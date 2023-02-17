@@ -9,17 +9,14 @@ const adminPagesStore = useAdminPagesStore();
 const router = useRouter();
 
 
-// const isSideBarActive = adminPagesStore.getIsSidebarActive;
 const pagesActive = adminPagesStore.getPagesActive;
 const getIdentitas = adminPagesStore.getIdentitas;
 const isSideBarActive = ref(adminPagesStore.isSidebarActive);
 const superadmin = ref(adminPagesStore.superadmin);
 adminPagesStore.$subscribe((mutation, state) => {
-    // console.log(state);
     isSideBarActive.value = adminPagesStore.isSidebarActive;
     superadmin.value = adminPagesStore.superadmin;
 });
-// const superadmin = computed(() => storeGuruBk.getSuperadminMode);
 const pagesActiveClass = ref(
     "border border-info rounded-lg bg-info text-info-content"
 );
@@ -66,8 +63,8 @@ const doLogout = async () => {
                                 UJIAN STUDI
                             </h3>
                         </li>
-                        <li class="lg:w-full py-0" :class="[pagesActive == 'sekolah' ? pagesActiveClass : '']">
-                            <router-link :to="{ name: 'admin-sekolah' }"
+                        <li class="lg:w-full py-0" :class="[pagesActive == 'ujianstudi-banksoal' ? pagesActiveClass : '']">
+                            <router-link :to="{ name: 'admin-ujianstudi-banksoal' }"
                                 class="text-base-content font-normal rounded-lg flex items-center p-2 group hover:link">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20"
                                     fill="currentColor">
@@ -77,8 +74,8 @@ const doLogout = async () => {
                                 <span class="ml-3">Banksoal Ujian Studi </span>
                             </router-link>
                         </li>
-                        <li class="lg:w-full py-0" :class="[pagesActive == 'sekolah' ? pagesActiveClass : '']">
-                            <router-link :to="{ name: 'admin-sekolah' }"
+                        <li class="lg:w-full py-0" :class="[pagesActive == 'ujianstudi-paketsoal' ? pagesActiveClass : '']">
+                            <router-link :to="{ name: 'admin-ujianstudi-paketsoal' }"
                                 class="text-base-content font-normal rounded-lg flex items-center p-2 group hover:link">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20"
                                     fill="currentColor">

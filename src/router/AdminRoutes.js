@@ -26,7 +26,7 @@ const AdminRoutes = [
             {
                 path: "/pages/admin/sekolah",
                 name: "admin-sekolah",
-                component: () => import("@/views/admin/other/ProfileIndex.vue"),
+                component: () => import("@/views/admin/sekolah/SekolahIndex.vue"),
             },
         ],
     },

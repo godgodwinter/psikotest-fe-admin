@@ -21,7 +21,7 @@ const toggleSideBar = () => {
 }
 </script>
 <template>
-    <div class="navbar bg-gradient-to-b from-[#d1f6e1] to-white border-b-2 border-gray-50">
+    <div class="navbar bg-gradient-to-b from-[#d1f6e1] to-white border-b-2 border-gray-50 fixed z-30 w-full top-0">
         <div class="navbar-start">
             <button id="toggleSidebarMobile" aria-expanded="true" aria-controls="sidebar"
                 class="lg:hidden mr-2 text-gray-600 hover:text-gray-900 cursor-pointer p-2 hover:border focus:border focus:ring-2 rounded"

@@ -3,6 +3,7 @@ import Toast from "@/components/lib/Toast";
 import LandingRoutes from "./LandingRoutes";
 import UserRoutes from "./UserRoutes";
 import AdminRoutes from "./AdminRoutes";
+import UjianStudiRoutes from "./UjianStudiRoutes";
 // import ExampleRoutes from "./ExampleRoutes";
 
 const routes = [];
@@ -10,6 +11,7 @@ routes.push(
   // ...ExampleRoutes,
   ...UserRoutes,
   ...AdminRoutes,
+  ...UjianStudiRoutes,
   ...LandingRoutes,
 );
 
