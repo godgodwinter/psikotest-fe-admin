@@ -3,6 +3,7 @@ import { defineAsyncComponent, ref } from "vue"
 import { useRouter } from "vue-router";
 import { Form, Field } from "vee-validate";
 import fnValidasi from "@/components/lib/babengValidasi";
+import API from "@/services/adminAuthServices";
 // import Logo from "@/components/babeng/icons/babeng-logo.vue";
 // import MenuIcon from "@/components/babeng/icons/babeng-menu.vue";
 // import PlayButton from "@/components/babeng/icons/babeng-play-button.vue";
@@ -49,13 +50,24 @@ const features = [
         color: "bg-pink",
     },
 ];
-const goHome = async () => {
-    // if (confirm("Apakah anda yakin untuk Logout ?")) {
-    // const res = await API.doLogout();
-    // if (res === true) {
-    router.push({ name: "user-home" });
-    // }
-    // }
+// const goHome = async () => {
+//     // if (confirm("Apakah anda yakin untuk Logout ?")) {
+//     // const res = await API.doLogout();
+//     // if (res === true) {
+//     router.push({ name: "user-home" });
+//     // }
+//     // }
+// };
+
+const username = ref(null);
+const password = ref(null);
+const doSubmit = async () => {
+    // console.log(username.value, password.value);
+    // router.push({ name: "ujian.psikotest.index" });
+    const res = await API.doLogin(username.value, password.value);
+    if (res === true) {
+        router.push({ name: "admin-home" });
+    }
 };
 </script>
 <template>
@@ -65,15 +77,15 @@ const goHome = async () => {
                 <div class="flex justify-between items-center py-10">
                     <!-- <Logo /> -->
                     <article class="prose lg:prose-xl ">
-                        <h4 class="font-bold capitalize">Computer Base test</h4>
+                        <h4 class="font-bold capitalize">YPMT PSIKOTES</h4>
                     </article>
                     <nav class="hidden md:flex md:items-center md:space-x-10">
-                        <a v-for="item in menu" href="#" class="text-gray-700 hover:text-gray-900">
-                            {{ item }}
-                        </a>
-                        <a href="#" class="font-semibold text-indigo-600 hover:text-indigo-800">
-                            Try now
-                        </a>
+                        <span class="text-gray-700 hover:text-gray-900">
+                            Home
+                        </span>
+                        <!-- <a href="#" class="font-semibold text-indigo-600 hover:text-indigo-800">
+                                                                                            Try now
+                                                                                        </a> -->
                     </nav>
                     <button class="p-4 md:hidden">
                         <MenuIcon class="w-6 h-6 text-gray-800" />
@@ -84,15 +96,15 @@ const goHome = async () => {
                 <div class="flex flex-col-reverse items-center md:flex-row lg:items-center">
                     <div class="pt-24 pr-8 pb-24 text-center md:pb-12 md:w-1/2 md:text-left">
                         <h1 class="relative z-10 text-5xl font-bold md:text-6xl font-display">
-                            Learn the
+                            YAYASAN
                             <span
                                 class="relative after:content-[url(/img/scratch.svg)] after:absolute after:-top-2 after:-right-6 after:-z-1">
-                                best
+                                PELITA
                             </span>
-                            ways for staying
+                            MULTI
                             <span
                                 class="relative after:content-[url(/img/decoration.svg)] after:absolute after:-bottom-2 after:-right-8 after:-z-1">
-                                productive
+                                TALENTA
                             </span>
                         </h1>
                         <p class="pt-8 text-lg leading-relaxed text-gray-500 md:max-w-md md:text-xl">
@@ -112,7 +124,7 @@ const goHome = async () => {
                     <div class="flex items-center justify-center w-full md:w-1/2 border-b border-gray-200">
                         <div class="flex flex-1 flex-col justify-center space-y-5 max-w-md">
                             <div class="flex flex-col space-y-2 text-center">
-                                <h2 class="text-3xl md:text-4xl font-bold">Sign in to account</h2>
+                                <h2 class="text-3xl md:text-4xl font-bold">Administrator</h2>
                             </div>
                             <Form class="flex flex-col max-w-md space-y-5" v-slot="{ errors }" @submit="doSubmit">
                                 <Field :rules="fnValidasi.validateData" placeholder="Username" v-model="username"
@@ -128,13 +140,13 @@ const goHome = async () => {
                                     {{ errors.password }}
                                 </div>
                                 <!-- <input type="text" placeholder="Username" v-model="username"
-                  class="flex px-3 py-2 md:px-4 md:py-3 border-2 border-black rounded-lg font-medium placeholder:font-normal" />
-                <input type="text" placeholder="Password" v-model="password"
-                  class="flex px-3 py-2 md:px-4 md:py-3 border-2 border-black rounded-lg font-medium placeholder:font-normal" /> -->
-                                <span @click="goHome()"
+                                                                                                          class="flex px-3 py-2 md:px-4 md:py-3 border-2 border-black rounded-lg font-medium placeholder:font-normal" />
+                                                                                                        <input type="text" placeholder="Password" v-model="password"
+                                                                                                          class="flex px-3 py-2 md:px-4 md:py-3 border-2 border-black rounded-lg font-medium placeholder:font-normal" /> -->
+                                <button
                                     class="flex items-center justify-center flex-none px-3 py-2 md:px-4 md:py-3 border-2 rounded-lg font-medium border-black bg-black text-white">
                                     Sign in
-                                </span>
+                                </button>
                                 <div class="flex justify-center items-center">
                                     <span class="w-full border border-gray-100"></span>
                                     <!-- <span class="px-4">Or</span> -->
@@ -230,5 +242,5 @@ const goHome = async () => {
                 </div>
             </div>
         </div>
-    </div>
+</div>
 </template>

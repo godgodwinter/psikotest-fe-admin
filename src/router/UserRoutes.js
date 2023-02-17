@@ -21,10 +21,6 @@ const UserRoutes = [
         component: () => import("@/views/users/ujian_studi/PaketIndex.vue"),
       },
     ],
-  },
-  {
-    path: "/:catchAll(.*)",
-    redirect: "/404",
-  },
+  }
 ];
 export default UserRoutes;

@@ -2,10 +2,15 @@ import { createRouter, createWebHistory } from "vue-router";
 import Toast from "@/components/lib/Toast";
 import LandingRoutes from "./LandingRoutes";
 import UserRoutes from "./UserRoutes";
+import AdminRoutes from "./AdminRoutes";
 
 const routes = [];
 
-routes.push(...LandingRoutes, ...UserRoutes);
+routes.push(
+  ...LandingRoutes,
+  ...UserRoutes,
+  ...AdminRoutes,
+);
 
 const router = createRouter({
   history: createWebHistory(),
