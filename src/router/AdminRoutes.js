@@ -1,8 +1,11 @@
 const AdminRoutes = [
     {
         path: "/pages/admin",
-        name: "User",
+        name: "Admin",
         component: () => import("@/layouts/AdminLayout.vue"),
+        meta: {
+            requireAuth: true,
+        },
         redirect: "/",
         children: [
             {
@@ -13,6 +16,16 @@ const AdminRoutes = [
             {
                 path: "/pages/admin/profile",
                 name: "admin-profile",
+                component: () => import("@/views/admin/other/ProfileIndex.vue"),
+            },
+            {
+                path: "/pages/admin/home",
+                name: "admin-dashboard",
+                component: () => import("@/views/admin/other/ProfileIndex.vue"),
+            },
+            {
+                path: "/pages/admin/sekolah",
+                name: "admin-sekolah",
                 component: () => import("@/views/admin/other/ProfileIndex.vue"),
             },
         ],

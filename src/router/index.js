@@ -3,13 +3,14 @@ import Toast from "@/components/lib/Toast";
 import LandingRoutes from "./LandingRoutes";
 import UserRoutes from "./UserRoutes";
 import AdminRoutes from "./AdminRoutes";
+// import ExampleRoutes from "./ExampleRoutes";
 
 const routes = [];
-
 routes.push(
-  ...LandingRoutes,
+  // ...ExampleRoutes,
   ...UserRoutes,
   ...AdminRoutes,
+  ...LandingRoutes,
 );
 
 const router = createRouter({
