@@ -6,7 +6,7 @@ const UjianStudiRoutes = [
         meta: {
             requireAuth: true,
         },
-        redirect: "/pages/admin/ujianstudi/banksoal/aspek",
+        redirect: "/pages/admin/ujianstudi/banksoal/aspek_detail",
         children: [
             {
                 path: "/pages/admin/ujianstudi/banksoal/index",
@@ -18,6 +18,16 @@ const UjianStudiRoutes = [
                         path: "/pages/admin/ujianstudi/banksoal/aspek",
                         name: "admin-ujianstudi-banksoal-aspek",
                         component: () => import("@/views/admin/ujianstudi/banksoal/UjianstudiBanksoalAspek.vue"),
+                    },
+                    {
+                        path: "/pages/admin/ujianstudi/banksoal/aspek/tambah",
+                        name: "admin-ujianstudi-banksoal-aspek-tambah",
+                        component: () => import("@/views/admin/ujianstudi/banksoal/UjianstudiBanksoalAspek_tambah.vue"),
+                    },
+                    {
+                        path: "/pages/admin/ujianstudi/banksoal/aspek/edit/:aspek_id",
+                        name: "admin-ujianstudi-banksoal-aspek-edit",
+                        component: () => import("@/views/admin/ujianstudi/banksoal/UjianstudiBanksoalAspek_edit.vue"),
                     },
                     {
                         path: "/pages/admin/ujianstudi/banksoal/aspek_detail",

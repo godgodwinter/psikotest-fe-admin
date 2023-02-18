@@ -64,7 +64,7 @@ const doLogout = async () => {
                             </h3>
                         </li>
                         <li class="lg:w-full py-0" :class="[pagesActive == 'ujianstudi-banksoal' ? pagesActiveClass : '']">
-                            <router-link :to="{ name: 'admin-ujianstudi-banksoal' }"
+                            <router-link :to="{ name: 'admin-ujianstudi-banksoal-aspek_detail' }"
                                 class="text-base-content font-normal rounded-lg flex items-center p-2 group hover:link">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20"
                                     fill="currentColor">
@@ -117,5 +117,5 @@ const doLogout = async () => {
                 </div>
             </div>
         </div>
-</aside>
+    </aside>
 </template>

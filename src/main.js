@@ -10,6 +10,8 @@ import "./style.css";
 // library fixed
 import VueGoodTablePlugin from "vue-good-table-next";
 import { VueQueryPlugin } from "@tanstack/vue-query";
+// import { VueSelect } from "vue-select";
+import vSelect from "vue-select";
 
 // style
 import "vue-good-table-next/dist/vue-good-table-next.css";
@@ -20,5 +22,7 @@ app.use(createPinia());
 app.use(router);
 app.use(VueGoodTablePlugin);
 app.use(VueQueryPlugin)
+// app.use(VueSelect)
+app.component("v-select", vSelect);
 
 app.mount("#app");
