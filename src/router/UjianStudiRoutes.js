@@ -6,12 +6,25 @@ const UjianStudiRoutes = [
         meta: {
             requireAuth: true,
         },
-        redirect: "/pages/admin/ujian/studi/banksoal",
+        redirect: "/pages/admin/ujianstudi/banksoal/aspek",
         children: [
             {
-                path: "/pages/admin/ujianstudi/banksoal",
+                path: "/pages/admin/ujianstudi/banksoal/index",
                 name: "admin-ujianstudi-banksoal",
-                component: () => import("@/views/admin/ujianstudi/banksoal/UjianstudiBanksoalIndex.vue"),
+                component: () => import("@/views/admin/ujianstudi/banksoal/Layout.vue"),
+                redirect: "/pages/admin/ujianstudi/banksoal/aspek",
+                children: [
+                    {
+                        path: "/pages/admin/ujianstudi/banksoal/aspek",
+                        name: "admin-ujianstudi-banksoal-aspek",
+                        component: () => import("@/views/admin/ujianstudi/banksoal/UjianstudiBanksoalAspek.vue"),
+                    },
+                    {
+                        path: "/pages/admin/ujianstudi/banksoal/aspek_detail",
+                        name: "admin-ujianstudi-banksoal-aspek_detail",
+                        component: () => import("@/views/admin/ujianstudi/banksoal/UjianstudiBanksoalAspekDetail.vue"),
+                    },
+                ]
             },
 
             {
