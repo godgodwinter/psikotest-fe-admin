@@ -13,12 +13,42 @@ moment.updateLocale("id", localization);
 const router = useRouter();
 const route = useRoute();
 const aspek_detail_id = ref(route.params.aspek_detail_id)
+const soal_id = ref(route.params.soal_id)
 const dataForm = ref({
     pertanyaan: "",
     nomer_urut: 0,
     aspek_detail_id,
     pilihanJawaban: [],
 });
+const dataDetail = ref(null)
+
+const getDataDetail = async () => {
+    try {
+        const response = await Api.get(`ujianstudi/banksoal/aspek_detail/${aspek_detail_id.value}/soal/${soal_id.value}`);
+        dataDetail.value = response.data;
+        // console.log(dataDetail.value);
+        dataForm.value.pertanyaan = dataDetail.value.pertanyaan;
+        dataForm.value.kode = dataDetail.value.kode;
+        dataForm.value.nomer_urut = dataDetail.value.nomer_urut ? dataDetail.value.nomer_urut : 0;
+        // tempAspek.value = {
+        //     id: dataDetail.value.skolastik_banksoal_aspek_id,
+        //     label: dataDetail.value.aspek_nama,
+        // };
+        // dataForm.value.skolastik_banksoal_aspek_id = tempAspek.value;
+        // tempAspekDetail.value = {
+        //     id: dataDetail.value.skolastik_banksoal_aspek_detail_id,
+        //     label: dataDetail.value.aspek_detail_nama,
+        // }
+        // dataForm.value.skolastik_banksoal_aspek_detail_id = tempAspekDetail.value;
+
+        dataPilihanJawaban.value = dataDetail.value.studi_v2_banksoal_soal_pilihanjawaban;
+        return response.data;
+    } catch (error) {
+        console.error(error);
+    }
+};
+getDataDetail();
+
 const onSubmit = async (values) => {
     let doSubmit = 1;
     values.fileAudio = fileAudio.value ? fileAudio.value : null;
@@ -66,8 +96,8 @@ const onSubmit = async (values) => {
             nomer_urut: values.nomer_urut,
         }
         // console.log(inputForm);
-        const response = await Api.post(
-            `ujianstudi/banksoal/aspek_detail/${aspek_detail_id.value}/soal`,
+        const response = await Api.put(
+            `ujianstudi/banksoal/aspek_detail/${aspek_detail_id.value}/soal/${soal_id.value}`,
             inputForm
         );
         // console.log(response);
@@ -155,7 +185,7 @@ const doClearImgPertanyaan = () => {
 <template>
     <div>
         <article class="prose lg:prose-sm">
-            <h1>TAMBAH SOAL</h1>
+            <h1>EDIT SOAL</h1>
         </article>
 
 
@@ -219,18 +249,18 @@ const doClearImgPertanyaan = () => {
                     <div class="grid grid-cols-1">
                         <!-- <div class="px-4 py-2 font-semibold">Preview </div> -->
                         <!-- <div class="avatar">
-                                                                                                            <div class="w-48 rounded">
-                                                                                                              <img :src="embedImgPertanyaan" v-if="embedImgPertanyaan" class="" />
-                                                                                                              <div class="shadow shadow-lg h-48" id="previewpdf" v-else />
-                                                                                                            </div>
-                                                                                                          </div> -->
+                                                                                                                                                                                <div class="w-48 rounded">
+                                                                                                                                                                                  <img :src="embedImgPertanyaan" v-if="embedImgPertanyaan" class="" />
+                                                                                                                                                                                  <div class="shadow shadow-lg h-48" id="previewpdf" v-else />
+                                                                                                                                                                                </div>
+                                                                                                                                                                              </div> -->
                     </div>
                 </div>
 
 
                 <!-- PILIHAN JAWABAN -->
 
-                <div v-if="dataPilihanJawaban.length > 0">
+                <div>
                     <div v-for="(item, index) in dataPilihanJawaban" :key="index">
                         <div class="py-10 px-4 space-y-4">
                             <div class="space-y-4 shadow-lg">
@@ -247,7 +277,7 @@ const doClearImgPertanyaan = () => {
                                         <label>Skor :
                                             <code
                                                 class="text-red-500 text-sm font-semibold">{{ dataPilihanJawaban[index].skor }}
-                                                                                                                  </code></label>
+                                                                                                                                                                                      </code></label>
                                         <div>
                                             <input :rules="fnValidasi.validateDataSkor"
                                                 v-model="dataPilihanJawaban[index].skor"

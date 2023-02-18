@@ -63,6 +63,11 @@ const UjianStudiBanksoalRoutes = [
                         name: "admin-ujianstudi-banksoal-aspek_detail-soal-tambah",
                         component: () => import("@/views/admin/ujianstudi/banksoal/UjianStudiBanksoalSoal_tambah.vue"),
                     },
+                    {
+                        path: "/pages/admin/ujianstudi/banksoal/aspek_detail/:aspek_detail_id/soal/edit/:soal_id",
+                        name: "admin-ujianstudi-banksoal-aspek_detail-soal-edit",
+                        component: () => import("@/views/admin/ujianstudi/banksoal/UjianStudiBanksoalSoal_edit.vue"),
+                    },
                     // ! SOAL-END
                 ]
             },
