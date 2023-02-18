@@ -2,6 +2,7 @@
 import { ref, defineAsyncComponent } from "vue"
 import Api from "@/axios/axiosNode";
 import Toast from "@/components/lib/Toast";
+import { useRouter } from "vue-router";
 
 const LoadingNavbar = defineAsyncComponent(() =>
     import('@/components/alert/AlertLoading.vue')
@@ -10,6 +11,7 @@ const AlertFailed = defineAsyncComponent(() =>
     import('@/components/alert/AlertFailed.vue')
 )
 
+const router = useRouter();
 const data = ref();
 const isLoading = ref(true);
 const isError = ref(false);
@@ -62,6 +64,12 @@ const doDeleteData = async (id, index) => {
     }
 };
 
+const doEditData = async (id, index) => {
+    router.push({
+        name: "admin-ujianstudi-banksoal-aspek_detail-edit",
+        params: { aspek_detail_id: id },
+    });
+};
 </script>
 <template>
     <div>
@@ -87,43 +95,21 @@ const doDeleteData = async (id, index) => {
 }" styleClass="vgt-table striped bordered condensed" class="py-0">
                                 <template #table-actions>
                                     <div class="space-x-1 space-y-1 gap-1">
-                                        <!-- <button class="btn btn-sm btn-secondary tooltip" data-tip="Refresh Data"
-                                                                                                                                                                                                                                                                                                                            @click="getData()">
-                                                                                                                                                                                                                                                                                                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20"
-                                                                                                                                                                                                                                                                                                                                fill="currentColor">
-                                                                                                                                                                                                                                                                                                                                <path fill-rule="evenodd"
-                                                                                                                                                                                                                                                                                                                                    d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z"
-                                                                                                                                                                                                                                                                                                                                    clip-rule="evenodd" />
-                                                                                                                                                                                                                                                                                                                            </svg>
-                                                                                                                                                                                                                                                                                                                        </button> -->
-                                        <!-- <router-link :to="{
-                                                                                                                                                                                                                                                                                                                                name: 'admin.ujian.create',
-                                                                                                                                                                                                                                                                                                                            }"> -->
-                                        <button class="btn btn-sm btn-primary tooltip" data-tip="Tambah SOAL">
-                                            TAMBAH
-                                        </button>
-                                        <!-- </router-link> -->
+                                        <router-link :to="{
+                                            name: 'admin-ujianstudi-banksoal-aspek_detail-tambah',
+                                        }">
+                                            <button class="btn btn-sm btn-primary tooltip" data-tip="Tambah">
+                                                TAMBAH
+                                            </button>
+                                        </router-link>
                                     </div>
                                 </template>
                                 <template #table-row="props">
                                     <span v-if="props.column.field == 'actions'">
                                         <div class="text-sm font-medium text-center flex justify-center space-x-1">
-                                            <!-- <router-link :to="{
-                                                                                                                                                                                                                                                                                                                            name: 'admin.ujian.kelas',
-                                                                                                                                                                                                                                                                                                                            params: { ujian_proses_id: props.row.id },
-                                                                                                                                                                                                                                                                                                                        }"> -->
-                                            <button class="btn btn-sm btn-primary tooltip" data-tip="Detail">
-                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
-                                                    viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                                        d="M13 5l7 7-7 7M5 5l7 7-7 7" />
-                                                </svg></button>
-                                            <!-- </router-link> -->
-                                            <!-- <router-link :to="{
-                                                                                                                                                                                                                                                                                                                        name: 'admin.ujian.edit',
-                                                                                                                                                                                                                                                                                                                        params: { id: props.row.id },
-                                                                                                                                                                                                                                                                                                                    }"> -->
-                                            <button class="btn btn-sm btn-warning tooltip" data-tip="Edit">
+
+                                            <button class="btn btn-sm btn-warning tooltip" data-tip="Edit"
+                                                @click="doEditData(props.row.id, props.index)">
                                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20"
                                                     fill="currentColor">
                                                     <path
@@ -132,7 +118,6 @@ const doDeleteData = async (id, index) => {
                                                         d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"
                                                         clip-rule="evenodd" />
                                                 </svg></button>
-                                            <!-- </router-link> -->
                                             <button class="btn btn-sm btn-danger"
                                                 @click="doDeleteData(props.row.id, props.index)">
                                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20"

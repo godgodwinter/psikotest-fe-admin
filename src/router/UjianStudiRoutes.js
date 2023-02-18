@@ -14,6 +14,7 @@ const UjianStudiRoutes = [
                 component: () => import("@/views/admin/ujianstudi/banksoal/Layout.vue"),
                 redirect: "/pages/admin/ujianstudi/banksoal/aspek",
                 children: [
+                    // ! ASPEK
                     {
                         path: "/pages/admin/ujianstudi/banksoal/aspek",
                         name: "admin-ujianstudi-banksoal-aspek",
@@ -29,11 +30,26 @@ const UjianStudiRoutes = [
                         name: "admin-ujianstudi-banksoal-aspek-edit",
                         component: () => import("@/views/admin/ujianstudi/banksoal/UjianstudiBanksoalAspek_edit.vue"),
                     },
+
+                    // ! ASPEK-END
+
+                    // ! ASPEK_DETAIL
                     {
                         path: "/pages/admin/ujianstudi/banksoal/aspek_detail",
                         name: "admin-ujianstudi-banksoal-aspek_detail",
                         component: () => import("@/views/admin/ujianstudi/banksoal/UjianstudiBanksoalAspekDetail.vue"),
                     },
+                    {
+                        path: "/pages/admin/ujianstudi/banksoal/aspek_detail/tambah",
+                        name: "admin-ujianstudi-banksoal-aspek_detail-tambah",
+                        component: () => import("@/views/admin/ujianstudi/banksoal/UjianstudiBanksoalAspekDetail_tambah.vue"),
+                    },
+                    {
+                        path: "/pages/admin/ujianstudi/banksoal/aspek_detail/edit/:aspek_detail_id",
+                        name: "admin-ujianstudi-banksoal-aspek_detail-edit",
+                        component: () => import("@/views/admin/ujianstudi/banksoal/UjianstudiBanksoalAspekDetail_edit.vue"),
+                    },
+                    // ! ASPEK_DETAIL-END
                 ]
             },
 
