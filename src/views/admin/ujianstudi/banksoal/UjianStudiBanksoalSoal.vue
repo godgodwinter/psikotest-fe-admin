@@ -2,8 +2,14 @@
 import { ref, defineAsyncComponent } from "vue"
 import Api from "@/axios/axiosNode";
 import Toast from "@/components/lib/Toast";
-import { useRouter } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 
+const BreadCrumb = defineAsyncComponent(() =>
+    import('@/components/atoms/BreadCrumb.vue')
+)
+const BreadCrumbSpace = defineAsyncComponent(() =>
+    import('@/components/atoms/BreadCrumbSpace.vue')
+)
 const LoadingNavbar = defineAsyncComponent(() =>
     import('@/components/alert/AlertLoading.vue')
 )
@@ -12,6 +18,9 @@ const AlertFailed = defineAsyncComponent(() =>
 )
 
 const router = useRouter();
+const route = useRoute();
+const aspek_detail_id = ref(route.params.aspek_detail_id)
+const aspek_detail = ref();
 const data = ref();
 const isLoading = ref(true);
 const isError = ref(false);
@@ -27,21 +36,38 @@ const columns = [
         thClass: "text-center",
     },
     {
-        label: "Nama",
-        field: "nama",
+        label: "Pertanyaan",
+        field: "pertanyaan",
         type: "String",
     },
     {
-        label: "Jumlah Soal",
-        field: "soal_jml",
+        label: "Jumlah Pilihan",
+        field: "pilihanjawaban_jml",
+        type: "String",
+    },
+    {
+        label: "Aspek",
+        field: "aspek_nama",
+        type: "String",
+    },
+    {
+        label: "Sub",
+        field: "aspek_detail_nama",
+        type: "String",
+    },
+    {
+        label: "Status",
+        field: "status",
         type: "String",
     },
 ];
 
 const getData = async () => {
     try {
-        const response = await Api.get(`ujianstudi/banksoal/aspek_detail`);
+        const response = await Api.get(`ujianstudi/banksoal/aspek_detail/${aspek_detail_id.value}/soal`);
         data.value = response.data;
+        aspek_detail.value = response.aspek_detail;
+        console.log(aspek_detail.value);
         isLoading.value = false;
         return response.data;
     } catch (error) {
@@ -78,9 +104,36 @@ const doEditData = async (id, index) => {
 </script>
 <template>
     <div>
-        <article class="prose lg:prose-sm">
-            <h1>MAPEL</h1>
-        </article>
+        <div class="pt-4 px-10 md:flex justify-between">
+            <div>
+                <article class="prose lg:prose-sm">
+                    <h1>MAPEL : {{ aspek_detail ? aspek_detail.nama : aspek_detail_id }}</h1>
+                </article>
+            </div>
+            <div class="md:py-0 py-4">
+                <BreadCrumb>
+                    <template v-slot:content>
+                        <li>
+                            <router-link :to="{ name: 'admin-ujianstudi-banksoal-aspek_detail' }"><span
+                                    class="font-semibold underline uppercase">Aspek</span></router-link>
+                        </li>
+                        <BreadCrumbSpace /> SOAL
+                    </template>
+                </BreadCrumb>
+            </div>
+        </div>
+        <div class="pt-4 px-10 md:flex justify-between">
+            <div class="space-x-2">
+                <button class="btn btn-sm btn-warning tooltip">
+                    IMPORT
+                </button>
+                <button class="btn btn-sm btn-warning tooltip">
+                    EXPORT
+                </button>
+            </div>
+            <div class="md:py-0 py-4">
+            </div>
+        </div>
         <span v-if="isLoading">
             <LoadingNavbar />
         </span>
@@ -101,10 +154,10 @@ const doEditData = async (id, index) => {
                                 <template #table-actions>
                                     <div class="space-x-1 space-y-1 gap-1">
                                         <router-link :to="{
-                                            name: 'admin-ujianstudi-banksoal-aspek_detail-tambah',
+                                            name: 'admin-ujianstudi-banksoal-aspek_detail-soal-tambah',
                                         }">
-                                            <button class="btn btn-sm btn-primary tooltip" data-tip="Tambah">
-                                                TAMBAH
+                                            <button class="btn btn-sm btn-primary tooltip" data-tip="Tambah SOAL">
+                                                TAMBAH SOAL
                                             </button>
                                         </router-link>
                                     </div>
@@ -112,15 +165,6 @@ const doEditData = async (id, index) => {
                                 <template #table-row="props">
                                     <span v-if="props.column.field == 'actions'">
                                         <div class="text-sm font-medium text-center flex justify-center space-x-1">
-                                            <RouterLink
-                                                :to="{ name: 'admin-ujianstudi-banksoal-aspek_detail-soal', params: { aspek_detail_id: props.row.id } }">
-                                                <button class="btn btn-sm btn-primary tooltip" data-tip="Detail Soal">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
-                                                        viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                                            d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                                    </svg></button>
-                                            </RouterLink>
                                             <button class="btn btn-sm btn-warning tooltip" data-tip="Edit"
                                                 @click="doEditData(props.row.id, props.index)">
                                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20"
@@ -143,6 +187,9 @@ const doEditData = async (id, index) => {
                                         </div>
                                     </span>
 
+                                    <span v-else-if="props.column.field == 'pertanyaan'"><span
+                                            v-html="props.row.pertanyaan"></span>
+                                    </span>
 
                                     <span v-else>
                                         {{ props.formattedRow[props.column.field] }}

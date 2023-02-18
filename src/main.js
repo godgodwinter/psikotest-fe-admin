@@ -10,6 +10,9 @@ import "./style.css";
 // library fixed
 import VueGoodTablePlugin from "vue-good-table-next";
 import { VueQueryPlugin } from "@tanstack/vue-query";
+import { QuillEditor } from '@vueup/vue-quill'
+import '@vueup/vue-quill/dist/vue-quill.snow.css';
+
 // import { VueSelect } from "vue-select";
 import vSelect from "vue-select";
 
@@ -24,5 +27,6 @@ app.use(VueGoodTablePlugin);
 app.use(VueQueryPlugin)
 // app.use(VueSelect)
 app.component("v-select", vSelect);
+app.component('QuillEditor', QuillEditor)
 
 app.mount("#app");

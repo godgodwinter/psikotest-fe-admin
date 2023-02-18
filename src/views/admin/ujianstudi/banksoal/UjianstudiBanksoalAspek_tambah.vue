@@ -21,7 +21,7 @@ const onSubmit = async (values) => {
     };
     try {
         const response = await Api.post(`ujianstudi/banksoal/aspek`, dataFormSend);
-        console.log(response);
+        // console.log(response);
         Toast.success("Info", "Data berhasil ditambahkan!");
         router.push({ name: "admin-ujianstudi-banksoal-aspek" });
         return true;
