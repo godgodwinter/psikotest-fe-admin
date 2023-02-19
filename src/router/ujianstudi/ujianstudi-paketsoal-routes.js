@@ -57,6 +57,11 @@ const UjianStudiPaketsoalRoutes = [
                                 component: () => import("@/views/admin/ujianstudi/paketsoal/detail/UjianstudiPaketsoalAspekDetail.vue"),
                             },
                             {
+                                path: "/pages/admin/ujianstudi/paketsoal/detail/:paketsoal_id/aspek_detail/tambah",
+                                name: "admin-ujianstudi-paketsoal-aspek_detail-tambah",
+                                component: () => import("@/views/admin/ujianstudi/paketsoal/detail/UjianstudiPaketsoalAspekDetail_tambah.vue"),
+                            },
+                            {
                                 path: "/pages/admin/ujianstudi/paketsoal/detail/:paketsoal_id/penilaian",
                                 name: "admin-ujianstudi-paketsoal-penilaian",
                                 component: () => import("@/views/admin/ujianstudi/paketsoal/detail/UjianstudiPaketsoalPenilaian.vue"),
