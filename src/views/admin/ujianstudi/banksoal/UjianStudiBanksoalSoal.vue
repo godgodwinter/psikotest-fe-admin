@@ -67,7 +67,7 @@ const getData = async () => {
         const response = await Api.get(`ujianstudi/banksoal/aspek_detail/${aspek_detail_id.value}/soal`);
         data.value = response.data;
         aspek_detail.value = response.aspek_detail;
-        console.log(aspek_detail.value);
+        // console.log(aspek_detail.value);
         isLoading.value = false;
         return response.data;
     } catch (error) {
@@ -124,12 +124,14 @@ const doEditData = async (id, index) => {
         </div>
         <div class="pt-4 px-10 md:flex justify-between">
             <div class="space-x-2">
-                <button class="btn btn-sm btn-warning tooltip">
-                    IMPORT
-                </button>
-                <button class="btn btn-sm btn-warning tooltip">
-                    EXPORT
-                </button>
+                <router-link
+                    :to="{ name: 'admin-ujianstudi-banksoal-aspek_detail-soal-import', params: { aspek_detail_id } }">
+                    <button class="btn btn-sm btn-warning tooltip">
+                        IMPORT
+                    </button></router-link>
+                <!-- <button class="btn btn-sm btn-warning tooltip">
+                                    EXPORT
+                                </button> -->
             </div>
             <div class="md:py-0 py-4">
             </div>
