@@ -2,7 +2,7 @@
 import { ref, defineAsyncComponent } from "vue"
 import Api from "@/axios/axiosNode";
 import Toast from "@/components/lib/Toast";
-import { useRouter } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 
 const LoadingNavbar = defineAsyncComponent(() =>
     import('@/components/alert/AlertLoading.vue')
@@ -12,6 +12,8 @@ const AlertFailed = defineAsyncComponent(() =>
 )
 
 const router = useRouter();
+const route = useRoute();
+const paketsoal_id = ref(route.params.paketsoal_id)
 const data = ref();
 const isLoading = ref(true);
 const isError = ref(false);
@@ -31,16 +33,11 @@ const columns = [
         field: "nama",
         type: "String",
     },
-    {
-        label: "Tanggal Pembuatan",
-        field: "tgl",
-        type: "String",
-    },
 ];
 
 const getData = async () => {
     try {
-        const response = await Api.get(`ujianstudi/paketsoal`);
+        const response = await Api.get(`ujianstudi/paketsoal/${paketsoal_id.value}/penilaian`);
         data.value = response.data;
         isLoading.value = false;
         return response.data;
@@ -80,7 +77,7 @@ const doEditData = async (id, index) => {
 <template>
     <div>
         <article class="prose lg:prose-sm">
-            <h1>PAKETSOAL</h1>
+            <h1>PENILAIAN</h1>
         </article>
         <span v-if="isLoading">
             <LoadingNavbar />
