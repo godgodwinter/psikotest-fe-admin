@@ -25,6 +25,7 @@ const onChangefileUpload = (e) => {
     fileExcelLink.value = URL.createObjectURL(file.value);
     // console.log(file.value, fileExcelLink.value);
     importExcelFile();
+
 };
 
 const completedSteps = ref(0);
@@ -36,6 +37,29 @@ const dataBelumDiGenerate = ref(0);
 const dataSudahDiGenerate = ref(0);
 const dataAll = ref(0);
 const token_import = ref(uuidv4());
+
+const fnReset = (tipe = "baru") => {
+    completedSteps.value = 0;
+    prosesBerhasil.value = 0;
+    prosesGagal.value = 0;
+    dataExcel.value = [];
+    totalSteps.value = dataExcel.value.length;
+    //   if (tipe == "baru") {
+    //     totalSteps.value = data.value.length;
+    //   } else {
+    //     totalSteps.value = data.value.length;
+    //   }
+};
+const fnAlertFinish = () => {
+    if (totalSteps.value == completedSteps.value) {
+        Toast.babeng("Info", `Proses Selesai!`);
+    }
+};
+const fnPeriksaTotalBelumAda = () => {
+    let sudahAda = dataExcel.value.filter(e => e.status === "Sudah Ada" || e.status === "Tersimpan");
+    prosesBerhasil.value = sudahAda.length;
+    completedSteps.value = sudahAda.length;
+}
 
 const columns = [
     {
@@ -113,6 +137,26 @@ function populateGrid(workbook) {
         H: 'pilihan_1_kode_jawaban',
         I: 'pilihan_1_skor',
         J: 'pilihan_1_jawaban',
+
+        L: 'pilihan_2_kode_jawaban',
+        M: 'pilihan_2_skor',
+        N: 'pilihan_2_jawaban',
+
+        P: 'pilihan_3_kode_jawaban',
+        Q: 'pilihan_3_skor',
+        R: 'pilihan_3_jawaban',
+
+        T: 'pilihan_4_kode_jawaban',
+        U: 'pilihan_4_skor',
+        V: 'pilihan_4_jawaban',
+
+        X: 'pilihan_5_kode_jawaban',
+        Y: 'pilihan_5_skor',
+        Z: 'pilihan_5_jawaban',
+
+        AB: 'pilihan_6_kode_jawaban',
+        AC: 'pilihan_6_skor',
+        AD: 'pilihan_6_jawaban',
     };
 
     var rowData = [];
@@ -124,8 +168,52 @@ function populateGrid(workbook) {
     while (worksheet['A' + rowIndex]) {
         var row = {};
         Object.keys(columns).forEach(function (column) {
-            row[columns[column]] = worksheet[column + rowIndex].w;
+            // console.log(column);
+            row[columns[column]] = worksheet[column + rowIndex] ? worksheet[column + rowIndex].w : null;
         });
+        row.pilihanJawaban = [];
+        if (row.pilihan_1_kode_jawaban) {
+            let tempPilihanjawaban = {
+                jawaban: row?.pilihan_1_jawaban || null,
+                skor: row?.pilihan_1_skor || 0.
+            }
+            row.pilihanJawaban.push(tempPilihanjawaban);
+        }
+        if (row.pilihan_2_kode_jawaban) {
+            let tempPilihanjawaban = {
+                jawaban: row?.pilihan_2_jawaban || null,
+                skor: row?.pilihan_2_skor || 0.
+            }
+            row.pilihanJawaban.push(tempPilihanjawaban);
+        }
+        if (row.pilihan_3_kode_jawaban) {
+            let tempPilihanjawaban = {
+                jawaban: row?.pilihan_3_jawaban || null,
+                skor: row?.pilihan_3_skor || 0.
+            }
+            row.pilihanJawaban.push(tempPilihanjawaban);
+        }
+        if (row.pilihan_4_kode_jawaban) {
+            let tempPilihanjawaban = {
+                jawaban: row?.pilihan_4_jawaban || null,
+                skor: row?.pilihan_4_skor || 0.
+            }
+            row.pilihanJawaban.push(tempPilihanjawaban);
+        }
+        if (row.pilihan_5_kode_jawaban) {
+            let tempPilihanjawaban = {
+                jawaban: row?.pilihan_5_jawaban || null,
+                skor: row?.pilihan_5_skor || 0.
+            }
+            row.pilihanJawaban.push(tempPilihanjawaban);
+        }
+        if (row.pilihan_6_kode_jawaban) {
+            let tempPilihanjawaban = {
+                jawaban: row?.pilihan_6_jawaban || null,
+                skor: row?.pilihan_6_skor || 0.
+            }
+            row.pilihanJawaban.push(tempPilihanjawaban);
+        }
 
         rowData.push(row);
 
@@ -208,20 +296,42 @@ const doPeriksaAll = async () => {
 
 const doSimpanPerSoal = async (index, kode_soal) => {
     try {
-        let dataFormSend = {
-            studi_v2_banksoal_aspek_detail_id: aspek_detail_id.value,
-            kode_soal: dataExcel.value[index].kode_soal,
-            pertanyaan: dataExcel.value[index].pertanyaan,
-            kode: dataExcel.value[index].kode,
-            nomer_urut: dataExcel.value[index].nomer_urut,
-            desc: dataExcel.value[index].desc,
-            pilihanJawaban: dataExcel.value[index].pilihanJawaban,
+        if (dataExcel.value[index].status === "Belum Ada") {
+            let dataFormSend = {
+                studi_v2_banksoal_aspek_detail_id: aspek_detail_id.value,
+                kode_soal: dataExcel.value[index].kode_soal,
+                pertanyaan: dataExcel.value[index].pertanyaan,
+                kode: dataExcel.value[index].kode,
+                nomer_urut: dataExcel.value[index].nomer_urut,
+                desc: dataExcel.value[index].desc,
+                pilihanJawaban: dataExcel.value[index].pilihanJawaban,
+            }
+            // console.log('====================================');
+            // console.log(dataFormSend, dataExcel.value[index]);
+            // console.log('====================================');
+
+            const response = await Api.post(
+                `ujianstudi/banksoal/aspek_detail/${aspek_detail_id.value}/soal`,
+                dataFormSend
+            );
+            console.log(response);
+            dataExcel.value[index].status = "Tersimpan",
+                Toast.babeng("Info", "Data berhasil disimpan")
+        } else if (dataExcel.value[index].status === "Sudah Ada" || dataExcel.value[index].status === "Tersimpan") {
+            Toast.danger(`Gagal `, `${kode_soal} : Data Sudah Ada!`)
         }
-        console.log('====================================');
-        console.log(dataFormSend, dataExcel.value[index]);
-        console.log('====================================');
+        else {
+            Toast.danger(`Gagal `, `${kode_soal} : Belum diperiksa!`)
+        }
+        fnPeriksaTotalBelumAda();
     } catch (error) {
         console.error(error);
+    }
+}
+
+const doSimpanAll = async () => {
+    for (const [index, item] of dataExcel.value.entries()) {
+        doSimpanPerSoal(index, item.kode_soal);
     }
 }
 </script>
@@ -238,6 +348,9 @@ const doSimpanPerSoal = async (index, kode_soal) => {
             </button>
             <button @click="doSimpanAll()" class="btn btn-sm btn-success">
                 SIMPAN DATA BARU
+            </button>
+            <button @click="fnReset()" class="btn btn-sm btn-secondary">
+                Reset
             </button>
         </div>
 
