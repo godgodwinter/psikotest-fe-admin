@@ -314,7 +314,7 @@ const doSimpanPerSoal = async (index, kode_soal) => {
                 `ujianstudi/banksoal/aspek_detail/${aspek_detail_id.value}/soal`,
                 dataFormSend
             );
-            console.log(response);
+            // console.log(response);
             dataExcel.value[index].status = "Tersimpan",
                 Toast.babeng("Info", "Data berhasil disimpan")
         } else if (dataExcel.value[index].status === "Sudah Ada" || dataExcel.value[index].status === "Tersimpan") {

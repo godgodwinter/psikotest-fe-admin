@@ -77,11 +77,7 @@ const UjianStudiBanksoalRoutes = [
                 ]
             },
 
-            {
-                path: "/pages/admin/ujianstudi/paketsoal",
-                name: "admin-ujianstudi-paketsoal",
-                component: () => import("@/views/admin/ujianstudi/paketsoal/UjianstudiPaketsoalIndex.vue"),
-            },
+           
         ],
     },
 ];
