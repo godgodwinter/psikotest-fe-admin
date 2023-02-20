@@ -16,12 +16,14 @@ const studi_v2_banksoal_aspek_id = ref(null);
 const dataForm = ref({
     nama: null,
     urutan: null,
+    tipe: "Sendiri"
 });
 const onSubmit = async (values) => {
     let dataFormSend = {
         nama: dataForm.value.nama,
         urutan: dataForm.value.urutan || null,
-        studi_v2_banksoal_aspek_id: studi_v2_banksoal_aspek_id.value
+        studi_v2_banksoal_aspek_id: studi_v2_banksoal_aspek_id.value,
+        tipe: dataForm.value.tipe
     };
     // console.log('====================================');
     // console.log(dataFormSend);
@@ -114,6 +116,21 @@ const doPilihAspek = (banksoal_aspek_id) => {
                         <div class="text-xs text-red-600 mt-1">
                             {{ errors.urutan }}
                         </div>
+                    </div>
+                </div>
+                <div>
+                    <label for="name" class="text-sm font-medium text-gray-900 block mb-2">Pilih Tipe
+                    </label>
+                    <div class="px-3">
+                        <select class="select select-info w-full max-w-xs" v-model="dataForm.tipe">
+                            <option selected value="Sendiri">
+                                Sendiri
+                            </option>
+                            <option value="Semua">
+                                Semua
+                            </option>
+                        </select>
+
                     </div>
                 </div>
             </div>

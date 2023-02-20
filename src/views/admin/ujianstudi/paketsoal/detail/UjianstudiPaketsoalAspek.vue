@@ -34,6 +34,11 @@ const columns = [
         type: "String",
     },
     {
+        label: "Tipe",
+        field: "tipe",
+        type: "String",
+    },
+    {
         label: "Jumlah Mapel",
         field: "mapel_jml",
         type: "String",
@@ -117,7 +122,7 @@ const doEditData = async (id, index) => {
                                     <span v-if="props.column.field == 'actions'">
                                         <div class="text-sm font-medium text-center flex justify-center space-x-1">
                                             <RouterLink
-                                                :to="{ name: 'admin-ujianstudi-paketsoal-aspek', params: { paketsoal_id: props.row.id } }">
+                                                :to="{ name: 'admin-ujianstudi-paketsoal-aspek-penilaian', params: { paketsoal_id: paketsoal_id, aspek_id: props.row.id } }">
                                                 <button class="btn btn-sm btn-primary tooltip" data-tip="Detail Soal">
                                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
                                                         viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -126,15 +131,15 @@ const doEditData = async (id, index) => {
                                                     </svg></button>
                                             </RouterLink>
                                             <!-- <button class="btn btn-sm btn-warning tooltip" data-tip="Edit"
-                                                    @click="doEditData(props.row.id, props.index)">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20"
-                                                        fill="currentColor">
-                                                        <path
-                                                            d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z" />
-                                                        <path fill-rule="evenodd"
-                                                            d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"
-                                                            clip-rule="evenodd" />
-                                                    </svg></button> -->
+                                                                            @click="doEditData(props.row.id, props.index)">
+                                                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20"
+                                                                                fill="currentColor">
+                                                                                <path
+                                                                                    d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z" />
+                                                                                <path fill-rule="evenodd"
+                                                                                    d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"
+                                                                                    clip-rule="evenodd" />
+                                                                            </svg></button> -->
                                             <button class="btn btn-sm btn-danger"
                                                 @click="doDeleteData(props.row.id, props.index)">
                                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20"

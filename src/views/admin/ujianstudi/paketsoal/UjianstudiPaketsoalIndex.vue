@@ -114,7 +114,7 @@ const doEditData = async (id, index) => {
                                     <span v-if="props.column.field == 'actions'">
                                         <div class="text-sm font-medium text-center flex justify-center space-x-1">
                                             <RouterLink
-                                                :to="{ name: 'admin-ujianstudi-paketsoal-aspek', params: { paketsoal_id: props.row.id } }">
+                                                :to="{ name: 'admin-ujianstudi-paketsoal-aspek_detail', params: { paketsoal_id: props.row.id } }">
                                                 <button class="btn btn-sm btn-primary tooltip" data-tip="Detail Soal">
                                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
                                                         viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">

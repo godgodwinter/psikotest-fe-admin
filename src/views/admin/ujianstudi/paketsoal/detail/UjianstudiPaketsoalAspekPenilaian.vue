@@ -14,6 +14,8 @@ const AlertFailed = defineAsyncComponent(() =>
 const router = useRouter();
 const route = useRoute();
 const paketsoal_id = ref(route.params.paketsoal_id)
+const aspek_id = ref(route.params.aspek_id)
+const aspek = ref();
 const data = ref();
 const isLoading = ref(true);
 const isError = ref(false);
@@ -30,15 +32,21 @@ const columns = [
     },
     {
         label: "Nama",
-        field: "nama",
+        field: "aspek_detail_nama",
+        type: "String",
+    },
+    {
+        label: "Status",
+        field: "status",
         type: "String",
     },
 ];
 
 const getData = async () => {
     try {
-        const response = await Api.get(`ujianstudi/paketsoal/${paketsoal_id.value}/penilaian`);
-        data.value = response.data;
+        const response = await Api.get(`ujianstudi/paketsoal/${paketsoal_id.value}/aspek/penilaian/get/${aspek_id.value}`);
+        aspek.value = response.data;
+        data.value = response.data?.penilaian;
         isLoading.value = false;
         return response.data;
     } catch (error) {
@@ -77,7 +85,8 @@ const doEditData = async (id, index) => {
 <template>
     <div>
         <article class="prose lg:prose-sm">
-            <h1>PENILAIAN</h1>
+            <h1>PENILAIAN </h1>
+            <p>ASPEK : {{ aspek?.nama }}</p>
         </article>
         <span v-if="isLoading">
             <LoadingNavbar />
@@ -99,7 +108,7 @@ const doEditData = async (id, index) => {
                                 <template #table-actions>
                                     <div class="space-x-1 space-y-1 gap-1">
                                         <router-link :to="{
-                                            name: 'admin-ujianstudi-paketsoal-tambah',
+                                            name: 'admin-ujianstudi-paketsoal-aspek-penilaian-tambah', params: { paketsoal_id, aspek_id }
                                         }">
                                             <button class="btn btn-sm btn-primary tooltip" data-tip="Tambah">
                                                 TAMBAH

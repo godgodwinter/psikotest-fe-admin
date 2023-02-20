@@ -46,11 +46,16 @@ const UjianStudiPaketsoalRoutes = [
                                 name: "admin-ujianstudi-paketsoal-aspek-tambah",
                                 component: () => import("@/views/admin/ujianstudi/paketsoal/detail/UjianstudiPaketsoalAspek_tambah.vue"),
                             },
-                            // {
-                            //     path: "/pages/admin/ujianstudi/paketsoal/detail/:paketsoal_id/aspek/edit/:aspek_id",
-                            //     name: "admin-ujianstudi-paketsoal-aspek-edit",
-                            //     component: () => import("@/views/admin/ujianstudi/paketsoal/detail/UjianstudiPaketsoalAspek_edit.vue"),
-                            // },
+                            {
+                                path: "/pages/admin/ujianstudi/paketsoal/detail/:paketsoal_id/aspek/detail/:aspek_id/penilaian",
+                                name: "admin-ujianstudi-paketsoal-aspek-penilaian",
+                                component: () => import("@/views/admin/ujianstudi/paketsoal/detail/UjianstudiPaketsoalAspekPenilaian.vue"),
+                            },
+                            {
+                                path: "/pages/admin/ujianstudi/paketsoal/detail/:paketsoal_id/aspek/detail/:aspek_id/penilaian/tambah",
+                                name: "admin-ujianstudi-paketsoal-aspek-penilaian-tambah",
+                                component: () => import("@/views/admin/ujianstudi/paketsoal/detail/UjianstudiPaketsoalAspekPenilaian_tambah.vue"),
+                            },
                             {
                                 path: "/pages/admin/ujianstudi/paketsoal/detail/:paketsoal_id/aspek_detail",
                                 name: "admin-ujianstudi-paketsoal-aspek_detail",
@@ -60,11 +65,6 @@ const UjianStudiPaketsoalRoutes = [
                                 path: "/pages/admin/ujianstudi/paketsoal/detail/:paketsoal_id/aspek_detail/tambah",
                                 name: "admin-ujianstudi-paketsoal-aspek_detail-tambah",
                                 component: () => import("@/views/admin/ujianstudi/paketsoal/detail/UjianstudiPaketsoalAspekDetail_tambah.vue"),
-                            },
-                            {
-                                path: "/pages/admin/ujianstudi/paketsoal/detail/:paketsoal_id/penilaian",
-                                name: "admin-ujianstudi-paketsoal-penilaian",
-                                component: () => import("@/views/admin/ujianstudi/paketsoal/detail/UjianstudiPaketsoalPenilaian.vue"),
                             },
                         ]
                     },
