@@ -270,6 +270,14 @@
   resolved "https://registry.npmjs.org/@vue/shared/-/shared-3.2.47.tgz"
   integrity sha512-BHGyyGN3Q97EZx0taMQ+OLNuZcW3d37ZEVmEAyeoA9ERdGvm9Irc/0Fua8SNyOtV1w6BS4q25wbMzJujO9HIfQ==
 
+"@vuepic/vue-datepicker@^4.0.1":
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/@vuepic/vue-datepicker/-/vue-datepicker-4.0.1.tgz#617dbed47399c331b690f2c1a61c0f02b79bbfb5"
+  integrity sha512-F6QTQewQjQbWkLFKEoD0B9DopR6/8QCaXEw5FsGnVqeORe0uryORVmSFDl6I0BactlcHwlG8pFx658216JOZVQ==
+  dependencies:
+    date-fns "^2.29.3"
+    date-fns-tz "^1.3.7"
+
 "@vueup/vue-quill@^1.1.0":
   version "1.1.0"
   resolved "https://registry.npmjs.org/@vueup/vue-quill/-/vue-quill-1.1.0.tgz"
@@ -464,7 +472,12 @@ daisyui@^2.50.0:
     postcss-js "^4.0.0"
     tailwindcss "^3"
 
-date-fns@^2.25.0:
+date-fns-tz@^1.3.7:
+  version "1.3.8"
+  resolved "https://registry.yarnpkg.com/date-fns-tz/-/date-fns-tz-1.3.8.tgz#083e3a4e1f19b7857fa0c18deea6c2bc46ded7b9"
+  integrity sha512-qwNXUFtMHTTU6CFSFjoJ80W8Fzzp24LntbjFFBgL/faqds4e5mo9mftoRLgr3Vi1trISsg4awSpYVsOQCRnapQ==
+
+date-fns@^2.25.0, date-fns@^2.29.3:
   version "2.29.3"
   resolved "https://registry.npmjs.org/date-fns/-/date-fns-2.29.3.tgz"
   integrity sha512-dDCnyH2WnnKusqvZZ6+jA1O51Ibt8ZMRNkDZdyAyK4YfbDwa/cEmuztzG5pk6hqlp9aSBPYcjOlktquahGwGeA==

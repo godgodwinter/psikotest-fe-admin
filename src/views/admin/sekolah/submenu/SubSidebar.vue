@@ -87,7 +87,7 @@ adminPagesStore.$subscribe((mutation, state) => {
             <div class="px-2">
                 <ul class="space-y-0 pb-2 lg:flex flex-wrap px-0 gap-0 justify-between">
                     <li class="bg-base-100 lg:w-full py-0 pt-2 ">
-                        <router-link :to="{ name: 'admin-sekolah-submenu-dashboard', params: { sekolah_id } }"
+                        <router-link :to="{ name: 'admin-sekolah-submenu-ujianstudi', params: { sekolah_id, kelas_id } }"
                             class="text-base-content font-normal rounded-lg flex items-center p-2 group hover:link">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                                 <path

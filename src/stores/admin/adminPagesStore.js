@@ -1,7 +1,5 @@
 import { ref, computed } from "vue";
 import { defineStore } from "pinia";
-import { useStorage } from "vue3-storage";
-const storage = useStorage();
 // import { useRouter } from "vue-router";
 // import Toast from "@/components/lib/Toast.js";
 
