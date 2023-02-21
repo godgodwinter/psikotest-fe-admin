@@ -36,7 +36,7 @@ const AdminSekolahRoutes = [
                                 component: () => import("@/views/admin/sekolah/submenu/kelas/Kelas.vue"),
                             },
                             {
-                                path: "/pages/admin/mastering/sekolah/:sekolah_id/submenu/kelas/:kelas_id/siswa",
+                                path: "/pages/admin/mastering/sekolah/:sekolah_id/submenu/kelas/:kelas_id?/siswa",
                                 name: "admin-sekolah-submenu-siswa",
                                 component: () => import("@/views/admin/sekolah/submenu/siswa/Siswa.vue"),
                             },

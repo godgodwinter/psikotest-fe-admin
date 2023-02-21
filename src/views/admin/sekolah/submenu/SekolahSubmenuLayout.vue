@@ -37,19 +37,20 @@ const SubSidebar = defineAsyncComponent(() =>
 const getSekolahAktif = adminPagesStore.getpages_sekolah_aktif;
 const sekolahDefault = adminPagesStore.getsekolah_default;
 sekolahDefault.sekolah_id = sekolah_id.value;
-const fn_periksaLocalStrg_sekolahAktif = () => {
+const fn_periksaLocalStrg_sekolahAktif = async () => {
     //! jika localstorage masi kosong
     if (!getSekolahAktif) {
-        adminPagesStore.setpages_sekolah_aktif(sekolahDefault)
+        await adminPagesStore.setpages_sekolah_aktif(sekolahDefault)
     }
     //! jika localstrg.sekolah_id != sekolah_id -> maka ambil kelas_id;
     if (getSekolahAktif.sekolah_id !== sekolah_id.value) {
-        kelas_id.value = kelas.value.length > 0 ? kelas.value[0].id : 0;
+        kelas_id.value = kelas.value.length > 0 ? kelas.value[0].id : 99;
         let newDataSekolahAktif = {
             sekolah_id: sekolah_id.value,
-            kelas_id: kelas_id.value
+            kelas_id: kelas_id.value,
+            kelas_nama: kelas.value.length > 0 ? kelas.value[0].nama : "-aa",
         }
-        adminPagesStore.setpages_sekolah_aktif(newDataSekolahAktif)
+        await adminPagesStore.setpages_sekolah_aktif(newDataSekolahAktif)
 
     }
 }

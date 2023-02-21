@@ -6,8 +6,20 @@ const adminPagesStore = useAdminPagesStore();
 const route = useRoute();
 const sekolah_id = ref(route.params.sekolah_id)
 const kelas_id = ref(0)
-const getSekolahAktif = adminPagesStore.getpages_sekolah_aktif;
-kelas_id.value = getSekolahAktif.kelas_id;
+const getSekolahAktif_temp = adminPagesStore.getpages_sekolah_aktif;
+const getSekolahAktif = ref({
+    sekolah_id: sekolah_id.value,
+    kelas_id: getSekolahAktif_temp.kelas_id
+})
+// console.log(getSekolahAktif.value);
+if (getSekolahAktif.value.kelas_id) {
+    kelas_id.value = getSekolahAktif.value.kelas_id;
+}
+adminPagesStore.$subscribe((mutation, state) => {
+    getSekolahAktif.value = adminPagesStore.getpages_sekolah_aktif;
+    // console.log(getSekolahAktif.value);
+    kelas_id.value = getSekolahAktif.value.kelas_id;
+});
 </script>
 <template>
     <div>

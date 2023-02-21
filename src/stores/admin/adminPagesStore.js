@@ -41,7 +41,8 @@ export const useAdminPagesStore = defineStore("adminPagesStore", () => {
 
     const sekolah_default = {
         sekolah_id: 0,
-        kelas_id: 0
+        kelas_id: 1,
+        kelas_nama: "-",
     };
     const getsekolah_default = computed(() => sekolah_default)
     // State
