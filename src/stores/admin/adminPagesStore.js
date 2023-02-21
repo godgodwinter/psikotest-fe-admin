@@ -1,5 +1,8 @@
 import { ref, computed } from "vue";
 import { defineStore } from "pinia";
+import moment from "moment/min/moment-with-locales";
+import localization from "moment/locale/id";
+moment.updateLocale("id", localization);
 // import { useRouter } from "vue-router";
 // import Toast from "@/components/lib/Toast.js";
 
@@ -48,6 +51,20 @@ export const useAdminPagesStore = defineStore("adminPagesStore", () => {
     }
 
 
+    const ujianstudi_pengaturan_default = {
+        paketsoal_id: 1,
+        paketsoal_nama: "-",
+        tgl_ujian: moment().add(2, 'days')
+    }
+
+    const ujianstudi_pengaturan = ref(localStorage.getItem("pages_ujianstudi_pengaturan") ? JSON.parse(localStorage.getItem("pages_ujianstudi_pengaturan")) : ujianstudi_pengaturan_default)
+
+    const get_ujianstudi_pengaturan = computed(() => ujianstudi_pengaturan.value)
+    const set_ujianstudi_pengaturan = (item) => {
+        ujianstudi_pengaturan.value = item;
+        localStorage.setItem("pages_ujianstudi_pengaturan", JSON.stringify(item))
+    }
+
     return {
         isSidebarActive,
         getIsSidebarActive,
@@ -67,6 +84,11 @@ export const useAdminPagesStore = defineStore("adminPagesStore", () => {
         getsekolah_default,
         pages_sekolah_aktif,
         getpages_sekolah_aktif,
-        setpages_sekolah_aktif
+        setpages_sekolah_aktif,
+        // !ujianstudi
+        ujianstudi_pengaturan_default,
+        ujianstudi_pengaturan,
+        get_ujianstudi_pengaturan,
+        set_ujianstudi_pengaturan,
     };
 });

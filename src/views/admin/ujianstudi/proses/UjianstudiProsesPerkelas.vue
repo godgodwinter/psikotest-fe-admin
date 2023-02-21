@@ -179,9 +179,15 @@ const doPilihKelas = async () => {
 
 // !PENGATURAN
 const paketTerpilih = ref({})
-const dataForm = ref({})
+const dataForm = ref({
+    tglBatasPengerjaan: adminPagesStore.get_ujianstudi_pengaturan.tgl_ujian
+})
 const pilihPaket = ref([])
-const inputCariPaket = ref({})
+// const inputCariPaket = ref()
+const inputCariPaket = ref({
+    id: adminPagesStore.get_ujianstudi_pengaturan.paketsoal_id,
+    label: adminPagesStore.get_ujianstudi_pengaturan.paketsoal_nama,
+})
 const dataPaket = ref([])
 
 const getDataPaket = async () => {
@@ -207,6 +213,74 @@ const getDataPaket = async () => {
     }
 };
 getDataPaket();
+
+
+const doPilihPaket = () => {
+    // console.log('====================================');
+    // console.log(inputCariPaket.value.label, dataForm.value.tglBatasPengerjaan);
+    // console.log('====================================');
+    let tempDataSave = {
+        paketsoal_id: inputCariPaket.value.id,
+        paketsoal_nama: inputCariPaket.value.label,
+        tgl_ujian: moment(dataForm.value.tglBatasPengerjaan).add(0, 'days'),
+    }
+    adminPagesStore.set_ujianstudi_pengaturan(tempDataSave)
+}
+
+
+
+const doGenerateSiswa = async (id, index) => {
+    if (confirm("Apakah anda yakin generate data ini?")) {
+        let dataFormSend = {
+            tgl_ujian: adminPagesStore.get_ujianstudi_pengaturan.tgl_ujian,
+        }
+        try {
+            const response = await Api.post(`ujianstudi/proses/sekolah/${sekolah_id.value}/kelas/${kelas_id.value}/siswa/${id}/generate/${adminPagesStore.get_ujianstudi_pengaturan.paketsoal_id}`, dataFormSend);
+            Toast.babeng("Berhasil", 'Data berhasil digenerate!');
+            getData();
+        } catch (error) {
+            console.error(error);
+        }
+    }
+};
+const doDeleteProsesSiswa = async (id, proses_id) => {
+    if (confirm("Apakah anda yakin menghapus data ujian ini?")) {
+        try {
+            const response = await Api.delete(`ujianstudi/proses/sekolah/${sekolah_id.value}/kelas/${kelas_id.value}/siswa/${id}/delete/${proses_id}`);
+            Toast.babeng("Berhasil", 'Data berhasil di hapus!');
+            getData();
+        } catch (error) {
+            console.error(error);
+        }
+    }
+};
+
+
+const doGenerateSiswaPerkelas = async (id, index) => {
+    if (confirm("Apakah anda yakin generate data ini?")) {
+        let dataFormSend = {
+            tgl_ujian: adminPagesStore.get_ujianstudi_pengaturan.tgl_ujian,
+        }
+        try {
+            const response = await Api.post(`ujianstudi/proses/sekolah/${sekolah_id.value}/kelas/${kelas_id.value}/generate/${adminPagesStore.get_ujianstudi_pengaturan.paketsoal_id}`, dataFormSend);
+            Toast.babeng("Berhasil", 'Data berhasil digenerate!');
+            getData();
+        } catch (error) {
+            console.error(error);
+        }
+    }
+};
+const doDeleteProsesSiswaPerkelas = async (id) => {
+    if (confirm("Apakah anda yakin menghapus data ujian ini?")) {
+        try {
+            const response = await Api.delete(`ujianstudi/proses/sekolah/${sekolah_id.value}/kelas/${kelas_id.value}/delete`);
+            Toast.babeng("Berhasil", 'Data berhasil di hapus!');
+            getData();
+        } catch (error) {
+            console.error(error);
+        }
+    }
+};
 </script>
 <template>
     <div>
@@ -247,12 +321,11 @@ getDataPaket();
             </div>
         </div>
         <div class="space-x-2 shadow-sm">
-            <button class="btn btn-sm btn-error p-2"
-                @click="doDeleteProsesKelas(inputCariKelas ? inputCariKelas.id : kelas_id)">
+            <button class="btn btn-sm btn-error p-2" @click="doDeleteProsesSiswaPerkelas()">
                 Delete Per Kelas
             </button>
-            <button class="btn btn-sm btn-info p-2" @click="doGenerateKelas(inputCariKelas ? inputCariKelas.id : kelas_id)">
-                Generate Skolastik Per Kelas
+            <button class="btn btn-sm btn-info p-2" @click="doGenerateSiswaPerkelas()">
+                Generate UJIANSTUDI Per Kelas
             </button>
         </div>
         <!-- !PENGATURAN-END -->
@@ -276,18 +349,18 @@ getDataPaket();
                                 <template #table-actions>
                                     <div class="space-x-1 space-y-1 gap-1">
                                         <!-- <router-link :to="{
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                name: 'admin-ujianstudi-paketsoal-tambah',
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            }">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <button class="btn btn-sm btn-primary tooltip" data-tip="Tambah">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    TAMBAH
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </button>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            </router-link> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    name: 'admin-ujianstudi-paketsoal-tambah',
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                }">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <button class="btn btn-sm btn-primary tooltip" data-tip="Tambah">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        TAMBAH
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </button>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </router-link> -->
                                     </div>
                                 </template>
                                 <template #table-row="props">
                                     <span v-if="props.column.field == 'actions'">
                                         <div class="text-sm font-medium text-center flex justify-center space-x-1">
-                                            <button class="btn btn-sm btn-warning tooltip" data-tip="Generate Skolastik"
+                                            <button class="btn btn-sm btn-warning tooltip" data-tip="Generate UJIANSTUDI"
                                                 @click="doGenerateSiswa(props.row.id)">
                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                                     stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
@@ -314,6 +387,16 @@ getDataPaket();
                                                             d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
                                                     </svg></button>
                                             </RouterLink>
+                                            <button class="btn btn-sm btn-error tooltip" data-tip="Delete Ujianstudi"
+                                                @click="doDeleteProsesSiswa(props.row.id, props.row.proses_id)"
+                                                v-if="props.row.paketsoal_nama">
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                                    stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                                                </svg>
+
+                                            </button>
                                         </div>
                                     </span>
 
