@@ -66,6 +66,17 @@ const UjianStudiPaketsoalRoutes = [
                                 name: "admin-ujianstudi-paketsoal-aspek_detail-tambah",
                                 component: () => import("@/views/admin/ujianstudi/paketsoal/detail/UjianstudiPaketsoalAspekDetail_tambah.vue"),
                             },
+
+                            {
+                                path: "/pages/admin/ujianstudi/paketsoal/detail/:paketsoal_id/aspek_detail/:aspek_detail_id/bank/:banksoal_aspek_detail_id/soal",
+                                name: "admin-ujianstudi-paketsoal-aspek_detail-soal",
+                                component: () => import("@/views/admin/ujianstudi/paketsoal/detail/UjianstudiPaketsoalAspekDetailSoal.vue"),
+                            },
+                            {
+                                path: "/pages/admin/ujianstudi/paketsoal/detail/:paketsoal_id/aspek_detail/:aspek_detail_id/bank/:banksoal_aspek_detail_id/soal/tambah/",
+                                name: "admin-ujianstudi-paketsoal-aspek_detail-soal-tambah",
+                                component: () => import("@/views/admin/ujianstudi/paketsoal/detail/UjianstudiPaketsoalAspekDetailSoal_tambah.vue"),
+                            },
                         ]
                     },
 

@@ -4,6 +4,7 @@ import LandingRoutes from "./LandingRoutes";
 import UserRoutes from "./UserRoutes";
 import AdminRoutes from "./AdminRoutes";
 import UjianStudiRoutes from "./UjianStudiRoutes";
+import AdminSekolahRoutes from "./mastering/sekolah-routes";
 // import ExampleRoutes from "./ExampleRoutes";
 
 const routes = [];
@@ -11,6 +12,7 @@ routes.push(
   // ...ExampleRoutes,
   ...UserRoutes,
   ...AdminRoutes,
+  ...AdminSekolahRoutes,
   ...UjianStudiRoutes,
   ...LandingRoutes,
 );

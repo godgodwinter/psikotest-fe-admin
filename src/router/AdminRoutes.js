@@ -23,11 +23,11 @@ const AdminRoutes = [
                 name: "admin-dashboard",
                 component: () => import("@/views/admin/other/ProfileIndex.vue"),
             },
-            {
-                path: "/pages/admin/sekolah",
-                name: "admin-sekolah",
-                component: () => import("@/views/admin/sekolah/SekolahIndex.vue"),
-            },
+            // {
+            //     path: "/pages/admin/sekolah",
+            //     name: "admin-sekolah",
+            //     component: () => import("@/views/admin/sekolah/SekolahIndex.vue"),
+            // },
         ],
     },
 ];

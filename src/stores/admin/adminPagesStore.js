@@ -1,5 +1,7 @@
 import { ref, computed } from "vue";
 import { defineStore } from "pinia";
+import { useStorage } from "vue3-storage";
+const storage = useStorage();
 // import { useRouter } from "vue-router";
 // import Toast from "@/components/lib/Toast.js";
 
@@ -37,6 +39,20 @@ export const useAdminPagesStore = defineStore("adminPagesStore", () => {
         superadmin.value = item;
     };
 
+    const sekolah_default = {
+        sekolah_id: 0,
+        kelas_id: 0
+    };
+    const getsekolah_default = computed(() => sekolah_default)
+    // State
+    const pages_sekolah_aktif = ref(localStorage.getItem("pages_sekolah_aktif") ? JSON.parse(localStorage.getItem("pages_sekolah_aktif")) : null);
+    const getpages_sekolah_aktif = computed(() => pages_sekolah_aktif.value)
+    const setpages_sekolah_aktif = (item) => {
+        pages_sekolah_aktif.value = item;
+        localStorage.setItem("pages_sekolah_aktif", JSON.stringify(item))
+    }
+
+
     return {
         isSidebarActive,
         getIsSidebarActive,
@@ -47,6 +63,15 @@ export const useAdminPagesStore = defineStore("adminPagesStore", () => {
         setPagesActive,
         identitas,
         getIdentitas,
-        setIdentitas
+        setIdentitas,
+        // !superadmin
+        superadmin,
+        getSuperadmin,
+        setSuperadmin,
+        // untuk sub menu sekolah
+        getsekolah_default,
+        pages_sekolah_aktif,
+        getpages_sekolah_aktif,
+        setpages_sekolah_aktif
     };
 });

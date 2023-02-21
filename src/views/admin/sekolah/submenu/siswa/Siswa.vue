@@ -20,7 +20,8 @@ const BASE_URL = import.meta.env.VITE_API_URL;
 const router = useRouter();
 const route = useRoute();
 
-
+const sekolah_id = ref(route.params.sekolah_id)
+const kelas_id = ref(route.params.kelas_id)
 const data = ref();
 const isLoading = ref(true);
 const isError = ref(false);
@@ -41,30 +42,25 @@ const columns = [
         type: "String",
     },
     {
-        label: "Status",
-        field: "status",
+        label: "Guru BK",
+        field: "gurubk_nama",
         type: "String",
     },
     {
-        label: "Paket",
-        field: "paket_nama",
+        label: "Wali Kelas",
+        field: "walikelas_nama",
         type: "String",
     },
     {
         label: "Jumlah Siswa",
-        field: "jml_siswa",
-        type: "String",
-    },
-    {
-        label: "Jumlah Kelas",
-        field: "jml_kelas",
-        type: "String",
+        field: "siswa_jml",
+        type: "number",
     },
 ];
 
 const getData = async () => {
     try {
-        const response = await Api.get(`/master/sekolah`);
+        const response = await Api.get(`/master/sekolah/${sekolah_id.value}/kelas/${kelas_id.value}/siswa`);
         data.value = response.data;
         isLoading.value = false;
         return response.data;
@@ -104,7 +100,7 @@ const doEditData = async (id, index) => {
 <template>
     <div>
         <article class="prose lg:prose-sm">
-            <h1>PAKETSOAL</h1>
+            <h1>SISWA</h1>
         </article>
         <span v-if="isLoading">
             <LoadingNavbar />
@@ -126,12 +122,12 @@ const doEditData = async (id, index) => {
                                 <template #table-actions>
                                     <div class="space-x-1 space-y-1 gap-1">
                                         <!-- <router-link :to="{
-                                                    name: 'admin-ujianstudi-paketsoal-tambah',
-                                                }">
-                                                    <button class="btn btn-sm btn-primary tooltip" data-tip="Tambah">
-                                                        TAMBAH
-                                                    </button>
-                                                </router-link> -->
+                                                                                                                                    name: 'admin-ujianstudi-paketsoal-tambah',
+                                                                                                                                }">
+                                                                                                                                    <button class="btn btn-sm btn-primary tooltip" data-tip="Tambah">
+                                                                                                                                        TAMBAH
+                                                                                                                                    </button>
+                                                                                                                                </router-link> -->
                                     </div>
                                 </template>
                                 <template #table-row="props">
@@ -147,24 +143,24 @@ const doEditData = async (id, index) => {
                                                     </svg></button>
                                             </RouterLink>
                                             <!-- <button class="btn btn-sm btn-warning tooltip" data-tip="Edit"
-                                                            @click="doEditData(props.row.id, props.index)">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20"
-                                                                fill="currentColor">
-                                                                <path
-                                                                    d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z" />
-                                                                <path fill-rule="evenodd"
-                                                                    d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"
-                                                                    clip-rule="evenodd" />
-                                                            </svg></button>
-                                                        <button class="btn btn-sm btn-danger"
-                                                            @click="doDeleteData(props.row.id, props.index)">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20"
-                                                                fill="currentColor">
-                                                                <path fill-rule="evenodd"
-                                                                    d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
-                                                                    clip-rule="evenodd" />
-                                                            </svg>
-                                                        </button> -->
+                                                                                                                                            @click="doEditData(props.row.id, props.index)">
+                                                                                                                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20"
+                                                                                                                                                fill="currentColor">
+                                                                                                                                                <path
+                                                                                                                                                    d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z" />
+                                                                                                                                                <path fill-rule="evenodd"
+                                                                                                                                                    d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"
+                                                                                                                                                    clip-rule="evenodd" />
+                                                                                                                                            </svg></button>
+                                                                                                                                        <button class="btn btn-sm btn-danger"
+                                                                                                                                            @click="doDeleteData(props.row.id, props.index)">
+                                                                                                                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20"
+                                                                                                                                                fill="currentColor">
+                                                                                                                                                <path fill-rule="evenodd"
+                                                                                                                                                    d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
+                                                                                                                                                    clip-rule="evenodd" />
+                                                                                                                                            </svg>
+                                                                                                                                        </button> -->
                                         </div>
                                     </span>
 
