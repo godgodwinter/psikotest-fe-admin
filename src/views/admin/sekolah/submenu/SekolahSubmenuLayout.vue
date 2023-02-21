@@ -43,7 +43,7 @@ const fn_periksaLocalStrg_sekolahAktif = async () => {
         await adminPagesStore.setpages_sekolah_aktif(sekolahDefault)
     }
     //! jika localstrg.sekolah_id != sekolah_id -> maka ambil kelas_id;
-    if (getSekolahAktif.sekolah_id !== sekolah_id.value) {
+    if (getSekolahAktif?.sekolah_id !== sekolah_id.value) {
         kelas_id.value = kelas.value.length > 0 ? kelas.value[0].id : 99;
         let newDataSekolahAktif = {
             sekolah_id: sekolah_id.value,

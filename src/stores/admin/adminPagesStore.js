@@ -39,11 +39,7 @@ export const useAdminPagesStore = defineStore("adminPagesStore", () => {
         superadmin.value = item;
     };
 
-    const sekolah_default = {
-        sekolah_id: 0,
-        kelas_id: 1,
-        kelas_nama: "-",
-    };
+    const sekolah_default = { "sekolah_id": "2", "kelas_id": 10, "kelas_nama": "X" };
     const getsekolah_default = computed(() => sekolah_default)
     // State
     const pages_sekolah_aktif = ref(localStorage.getItem("pages_sekolah_aktif") ? JSON.parse(localStorage.getItem("pages_sekolah_aktif")) : null);

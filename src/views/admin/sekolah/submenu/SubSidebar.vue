@@ -9,8 +9,12 @@ const kelas_id = ref(0)
 const getSekolahAktif_temp = adminPagesStore.getpages_sekolah_aktif;
 const getSekolahAktif = ref({
     sekolah_id: sekolah_id.value,
-    kelas_id: getSekolahAktif_temp.kelas_id
+    kelas_id: getSekolahAktif_temp?.kelas_id
 })
+
+if (!getSekolahAktif) {
+    adminPagesStore.setpages_sekolah_aktif(sekolahDefault)
+}
 // console.log(getSekolahAktif.value);
 if (getSekolahAktif.value.kelas_id) {
     kelas_id.value = getSekolahAktif.value.kelas_id;
