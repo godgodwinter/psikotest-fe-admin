@@ -69,6 +69,11 @@ const doSubmit = async () => {
         router.push({ name: "admin-home" });
     }
 };
+const isLogin = ref(localStorage.getItem("isLogin") ? localStorage.getItem("isLogin") : "");
+if (isLogin.value) {
+    router.push({ name: "admin-sekolah" });
+}
+
 </script>
 <template>
     <div class="w-full min-h-screen font-sans text-gray-900">
@@ -84,8 +89,8 @@ const doSubmit = async () => {
                             Home
                         </span>
                         <!-- <a href="#" class="font-semibold text-indigo-600 hover:text-indigo-800">
-                                                                                            Try now
-                                                                                        </a> -->
+                                                                                                        Try now
+                                                                                                    </a> -->
                     </nav>
                     <button class="p-4 md:hidden">
                         <MenuIcon class="w-6 h-6 text-gray-800" />
@@ -140,9 +145,9 @@ const doSubmit = async () => {
                                     {{ errors.password }}
                                 </div>
                                 <!-- <input type="text" placeholder="Username" v-model="username"
-                                                                                                          class="flex px-3 py-2 md:px-4 md:py-3 border-2 border-black rounded-lg font-medium placeholder:font-normal" />
-                                                                                                        <input type="text" placeholder="Password" v-model="password"
-                                                                                                          class="flex px-3 py-2 md:px-4 md:py-3 border-2 border-black rounded-lg font-medium placeholder:font-normal" /> -->
+                                                                                                                      class="flex px-3 py-2 md:px-4 md:py-3 border-2 border-black rounded-lg font-medium placeholder:font-normal" />
+                                                                                                                    <input type="text" placeholder="Password" v-model="password"
+                                                                                                                      class="flex px-3 py-2 md:px-4 md:py-3 border-2 border-black rounded-lg font-medium placeholder:font-normal" /> -->
                                 <button
                                     class="flex items-center justify-center flex-none px-3 py-2 md:px-4 md:py-3 border-2 rounded-lg font-medium border-black bg-black text-white">
                                     Sign in
@@ -242,5 +247,5 @@ const doSubmit = async () => {
                 </div>
             </div>
         </div>
-</div>
+    </div>
 </template>

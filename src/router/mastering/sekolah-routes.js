@@ -46,6 +46,11 @@ const AdminSekolahRoutes = [
                                 name: "admin-sekolah-submenu-ujianstudi",
                                 component: () => import("@/views/admin/ujianstudi/proses/UjianstudiProsesPerkelas.vue"),
                             },
+                            {
+                                path: "/pages/admin/mastering/sekolah/:sekolah_id/submenu/kelas/:kelas_id?/ujianstudi/siswa/:siswa_id",
+                                name: "admin-sekolah-submenu-ujianstudi-persiswa",
+                                component: () => import("@/views/admin/ujianstudi/proses/UjianstudiProsesPerSiswa.vue"),
+                            },
 
                             // ! UJIANSTUDI-PROSES-END
                         ]
