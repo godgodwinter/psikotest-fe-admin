@@ -97,6 +97,11 @@ const columns = [
         type: "String",
     },
     {
+        label: "Hasil",
+        field: "hasil",
+        type: "String",
+    },
+    {
         label: "Paket",
         field: "paketsoal_nama",
         type: "String",
@@ -113,13 +118,13 @@ const columns = [
     },
     {
         label: "progres",
-        field: "progres",
+        field: "progres_status",
         type: "String",
     },
     {
         label: "progres",
         field: "progres_angka",
-        type: "String",
+        type: "number",
     },
     {
         label: "Username",
@@ -319,6 +324,67 @@ const doDeleteProsesSiswaPerkelas = async (id) => {
         }
     }
 };
+
+// HASIL-UJIAN
+const doGenerateHasilSiswa = async (id, index) => {
+    if (confirm("Apakah anda yakin generate data ini?")) {
+        let dataFormSend = {}
+        try {
+            isLoading.value = true;
+            const response = await Api.post(`ujianstudi/hasil/sekolah/${sekolah_id.value}/kelas/${kelas_id.value}/siswa/${id}/generate`, dataFormSend);
+            Toast.babeng("Berhasil", 'Hasil Ujian berhasil digenerate!');
+            getData();
+        } catch (error) {
+            isLoading.value = false;
+            isError.value = true;
+            console.error(error);
+        }
+    }
+};
+const doDeleteHasilSiswa = async (id, proses_id) => {
+    if (confirm("Apakah anda yakin menghapus data ujian ini?")) {
+        try {
+            isLoading.value = true;
+            const response = await Api.delete(`ujianstudi/hasil/sekolah/${sekolah_id.value}/kelas/${kelas_id.value}/siswa/${id}/delete`);
+            Toast.babeng("Berhasil", 'Hasil Ujian berhasil di hapus!');
+            getData();
+        } catch (error) {
+            isLoading.value = false;
+            isError.value = true;
+            console.error(error);
+        }
+    }
+};
+const doGenerateHasilSiswaPerkelas = async (id) => {
+    if (confirm("Apakah anda yakin generate data ini?")) {
+        let dataFormSend = {}
+        try {
+            isLoading.value = true;
+            const response = await Api.post(`ujianstudi/hasil/sekolah/${sekolah_id.value}/kelas/${kelas_id.value}/generate`, dataFormSend);
+            Toast.babeng("Berhasil", 'Hasil Ujian berhasil digenerate!');
+            getData();
+        } catch (error) {
+            isLoading.value = false;
+            isError.value = true;
+            console.error(error);
+        }
+    }
+};
+const doDeleteHasilSiswaPerkelas = async (id) => {
+    if (confirm("Apakah anda yakin menghapus data ujian ini?")) {
+        try {
+            isLoading.value = true;
+            const response = await Api.delete(`ujianstudi/hasil/sekolah/${sekolah_id.value}/kelas/${kelas_id.value}/delete`);
+            Toast.babeng("Berhasil", 'Hasil Ujian berhasil di hapus!');
+            getData();
+        } catch (error) {
+            isLoading.value = false;
+            isError.value = true;
+            console.error(error);
+        }
+    }
+};
+// HASIL-UJIAN-END
 </script>
 <template>
     <span v-if="isLoading">
@@ -373,6 +439,14 @@ const doDeleteProsesSiswaPerkelas = async (id) => {
                     Generate UJIANSTUDI Per Kelas
                 </button>
             </div>
+            <div class="space-x-2 space-y-2 shadow-sm">
+                <button class="btn btn-sm btn-error p-2" @click="doDeleteHasilSiswaPerkelas()">
+                    Delete Hasil Per Kelas
+                </button>
+                <button class="btn btn-sm btn-info p-2" @click="doGenerateHasilSiswaPerkelas()">
+                    Generate Hasil UJIANSTUDI Per Kelas
+                </button>
+            </div>
             <!-- !PENGATURAN-END -->
             <span v-if="isLoading">
                 <LoadingNavbar />
@@ -393,13 +467,15 @@ const doDeleteProsesSiswaPerkelas = async (id) => {
 }" styleClass="vgt-table striped bordered condensed" class="py-0">
                                     <template #table-actions>
                                         <div class="space-x-1 space-y-1 gap-1">
-                                            <!-- <router-link :to="{
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            name: 'admin-ujianstudi-paketsoal-tambah',
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        }">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <button class="btn btn-sm btn-primary tooltip" data-tip="Tambah">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                TAMBAH
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            </button>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        </router-link> -->
+                                            <button class="btn btn-sm btn-secondary tooltip" data-tip="Refresh Data"
+                                                @click="getData()">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20"
+                                                    fill="currentColor">
+                                                    <path fill-rule="evenodd"
+                                                        d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z"
+                                                        clip-rule="evenodd" />
+                                                </svg>
+                                            </button>
                                         </div>
                                     </template>
                                     <template #table-row="props">
@@ -414,16 +490,7 @@ const doDeleteProsesSiswaPerkelas = async (id) => {
                                                     </svg>
                                                 </button>
 
-                                                <button class="btn btn-sm btn-primary tooltip" data-tip="Generate Hasil"
-                                                    @click="doGenerateSiswaHasil(props.row.id)"
-                                                    v-if="props.row.paketsoal_nama">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                                        stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                                            d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" />
-                                                    </svg>
 
-                                                </button>
                                                 <RouterLink
                                                     :to="{ name: 'admin-sekolah-submenu-ujianstudi-persiswa', params: { sekolah_id, kelas_id, siswa_id: props.row.id } }">
                                                     <button class="btn btn-sm btn-primary tooltip" data-tip="Detail">
@@ -446,6 +513,43 @@ const doDeleteProsesSiswaPerkelas = async (id) => {
                                             </div>
                                         </span>
 
+                                        <span v-else-if="props.column.field == 'hasil'">
+
+                                            <span v-if="props.row.hasil" class="gap-1 space-x-0 space-y-1">
+                                                <RouterLink
+                                                    :to="{ name: 'admin-sekolah-submenu-ujianstudi-persiswa', params: { sekolah_id, kelas_id, siswa_id: props.row.id } }">
+                                                    <button class="btn btn-sm btn-success tooltip" data-tip="Lihat Hasil">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
+                                                            viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                                d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                                        </svg></button>
+                                                </RouterLink>
+                                                <button class="btn btn-sm btn-error tooltip" data-tip="Delete Hasil Ujian"
+                                                    @click="doDeleteHasilSiswa(props.row.id, props.row.proses_id)"
+                                                    v-if="props.row.paketsoal_nama">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                                        stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                                            d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                                                    </svg>
+
+                                                </button>
+                                            </span>
+                                            <span v-else>
+                                                <button class="btn btn-sm btn-primary tooltip" data-tip="Generate Hasil"
+                                                    @click="doGenerateHasilSiswa(props.row.id)"
+                                                    v-if="props.row.paketsoal_nama">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                                        stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                                            d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" />
+                                                    </svg>
+
+                                                </button>
+                                                <span v-else>-</span>
+                                            </span>
+                                        </span>
 
                                         <span v-else-if="props.column.field == 'progres'">
                                             {{ props.row.progres?.status }}

@@ -63,7 +63,7 @@ const kepanjangan = (item = null) => {
         hasil = "Sangat Rendah Sekali";
     }
     return hasil;
-}
+};
 
 const iqKet = (item = null) => {
     let hasil = "Moron";
@@ -89,7 +89,7 @@ const iqKet = (item = null) => {
         hasil = "Moron";
     }
     return hasil;
-}
+};
 
 const getKesimpulanIq = (item = null) => {
     let hasil = "Kurang Lancar";
@@ -107,7 +107,7 @@ const getKesimpulanIq = (item = null) => {
         hasil = "Sangat Kurang Lancar";
     }
     return hasil;
-}
+};
 
 const getKesimpulanEqSq = (item = null) => {
     let hasil = "Lebih Tinggi";
@@ -125,13 +125,62 @@ const getKesimpulanEqSq = (item = null) => {
         hasil = "Lebih Tinggi";
     }
     return hasil;
-}
+};
+
+export const fn_studi_ket = (item = null) => {
+    let hasil = "Angka tidak valid!";
+    if (item > 88) {
+        hasil = "Sangat Baik Sekali";
+    } else if (88 > item && item >= 78) {
+        hasil = "Baik Sekali";
+    } else if (78 > item && item >= 68) {
+        hasil = "Baik";
+    } else if (68 > item && item >= 61) {
+        hasil = "Cukup Baik";
+    } else if (61 > item && item >= 44) {
+        hasil = "Cukup";
+    } else if (44 > item && item >= 34) {
+        hasil = "Hampir Cukup";
+    } else if (34 > item && item >= 28) {
+        hasil = "Kurang";
+    } else if (28 > item && item >= 18) {
+        hasil = "Kurang Sekali";
+    } else {
+        hasil = "Sangat Kurang Sekali";
+    }
+    return hasil;
+};
+export const fn_studi_ket_singkatan = (item = null) => {
+    let hasil = "Angka tidak valid!";
+    if (item > 88) {
+        hasil = "SBS";
+    } else if (88 > item && item >= 78) {
+        hasil = "BS";
+    } else if (78 > item && item >= 68) {
+        hasil = "B";
+    } else if (68 > item && item >= 61) {
+        hasil = "CB";
+    } else if (61 > item && item >= 44) {
+        hasil = "C";
+    } else if (44 > item && item >= 34) {
+        hasil = "HC";
+    } else if (34 > item && item >= 28) {
+        hasil = "K";
+    } else if (28 > item && item >= 18) {
+        hasil = "KS";
+    } else {
+        hasil = "SKS";
+    }
+    return hasil;
+};
 
 const Fungsi = {
     getKelas,
     kepanjangan,
     iqKet,
     getKesimpulanIq,
-    getKesimpulanEqSq
+    getKesimpulanEqSq,
+    fn_studi_ket,
+    fn_studi_ket_singkatan,
 };
 export default Fungsi;

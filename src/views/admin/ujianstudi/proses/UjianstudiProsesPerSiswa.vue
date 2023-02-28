@@ -7,6 +7,7 @@ import ButtonEdit from "@/components/atoms/ButtonEdit.vue";
 import ButtonDelete from "@/components/atoms/ButtonDel.vue";
 import { useRouter, useRoute } from "vue-router";
 import Toast from "@/components/lib/Toast";
+import { fn_studi_ket, fn_studi_ket_singkatan } from "@/components/lib/Psikotest.js"
 
 const LoadingNavbar = defineAsyncComponent(() =>
     import('@/components/alert/AlertLoading.vue')
@@ -43,6 +44,21 @@ const getData = async () => {
     }
 };
 getData();
+const dataUjian = ref(null)
+const getDataHasil = async () => {
+    try {
+        isLoading.value = true;
+        const response = await Api.get(`/ujianstudi/hasil/sekolah/${sekolah_id.value}/kelas/${kelas_id.value}/siswa/${siswa_id.value}`);
+        dataUjian.value = response.data;
+        isLoading.value = false;
+        return response.data;
+    } catch (error) {
+        isLoading.value = false;
+        isError.value = true;
+        console.error(error);
+    }
+};
+getDataHasil();
 
 const columns = [
     {
@@ -121,12 +137,12 @@ const doResetSalah = async (proses_detail_id,) => {
     <div>
         <div class="pt-4 px-10 md:flex justify-between">
             <div>
-                <span class="text-2xl sm:text-3xl leading-none font-bold text-base-content shadow-sm">Hasil Ujian Skolastik
-                    Siswa
-
-                </span>
-            </div>
-            <div class="md:py-0 py-4 space-x-2 space-y-2">
+                <span class="text-2xl sm:text-3xl leading-none font-bold text-base-content shadow-sm">Hasil Ujian
+                    Lintas Bidang
+                Studi
+            </span>
+        </div>
+        <div class="md:py-0 py-4 space-x-2 space-y-2">
 
                 <button class="btn btn-sm btn-primary tooltip" data-tip="CETAK Hasil">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
@@ -165,27 +181,27 @@ const doResetSalah = async (proses_detail_id,) => {
                                     <tbody>
                                         <tr>
                                             <td class="whitespace-nowrap w-1/12">No Induk</td>
-                                            <td class="whitespace-nowrap w-1/12">:</td>
-                                            <td class="whitespace-nowrap w-10/12">
-                                                {{ siswa.nomeridentitas }}
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Nama</td>
-                                            <td>:</td>
-                                            <td>{{ siswa.nama }}</td>
-                                        </tr>
-                                        <!-- <tr>
-                                                                                                                                                                                                                        <td>Umur</td>
-                                                                                                                                                                                                                            <td>:</td>
-                                                                                                                                                                                                                            <td>{{ siswa.umur }}</td>
-                                                                                                                                                                                                                        </tr> -->
-                                        <tr>
-                                            <td>Jenis Kelamin</td>
-                                            <td>:</td>
-                                            <td>{{ siswa.jk }}</td>
-                                        </tr>
-                                        <tr>
+                                        <td class="whitespace-nowrap w-1/12">:</td>
+                                        <td class="whitespace-nowrap w-10/12">
+                                            {{ siswa.nomeridentitas }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Nama</td>
+                                        <td>:</td>
+                                        <td>{{ siswa.nama }}</td>
+                                    </tr>
+                                    <!-- <tr>
+                                                                                                                                                                                                                                                                                                    <td>Umur</td>
+                                                                                                                                                                                                                                                                                                        <td>:</td>
+                                                                                                                                                                                                                                                                                                        <td>{{ siswa.umur }}</td>
+                                                                                                                                                                                                                                                                                                    </tr> -->
+                                    <tr>
+                                        <td>Jenis Kelamin</td>
+                                        <td>:</td>
+                                        <td>{{ siswa.jk }}</td>
+                                    </tr>
+                                    <tr>
                                             <td>Sekolah</td>
                                             <td>:</td>
                                             <td>{{ siswa.sekolah_nama }}</td>
@@ -195,30 +211,30 @@ const doResetSalah = async (proses_detail_id,) => {
                             </div>
                         </div>
                     </div>
-                </div>
             </div>
-            <div v-if="data">
-                <div class="w-full lg:w-full">
-                    <div class="bg-white shadow rounded-lg px-4 py-4">
-                        <div v-if="data">
-                            <vue-good-table :line-numbers="true" :columns="columns" :rows="data" :search-options="{
-                                enabled: true,
-                            }" :pagination-options="{
+        </div>
+        <div v-if="data">
+            <div class="w-full lg:w-full">
+                <div class="bg-white shadow rounded-lg px-4 py-4">
+                    <div v-if="data">
+                        <vue-good-table :line-numbers="true" :columns="columns" :rows="data" :search-options="{
+                            enabled: true,
+                        }" :pagination-options="{
     enabled: true,
     perPageDropdown: [50, 100, 150, 200],
 }" styleClass="vgt-table striped bordered condensed" class="py-0">
-                                <template #table-actions>
-                                    <div class="space-x-1 space-y-1 gap-1">
-                                        <!-- <router-link :to="{
-                                                                                                                                                    name: 'admin-ujianstudi-paketsoal-tambah',
-                                                                                                                                                }">
-                                                                                                                                                    <button class="btn btn-sm btn-primary tooltip" data-tip="Tambah">
-                                                                                                                                                        TAMBAH
-                                                                                                                                                    </button>
-                                                                                                                                                </router-link> -->
-                                    </div>
-                                </template>
-                                <template #table-row="props">
+                            <template #table-actions>
+                                <div class="space-x-1 space-y-1 gap-1">
+                                    <!-- <router-link :to="{
+                                                                                                                                                                                                                                        name: 'admin-ujianstudi-paketsoal-tambah',
+                                                                                                                                                                                                                                    }">
+                                                                                                                                                                                                                                        <button class="btn btn-sm btn-primary tooltip" data-tip="Tambah">
+                                                                                                                                                                                                                                            TAMBAH
+                                                                                                                                                                                                                                        </button>
+                                                                                                                                                                                                                                    </router-link> -->
+                                </div>
+                            </template>
+                            <template #table-row="props">
                                     <span v-if="props.column.field == 'actions'">
                                         <div class="text-sm font-medium text-center flex justify-center space-x-1">
                                             <button class="btn btn-sm btn-primary tooltip" data-tip="Reset Waktu"
@@ -228,15 +244,15 @@ const doResetSalah = async (proses_detail_id,) => {
                                                     <path stroke-linecap="round" stroke-linejoin="round"
                                                         d="M19.5 12c0-1.232-.046-2.453-.138-3.662a4.006 4.006 0 00-3.7-3.7 48.678 48.678 0 00-7.324 0 4.006 4.006 0 00-3.7 3.7c-.017.22-.032.441-.046.662M19.5 12l3-3m-3 3l-3-3m-12 3c0 1.232.046 2.453.138 3.662a4.006 4.006 0 003.7 3.7 48.656 48.656 0 007.324 0 4.006 4.006 0 003.7-3.7c.017-.22.032-.441.046-.662M4.5 12l3 3m-3-3l-3 3" />
                                                 </svg>
-                                            </button>
-                                            <button class="btn btn-sm btn-success tooltip" data-tip="Reset Jawaban Salah"
-                                                @click="doResetSalah(props.row.id)">
-                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                                    stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                                        d="M19.5 12c0-1.232-.046-2.453-.138-3.662a4.006 4.006 0 00-3.7-3.7 48.678 48.678 0 00-7.324 0 4.006 4.006 0 00-3.7 3.7c-.017.22-.032.441-.046.662M19.5 12l3-3m-3 3l-3-3m-12 3c0 1.232.046 2.453.138 3.662a4.006 4.006 0 003.7 3.7 48.656 48.656 0 007.324 0 4.006 4.006 0 003.7-3.7c.017-.22.032-.441.046-.662M4.5 12l3 3m-3-3l-3 3" />
-                                                </svg>
-                                            </button>
+                                        </button>
+                                        <button class="btn btn-sm btn-success tooltip" data-tip="Reset Jawaban Salah"
+                                            @click="doResetSalah(props.row.id)">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                                stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                                <path stroke-linecap="round" stroke-linejoin="round"
+                                                    d="M19.5 12c0-1.232-.046-2.453-.138-3.662a4.006 4.006 0 00-3.7-3.7 48.678 48.678 0 00-7.324 0 4.006 4.006 0 00-3.7 3.7c-.017.22-.032.441-.046.662M19.5 12l3-3m-3 3l-3-3m-12 3c0 1.232.046 2.453.138 3.662a4.006 4.006 0 003.7 3.7 48.656 48.656 0 007.324 0 4.006 4.006 0 003.7-3.7c.017-.22.032-.441.046-.662M4.5 12l3 3m-3-3l-3 3" />
+                                            </svg>
+                                        </button>
                                         </div>
                                     </span>
 
@@ -244,11 +260,149 @@ const doResetSalah = async (proses_detail_id,) => {
                                     <span v-else>
                                         {{ props.formattedRow[props.column.field] }}
                                     </span>
-                                </template>
-                            </vue-good-table>
+                            </template>
+                        </vue-good-table>
+                    </div>
+                </div>
+            </div>
+        </div>
+            <div v-if="dataUjian">
+                <div class="w-full lg:w-full py-2">
+                    <div class="bg-white shadow rounded-lg px-4 py-4">
+
+                        <div class="md:py-2 px-4 lg:flex flex-wrap gap-4" v-for="item, index in dataUjian" :key="item.id">
+
+                            <p class="font-bold "> {{ index + 1 }}. {{ item.aspek_nama }}
+                                <!-- : {{ item.nilaiAkhir_avg }} - {{
+                                                                                                item.nilaiAkhir_avg_ket
+                                                                                            }}
+                                                                                                ({{
+                                                                                                    item.nilaiAkhir_avg_ket_singkatan
+                                                                                                }}) -->
+                            </p>
+                            <div class="w-full lg:w-full">
+                                <div class="bg-white shadow rounded-lg px-4 py-4">
+                                    <div class="overflow-x-auto">
+                                        <table class="table table-compact">
+                                            <tbody>
+                                                <tr v-for="mapel, i in item.aspek_detail " :key="mapel.id">
+                                                    <td class="whitespace-nowrap w-1/12">{{ parseInt(i) + 1 }}</td>
+                                                    <td class="whitespace-nowrap w-3/12">
+                                                        {{ mapel.aspek_detail_nama }}
+                                                    </td>
+                                                    <td class="whitespace-nowrap w-1/12">:</td>
+                                                    <td class="whitespace-nowrap w-3/12">{{ mapel.nilai_akhir }}
+                                                        -
+                                                        {{ fn_studi_ket(mapel.nilai_akhir) }} ( {{
+                                                            fn_studi_ket_singkatan(mapel.nilai_akhir)
+                                                        }})
+
+                                                    </td>
+                                                </tr>
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
+
+                <div class="md:py-2 px-4 lg:flex flex-wrap gap-4">
+                    <!-- <h2 class="font-bold uppercase">JURUSAN </h2> -->
+                    <div>
+                        <h2 class="font-bold uppercase">KESIMPULAN DAN SARAN </h2>
+                        <h4 class="font-bold capitalize">Penguasaan Peminatan Jurusan </h4>
+                    </div>
+                    <!-- <div class="w-full lg:w-full">
+                                                                <div class="bg-white shadow rounded-lg px-4 py-4">
+                                                                    <div class="overflow-x-auto">
+                                                                        <table class="table table-compact">
+                                                                            <tbody>
+                                                                                <tr v-for="item, index in dataJurusan" :key="item.id">
+                                                                                    <td class="whitespace-nowrap w-1/12">{{ index + 1 }}</td>
+                                                                                    <td class="whitespace-nowrap w-3/12">
+                                                                                        {{ item.nama }}
+                                                                                    </td>
+                                                                                    <td class="whitespace-nowrap w-1/12">:</td>
+                                                                                    <td class="whitespace-nowrap w-3/12">
+                                                                                        {{ item.aspek_nama }} : {{ item.aspek_nilaiAkhir_avg }}
+                                                                                    </td>
+
+                                                                                </tr>
+
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </div>
+                                                                </div>
+                                                            </div> -->
+                </div>
+
+
+                <div class="md:py-2 px-4 lg:flex flex-wrap gap-4">
+                    <h2 class="font-bold uppercase">Minat Bidang Studi Terkuat </h2>
+                    <div class="w-full lg:w-full">
+                        <div class="bg-white  rounded-lg px-4 py-4">
+                            <div class="overflow-x-auto">
+                                <!-- <table class="table table-compact">
+                                                                    <tbody>
+                                                                        <tr v-for="item, i in dataMinatbidangstudi" :key="item.nilaiAkhir">
+                                                                            <td class="whitespace-nowrap w-1/12">{{ i + 1 }}</td>
+                                                                            <td class="whitespace-nowrap w-3/12 text-left"> {{
+                                                                                item.ujian_paketsoal_kategori_nama
+                                                                            }} </td>
+                                                                            <td class="whitespace-nowrap w-1/12">:</td>
+                                                                            <td class="whitespace-nowrap w-3/12">
+                                                                                {{ item.nilaiAkhir }}
+                                                                            </td>
+                                                                            <td class="whitespace-nowrap w-3/12">
+                                                                                {{
+                                                                                    item.nilaiAkhir_ket_singkatan_revisi ?
+                                                                                    `${fn_studi_ket(item.nilaiAkhir)}
+                                                                                                                                (${fn_studi_ket_singkatan(item.nilaiAkhir)})` :
+                                                                                    `${fn_studi_ket(item.nilaiAkhir)}
+                                                                                                                                (${fn_studi_ket_singkatan(item.nilaiAkhir)})`
+                                                                                }}
+                                                                            </td>
+
+                                                                        </tr>
+
+                                                                    </tbody>
+                                                                </table> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <p class="indent-8 py-4">Sedangkan minat Subyek untuk mempelajari dibidang studi yang disukai dan
+                    terkuat yaitu
+                    <!-- <span class="font-bold"> {{ dataMinatbidangstudi[0].ujian_paketsoal_kategori_nama }},
+                                                {{
+                                                    dataMinatbidangstudi[1].ujian_paketsoal_kategori_nama
+                                                }}, {{
+                            dataMinatbidangstudi[2].ujian_paketsoal_kategori_nama
+                        }}, {{
+                            dataMinatbidangstudi[3].ujian_paketsoal_kategori_nama
+                        }}, dan {{
+                            dataMinatbidangstudi[4].ujian_paketsoal_kategori_nama
+                        }}</span> -->
+
+                    sebagai
+                    penunjang dari kelancaran studi lanjud dan keberhasilan pencapaian cita-cita dalam menempuh profesi
+                    yang dinginkan. Selain itu juga Subyek harus belajar membiasakan menyukai mata pelajaran bidang
+                    studi yang nilainya kurang dan tidak disukai terutama :
+
+                    <!-- <span class="font-bold"> 1.{{
+                                                dataTidakDisukai[0].ujian_paketsoal_kategori_nama
+                                            }} 2.{{
+                            dataTidakDisukai[1].ujian_paketsoal_kategori_nama
+                        }} 3.{{
+                            dataTidakDisukai[2].ujian_paketsoal_kategori_nama
+                        }}</span> -->
+                </p>
+
             </div>
         </span>
     </div>
