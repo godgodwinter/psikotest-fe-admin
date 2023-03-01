@@ -56,18 +56,20 @@ const getDataHasil = async () => {
         // isLoading.value = true;
         const response = await Api.get(`/ujianstudi/hasil/sekolah/${sekolah_id.value}/kelas/${kelas_id.value}/siswa/${siswa_id.value}`);
         dataUjian.value = response.data;
-        for (const [index, item] of dataUjian.value.entries()) {
-            if (item.tipe == "Semua") {
-                dataMinatbidangstudi.value = item.aspek_detail;
+        if (dataUjian.value) {
+            for (const [index, item] of dataUjian.value.entries()) {
+                if (item.tipe == "Semua") {
+                    dataMinatbidangstudi.value = item.aspek_detail;
+                }
+                else {
+                    dataJurusan.value.push(item)
+                }
             }
-            else {
-                dataJurusan.value.push(item)
-            }
-        }
 
-        dataJurusan.value.sort(function (a, b) {
-            return b.aspek_avg - a.aspek_avg;
-        });
+            dataJurusan.value.sort(function (a, b) {
+                return b.aspek_avg - a.aspek_avg;
+            });
+        }
         // isLoading.value = false;
         // return response.data;
     } catch (error) {
@@ -195,7 +197,7 @@ const onSubmitRevisi = async (values) => {
             </div>
             <div class="md:py-0 py-4 space-x-2 space-y-2">
 
-                <button class="btn btn-sm btn-primary tooltip" data-tip="CETAK Hasil">
+            <button class="btn btn-sm btn-primary tooltip" data-tip="CETAK Hasil">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
                     stroke="currentColor" stroke-width="2">
                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -217,8 +219,8 @@ const onSubmitRevisi = async (values) => {
     </div>
 
     <span v-if="isLoading">
-        <LoadingNavbar />
-    </span>
+            <LoadingNavbar />
+        </span>
         <span v-else-if="isError">
             <AlertFailed :message="'Gagal mendapatkan response dari server'" />
         </span>
@@ -243,10 +245,10 @@ const onSubmitRevisi = async (values) => {
                                             <td>{{ siswa.nama }}</td>
                                         </tr>
                                         <!-- <tr>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                        <td>Umur</td>
-                                                                                                                                                                                                                                                                                                                                                                                                                                            <td>:</td>
-                                                                                                                                                                                                                                                                                                                                                                                                                                        <td>{{ siswa.umur }}</td>
-                                                                                                                                                                                                                                                                                                                                                                                                                                    </tr> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                <td>Umur</td>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                    <td>:</td>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                <td>{{ siswa.umur }}</td>
+                                                                                                                                                                                                                                                                                                                                                                                                                                            </tr> -->
                                         <tr>
                                             <td>Jenis Kelamin</td>
                                             <td>:</td>
@@ -277,12 +279,12 @@ const onSubmitRevisi = async (values) => {
                                 <template #table-actions>
                                     <div class="space-x-1 space-y-1 gap-1">
                                         <!-- <router-link :to="{
-                                                                                                                                                                                                                                                                                                                                            name: 'admin-ujianstudi-paketsoal-tambah',
-                                                                                                                                                                                                                                                                                                                                                                }">
-                                                                                                                                                                                                                                                                                                                                                                        <button class="btn btn-sm btn-primary tooltip" data-tip="Tambah">
-                                                                                                                                                                                                                                                                                                                                                                                        TAMBAH
-                                                                                                                                                                                                                                                                                                                                                                                                        </button>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                </router-link> -->
+                                                                                                                                                                                                                                                                                                                                                    name: 'admin-ujianstudi-paketsoal-tambah',
+                                                                                                                                                                                                                                                                                                                                                                        }">
+                                                                                                                                                                                                                                                                                                                                                                                <button class="btn btn-sm btn-primary tooltip" data-tip="Tambah">
+                                                                                                                                                                                                                                                                                                                                                                                                TAMBAH
+                                                                                                                                                                                                                                                                                                                                                                                                                </button>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                        </router-link> -->
                                     </div>
                                 </template>
                                 <template #table-row="props">
@@ -309,7 +311,7 @@ const onSubmitRevisi = async (values) => {
 
 
                                     <span v-else>
-                                    {{ props.formattedRow[props.column.field] }}
+                                        {{ props.formattedRow[props.column.field] }}
                                     </span>
                                 </template>
                             </vue-good-table>
@@ -355,10 +357,10 @@ const onSubmitRevisi = async (values) => {
                                                                 fn_studi_ket_singkatan(mapel.nilai_akhir)
                                                             }})
                                                             <!-- {{ mapel.nilai_akhir }}
-                                                                                                                                                                                                                                                                                                                                                                                                                    -
-                                                                                                                                                                                                                                                                                                                                                                                                                    {{ fn_studi_ket(mapel.nilai_akhir) }} ( {{
-                                                                                                                                                                                                                                                                                                                                                                                                                        fn_studi_ket_singkatan(mapel.nilai_akhir)
-                                                                                                                                                                                                                                                                                                                                                                                                                    }}) -->
+                                                                                                                                                                                                                                                                                                                                                                                                                            -
+                                                                                                                                                                                                                                                                                                                                                                                                                            {{ fn_studi_ket(mapel.nilai_akhir) }} ( {{
+                                                                                                                                                                                                                                                                                                                                                                                                                                fn_studi_ket_singkatan(mapel.nilai_akhir)
+                                                                                                                                                                                                                                                                                                                                                                                                                            }}) -->
 
                                                         </td>
                                                     </tr>
@@ -382,29 +384,29 @@ const onSubmitRevisi = async (values) => {
                         <!-- <h4 class="font-bold capitalize">Penguasaan Peminatan Jurusan </h4> -->
                     </div>
                     <!-- <div class="w-full lg:w-full">
-                                    <div class="bg-white shadow rounded-lg px-4 py-4">
-                                        <div class="overflow-x-auto">
-                                            <table class="table table-compact">
-                                                <tbody v-for="item, index in dataJurusan" :key="item.id">
-                                                    <tr>
-                                                        <td class="whitespace-nowrap w-1/12">{{ index + 1 }}</td>
-                                                        <td class="whitespace-nowrap w-3/12">
-                                                            {{ item.aspek_nama }}
-                                                        </td>
-                                                        <td class="whitespace-nowrap w-1/12">:</td>
-                                                        <td class="whitespace-nowrap w-3/12">
-                                                            {{ item.aspek_avg }} - {{ fn_studi_ket(item.aspek_avg) }} ( {{
-                                                                fn_studi_ket_singkatan(item.aspek_avg)
-                                                            }})
-                                                        </td>
+                                            <div class="bg-white shadow rounded-lg px-4 py-4">
+                                                <div class="overflow-x-auto">
+                                                    <table class="table table-compact">
+                                                        <tbody v-for="item, index in dataJurusan" :key="item.id">
+                                                            <tr>
+                                                                <td class="whitespace-nowrap w-1/12">{{ index + 1 }}</td>
+                                                                <td class="whitespace-nowrap w-3/12">
+                                                                    {{ item.aspek_nama }}
+                                                                </td>
+                                                                <td class="whitespace-nowrap w-1/12">:</td>
+                                                                <td class="whitespace-nowrap w-3/12">
+                                                                    {{ item.aspek_avg }} - {{ fn_studi_ket(item.aspek_avg) }} ( {{
+                                                                        fn_studi_ket_singkatan(item.aspek_avg)
+                                                                    }})
+                                                                </td>
 
-                                                    </tr>
+                                                            </tr>
 
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div> -->
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div> -->
                     <p class="indent-8">
                         Potensi kemampuan Akademik Subyek saat ini terkuat dibidang studi yang terkait dengan <span
                             class="font-bold">{{
@@ -495,7 +497,7 @@ const onSubmitRevisi = async (values) => {
                     <label for="modal-revisi" class="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
                     <h3 class="text-lg font-bold">{{ revisi_dataForm.aspek_detail_nama }}</h3>
                     <!-- <p class="py-4">You've been selected for a chance to get one year of subscription to use Wikipedia for
-                                                                                                                                                                                                                                                                                                            free!</p> -->
+                                                                                                                                                                                                                                                                                                                    free!</p> -->
 
                     <Form v-slot="{ errors }" @submit="onSubmitRevisi">
                         <div class="py-2 lg:py-4 px-4">
