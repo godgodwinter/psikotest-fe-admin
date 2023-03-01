@@ -271,7 +271,7 @@ const doGenerateSiswa = async (id, index) => {
         }
         try {
             isLoading.value = true;
-            const response = await Api.post(`ujianstudi/proses/sekolah/${sekolah_id.value}/kelas/${kelas_id.value}/siswa/${id}/generate/${adminPagesStore.get_ujianstudi_pengaturan.paketsoal_id}`, dataFormSend);
+            const response = await Api.post(`ujianstudi/proses/sekolah/${sekolah_id.value}/kelas/${getSekolahAktif.value.kelas_id}/siswa/${id}/generate/${adminPagesStore.get_ujianstudi_pengaturan.paketsoal_id}`, dataFormSend);
             Toast.babeng("Berhasil", 'Data berhasil digenerate!');
             getData();
         } catch (error) {
@@ -285,7 +285,7 @@ const doDeleteProsesSiswa = async (id, proses_id) => {
     if (confirm("Apakah anda yakin menghapus data ujian ini?")) {
         try {
             isLoading.value = true;
-            const response = await Api.delete(`ujianstudi/proses/sekolah/${sekolah_id.value}/kelas/${kelas_id.value}/siswa/${id}/delete/${proses_id}`);
+            const response = await Api.delete(`ujianstudi/proses/sekolah/${sekolah_id.value}/kelas/${getSekolahAktif.value.kelas_id}/siswa/${id}/delete/${proses_id}`);
             Toast.babeng("Berhasil", 'Data berhasil di hapus!');
             getData();
         } catch (error) {
@@ -304,7 +304,7 @@ const doGenerateSiswaPerkelas = async (id, index) => {
         }
         try {
             isLoading.value = true;
-            const response = await Api.post(`ujianstudi/proses/sekolah/${sekolah_id.value}/kelas/${kelas_id.value}/generate/${adminPagesStore.get_ujianstudi_pengaturan.paketsoal_id}`, dataFormSend);
+            const response = await Api.post(`ujianstudi/proses/sekolah/${sekolah_id.value}/kelas/${getSekolahAktif.value.kelas_id}/generate/${adminPagesStore.get_ujianstudi_pengaturan.paketsoal_id}`, dataFormSend);
             Toast.babeng("Berhasil", 'Data berhasil digenerate!');
             getData();
         } catch (error) {
@@ -318,7 +318,7 @@ const doDeleteProsesSiswaPerkelas = async (id) => {
     if (confirm("Apakah anda yakin menghapus data ujian ini?")) {
         try {
             isLoading.value = true;
-            const response = await Api.delete(`ujianstudi/proses/sekolah/${sekolah_id.value}/kelas/${kelas_id.value}/delete`);
+            const response = await Api.delete(`ujianstudi/proses/sekolah/${sekolah_id.value}/kelas/${getSekolahAktif.value.kelas_id}/delete`);
             Toast.babeng("Berhasil", 'Data berhasil di hapus!');
             getData();
         } catch (error) {
@@ -335,7 +335,7 @@ const doGenerateHasilSiswa = async (id, index) => {
         let dataFormSend = {}
         try {
             isLoading.value = true;
-            const response = await Api.post(`ujianstudi/hasil/sekolah/${sekolah_id.value}/kelas/${kelas_id.value}/siswa/${id}/generate`, dataFormSend);
+            const response = await Api.post(`ujianstudi/hasil/sekolah/${sekolah_id.value}/kelas/${getSekolahAktif.value.kelas_id}/siswa/${id}/generate`, dataFormSend);
             Toast.babeng("Berhasil", 'Hasil Ujian berhasil digenerate!');
             getData();
         } catch (error) {
@@ -349,7 +349,7 @@ const doDeleteHasilSiswa = async (id, proses_id) => {
     if (confirm("Apakah anda yakin menghapus data ujian ini?")) {
         try {
             isLoading.value = true;
-            const response = await Api.delete(`ujianstudi/hasil/sekolah/${sekolah_id.value}/kelas/${kelas_id.value}/siswa/${id}/delete`);
+            const response = await Api.delete(`ujianstudi/hasil/sekolah/${sekolah_id.value}/kelas/${getSekolahAktif.value.kelas_id}/siswa/${id}/delete`);
             Toast.babeng("Berhasil", 'Hasil Ujian berhasil di hapus!');
             getData();
         } catch (error) {
@@ -364,7 +364,7 @@ const doGenerateHasilSiswaPerkelas = async (id) => {
         let dataFormSend = {}
         try {
             isLoading.value = true;
-            const response = await Api.post(`ujianstudi/hasil/sekolah/${sekolah_id.value}/kelas/${kelas_id.value}/generate`, dataFormSend);
+            const response = await Api.post(`ujianstudi/hasil/sekolah/${sekolah_id.value}/kelas/${getSekolahAktif.value.kelas_id}/generate`, dataFormSend);
             Toast.babeng("Berhasil", 'Hasil Ujian berhasil digenerate!');
             getData();
         } catch (error) {
@@ -378,7 +378,7 @@ const doDeleteHasilSiswaPerkelas = async (id) => {
     if (confirm("Apakah anda yakin menghapus data ujian ini?")) {
         try {
             isLoading.value = true;
-            const response = await Api.delete(`ujianstudi/hasil/sekolah/${sekolah_id.value}/kelas/${kelas_id.value}/delete`);
+            const response = await Api.delete(`ujianstudi/hasil/sekolah/${sekolah_id.value}/kelas/${getSekolahAktif.value.kelas_id}/delete`);
             Toast.babeng("Berhasil", 'Hasil Ujian berhasil di hapus!');
             getData();
         } catch (error) {
