@@ -375,20 +375,20 @@ const doGenerateHasilSiswaPerkelas = async (id) => {
     }
 };
 const doGenerateHasilSiswaPerkelasComplete = async (id) => {
-    Toast.danger("Info", "Menu belum tersedia!");
-    // if (confirm("Apakah anda yakin generate data ini?")) {
-    //     let dataFormSend = {}
-    //     try {
-    //         isLoading.value = true;
-    //         const response = await Api.post(`ujianstudi/hasil/sekolah/${sekolah_id.value}/kelas/${getSekolahAktif.value.kelas_id}/generate`, dataFormSend);
-    //         Toast.babeng("Berhasil", 'Hasil Ujian berhasil digenerate!');
-    //         getData();
-    //     } catch (error) {
-    //         isLoading.value = false;
-    //         isError.value = true;
-    //         console.error(error);
-    //     }
-    // }
+    // Toast.danger("Info", "Menu belum tersedia!");
+    if (confirm("Apakah anda yakin generate data yang sudah complete saja ini?")) {
+        let dataFormSend = {}
+        try {
+            isLoading.value = true;
+            const response = await Api.post(`ujianstudi/hasil/sekolah/${sekolah_id.value}/kelas/${getSekolahAktif.value.kelas_id}/generate/complete`, dataFormSend);
+            Toast.babeng("Berhasil", 'Hasil Ujian berhasil digenerate!');
+            getData();
+        } catch (error) {
+            isLoading.value = false;
+            isError.value = true;
+            console.error(error);
+        }
+    }
 };
 const doDeleteHasilSiswaPerkelas = async (id) => {
     if (confirm("Apakah anda yakin menghapus data ujian ini?")) {
