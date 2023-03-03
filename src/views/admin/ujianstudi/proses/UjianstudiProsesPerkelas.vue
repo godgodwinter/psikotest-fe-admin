@@ -374,6 +374,22 @@ const doGenerateHasilSiswaPerkelas = async (id) => {
         }
     }
 };
+const doGenerateHasilSiswaPerkelasComplete = async (id) => {
+    Toast.danger("Info", "Menu belum tersedia!");
+    // if (confirm("Apakah anda yakin generate data ini?")) {
+    //     let dataFormSend = {}
+    //     try {
+    //         isLoading.value = true;
+    //         const response = await Api.post(`ujianstudi/hasil/sekolah/${sekolah_id.value}/kelas/${getSekolahAktif.value.kelas_id}/generate`, dataFormSend);
+    //         Toast.babeng("Berhasil", 'Hasil Ujian berhasil digenerate!');
+    //         getData();
+    //     } catch (error) {
+    //         isLoading.value = false;
+    //         isError.value = true;
+    //         console.error(error);
+    //     }
+    // }
+};
 const doDeleteHasilSiswaPerkelas = async (id) => {
     if (confirm("Apakah anda yakin menghapus data ujian ini?")) {
         try {
@@ -396,6 +412,24 @@ const doCetak = (id = null, token = moment().format("YYYY-MM-DD")) => {
     // } else {
     window.open(
         `${BASE_URL_CETAK}api/guest/ujianstudi/v2/cetak/kelas/${getSekolahAktif.value.kelas_id}`
+    );
+    // }
+};
+const doCetakLess = (id = null, token = moment().format("YYYY-MM-DD")) => {
+    // if (id === null) {
+    // Toast.danger("Info", "Menu belum tersedia!");
+    // } else {
+    window.open(
+        `${BASE_URL_CETAK}api/guest/ujianstudi/v2/cetak/kelas/${getSekolahAktif.value.kelas_id}/less`
+    );
+    // }
+};
+const doExportJawabanSiswa = (id = null, token = moment().format("YYYY-MM-DD")) => {
+    // if (id === null) {
+    // Toast.danger("Info", "Menu belum tersedia!");
+    // } else {
+    window.open(
+        `${BASE_URL_CETAK}api/guest/ujianstudi/v2/exportjawaban/kelas/${getSekolahAktif.value.kelas_id}`
     );
     // }
 };
@@ -460,15 +494,40 @@ const doCetak = (id = null, token = moment().format("YYYY-MM-DD")) => {
                 <button class="btn btn-sm btn-info p-2" @click="doGenerateHasilSiswaPerkelas()">
                     Generate Hasil UJIANSTUDI Per Kelas
                 </button>
-            </div>
-            <div class="space-x-2 space-y-2 shadow-sm py-1">
-                <button class="btn btn-sm btn-primary tooltip" data-tip="CETAK Hasil" @click="doCetak()">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                        stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
-                    </svg>
+                <button class="btn btn-sm btn-primary p-2" @click="doGenerateHasilSiswaPerkelasComplete()">
+                    Generate Hasil (Complete Only)
                 </button>
+            </div>
+            <div class="space-x-2 space-y-0 shadow-sm flex justify-start ">
+                <div class="space-x-2 space-y-2 shadow-sm py-1">
+                    <button class="btn btn-sm btn-primary tooltip" data-tip="CETAK Hasil" @click="doCetak()">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
+                        </svg>
+                    </button>
+                </div>
+                <div class="space-x-2 space-y-2 shadow-sm py-1">
+                    <button class="btn btn-sm btn-warning tooltip" data-tip="CETAK Hasil v2" @click="doCetakLess()">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
+                        </svg>
+                    </button>
+                </div>
+                <div class="space-x-2 space-y-2 shadow-sm py-1">
+                    <button class="btn btn-sm btn-primary tooltip" data-tip="Export Jawaban Siswa"
+                        @click="doExportJawabanSiswa()">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                            stroke="currentColor" class="w-6 h-6">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M12 9.75v6.75m0 0l-3-3m3 3l3-3m-8.25 6a4.5 4.5 0 01-1.41-8.775 5.25 5.25 0 0110.233-2.33 3 3 0 013.758 3.848A3.752 3.752 0 0118 19.5H6.75z" />
+                        </svg>
+
+                    </button>
+                </div>
             </div>
             <!-- !PENGATURAN-END -->
             <span v-if="isLoading">

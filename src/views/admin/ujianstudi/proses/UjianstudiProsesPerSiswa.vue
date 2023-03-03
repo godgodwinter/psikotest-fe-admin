@@ -205,20 +205,36 @@ const doCetak = (id = null, token = moment().format("YYYY-MM-DD")) => {
     );
     // }
 };
+const doCetakLess = (id = null, token = moment().format("YYYY-MM-DD")) => {
+    // if (id === null) {
+    //     Toast.danger("Warning", "Data tidak valid!");
+    // } else {
+    window.open(
+        `${BASE_URL_CETAK}api/guest/ujianstudi/v2/cetak/siswa/${siswa_id.value}/less`
+    );
+    // }
+};
 </script>
 <template>
     <div>
-    <div class="pt-4 px-10 md:flex justify-between">
-        <div>
-            <span class="text-2xl sm:text-3xl leading-none font-bold text-base-content shadow-sm">Hasil Ujian
-                Lintas Bidang
-                Studi
-            </span>
-        </div>
-        <div class="md:py-0 py-4 space-x-2 space-y-2">
+        <div class="pt-4 px-10 md:flex justify-between">
+            <div>
+                <span class="text-2xl sm:text-3xl leading-none font-bold text-base-content shadow-sm">Hasil Ujian
+                    Lintas Bidang
+                    Studi
+                </span>
+            </div>
+            <div class="md:py-0 py-4 space-x-2 space-y-2">
 
-            <button class="btn btn-sm btn-primary tooltip" data-tip="CETAK Hasil" @click="doCetak()">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                <button class="btn btn-sm btn-primary tooltip" data-tip="CETAK Hasil" @click="doCetak()">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
+                    </svg>
+                </button>
+                <button class="btn btn-sm btn-warning tooltip" data-tip="CETAK Hasil v2" @click="doCetakLess()">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
                         stroke="currentColor" stroke-width="2">
                         <path stroke-linecap="round" stroke-linejoin="round"
                             d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
@@ -265,10 +281,10 @@ const doCetak = (id = null, token = moment().format("YYYY-MM-DD")) => {
                                             <td>{{ siswa.nama }}</td>
                                         </tr>
                                         <!-- <tr>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <td>Umur</td>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <td>:</td>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <td>{{ siswa.umur }}</td>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </tr> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <td>Umur</td>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <td>:</td>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <td>{{ siswa.umur }}</td>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </tr> -->
                                         <tr>
                                             <td>Jenis Kelamin</td>
                                             <td>:</td>
@@ -277,7 +293,7 @@ const doCetak = (id = null, token = moment().format("YYYY-MM-DD")) => {
                                         <tr>
                                             <td>Sekolah</td>
                                             <td>:</td>
-                                            <td>{{ siswa.sekolah_nama }}</td>
+                                        <td>{{ siswa.sekolah_nama }}</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -299,17 +315,17 @@ const doCetak = (id = null, token = moment().format("YYYY-MM-DD")) => {
                                 <template #table-actions>
                                     <div class="space-x-1 space-y-1 gap-1">
                                         <!-- <router-link :to="{
-                                                                                                                                                                                                                                                                                                                                                                                                        name: 'admin-ujianstudi-paketsoal-tambah',
-                                                                                                                                                                                                                                                                                                                                                                                                                            }">
-                                                                                                                                                                                                                                                                                                                                                                                                                                    <button class="btn btn-sm btn-primary tooltip" data-tip="Tambah">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                    TAMBAH
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </button>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            </router-link> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                        name: 'admin-ujianstudi-paketsoal-tambah',
+                                                                                                                                                                                                                                                                                                                                                                                                                                            }">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                    <button class="btn btn-sm btn-primary tooltip" data-tip="Tambah">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                    TAMBAH
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </button>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            </router-link> -->
                                     </div>
                                 </template>
                                 <template #table-row="props">
                                     <span v-if="props.column.field == 'actions'">
-                                    <div class="text-sm font-medium text-center flex justify-center space-x-1">
+                                        <div class="text-sm font-medium text-center flex justify-center space-x-1">
                                             <button class="btn btn-sm btn-primary tooltip" data-tip="Reset Waktu"
                                                 @click="doResetWaktu(props.row.id)">
                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
@@ -377,10 +393,10 @@ const doCetak = (id = null, token = moment().format("YYYY-MM-DD")) => {
                                                                 fn_studi_ket_singkatan(mapel.nilai_akhir)
                                                             }})
                                                             <!-- {{ mapel.nilai_akhir }}
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                -
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                {{ fn_studi_ket(mapel.nilai_akhir) }} ( {{
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    fn_studi_ket_singkatan(mapel.nilai_akhir)
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                }}) -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                -
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                {{ fn_studi_ket(mapel.nilai_akhir) }} ( {{
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    fn_studi_ket_singkatan(mapel.nilai_akhir)
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                }}) -->
 
                                                         </td>
                                                     </tr>
@@ -403,30 +419,7 @@ const doCetak = (id = null, token = moment().format("YYYY-MM-DD")) => {
                         <h2 class="font-bold uppercase">KESIMPULAN DAN SARAN </h2>
                         <!-- <h4 class="font-bold capitalize">Penguasaan Peminatan Jurusan </h4> -->
                     </div>
-                    <!-- <div class="w-full lg:w-full">
-                                                                                                <div class="bg-white shadow rounded-lg px-4 py-4">
-                                                                                                    <div class="overflow-x-auto">
-                                                                                                        <table class="table table-compact">
-                                                                                                            <tbody v-for="item, index in dataJurusan" :key="item.id">
-                                                                                                                <tr>
-                                                                                                                    <td class="whitespace-nowrap w-1/12">{{ index + 1 }}</td>
-                                                                                                                    <td class="whitespace-nowrap w-3/12">
-                                                                                                                        {{ item.aspek_nama }}
-                                                                                                                    </td>
-                                                                                                                    <td class="whitespace-nowrap w-1/12">:</td>
-                                                                                                                    <td class="whitespace-nowrap w-3/12">
-                                                                                                                        {{ item.aspek_avg }} - {{ fn_studi_ket(item.aspek_avg) }} ( {{
-                                                                                                                            fn_studi_ket_singkatan(item.aspek_avg)
-                                                                                                                        }})
-                                                                                                                    </td>
 
-                                                                                                                </tr>
-
-                                                                                                            </tbody>
-                                                                                                        </table>
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                            </div> -->
                     <p class="indent-8">
                         Potensi kemampuan Akademik Subyek saat ini terkuat dibidang studi yang terkait dengan <span
                             class="font-bold">{{
@@ -517,7 +510,7 @@ const doCetak = (id = null, token = moment().format("YYYY-MM-DD")) => {
                     <label for="modal-revisi" class="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
                     <h3 class="text-lg font-bold">{{ revisi_dataForm.aspek_detail_nama }}</h3>
                     <!-- <p class="py-4">You've been selected for a chance to get one year of subscription to use Wikipedia for
-                                                                                                                                                                                                                                                                                                                                                                        free!</p> -->
+                                                                                                                                                                                                                                                                                                                                                                                        free!</p> -->
 
                     <Form v-slot="{ errors }" @submit="onSubmitRevisi">
                         <div class="py-2 lg:py-4 px-4">
