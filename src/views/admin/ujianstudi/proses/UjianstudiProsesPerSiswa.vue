@@ -214,6 +214,11 @@ const doCetakLess = (id = null, token = moment().format("YYYY-MM-DD")) => {
     );
     // }
 };
+
+const doRefreshData = () => {
+    getData();
+    getDataHasil();
+}
 </script>
 <template>
     <div>
@@ -241,13 +246,13 @@ const doCetakLess = (id = null, token = moment().format("YYYY-MM-DD")) => {
                     </svg>
                 </button>
                 <!-- <button class="btn btn-sm btn-primary tooltip" data-tip="Generate Hasil">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                            stroke="currentColor" class="w-6 h-6">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" />
-                        </svg>
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                                stroke="currentColor" class="w-6 h-6">
+                                                <path stroke-linecap="round" stroke-linejoin="round"
+                                                    d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" />
+                                            </svg>
 
-                    </button> -->
+                                        </button> -->
                 <button class="btn hover:shadow-lg shadow text-white hover:text-gray-100 gap-2"
                     @click="router.go(-1)">Kembali</button>
 
@@ -281,19 +286,19 @@ const doCetakLess = (id = null, token = moment().format("YYYY-MM-DD")) => {
                                             <td>{{ siswa.nama }}</td>
                                         </tr>
                                         <!-- <tr>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <td>Umur</td>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <td>:</td>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <td>{{ siswa.umur }}</td>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </tr> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <td>Umur</td>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <td>:</td>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <td>{{ siswa.umur }}</td>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </tr> -->
                                         <tr>
                                             <td>Jenis Kelamin</td>
                                             <td>:</td>
                                             <td>{{ siswa.jk }}</td>
                                         </tr>
-                                        <tr>
+                                    <tr>
                                             <td>Sekolah</td>
                                             <td>:</td>
-                                        <td>{{ siswa.sekolah_nama }}</td>
+                                            <td>{{ siswa.sekolah_nama }}</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -314,13 +319,15 @@ const doCetakLess = (id = null, token = moment().format("YYYY-MM-DD")) => {
 }" styleClass="vgt-table striped bordered condensed" class="py-0">
                                 <template #table-actions>
                                     <div class="space-x-1 space-y-1 gap-1">
-                                        <!-- <router-link :to="{
-                                                                                                                                                                                                                                                                                                                                                                                                                        name: 'admin-ujianstudi-paketsoal-tambah',
-                                                                                                                                                                                                                                                                                                                                                                                                                                            }">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                    <button class="btn btn-sm btn-primary tooltip" data-tip="Tambah">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                    TAMBAH
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </button>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            </router-link> -->
+                                        <button class="btn btn-sm btn-secondary tooltip" data-tip="Refresh Data"
+                                            @click="doRefreshData()">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20"
+                                                fill="currentColor">
+                                                <path fill-rule="evenodd"
+                                                    d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z"
+                                                    clip-rule="evenodd" />
+                                            </svg>
+                                        </button>
                                     </div>
                                 </template>
                                 <template #table-row="props">
@@ -393,10 +400,10 @@ const doCetakLess = (id = null, token = moment().format("YYYY-MM-DD")) => {
                                                                 fn_studi_ket_singkatan(mapel.nilai_akhir)
                                                             }})
                                                             <!-- {{ mapel.nilai_akhir }}
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                -
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                {{ fn_studi_ket(mapel.nilai_akhir) }} ( {{
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    fn_studi_ket_singkatan(mapel.nilai_akhir)
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                }}) -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    -
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    {{ fn_studi_ket(mapel.nilai_akhir) }} ( {{
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        fn_studi_ket_singkatan(mapel.nilai_akhir)
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    }}) -->
 
                                                         </td>
                                                     </tr>
@@ -510,7 +517,7 @@ const doCetakLess = (id = null, token = moment().format("YYYY-MM-DD")) => {
                     <label for="modal-revisi" class="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
                     <h3 class="text-lg font-bold">{{ revisi_dataForm.aspek_detail_nama }}</h3>
                     <!-- <p class="py-4">You've been selected for a chance to get one year of subscription to use Wikipedia for
-                                                                                                                                                                                                                                                                                                                                                                                        free!</p> -->
+                                                                                                                                                                                                                                                                                                                                                                                                            free!</p> -->
 
                     <Form v-slot="{ errors }" @submit="onSubmitRevisi">
                         <div class="py-2 lg:py-4 px-4">
