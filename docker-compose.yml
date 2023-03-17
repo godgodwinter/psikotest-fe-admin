@@ -4,4 +4,4 @@ services:
       build: .
       container_name: vite_vue_app
       ports:
-        - '3100:3100'
+        - '${APP_PORT}:${APP_PORT}'

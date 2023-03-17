@@ -8,7 +8,7 @@ COPY . /app
 
 # RUN npm install serve -g
 
-RUN npm install -g npm@9.6.2
+# RUN npm install -g npm@9.6.2
 
 RUN npm install
 
