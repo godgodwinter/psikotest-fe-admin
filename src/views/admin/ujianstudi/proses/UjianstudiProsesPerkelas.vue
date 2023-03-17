@@ -199,10 +199,10 @@ const unsecuredCopyToClipboard = (text) => { const textArea = document.createEle
 const doCopyClipboard = (content) => {
     if (window.isSecureContext && navigator.clipboard) {
         navigator.clipboard.writeText(content);
-        Toast.babeng("Info", `${content} berhasil disalin`);
+        Toast.babeng("Info 2", `${content} berhasil disalin`);
     } else {
         unsecuredCopyToClipboard(content);
-        Toast.babeng("Info", `${content} berhasil disalin`);
+        Toast.babeng("Info 2", `${content} berhasil disalin`);
     }
 };
 
