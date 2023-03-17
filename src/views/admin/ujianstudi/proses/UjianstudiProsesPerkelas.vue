@@ -197,13 +197,13 @@ const unsecuredCopyToClipboard = (text) => { const textArea = document.createEle
  * Then uses standard clipboard API, otherwise uses fallback
 */
 const doCopyClipboard = (content) => {
-    if (window.isSecureContext && navigator.clipboard) {
-        navigator.clipboard.writeText(content);
-        Toast.babeng("Info 2", `${content} berhasil disalin`);
-    } else {
-        unsecuredCopyToClipboard(content);
-        Toast.babeng("Info 2", `${content} berhasil disalin`);
-    }
+    // if (window.isSecureContext && navigator.clipboard) {
+    //     navigator.clipboard.writeText(content);
+    //     Toast.babeng("Info 2", `${content} berhasil disalin`);
+    // } else {
+    unsecuredCopyToClipboard(content);
+    Toast.babeng("Info 2", `${content} berhasil disalin`);
+    // }
 };
 
 
