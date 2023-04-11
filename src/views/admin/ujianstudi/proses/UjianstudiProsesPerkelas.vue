@@ -285,8 +285,11 @@ const doPilihPaket = () => {
 
 const doGenerateSiswa = async (id, index) => {
     if (confirm("Apakah anda yakin generate data ini?")) {
+        console.log('====================================');
+        console.log(moment(adminPagesStore.get_ujianstudi_pengaturan.tgl_ujian).format("YYYY-MM-DD HH:mm:ss"));
+        console.log('====================================');
         let dataFormSend = {
-            tgl_ujian: adminPagesStore.get_ujianstudi_pengaturan.tgl_ujian,
+            tgl_ujian: moment(adminPagesStore.get_ujianstudi_pengaturan.tgl_ujian).format("YYYY-MM-DD HH:mm:ss"),
         }
         try {
             isLoading.value = true;
@@ -319,7 +322,7 @@ const doDeleteProsesSiswa = async (id, proses_id) => {
 const doGenerateSiswaPerkelas = async (id, index) => {
     if (confirm("Apakah anda yakin generate data ini?")) {
         let dataFormSend = {
-            tgl_ujian: adminPagesStore.get_ujianstudi_pengaturan.tgl_ujian,
+            tgl_ujian: moment(adminPagesStore.get_ujianstudi_pengaturan.tgl_ujian).format("YYYY-MM-DD HH:mm:ss"),
         }
         try {
             isLoading.value = true;
