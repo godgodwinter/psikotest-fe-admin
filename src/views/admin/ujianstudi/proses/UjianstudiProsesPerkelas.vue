@@ -458,6 +458,40 @@ const doExportJawabanSiswa = (id = null, token = moment().format("YYYY-MM-DD")) 
     );
     // }
 };
+
+
+const doCachingRedisPerSiswa = async (id, index) => {
+    if (confirm("Apakah anda yakin caching data ini?")) {
+        let dataFormSend = {}
+        try {
+            isLoading.value = true;
+            const response = await Api.get(`redis/studiv2/proses/${id}/store`, dataFormSend);
+            Toast.babeng("Berhasil", 'Cacing proses Ujian berhasil digenerate!');
+            getData();
+        } catch (error) {
+            isLoading.value = false;
+            isError.value = true;
+            console.error(error);
+        }
+    }
+};
+
+const doCachingRedisPerKelas = async () => {
+    if (confirm("Apakah anda yakin caching data ini?")) {
+        let dataFormSend = {}
+        try {
+            isLoading.value = true;
+            const response = await Api.get(`redis/studiv2/proses_kelas/${getSekolahAktif.value.kelas_id}/store`, dataFormSend);
+            Toast.babeng("Berhasil", 'Cacing proses Ujian berhasil digenerate!');
+            getData();
+        } catch (error) {
+            isLoading.value = false;
+            isError.value = true;
+            console.error(error);
+        }
+    }
+};
+
 </script>
 <template>
     <span v-if="isLoading">
@@ -510,6 +544,9 @@ const doExportJawabanSiswa = (id = null, token = moment().format("YYYY-MM-DD")) 
                 </button>
                 <button class="btn btn-sm btn-info p-2" @click="doGenerateSiswaPerkelas()">
                     Generate UJIANSTUDI Per Kelas
+                </button>
+                <button class="btn btn-sm btn-danger p-2" @click="doCachingRedisPerKelas()">
+                    Caching UJIANSTUDI Per Kelas
                 </button>
             </div>
             <div class="space-x-2 space-y-2 shadow-sm">
@@ -588,6 +625,15 @@ const doExportJawabanSiswa = (id = null, token = moment().format("YYYY-MM-DD")) 
                                     <template #table-row="props">
                                         <span v-if="props.column.field == 'actions'">
                                             <div class="text-sm font-medium text-center flex justify-center space-x-1">
+                                                <button class="btn btn-sm btn-danger tooltip" data-tip="Caching UJIANSTUDI"
+                                                    @click="doCachingRedisPerSiswa(props.row.id)">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                                        stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                                            d="M9 8.25H7.5a2.25 2.25 0 00-2.25 2.25v9a2.25 2.25 0 002.25 2.25h9a2.25 2.25 0 002.25-2.25v-9a2.25 2.25 0 00-2.25-2.25H15M9 12l3 3m0 0l3-3m-3 3V2.25" />
+                                                    </svg>
+
+                                                </button>
                                                 <button class="btn btn-sm btn-warning tooltip"
                                                     data-tip="Generate UJIANSTUDI" @click="doGenerateSiswa(props.row.id)">
                                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
