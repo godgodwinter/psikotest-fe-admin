@@ -285,15 +285,18 @@ const doPilihPaket = () => {
 
 const doGenerateSiswa = async (id, index) => {
     if (confirm("Apakah anda yakin generate data ini?")) {
-        console.log('====================================');
-        console.log(moment(adminPagesStore.get_ujianstudi_pengaturan.tgl_ujian).format("YYYY-MM-DD HH:mm:ss"));
-        console.log('====================================');
+        // console.log('====================================');
+        // console.log(moment(adminPagesStore.get_ujianstudi_pengaturan.tgl_ujian).format("YYYY-MM-DD HH:mm:ss"));
+        // console.log('====================================');
         let dataFormSend = {
             tgl_ujian: moment(adminPagesStore.get_ujianstudi_pengaturan.tgl_ujian).format("YYYY-MM-DD HH:mm:ss"),
         }
         try {
             isLoading.value = true;
             const response = await Api.post(`ujianstudi/proses/sekolah/${sekolah_id.value}/kelas/${getSekolahAktif.value.kelas_id}/siswa/${id}/generate/${adminPagesStore.get_ujianstudi_pengaturan.paketsoal_id}`, dataFormSend);
+            console.log('====================================');
+            console.log(response?.data);
+            console.log('====================================');
             Toast.babeng("Berhasil", 'Data berhasil digenerate!');
             getData();
         } catch (error) {

@@ -76,11 +76,67 @@ const doEditData = async (id, index) => {
         params: { paketsoal_id: id },
     });
 };
+
+const paketsoal_aktif = ref(null);
+const getPaketAktif = async (id) => {
+    let dataFormSend = {}
+    try {
+        isLoading.value = true;
+        const response = await Api.get(`redis/studiv2/paketsoal_aktif/get/less`, dataFormSend);
+        if (response?.data) {
+            paketsoal_aktif.value = response.data;
+        } else {
+            paketsoal_aktif.value = null;
+        }
+        isLoading.value = false;
+    } catch (error) {
+        isLoading.value = false;
+        isError.value = true;
+        console.error(error);
+    }
+};
+getPaketAktif();
+const doAktifkanPaket = async (id) => {
+    if (confirm("Apakah anda yakin aktifkan paketsoal ini?")) {
+        let dataFormSend = {}
+        try {
+            isLoading.value = true;
+            const response = await Api.get(`redis/studiv2/paketsoal/${id}/aktifkan`, dataFormSend);
+            Toast.babeng("Berhasil", 'Paket berhasil diAktifkan!');
+            getPaketAktif();
+            isLoading.value = false;
+        } catch (error) {
+            isLoading.value = false;
+            isError.value = true;
+            console.error(error);
+        }
+    }
+};
+
+const doDeletPaketAktif = async () => {
+    if (confirm("Apakah anda yakin menghapus paketsoal ini?")) {
+        let dataFormSend = {}
+        try {
+            isLoading.value = true;
+            const response = await Api.delete(`redis/studiv2/paketsoal_aktif/delete`, dataFormSend);
+            Toast.babeng("Berhasil", 'Paket berhasil dihapus!');
+            getPaketAktif();
+            isLoading.value = false;
+        } catch (error) {
+            isLoading.value = false;
+            isError.value = true;
+            console.error(error);
+        }
+    }
+};
 </script>
 <template>
     <div>
         <article class="prose lg:prose-sm">
             <h1>PAKETSOAL</h1>
+            <div v-if="paketsoal_aktif">
+                <h4>PAKETSOAL AKTIF : {{ paketsoal_aktif?.nama }}</h4>
+            </div>
         </article>
         <span v-if="isLoading">
             <LoadingNavbar />
@@ -108,6 +164,11 @@ const doEditData = async (id, index) => {
                                                 TAMBAH
                                             </button>
                                         </router-link>
+                                        <button class="btn btn-sm btn-warning tooltip" data-tip="Clear"
+                                            @click="doDeletPaketAktif()">
+                                            CLEAR PAKETAKTIF
+                                        </button>
+
                                     </div>
                                 </template>
                                 <template #table-row="props">
@@ -141,6 +202,12 @@ const doEditData = async (id, index) => {
                                                         clip-rule="evenodd" />
                                                 </svg>
                                             </button>
+
+
+                                            <button class="btn btn-sm btn-info tooltip" data-tip="Aktifkan Paket"
+                                                @click="doAktifkanPaket(props.row.id)">
+                                                Aktifkan </button>
+
                                         </div>
                                     </span>
 
