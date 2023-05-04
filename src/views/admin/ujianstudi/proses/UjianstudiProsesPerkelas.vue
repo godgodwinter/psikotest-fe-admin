@@ -519,13 +519,13 @@ const doCachingRedisPerKelas = async () => {
             </div>
             <!-- !PENGATURAN -->
             <div class="flex justify-start w-full space-x-2 content-center py-2">
-                <div class="w-64">
+                <!-- <div class="w-64">
                     <div class="flex justify-center">
                         <v-select class=" px-0 w-full mx-auto md:mx-0" :options="pilihPaket" v-model="inputCariPaket"
                             v-bind:class="{ disabled: false }"></v-select>
 
                     </div>
-                </div>
+                </div> -->
                 <div class="w-64 flex flex-col">
                     <div>
                         <VueDatePicker v-model="dataForm.tglBatasPengerjaan"></VueDatePicker>
@@ -537,6 +537,9 @@ const doCachingRedisPerKelas = async () => {
                             Apply</button>
                     </div>
                 </div>
+            </div>
+            <div>
+                <p>Catatan : aktifkan paket pada menu Paketsoal</p>
             </div>
             <div class="space-x-2 shadow-sm">
                 <button class="btn btn-sm btn-error p-2" @click="doDeleteProsesSiswaPerkelas()">

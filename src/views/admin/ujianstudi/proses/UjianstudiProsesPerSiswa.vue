@@ -133,7 +133,7 @@ const doResetWaktu = async (proses_detail_id) => {
     if (confirm("Apakah anda yakin mereset waktu data ini?")) {
 
         let dataFormSend = {
-            // nilaiAkhir_revisi: dataForm.value.nilaiAkhir_revisi,
+            siswa_id: siswa_id.value,
         }
         try {
             const response = await Api.post(`ujianstudi/proses/reset/${proses_detail_id}/waktu`, dataFormSend);
@@ -148,7 +148,7 @@ const doResetWaktu = async (proses_detail_id) => {
 const doResetSalah = async (proses_detail_id,) => {
     if (confirm("Apakah anda yakin mereset jawban salah dan waktu data ini?")) {
         let dataFormSend = {
-            // nilaiAkhir_revisi: dataForm.value.nilaiAkhir_revisi,
+            siswa_id: siswa_id.value,
         }
         try {
             const response = await Api.post(`ujianstudi/proses/reset/${proses_detail_id}/salah`, dataFormSend);
@@ -295,7 +295,7 @@ const doRefreshData = () => {
                                             <td>:</td>
                                             <td>{{ siswa.jk }}</td>
                                         </tr>
-                                    <tr>
+                                        <tr>
                                             <td>Sekolah</td>
                                             <td>:</td>
                                             <td>{{ siswa.sekolah_nama }}</td>
