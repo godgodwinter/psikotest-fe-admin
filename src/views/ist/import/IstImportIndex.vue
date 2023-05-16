@@ -1,10 +1,8 @@
 <script setup>
-import RadialProgressBar from "vue3-radial-progress";
 import { reactive, onMounted, ref, watch, computed } from "vue";
 import Api from "@/axios/axios";
-import axios from "axios";
+import ApiIst from "@/axios/axiosIst";
 import Toast from "@/components/lib/Toast";
-import { v4 as uuidv4 } from "uuid";
 import "ag-grid-community/styles/ag-grid.css"; // Core grid CSS, always needed
 import "ag-grid-community/styles/ag-theme-alpine.css"; // Optional theme CSS
 import moment from "moment/min/moment-with-locales";
@@ -237,6 +235,11 @@ const columns = [
         field: "ge",
         type: "Number",
     },
+    {
+        label: "siswa_id",
+        field: "siswa_id",
+        type: "Number",
+    },
 ];
 
 const doDelete = (index, nama) => {
@@ -255,185 +258,6 @@ const doDelete = (index, nama) => {
 }
 const kelas_id = ref(null);
 const sekolah_id = ref(null);
-
-//FETCHING DATA FROM WEB API LAMA
-const getDataFromApiUjianSertifikat = async (
-    username,
-    index = 0,
-    apiprobk_id = 0,
-) => {
-    try {
-        if (linkSertifikat.value) {
-            const response = await axios.post(
-                `${linkSertifikat.value}`,
-                {
-                    username: username,
-                },
-                {
-                    headers: {},
-                }
-            );
-            // console.log(response.data);
-            dataExcel.value[index].data_sertifikat = response.data;
-        } else {
-            Toast.babeng("Warning", "Link Sertifikat tidak ditemukan!");
-        }
-    } catch (error) {
-        console.error(error);
-    }
-};
-
-const getDataFromApiUjianDeteksi = async (
-    username,
-    index = 0,
-    apiprobk_id = 0,
-) => {
-    try {
-        if (linkDeteksi) {
-            const response = await axios.post(
-                `${linkDeteksi.value}`,
-                {
-                    username: username,
-                },
-                {
-                    headers: {},
-                }
-            );
-            // console.log(response);
-            dataExcel.value[index].data_deteksi = response.data;
-        }
-        else {
-            Toast.babeng("Warning", "Link Deteksi tidak ditemukan!")
-        }
-    } catch (error) {
-        // doProsesGetApiGagal(apiprobk_id, index);
-        // data.value[index].sertifikat = "gagal";
-        // Toast.danger("Warning", "Proses gagal");
-        console.error(error);
-    }
-};
-//FETCHING DATA FROM WEB API LAMA-END
-
-//SAVE DATA SERTIFIKAT DAN DETEKSI KE SERVER KITA
-const doStoreDataBackupSertifikat = async (d, index) => {
-    try {
-        const response = await Api.post("admin/apiprobk/api_backup", d);
-        // console.log(response.data);
-        // Toast.success("Success", "Data Berhasil ditambahkan!");
-        data.value[index].deteksi = "sudah";
-        diProses.value++;
-        return response.data;
-    } catch (error) {
-        diProses.value++;
-        data.value[index].deteksi = "gagal";
-        // Toast.danger("Warning", "Data gagal ditambahkan!");
-        console.error(error);
-    }
-};
-//SAVE DATA SERTIFIKAT DAN DETEKSI KE SERVER KITA-END
-
-const doPeriksaDariApiWebUjianLama = async () => {
-    // console.log(dataExcel.value);
-    if (dataExcel.value.length < 1) {
-        Toast.babeng("Warning", "Data tidak boleh kosong!");
-    } else {
-        if (sekolah_id.value) {
-            fn_getData_from_API();
-            // fn_Import_store_ke_db();
-        } else {
-            Toast.babeng("Sekolah Tidak boleh kosong!")
-        }
-    }
-}
-const doStoreKeWebBaru = async () => {
-    token_import.value = uuidv4();
-    // console.log(token_import.value);
-
-    // console.log(dataExcel.value);
-    if (dataExcel.value.length < 1) {
-        Toast.babeng("Warning", "Data tidak boleh kosong!");
-    } else {
-        if (sekolah_id.value) {
-            // fn_getData_from_API();
-            fn_Import_store_ke_db();
-        } else {
-            Toast.babeng("Sekolah Tidak boleh kosong!")
-        }
-    }
-}
-const fn_getData_from_API = async () => {
-    for (let index = 0; index < dataExcel.value.length; index++) {
-        const element = dataExcel.value[index];
-        console.log(element);
-        getDataFromApiUjianSertifikat(element.username, index);
-        getDataFromApiUjianDeteksi(element.username, index);
-        // fnApiprobkStore(index, element.username)
-
-    }
-}
-
-const fn_Import_store_ke_db = async () => {
-    if (confirm("Apakah anda yakin mengimport data ini?")) {
-        try {
-            completedSteps.value = 0;
-            // Toast.success("Success", "Data Berhasil dihapus!");
-            for (let index = 0; index < dataExcel.value.length; index++) {
-                const element = dataExcel.value[index];
-                console.log(element);
-                if (element.data_sertifikat && element.data_deteksi) {
-                    fnApiprobkStore(index, element.username, element.data_sertifikat, element.data_deteksi)
-                } else {
-                    dataExcel.value[index].status = 'Tidak disimpan';
-                    prosesGagal.value++;
-                    completedSteps.value++;
-                    dataExcel.value[index].tgl_import = "-";
-                }
-
-            }
-        } catch (error) {
-            console.error(error);
-        }
-    }
-}
-const token_import = ref(uuidv4());
-// console.log(token_import.value);
-const fnApiprobkStore = async (index, username, data_sertifikat, data_deteksi) => {
-
-    let dataStore = {
-        username,
-        kelas_id: kelas_id.value,
-        sekolah_id: sekolah_id.value,
-        data_sertifikat,
-        data_deteksi,
-        token_import: token_import.value
-    };
-    console.log(dataStore);
-    try {
-        const response = await Api.post(
-            `admin/secret/apiprobk`,
-            dataStore
-        );
-        if (response.success) {
-            dataExcel.value[index].status = 'Baru';
-            prosesBerhasil.value++
-            completedSteps.value++;
-            dataExcel.value[index].tgl_import = response.data.tgl_import;
-            // dataExcel.value[index].status_backup = response.data.status_backup;
-            // dataExcel.value[index].tgl_import = response.data.tgl_import;
-        } else {
-            dataExcel.value[index].status = 'Sudah Ada';
-            prosesGagal.value++;
-            completedSteps.value++;
-            dataExcel.value[index].tgl_import = response.data.tgl_import;
-            // dataExcel.value[index].status_backup = response.data.status_backup;
-            // dataExcel.value[index].tgl_import = response.data.tgl_import;
-        }
-
-    } catch (error) {
-        // Toast.danger("Warning", "Data gagal ditambahkan!");
-        console.error(error);
-    }
-}
 
 const id = null;
 const idTemp = ref(id);
@@ -499,20 +323,34 @@ const doApply = (sekolah, kelas) => {
     kelas_id.value = kelas
 }
 
-const fnPeriksaDataSertifikat = (index) => {
-    console.log(dataExcel.value[index].data_sertifikat);
-}
-const fnPeriksaDataDeteksi = (index) => {
-    console.log(dataExcel.value[index].data_deteksi);
-}
 
-const doStore = () => {
-    const dataForm = {
-        sekolah_id: sekolah_id.value,
-        kelas_id: kelas_id.value,
-        data: dataExcel.value
+const doStore = async () => {
+    if (sekolah_id.value) {
+
+        const dataForm = {
+            sekolah_id: sekolah_id.value,
+            kelas_id: kelas_id.value,
+            data: dataExcel.value
+        }
+        console.log(dataForm);
+        try {
+            const response = await ApiIst.post(
+                `ist/import`,
+                dataForm
+            );
+            // dataExcel.value = []
+            // console.log(response.data);
+            if (response.data) {
+                dataExcel.value = response.data;
+            }
+
+        } catch (error) {
+            // Toast.danger("Warning", "Data gagal ditambahkan!");
+            console.error(error);
+        }
+    } else {
+        Toast.danger("Pilih sekolah terlebih dahulu!")
     }
-    console.log(dataForm);
 }
 </script>
 <template>
@@ -520,6 +358,13 @@ const doStore = () => {
         <article class="prose lg:prose-sm">
             <h1>IMPORT DATA IST</h1>
         </article>
+        <div>
+            <RouterLink
+                :to="{ name: 'admin-sekolah-submenu-ist-import-migration', params: { sekolah_id: 0, kelas_id: 0 } }">
+                <button class="btn btn-sm ">
+                    Migrasi</button>
+            </RouterLink>
+        </div>
 
         <div>
             <div class="pt-0 px-0">
@@ -579,7 +424,7 @@ const doStore = () => {
                 Reset
             </button>
         </div>
-        <div class="w-full flex flex-wrap justify-center">
+        <!-- <div class="w-full flex flex-wrap justify-center">
             <div class="w-1/2 flex justify-center gap-10">
                 <div>
                     <radial-progress-bar :diameter="200" :completed-steps="completedSteps" :total-steps="totalSteps"
@@ -587,7 +432,6 @@ const doStore = () => {
                         <h2 class="font-bold text-2xl">
                             {{ completedSteps }} / {{ totalSteps }}
                         </h2>
-                        <!-- Your inner content here -->
                     </radial-progress-bar>
                 </div>
                 <div>
@@ -600,7 +444,7 @@ const doStore = () => {
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
         <div class="md:py-2 lg:flex flex-wrap gap-4">
             <div class="w-full lg:w-full">
                 <div class="bg-white shadow rounded-lg px-4 py-4">
