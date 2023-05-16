@@ -63,15 +63,17 @@ const getData = async () => {
 };
 getData();
 const doRollback = async (id) => {
-    try {
-        const dataForm = {
-            ist_migration_id: id
+    if (confirm("Apakah anda yakin ROLLBACK data ini? Data yang akan dihapus tidak bisa dikembalikan!")) {
+        try {
+            const dataForm = {
+                ist_migration_id: id
+            }
+            const response = await ApiIst.post(`/ist/import/rollback`, dataForm);
+            getData()
+            return response.data;
+        } catch (error) {
+            console.error(error);
         }
-        const response = await ApiIst.post(`/ist/import/rollback`, dataForm);
-        getData()
-        return response.data;
-    } catch (error) {
-        console.error(error);
     }
 };
 getData();

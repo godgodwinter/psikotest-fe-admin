@@ -72,22 +72,21 @@ const AdminSekolahRoutes = [
                 name: "admin-sekolah-submenu-ist",
                 component: () => import("@/views/ist/DataIstPerkelas.vue"),
               },
-              {
-                path: "/pages/admin/mastering/sekolah/:sekolah_id?/submenu/kelas/:kelas_id?/ist/import",
-                name: "admin-sekolah-submenu-ist-import",
-                component: () =>
-                  import("@/views/ist/import/IstImportIndex.vue"),
-              },
-              {
-                path: "/pages/admin/mastering/sekolah/:sekolah_id?/submenu/kelas/:kelas_id?/ist/import/migrasi",
-                name: "admin-sekolah-submenu-ist-import-migration",
-                component: () =>
-                  import("@/views/ist/import/IstImportIndex_migration.vue"),
-              },
               // ! DATA-IST-PROSES-END
             ],
           },
         ],
+      },
+      {
+        path: "/pages/admin/mastering/sekolah/:sekolah_id?/submenu/kelas/:kelas_id?/ist/import",
+        name: "admin-sekolah-submenu-ist-import",
+        component: () => import("@/views/ist/import/IstImportIndex.vue"),
+      },
+      {
+        path: "/pages/admin/mastering/sekolah/:sekolah_id?/submenu/kelas/:kelas_id?/ist/import/migrasi",
+        name: "admin-sekolah-submenu-ist-import-migration",
+        component: () =>
+          import("@/views/ist/import/IstImportIndex_migration.vue"),
       },
     ],
   },
