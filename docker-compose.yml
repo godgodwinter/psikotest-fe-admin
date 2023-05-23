@@ -1,7 +1,7 @@
 version: "3.8"
 services:
     viteapp:
-      restart: on-failure
+      restart: always
       build: .
       container_name: fe-admin
       ports:
