@@ -5,3 +5,4 @@ services:
       container_name: fe-admin
       ports:
         - '${APP_PORT}:${APP_PORT}'
+    restart: on-failure
