@@ -93,9 +93,14 @@ const columns = [
         type: "String",
     },
     {
+        label: "IQ",
+        field: "iq",
+        type: "Number",
+    },
+    {
         label: "Ist",
         field: "ist",
-        type: "String",
+        type: "Number",
     },
     {
         label: "wa",
@@ -265,32 +270,35 @@ getData();
                                         <span v-else-if="props.column.field == 'ist'">
                                             {{ props.row.ist ? "Ada" : "-" }}
                                         </span>
+                                        <span v-else-if="props.column.field == 'iq'">
+                                            {{ props.row.ist ? props.row.ist.iq_val : "-" }}
+                                        </span>
                                         <span v-else-if="props.column.field == 'wa'">
-                                            {{ props.row.ist ? props.row.ist.wa : "-" }}
+                                            {{ props.row.ist ? props.row.ist.wa_val : "-" }}
                                         </span>
                                         <span v-else-if="props.column.field == 'an'">
-                                            {{ props.row.ist ? props.row.ist.an : "-" }}
+                                            {{ props.row.ist ? props.row.ist.an_val : "-" }}
                                         </span>
                                         <span v-else-if="props.column.field == 'ra'">
-                                            {{ props.row.ist ? props.row.ist.ra : "-" }}
+                                            {{ props.row.ist ? props.row.ist.ra_val: "-" }}
                                         </span>
                                         <span v-else-if="props.column.field == 'zr'">
-                                            {{ props.row.ist ? props.row.ist.zr : "-" }}
+                                            {{ props.row.ist ? props.row.ist.zr_val : "-" }}
                                         </span>
                                         <span v-else-if="props.column.field == 'fa'">
-                                            {{ props.row.ist ? props.row.ist.fa : "-" }}
+                                            {{ props.row.ist ? props.row.ist.fa_val : "-" }}
                                         </span>
                                         <span v-else-if="props.column.field == 'wu'">
-                                            {{ props.row.ist ? props.row.ist.wu : "-" }}
+                                            {{ props.row.ist ? props.row.ist.wu_val : "-" }}
                                         </span>
                                         <span v-else-if="props.column.field == 'se'">
-                                            {{ props.row.ist ? props.row.ist.se : "-" }}
+                                            {{ props.row.ist ? props.row.ist.se_val : "-" }}
                                         </span>
                                         <span v-else-if="props.column.field == 'me'">
-                                            {{ props.row.ist ? props.row.ist.me : "-" }}
+                                            {{ props.row.ist ? props.row.ist.me_val : "-" }}
                                         </span>
                                         <span v-else-if="props.column.field == 'ge'">
-                                            {{ props.row.ist ? props.row.ist.ge : "-" }}
+                                            {{ props.row.ist ? props.row.ist.ge_val : "-" }}
                                         </span>
 
                                         <span v-else>
