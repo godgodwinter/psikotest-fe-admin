@@ -93,6 +93,11 @@ const columns = [
         type: "String",
     },
     {
+        label: "Umur",
+        field: "umur",
+        type: "Number",
+    },
+    {
         label: "IQ",
         field: "iq",
         type: "Number",
@@ -270,6 +275,9 @@ getData();
                                         <span v-else-if="props.column.field == 'ist'">
                                             {{ props.row.ist ? "Ada" : "-" }}
                                         </span>
+                                        <span v-else-if="props.column.field == 'umur'">
+                                            {{ props.row.ist ? props.row.ist.umur : "-" }}
+                                        </span>
                                         <span v-else-if="props.column.field == 'iq'">
                                             {{ props.row.ist ? props.row.ist.iq_val : "-" }}
                                         </span>
@@ -280,7 +288,7 @@ getData();
                                             {{ props.row.ist ? props.row.ist.an_val : "-" }}
                                         </span>
                                         <span v-else-if="props.column.field == 'ra'">
-                                            {{ props.row.ist ? props.row.ist.ra_val: "-" }}
+                                            {{ props.row.ist ? props.row.ist.ra_val : "-" }}
                                         </span>
                                         <span v-else-if="props.column.field == 'zr'">
                                             {{ props.row.ist ? props.row.ist.zr_val : "-" }}
