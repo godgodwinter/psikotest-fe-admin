@@ -214,7 +214,7 @@ const doCetakLess = (id = null, token = moment().format("YYYY-MM-DD")) => {
     );
     // }
 };
-const doCetakLess = (id = null, token = moment().format("YYYY-MM-DD")) => {
+const doCetakLess_tanpa_ttd = (id = null, token = moment().format("YYYY-MM-DD")) => {
     // if (id === null) {
     //     Toast.danger("Warning", "Data tidak valid!");
     // } else {
