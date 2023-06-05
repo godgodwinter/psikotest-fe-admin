@@ -18,6 +18,9 @@ const route = useRoute();
 const BASE_URL_CETAK = import.meta.env.VITE_API_URL_CETAK
     ? import.meta.env.VITE_API_URL_CETAK
     : "http://localhost:8000/";
+const VITE_API_FE_REACT = import.meta.env.VITE_API_FE_REACT
+    ? import.meta.env.VITE_API_FE_REACT
+    : "http://localhost:3500/";
 
 const sekolah_id = ref(route.params.sekolah_id)
 const kelas_id = ref(route.params.kelas_id)
@@ -193,6 +196,11 @@ const getData = async () => {
 };
 getData();
 
+const doCetakIst = () => {
+    window.open(
+        `${VITE_API_FE_REACT}ist/data/cetak/${getSekolahAktif.value.kelas_id}`
+    );
+}
 </script>
 <template>
     <span v-if="isLoading">
@@ -206,12 +214,14 @@ getData();
             <article class="prose lg:prose-sm">
                 <h1>UJIAN STUDI KELAS {{ kelas_nama }}</h1>
             </article>
-            <div>
+            <div class="space-x-2">
                 <RouterLink
                     :to="{ name: 'admin-sekolah-submenu-ist-import-migration', params: { sekolah_id: 0, kelas_id: 0 } }">
                     <button class="btn btn-sm ">
                         IMPORT DATA IST</button>
                 </RouterLink>
+                <button class="btn btn-sm btn-success" @click="doCetakIst()">
+                    Cetak</button>
             </div>
 
             <div class="w-full bg-base-100 shadow-sm rounded-lg py-4 px-4">
