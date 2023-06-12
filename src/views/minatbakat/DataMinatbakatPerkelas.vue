@@ -96,63 +96,68 @@ const columns = [
         type: "String",
     },
     {
-        label: "Umur",
-        field: "umur",
-        type: "Number",
+        label: "minatbakat",
+        field: "minatbakat",
+        type: "String",
     },
     {
-        label: "IQ",
-        field: "iq",
-        type: "Number",
-    },
-    {
-        label: "Ist",
-        field: "ist",
-        type: "Number",
-    },
-    {
-        label: "wa",
-        field: "wa",
-        type: "Number",
-    },
-    {
-        label: "an",
-        field: "an",
-        type: "Number",
-    },
-    {
-        label: "ra",
-        field: "ra",
-        type: "Number",
-    },
-    {
-        label: "zr",
-        field: "zr",
-        type: "Number",
-    },
-    {
-        label: "fa",
-        field: "fa",
-        type: "Number",
-    },
-    {
-        label: "wu",
-        field: "wu",
-        type: "Number",
-    },
-    {
-        label: "se",
-        field: "se",
+        label: "ou",
+        field: "mb_ou",
         type: "Number",
     },
     {
         label: "me",
-        field: "me",
+        field: "mb_me",
         type: "Number",
     },
     {
-        label: "ge",
-        field: "ge",
+        label: "co",
+        field: "mb_co",
+        type: "Number",
+    },
+    {
+        label: "sc",
+        field: "mb_sc",
+        type: "Number",
+    },
+    {
+        label: "pc",
+        field: "mb_pc",
+        type: "Number",
+    },
+    {
+        label: "as",
+        field: "mb_as",
+        type: "Number",
+    },
+    {
+        label: "li",
+        field: "mb_li",
+        type: "Number",
+    },
+    {
+        label: "mu",
+        field: "mb_mu",
+        type: "Number",
+    },
+    {
+        label: "ss",
+        field: "mb_ss",
+        type: "Number",
+    },
+    {
+        label: "cl",
+        field: "mb_cl",
+        type: "Number",
+    },
+    {
+        label: "pr",
+        field: "mb_pr",
+        type: "Number",
+    },
+    {
+        label: "md",
+        field: "mb_md",
         type: "Number",
     },
 ];
@@ -185,7 +190,7 @@ const doPilihKelas = async () => {
 const getData = async () => {
     try {
         isLoading.value = true;
-        const response = await ApiIst.get(`/ist/kelas/${getSekolahAktif.value.kelas_id}`);
+        const response = await ApiIst.get(`/minatbakat/kelas/${getSekolahAktif.value.kelas_id}`);
         data.value = response.data;
         isLoading.value = false;
     } catch (error) {
@@ -198,7 +203,7 @@ getData();
 
 const doCetakIst = () => {
     window.open(
-        `${VITE_API_FE_REACT}ist/data/cetak/${getSekolahAktif.value.kelas_id}`
+        `${VITE_API_FE_REACT}minatbakat/data/cetak/${getSekolahAktif.value.kelas_id}`
     );
 }
 </script>
@@ -211,8 +216,8 @@ const doCetakIst = () => {
     </span>
     <span v-else>
         <div>
-            <article class="prose lg:prose-sm">
-                <h1>DATA IST KELAS {{ kelas_nama }}</h1>
+            <article class="prose lg:prose-sm max-w-screen-lg">
+                <h1>DATA MINAT & BAKAT KELAS {{ kelas_nama }}</h1>
             </article>
             <div class="space-x-2">
                 <RouterLink
@@ -282,41 +287,44 @@ const doCetakIst = () => {
                                                 </button>
                                             </div> -->
                                         </span>
-                                        <span v-else-if="props.column.field == 'ist'">
-                                            {{ props.row.ist ? "Ada" : "-" }}
+                                        <span v-else-if="props.column.field == 'minatbakat'">
+                                            {{ props.row.minatbakat ? "Ada" : "-" }}
                                         </span>
-                                        <span v-else-if="props.column.field == 'umur'">
-                                            {{ props.row.ist ? props.row.ist.umur : "-" }}
+                                        <span v-else-if="props.column.field == 'mb_ou'">
+                                            {{ props.row.minatbakat ? props.row.minatbakat.mb_ou_val : "-" }}
                                         </span>
-                                        <span v-else-if="props.column.field == 'iq'">
-                                            {{ props.row.ist ? props.row.ist.iq_val : "-" }}
+                                        <span v-else-if="props.column.field == 'mb_me'">
+                                            {{ props.row.minatbakat ? props.row.minatbakat.mb_me_val : "-" }}
                                         </span>
-                                        <span v-else-if="props.column.field == 'wa'">
-                                            {{ props.row.ist ? props.row.ist.wa_val : "-" }}
+                                        <span v-else-if="props.column.field == 'mb_co'">
+                                            {{ props.row.minatbakat ? props.row.minatbakat.mb_co_val : "-" }}
                                         </span>
-                                        <span v-else-if="props.column.field == 'an'">
-                                            {{ props.row.ist ? props.row.ist.an_val : "-" }}
+                                        <span v-else-if="props.column.field == 'mb_sc'">
+                                            {{ props.row.minatbakat ? props.row.minatbakat.mb_sc_val : "-" }}
                                         </span>
-                                        <span v-else-if="props.column.field == 'ra'">
-                                            {{ props.row.ist ? props.row.ist.ra_val : "-" }}
+                                        <span v-else-if="props.column.field == 'mb_pc'">
+                                            {{ props.row.minatbakat ? props.row.minatbakat.mb_pc_val : "-" }}
                                         </span>
-                                        <span v-else-if="props.column.field == 'zr'">
-                                            {{ props.row.ist ? props.row.ist.zr_val : "-" }}
+                                        <span v-else-if="props.column.field == 'mb_as'">
+                                            {{ props.row.minatbakat ? props.row.minatbakat.mb_as_val : "-" }}
                                         </span>
-                                        <span v-else-if="props.column.field == 'fa'">
-                                            {{ props.row.ist ? props.row.ist.fa_val : "-" }}
+                                        <span v-else-if="props.column.field == 'mb_li'">
+                                            {{ props.row.minatbakat ? props.row.minatbakat.mb_li_val : "-" }}
                                         </span>
-                                        <span v-else-if="props.column.field == 'wu'">
-                                            {{ props.row.ist ? props.row.ist.wu_val : "-" }}
+                                        <span v-else-if="props.column.field == 'mb_mu'">
+                                            {{ props.row.minatbakat ? props.row.minatbakat.mb_mu_val : "-" }}
                                         </span>
-                                        <span v-else-if="props.column.field == 'se'">
-                                            {{ props.row.ist ? props.row.ist.se_val : "-" }}
+                                        <span v-else-if="props.column.field == 'mb_ss'">
+                                            {{ props.row.minatbakat ? props.row.minatbakat.mb_ss_val : "-" }}
                                         </span>
-                                        <span v-else-if="props.column.field == 'me'">
-                                            {{ props.row.ist ? props.row.ist.me_val : "-" }}
+                                        <span v-else-if="props.column.field == 'mb_cl'">
+                                            {{ props.row.minatbakat ? props.row.minatbakat.mb_cl_val : "-" }}
                                         </span>
-                                        <span v-else-if="props.column.field == 'ge'">
-                                            {{ props.row.ist ? props.row.ist.ge_val : "-" }}
+                                        <span v-else-if="props.column.field == 'mb_pr'">
+                                            {{ props.row.minatbakat ? props.row.minatbakat.mb_pr_val : "-" }}
+                                        </span>
+                                        <span v-else-if="props.column.field == 'mb_md'">
+                                            {{ props.row.minatbakat ? props.row.minatbakat.mb_md_val : "-" }}
                                         </span>
 
                                         <span v-else>

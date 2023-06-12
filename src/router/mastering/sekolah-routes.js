@@ -73,6 +73,14 @@ const AdminSekolahRoutes = [
                 component: () => import("@/views/ist/DataIstPerkelas.vue"),
               },
               // ! DATA-IST-PROSES-END
+              // ! DATA-MINATBAKAT-PROSES
+              {
+                path: "/pages/admin/mastering/sekolah/:sekolah_id/submenu/kelas/:kelas_id?/minatbakat",
+                name: "admin-sekolah-submenu-minatbakat",
+                component: () =>
+                  import("@/views/minatbakat/DataMinatbakatPerkelas.vue"),
+              },
+              // ! DATA-MINATBAKAT-PROSES-END
             ],
           },
         ],

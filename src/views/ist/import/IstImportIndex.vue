@@ -99,6 +99,18 @@ function populateGrid(workbook) {
         M: 'se',
         N: 'me',
         O: 'ge',
+        P: 'mb_ou',
+        Q: 'mb_me',
+        R: 'mb_co',
+        S: 'mb_sc',
+        T: 'mb_pc',
+        U: 'mb_as',
+        V: 'mb_li',
+        W: 'mb_mu',
+        X: 'mb_ss',
+        Y: 'mb_cl',
+        Z: 'mb_pr',
+        AA: 'mb_md',
     };
 
     var rowData = [];
@@ -240,6 +252,66 @@ const columns = [
         field: "siswa_id",
         type: "Number",
     },
+    {
+        label: "mb_out",
+        field: "mb_out",
+        type: "Number",
+    },
+    {
+        label: "mb_me",
+        field: "mb_me",
+        type: "Number",
+    },
+    {
+        label: "mb_co",
+        field: "mb_co",
+        type: "Number",
+    },
+    {
+        label: "mb_sc",
+        field: "mb_sc",
+        type: "Number",
+    },
+    {
+        label: "mb_pc",
+        field: "mb_pc",
+        type: "Number",
+    },
+    {
+        label: "mb_as",
+        field: "mb_as",
+        type: "Number",
+    },
+    {
+        label: "mb_li",
+        field: "mb_li",
+        type: "Number",
+    },
+    {
+        label: "mb_mu",
+        field: "mb_mu",
+        type: "Number",
+    },
+    {
+        label: "mb_ss",
+        field: "mb_ss",
+        type: "Number",
+    },
+    {
+        label: "mb_cl",
+        field: "mb_cl",
+        type: "Number",
+    },
+    {
+        label: "mb_pr",
+        field: "mb_pr",
+        type: "Number",
+    },
+    {
+        label: "mb_md",
+        field: "mb_md",
+        type: "Number",
+    },
 ];
 
 const doDelete = (index, nama) => {
@@ -354,7 +426,7 @@ const doStore = async () => {
 }
 </script>
 <template>
-    <div>
+    <div class="px-2">
         <article class="prose lg:prose-sm">
             <h1>IMPORT DATA IST</h1>
         </article>
@@ -368,7 +440,7 @@ const doStore = async () => {
 
         <div>
             <div class="pt-0 px-0">
-                <div class="w-full mx-0">
+                <div class="w-full mx-0 lg:w-10/12">
                     <div class="bg-white rounded-lg p-0 sm:p-6 xl:p-0">
                         <div class="grid md:grid-cols-2 gap-2">
                             <div>
@@ -445,9 +517,9 @@ const doStore = async () => {
                 </div>
             </div>
         </div> -->
-        <div class="md:py-2 lg:flex flex-wrap gap-4">
-            <div class="w-full lg:w-full">
-                <div class="bg-white shadow rounded-lg px-4 py-4">
+        <div class="md:py-2 lg:flex flex-wrap gap-4 ">
+            <div class="w-full lg:w-10/12">
+                <div class="bg-white shadow rounded-lg px-4 py-4 ">
                     <div v-if="dataExcel">
                         <vue-good-table :line-numbers="true" :columns="columns" :rows="dataExcel" :search-options="{
                             enabled: true,
