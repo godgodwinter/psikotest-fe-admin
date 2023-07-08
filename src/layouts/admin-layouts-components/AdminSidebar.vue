@@ -60,7 +60,7 @@ const doLogout = async () => {
                         <li class="lg:w-full py-0">
                             <h3
                                 class="text-base-content font-bold rounded-lg flex items-center pt-4  group hover:link underline">
-                                UJIAN STUDI
+                                UJIAN STUDI V2
                             </h3>
                         </li>
                         <li class="lg:w-full py-0" :class="[pagesActive == 'ujianstudi-banksoal' ? pagesActiveClass : '']">
@@ -84,6 +84,12 @@ const doLogout = async () => {
                                 </svg>
                                 <span class="ml-3">Paketsoal Ujian Studi </span>
                             </router-link>
+                        </li>
+                        <li class="lg:w-full py-0">
+                            <h3
+                                class="text-base-content font-bold rounded-lg flex items-center pt-4  group hover:link underline">
+                                UJIAN STUDI V3 (full mongo)
+                            </h3>
                         </li>
                         <li class="lg:w-full py-0">
                             <h3

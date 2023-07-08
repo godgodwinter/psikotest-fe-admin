@@ -17,5 +17,5 @@ import AdminSidebar from "./admin-layouts-components/AdminSidebar.vue";
                 </main>
             </div>
         </div>
-</div>
+    </div>
 </template>

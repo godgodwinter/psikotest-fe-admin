@@ -122,7 +122,7 @@ function populateGrid(workbook) {
     while (worksheet['A' + rowIndex]) {
         var row = {};
         Object.keys(columns).forEach(function (column) {
-            row[columns[column]] = worksheet[column + rowIndex].w;
+            row[columns[column]] = worksheet[column + rowIndex]?.w;
         });
 
         rowData.push(row);
