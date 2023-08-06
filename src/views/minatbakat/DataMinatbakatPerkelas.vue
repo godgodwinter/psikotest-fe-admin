@@ -206,6 +206,11 @@ const doCetakIst = () => {
         `${VITE_API_FE_REACT}minatbakat/data/cetak/${getSekolahAktif.value.kelas_id}`
     );
 }
+const doCetakIstV2 = () => {
+    window.open(
+        `${VITE_API_FE_REACT}minatbakat/data/cetak/${getSekolahAktif.value.kelas_id}/v2`
+    );
+}
 </script>
 <template>
     <span v-if="isLoading">
@@ -223,10 +228,12 @@ const doCetakIst = () => {
                 <RouterLink
                     :to="{ name: 'admin-sekolah-submenu-ist-import-migration', params: { sekolah_id: 0, kelas_id: 0 } }">
                     <button class="btn btn-sm ">
-                        IMPORT DATA IST</button>
+                        IMPORT DATA IST/MINATBAKAT</button>
                 </RouterLink>
                 <button class="btn btn-sm btn-success" @click="doCetakIst()">
                     Cetak</button>
+                <button class="btn btn-sm btn-success" @click="doCetakIstV2()">
+                    Cetak V2</button>
             </div>
 
             <div class="w-full bg-base-100 shadow-sm rounded-lg py-4 px-4">

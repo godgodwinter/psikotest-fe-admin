@@ -46,7 +46,9 @@ const getData = async () => {
         const response = await Api.get(`/ujianstudi/proses/sekolah/${sekolah_id.value}/kelas/${kelas_id.value}/siswa/${siswa_id.value}`);
         siswa.value = response.siswa;
         data.value = response.data;
-
+        // console.log('====================================');
+        // console.log(data.value[0]?.soal_jml);
+        // console.log('====================================');
         await getDataHasil();
         isLoading.value = false;
         return response.data;
@@ -326,14 +328,17 @@ const doRefreshData = () => {
             </div>
             <div v-if="data">
                 <div class="w-full lg:w-full">
-                    <div class="bg-white shadow rounded-lg px-4 py-4">
+                    <div class="bg-white shadow rounded-lg px-4 py-4" v-if="data[0]?.soal_jml">
+
                         <div v-if="data">
                             <vue-good-table :line-numbers="true" :columns="columns" :rows="data" :search-options="{
                                 enabled: true,
-                            }" :pagination-options="{
-    enabled: true,
-    perPageDropdown: [50, 100, 150, 200],
-}" styleClass="vgt-table striped bordered condensed" class="py-0">
+                            }
+                                " :pagination-options="{
+        enabled: true,
+        perPageDropdown: [50, 100, 150, 200],
+    }
+        " styleClass="vgt-table striped bordered condensed" class="py-0">
                                 <template #table-actions>
                                     <div class="space-x-1 space-y-1 gap-1">
                                         <button class="btn btn-sm btn-secondary tooltip" data-tip="Refresh Data"
@@ -383,7 +388,8 @@ const doRefreshData = () => {
                 <div class="w-full lg:w-full py-2">
                     <div class="bg-white shadow rounded-lg px-4 py-4">
 
-                        <div class="md:py-2 px-4 lg:flex flex-wrap gap-4" v-for="item, index in dataUjian" :key="item.id">
+                        <div class="md:py-2 px-4 lg:flex flex-wrap gap-4" v-for=" item, index  in  dataUjian "
+                            :key="item.id">
 
                             <p class="font-bold "> {{ index + 1 }}. {{ item.aspek_nama }}
                                 : {{ item.aspek_avg }} - {{ fn_studi_ket(item.aspek_avg) }} ( {{
@@ -395,7 +401,7 @@ const doRefreshData = () => {
                                     <div class="overflow-x-auto">
                                         <table class="table table-compact">
                                             <tbody>
-                                                <span v-for="mapel, i in item.aspek_detail " :key="mapel.id">
+                                                <span v-for=" mapel, i  in  item.aspek_detail  " :key="mapel.id">
                                                     <tr v-if="mapel.status_tampil === 'Aktif'">
                                                         <td class="whitespace-nowrap w-1/12">
                                                             <label for="modal-revisi" class="btn"
@@ -469,7 +475,7 @@ const doRefreshData = () => {
                             <div class="overflow-x-auto">
                                 <table class="table table-compact">
                                     <tbody>
-                                        <tr v-for="item, i in dataMinatbidangstudi.slice(0, 5)" :key="item.id">
+                                        <tr v-for=" item, i  in  dataMinatbidangstudi.slice(0, 5) " :key="item.id">
                                             <td class="whitespace-nowrap w-1/12">{{ i + 1 }}</td>
                                             <td class="whitespace-nowrap w-3/12 text-left"> {{
                                                 item.aspek_detail_nama
