@@ -201,6 +201,11 @@ const doCetakIst = () => {
         `${VITE_API_FE_REACT}ist/data/cetak/${getSekolahAktif.value.kelas_id}`
     );
 }
+const doCetakIstJurusan = (ttd) => {
+    window.open(
+        `${VITE_API_FE_REACT}ist/jurusan/cetak/${getSekolahAktif.value.kelas_id}/${ttd}`
+    );
+}
 </script>
 <template>
     <span v-if="isLoading">
@@ -222,6 +227,10 @@ const doCetakIst = () => {
                 </RouterLink>
                 <button class="btn btn-sm btn-success" @click="doCetakIst()">
                     Cetak</button>
+                <button class="btn btn-sm btn-secondary" @click="doCetakIstJurusan('true')">
+                    Cetak FAKULTAS DENGAN TTD</button>
+                <button class="btn btn-sm btn-secondary" @click="doCetakIstJurusan('false')">
+                    Cetak FAKULTAS tanpa TTD</button>
             </div>
 
             <div class="w-full bg-base-100 shadow-sm rounded-lg py-4 px-4">
