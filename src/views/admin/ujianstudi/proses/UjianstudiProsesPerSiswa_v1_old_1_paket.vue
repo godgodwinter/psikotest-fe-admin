@@ -475,7 +475,7 @@ const doRefreshData = () => {
                             <div class="overflow-x-auto">
                                 <table class="table table-compact">
                                     <tbody>
-                                        <!-- <tr v-for=" item, i  in  dataMinatbidangstudi.slice(0, 5) " :key="item.id">
+                                        <tr v-for=" item, i  in  dataMinatbidangstudi.slice(0, 5) " :key="item.id">
                                             <td class="whitespace-nowrap w-1/12">{{ i + 1 }}</td>
                                             <td class="whitespace-nowrap w-3/12 text-left"> {{
                                                 item?.aspek_detail_nama
@@ -494,7 +494,7 @@ const doRefreshData = () => {
                                                 }}
                                             </td>
 
-                                        </tr> -->
+                                        </tr>
 
                                     </tbody>
                                 </table>
@@ -504,7 +504,7 @@ const doRefreshData = () => {
                 </div>
 
 
-                <!-- <p class="indent-8 py-4">Sedangkan minat Subyek untuk mempelajari dibidang studi yang disukai dan
+                <p class="indent-8 py-4">Sedangkan minat Subyek untuk mempelajari dibidang studi yang disukai dan
                     terkuat yaitu
                     <span class="font-bold"> {{ dataMinatbidangstudi[0]?.aspek_detail_nama }},
                         {{
@@ -529,7 +529,7 @@ const doRefreshData = () => {
 }} 3.{{
     dataMinatbidangstudi[dataMinatbidangstudi.length - 3]?.aspek_detail_nama
 }}</span>
-                </p> -->
+                </p>
 
             </div>
 

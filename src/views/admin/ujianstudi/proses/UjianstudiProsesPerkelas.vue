@@ -13,6 +13,9 @@ import moment from "moment/min/moment-with-locales";
 import localization from "moment/locale/id";
 moment.updateLocale("id", localization);
 
+const VITE_API_FE_REACT = import.meta.env.VITE_API_FE_REACT
+    ? import.meta.env.VITE_API_FE_REACT
+    : "http://localhost:3500/";
 
 const BASE_URL = import.meta.env.VITE_API_URL;
 const router = useRouter();
@@ -268,6 +271,29 @@ const getDataPaket = async () => {
 };
 getDataPaket();
 
+const paketsoal_aktif = ref(null);
+// !get paketsoal_aktif dari redis
+const getPaketAktif = async (id) => {
+    let dataFormSend = {}
+    try {
+        isLoading.value = true;
+        const response = await Api.get(`redis/studiv2/paketsoal_aktif/get/less`, dataFormSend);
+        if (response?.data) {
+            paketsoal_aktif.value = response.data;
+        } else {
+            paketsoal_aktif.value = null;
+        }
+        // console.log('====================================');
+        // console.log(paketsoal_aktif.value);
+        // console.log('====================================');
+        isLoading.value = false;
+    } catch (error) {
+        isLoading.value = false;
+        isError.value = true;
+        console.error(error);
+    }
+};
+getPaketAktif();
 
 const doPilihPaket = () => {
     // console.log('====================================');
@@ -282,18 +308,20 @@ const doPilihPaket = () => {
 }
 
 
-
 const doGenerateSiswa = async (id, index) => {
     if (confirm("Apakah anda yakin generate data ini?")) {
         // console.log('====================================');
         // console.log(moment(adminPagesStore.get_ujianstudi_pengaturan.tgl_ujian).format("YYYY-MM-DD HH:mm:ss"));
         // console.log('====================================');
+        console.log('====================================');
+        console.log(paketsoal_aktif.value.id);
+        console.log('====================================');
         let dataFormSend = {
             tgl_ujian: moment(adminPagesStore.get_ujianstudi_pengaturan.tgl_ujian).format("YYYY-MM-DD HH:mm:ss"),
         }
         try {
             isLoading.value = true;
-            const response = await Api.post(`ujianstudi/proses/sekolah/${sekolah_id.value}/kelas/${getSekolahAktif.value.kelas_id}/siswa/${id}/generate/${adminPagesStore.get_ujianstudi_pengaturan.paketsoal_id}`, dataFormSend);
+            const response = await Api.post(`ujianstudi/proses/sekolah/${sekolah_id.value}/kelas/${getSekolahAktif.value.kelas_id}/siswa/${id}/generate/${paketsoal_aktif.value.id}`, dataFormSend);
             console.log('====================================');
             console.log(response?.data);
             console.log('====================================');
@@ -329,7 +357,7 @@ const doGenerateSiswaPerkelas = async (id, index) => {
         }
         try {
             isLoading.value = true;
-            const response = await Api.post(`ujianstudi/proses/sekolah/${sekolah_id.value}/kelas/${getSekolahAktif.value.kelas_id}/generate/${adminPagesStore.get_ujianstudi_pengaturan.paketsoal_id}`, dataFormSend);
+            const response = await Api.post(`ujianstudi/proses/sekolah/${sekolah_id.value}/kelas/${getSekolahAktif.value.kelas_id}/generate/${paketsoal_aktif.value.id}`, dataFormSend);
             Toast.babeng("Berhasil", 'Data berhasil digenerate!');
             getData();
         } catch (error) {
@@ -501,6 +529,11 @@ const doCachingRedisPerKelas = async () => {
     }
 };
 
+const doCetakReact = (ttd) => {
+    window.open(
+        `${VITE_API_FE_REACT}lintasstudi/v1/a/data/cetak/${getSekolahAktif.value.kelas_id}/${ttd}`
+    );
+}
 </script>
 <template>
     <span v-if="isLoading">
@@ -612,6 +645,30 @@ const doCachingRedisPerKelas = async () => {
 
                     </button>
                 </div>
+            </div>
+            <div class="space-x-2 space-y-0 shadow-sm flex justify-start ">
+
+                <div class="space-x-2 space-y-2 shadow-sm py-1">
+                    <button class="btn btn-sm btn-success tooltip" data-tip="CETAK Hasil React"
+                        @click="doCetakReact('true')">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
+                        </svg>
+                    </button>
+                </div>
+                <div class="space-x-2 space-y-2 shadow-sm py-1">
+                    <button class="btn btn-sm btn-success tooltip" data-tip="CETAK Hasil React tanpa ttd"
+                        @click="doCetakReact('false')">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
+                        </svg>
+                    </button>
+                </div>
+
             </div>
             <!-- !PENGATURAN-END -->
             <span v-if="isLoading">
