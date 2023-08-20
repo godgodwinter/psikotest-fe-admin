@@ -114,6 +114,11 @@ const columns = [
         field: "prefix",
         type: "String",
     },
+    {
+        label: "ID",
+        field: "id",
+        type: "number",
+    },
 ];
 
 const getData = async () => {
