@@ -44,7 +44,7 @@ const AlertFailed = defineAsyncComponent(() =>
     import('@/components/alert/AlertFailed.vue')
 )
 
-const data = ref();
+const data = ref([]);
 const isLoading = ref(true);
 const isError = ref(false);
 
@@ -186,7 +186,14 @@ const getData = async () => {
     try {
         isLoading.value = true;
         const response = await ApiIst.get(`/ist/kelas/${getSekolahAktif.value.kelas_id}`);
-        data.value = response.data;
+        // data.value = response.data;
+        const res = [];
+        for (const item of response.data) {
+            if (item) {
+                data.value.push(item);
+            }
+        }
+        // console.log(data.value);
         isLoading.value = false;
     } catch (error) {
         isLoading.value = false;
