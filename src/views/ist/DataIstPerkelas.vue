@@ -211,7 +211,7 @@ const doCetakIst = () => {
 }
 const doCetakIstJurusan = (ttd) => {
     window.open(
-        `${VITE_API_FE_REACT}ist/jurusan/v2/cetak/${getSekolahAktif.value.kelas_id}/${ttd}`
+        `${VITE_API_FE_REACT}ist/jurusan/v3/cetak/${getSekolahAktif.value.kelas_id}/${ttd}`
     );
 }
 </script>
