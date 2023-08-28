@@ -236,9 +236,9 @@ const doCetakIstJurusan = (ttd) => {
                 <button class="btn btn-sm btn-success" @click="doCetakIst()">
                     Cetak</button>
                 <button class="btn btn-sm btn-secondary" @click="doCetakIstJurusan('true')">
-                    Cetak FAKULTAS DENGAN TTD</button>
-                <button class="btn btn-sm btn-secondary" @click="doCetakIstJurusan('false')">
-                    Cetak FAKULTAS tanpa TTD</button>
+                    Cetak FAKULTAS v3</button>
+                <!-- <button class="btn btn-sm btn-secondary" @click="doCetakIstJurusan('false')">
+                    Cetak FAKULTAS tanpa TTD</button> -->
             </div>
 
             <div class="w-full bg-base-100 shadow-sm rounded-lg py-4 px-4">
