@@ -8,3 +8,9 @@ docker-compose build
 
 # Menjalankan docker-compose up dalam mode detached (-d)
 docker-compose up -d
+
+# !tambhakan persmision dahulu pada osnya 
+# chmod +x docker-actions.sh
+
+# dan jalankan 
+# ./docker-restart.sh
