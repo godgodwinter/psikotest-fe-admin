@@ -189,6 +189,7 @@ const doPilihKelas = async () => {
 
 const getData = async () => {
     try {
+        data.value = []
         isLoading.value = true;
         const response = await ApiIst.get(`/minatbakat/kelas/${getSekolahAktif.value.kelas_id}`);
         // data.value = response.data;
