@@ -482,17 +482,17 @@ const doStore = async () => {
             kelas_id: kelas_id.value,
             data: dataExcel.value
         }
-        console.log(dataForm);
+        // console.log(dataForm);
         try {
-            // const response = await ApiIst.post(
-            //     `ist/import`,
-            //     dataForm
-            // );
-            // // dataExcel.value = []
-            // // console.log(response.data);
-            // if (response.data) {
-            //     dataExcel.value = response.data;
-            // }
+            const response = await ApiIst.post(
+                `ist/import`,
+                dataForm
+            );
+            // dataExcel.value = []
+            // console.log(response.data);
+            if (response.data) {
+                dataExcel.value = response.data;
+            }
 
         } catch (error) {
             // Toast.danger("Warning", "Data gagal ditambahkan!");
