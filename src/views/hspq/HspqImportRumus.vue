@@ -7,6 +7,7 @@ import "ag-grid-community/styles/ag-grid.css"; // Core grid CSS, always needed
 import "ag-grid-community/styles/ag-theme-alpine.css"; // Optional theme CSS
 import moment from "moment/min/moment-with-locales";
 import localization from "moment/locale/id";
+import { Field, Form } from "vee-validate";
 
 const VITE_API_TS_IST_BASE_URL_ = import.meta.env.VITE_API_TS_IST_BASE_URL_
     ? import.meta.env.VITE_API_TS_IST_BASE_URL_
@@ -22,6 +23,7 @@ const linkSertifikat = ref(null);
 
 
 const dataDetail = ref({
+    kode: "",
     nama: "",
     nomeridentitas: "",
     alamat: "",
@@ -84,46 +86,20 @@ function populateGrid(workbook) {
 
     // we expect the following columns to be present
     var columns = {
-        A: 'no',
-        B: 'kelas',
-        C: 'no_induk',
-        D: 'nama',
-        E: 'jk',
-        F: 'umur',
-        G: 'wa',
-        H: 'an',
-        I: 'ra',
-        J: 'zr',
-        K: 'fa',
-        L: 'wu',
-        M: 'se',
-        N: 'me',
-        O: 'ge',
-        P: 'mb_ou',
-        Q: 'mb_me',
-        R: 'mb_co',
-        S: 'mb_sc',
-        T: 'mb_pc',
-        U: 'mb_as',
-        V: 'mb_li',
-        W: 'mb_mu',
-        X: 'mb_ss',
-        Y: 'mb_cl',
-        Z: 'mb_pr',
-        AA: 'mb_md',
-        AB: 'hspq_a',
-        AC: 'hspq_c',
-        AD: 'hspq_d',
-        AE: 'hspq_e',
-        AF: 'hspq_f',
-        AG: 'hspq_g',
-        AH: 'hspq_h',
-        AI: 'hspq_i',
-        AJ: 'hspq_j',
-        AK: 'hspq_o',
-        AL: 'hspq_q2',
-        AM: 'hspq_q3',
-        AN: 'hspq_q4',
+        A: 'score',
+        B: 'kn_persen',
+        C: 'kn_keterangan_singkatan',
+        D: 'kn_keterangan_aspek_positif',
+        E: 'kn_keterangan_aspek_negatif',
+        F: 'kn_keterangan_sikap_positif',
+        G: 'kn_keterangan_sikap_negatif',
+        // H: '',
+        I: 'kr_persen',
+        J: 'kr_keterangan_singkatan',
+        K: 'kr_keterangan_aspek_positif',
+        L: 'kr_keterangan_aspek_negatif',
+        M: 'kr_keterangan_sikap_positif',
+        N: 'kr_keterangan_sikap_negatif',
     };
 
     var rowData = [];
@@ -143,11 +119,6 @@ function populateGrid(workbook) {
         rowIndex++;
     }
 
-    // finally, set the imported rowData into the grid
-    // gridOptions.api.setRowData(rowData);
-    // console.log('====================================');
-    // console.log(rowData);
-    // console.log('====================================');
     dataExcel.value = rowData;
     totalSteps.value = dataExcel.value.length;
 }
@@ -211,184 +182,69 @@ const columns = [
         thClass: "text-center",
     },
     {
-        label: "Nama",
-        field: "nama",
+        label: "score",
+        field: "score",
         type: "String",
     },
     {
-        label: "wa",
-        field: "wa",
+        label: "kn_persen",
+        field: "kn_persen",
         type: "Number",
     },
     {
-        label: "an",
-        field: "an",
+        label: "kn_keterangan_singkatan",
+        field: "kn_keterangan_singkatan",
+        type: "String",
+    },
+    {
+        label: "kn_keterangan_aspek_positif",
+        field: "kn_keterangan_aspek_positif",
+        type: "String",
+    },
+    {
+        label: "kn_keterangan_aspek_negatif",
+        field: "kn_keterangan_aspek_negatif",
+        type: "String",
+    },
+    {
+        label: "kn_keterangan_sikap_positif",
+        field: "kn_keterangan_sikap_positif",
+        type: "String",
+    },
+    {
+        label: "kn_keterangan_sikap_negatif",
+        field: "kn_keterangan_sikap_negatif",
+        type: "String",
+    },
+    {
+        label: "kr_persen",
+        field: "kr_persen",
         type: "Number",
     },
     {
-        label: "ra",
-        field: "ra",
-        type: "Number",
+        label: "kr_keterangan_singkatan",
+        field: "kr_keterangan_singkatan",
+        type: "String",
     },
     {
-        label: "zr",
-        field: "zr",
-        type: "Number",
+        label: "kr_keterangan_aspek_positif",
+        field: "kr_keterangan_aspek_positif",
+        type: "String",
     },
     {
-        label: "fa",
-        field: "fa",
-        type: "Number",
+        label: "kr_keterangan_aspek_negatif",
+        field: "kr_keterangan_aspek_negatif",
+        type: "String",
     },
     {
-        label: "wu",
-        field: "wu",
-        type: "Number",
+        label: "kr_keterangan_sikap_positif",
+        field: "kr_keterangan_sikap_positif",
+        type: "String",
     },
     {
-        label: "se",
-        field: "se",
-        type: "Number",
-    },
-    {
-        label: "me",
-        field: "me",
-        type: "Number",
-    },
-    {
-        label: "ge",
-        field: "ge",
-        type: "Number",
-    },
-    {
-        label: "siswa_id",
-        field: "siswa_id",
-        type: "Number",
-    },
-    {
-        label: "mb_out",
-        field: "mb_out",
-        type: "Number",
-    },
-    {
-        label: "mb_me",
-        field: "mb_me",
-        type: "Number",
-    },
-    {
-        label: "mb_co",
-        field: "mb_co",
-        type: "Number",
-    },
-    {
-        label: "mb_sc",
-        field: "mb_sc",
-        type: "Number",
-    },
-    {
-        label: "mb_pc",
-        field: "mb_pc",
-        type: "Number",
-    },
-    {
-        label: "mb_as",
-        field: "mb_as",
-        type: "Number",
-    },
-    {
-        label: "mb_li",
-        field: "mb_li",
-        type: "Number",
-    },
-    {
-        label: "mb_mu",
-        field: "mb_mu",
-        type: "Number",
-    },
-    {
-        label: "mb_ss",
-        field: "mb_ss",
-        type: "Number",
-    },
-    {
-        label: "mb_cl",
-        field: "mb_cl",
-        type: "Number",
-    },
-    {
-        label: "mb_pr",
-        field: "mb_pr",
-        type: "Number",
-    },
-    {
-        label: "mb_md",
-        field: "mb_md",
-        type: "Number",
-    },
-    {
-        label: "hspq_a",
-        field: "hspq_a",
-        type: "Number",
-    },
-    {
-        label: "hspq_c",
-        field: "hspq_c",
-        type: "Number",
-    },
-    {
-        label: "hspq_d",
-        field: "hspq_d",
-        type: "Number",
-    },
-    {
-        label: "hspq_e",
-        field: "hspq_e",
-        type: "Number",
-    },
-    {
-        label: "hspq_f",
-        field: "hspq_f",
-        type: "Number",
-    },
-    {
-        label: "hspq_g",
-        field: "hspq_g",
-        type: "Number",
-    },
-    {
-        label: "hspq_h",
-        field: "hspq_h",
-        type: "Number",
-    },
-    {
-        label: "hspq_i",
-        field: "hspq_i",
-        type: "Number",
-    },
-    {
-        label: "hspq_j",
-        field: "hspq_j",
-        type: "Number",
-    },
-    {
-        label: "hspq_o",
-        field: "hspq_o",
-        type: "Number",
-    },
-    {
-        label: "hspq_q2",
-        field: "hspq_q2",
-        type: "Number",
-    },
-    {
-        label: "hspq_q3",
-        field: "hspq_q3",
-        type: "Number",
-    },
-    {
-        label: "hspq_q4",
-        field: "hspq_q4",
-        type: "Number",
+        label: "kr_keterangan_sikap_negatif",
+        field: "kr_keterangan_sikap_negatif",
+        type: "String",
     },
 ];
 
@@ -475,89 +331,70 @@ const doApply = (sekolah, kelas) => {
 
 
 const doStore = async () => {
-    if (sekolah_id.value) {
-
-        const dataForm = {
-            sekolah_id: sekolah_id.value,
-            kelas_id: kelas_id.value,
-            data: dataExcel.value
-        }
-        console.log(dataForm);
-        try {
-            // const response = await ApiIst.post(
-            //     `ist/import`,
-            //     dataForm
-            // );
-            // // dataExcel.value = []
-            // // console.log(response.data);
-            // if (response.data) {
-            //     dataExcel.value = response.data;
-            // }
-
-        } catch (error) {
-            // Toast.danger("Warning", "Data gagal ditambahkan!");
-            console.error(error);
-        }
-    } else {
-        Toast.danger("Pilih sekolah terlebih dahulu!")
+    const dataForm = {
+        data: dataExcel.value
     }
+    console.log(dataForm);
+
 }
 </script>
 <template>
     <div class="px-2">
         <article class="prose lg:prose-sm">
-            <h1>IMPORT DATA IST</h1>
+            <h1>HSPQ Rumus Generator</h1>
         </article>
-        <div>
-            <RouterLink
-                :to="{ name: 'admin-sekolah-submenu-ist-import-migration', params: { sekolah_id: 0, kelas_id: 0 } }">
-                <button class="btn btn-sm ">
-                    Migrasi</button>
-            </RouterLink>
-        </div>
+
 
         <div>
             <div class="pt-0 px-0">
                 <div class="w-full mx-0 lg:w-10/12">
-                    <div class="bg-white rounded-lg p-0 sm:p-6 xl:p-0">
-                        <div class="grid md:grid-cols-2 gap-2">
-                            <div>
-                                <label for="name" class="text-sm font-medium text-gray-900 block mb-2">Pilih Sekolah
-                                </label>
-                                <select class="select select-info w-full max-w-xs" v-model="dataDetail.sekolah_id"
-                                    @change="changedValue" @selected="changedLabel">
-                                    <option selected :value="null">
-                                        NULL
-                                    </option>
-                                    <option v-for="(item, index) in pilihSekolah" :value="item.id">
-                                        {{ item.label }}
-                                    </option>
-                                </select>
+                    <Form v-slot="{ errors }" @submit="onSubmit">
+                        <div class="bg-white rounded-lg p-0 sm:p-6 xl:p-0">
+                            <div class="grid md:grid-cols-3 gap-2">
+                                <div>
+                                    <label for="name" class="text-sm font-medium text-gray-900 block mb-2">Kode : misal
+                                        hspq_a
+                                    </label>
+                                    <Field v-model="dataDetail.kode" type="text" name="kode" ref="kode"
+                                        class="input input-bordered md:w-full max-w-xs" required />
+                                    <div class="text-xs text-red-600 mt-1">
+                                        {{ errors.kode }}
+                                    </div>
+
+                                </div>
+                                <div>
+                                    <label for="name" class="text-sm font-medium text-gray-900 block mb-2">Kode Asli : misal
+                                        a,
+                                        c, d
+                                        dll
+                                    </label>
+                                    <Field v-model="dataDetail.kode_asli" type="text" name="kode_asli" ref="kode_asli"
+                                        class="input input-bordered md:w-full max-w-xs" required />
+                                    <div class="text-xs text-red-600 mt-1">
+                                        {{ errors.kode_asli }}
+                                    </div>
+                                </div>
+                                <div>
+                                    <label for="name" class="text-sm font-medium text-gray-900 block mb-2">jk : misal L/P
+                                    </label>
+                                    <Field v-model="dataDetail.jk" type="text" name="jk" ref="jk"
+                                        class="input input-bordered md:w-full max-w-xs" required />
+                                    <div class="text-xs text-red-600 mt-1">
+                                        {{ errors.jk }}
+                                    </div>
+
+                                </div>
+
 
                             </div>
 
-                            <div>
-                                <label for="name" class="text-sm font-medium text-gray-900 block mb-2">Pilih Kelas
-                                </label>
-                                <select class="select select-info w-full max-w-xs" v-model="dataDetail.kelas_id">
-                                    <option selected :value="null">
-                                        NULL
-                                    </option>
-                                    <option v-for="(item, index) in pilihKelas" :value="item.id">
-                                        {{ item.label }}
-                                    </option>
-                                </select>
-
-                            </div>
+                            <!-- <div class="w-full flex justify-end mt-4 px-20">
+                                <button class="btn btn-active btn-lg btn-primary" @click="doApply()">
+                                    Apply
+                                </button>
+                            </div> -->
                         </div>
-
-                        <div class="w-full flex justify-end mt-4 px-20">
-                            <button class="btn btn-active btn-lg btn-primary"
-                                @click="doApply(dataDetail.sekolah_id, dataDetail.kelas_id)">
-                                Apply
-                            </button>
-                        </div>
-                    </div>
+                    </Form>
                 </div>
             </div>
         </div>
@@ -574,27 +411,6 @@ const doStore = async () => {
                 Reset
             </button>
         </div>
-        <!-- <div class="w-full flex flex-wrap justify-center">
-            <div class="w-1/2 flex justify-center gap-10">
-                <div>
-                    <radial-progress-bar :diameter="200" :completed-steps="completedSteps" :total-steps="totalSteps"
-                        :start-color="'#0500ff'" :stop-color="'#00b7ff'">
-                        <h2 class="font-bold text-2xl">
-                            {{ completedSteps }} / {{ totalSteps }}
-                        </h2>
-                    </radial-progress-bar>
-                </div>
-                <div>
-                    <div class="py-4 font-bold">
-                        <h1>Proses Stats :</h1>
-                        <h4># Total Steps : {{ totalSteps }}</h4>
-                        <h4># Completed Steps :{{ completedSteps }}</h4>
-                        <h4># Proses Berhasil : {{ prosesBerhasil }}</h4>
-                        <h4># Proses Gagal :{{ prosesGagal }}</h4>
-                    </div>
-                </div>
-            </div>
-        </div> -->
         <div class="md:py-2 lg:flex flex-wrap gap-4 ">
             <div class="w-full lg:w-10/12">
                 <div class="bg-white shadow rounded-lg px-4 py-4 ">
@@ -623,30 +439,6 @@ const doStore = async () => {
                                         }}
                                     </div>
                                 </span>
-                                <span v-else-if="props.column.field == 'data_sertifikat'">
-                                    <div class="text-center">
-                                        {{
-                                            props.row.data_sertifikat ? 'Ada' : "-"
-                                        }}
-                                        <button class="btn btn-sm btn-info" @click="fnPeriksaDataSertifikat(props.index)"
-                                            v-if="props.row.data_sertifikat">Periksa</button>
-                                    </div>
-                                </span>
-                                <span v-else-if="props.column.field == 'data_deteksi'">
-                                    <div class="text-center">
-                                        {{
-                                            props.row.data_deteksi ? "Ada" : "-"
-                                        }}
-                                        <button class="btn btn-sm btn-info" @click="fnPeriksaDataDeteksi(props.index)"
-                                            v-if="props.row.data_deteksi">Periksa</button>
-                                    </div>
-                                </span>
-                                <!-- <span v-else-if="props.column.field == 'status'">
-                                    <div class="text-center" v-if="props.row.username != '' && props.row.username != null">
-                                        Sudah
-                                    </div>
-                                    <div class="text-center" v-else>Belum</div>
-                                </span> -->
 
                                 <span v-else>
                                     {{ props.formattedRow[props.column.field] }}

@@ -44,7 +44,7 @@ const AlertFailed = defineAsyncComponent(() =>
     import('@/components/alert/AlertFailed.vue')
 )
 
-const data = ref([]);
+const data = ref();
 const isLoading = ref(true);
 const isError = ref(false);
 
@@ -96,68 +96,73 @@ const columns = [
         type: "String",
     },
     {
-        label: "minatbakat",
-        field: "minatbakat",
+        label: "hspq",
+        field: "hspq",
         type: "String",
     },
     {
-        label: "ou",
-        field: "mb_ou",
+        label: "a",
+        field: "hspq_a",
         type: "Number",
     },
     {
-        label: "me",
-        field: "mb_me",
+        label: "c",
+        field: "hspq_c",
         type: "Number",
     },
     {
-        label: "co",
-        field: "mb_co",
+        label: "d",
+        field: "hspq_d",
         type: "Number",
     },
     {
-        label: "sc",
-        field: "mb_sc",
+        label: "e",
+        field: "hspq_e",
         type: "Number",
     },
     {
-        label: "pc",
-        field: "mb_pc",
+        label: "f",
+        field: "hspq_f",
         type: "Number",
     },
     {
-        label: "as",
-        field: "mb_as",
+        label: "g",
+        field: "hspq_g",
         type: "Number",
     },
     {
-        label: "li",
-        field: "mb_li",
+        label: "h",
+        field: "hspq_h",
         type: "Number",
     },
     {
-        label: "mu",
-        field: "mb_mu",
+        label: "i",
+        field: "hspq_i",
         type: "Number",
     },
     {
-        label: "ss",
-        field: "mb_ss",
+        label: "j",
+        field: "hspq_j",
         type: "Number",
     },
     {
-        label: "cl",
-        field: "mb_cl",
+        label: "o",
+        field: "hspq_o",
         type: "Number",
     },
     {
-        label: "pr",
-        field: "mb_pr",
+        label: "q2",
+        field: "hspq_q2",
         type: "Number",
     },
     {
-        label: "md",
-        field: "mb_md",
+        label: "q3",
+        field: "hspq_q3",
+        type: "Number",
+    },
+    {
+        label: "q4",
+        field: "hspq_q4",
         type: "Number",
     },
 ];
@@ -175,7 +180,7 @@ const doPilihKelas = async () => {
     await getData()
     // console.log(inputCariKelas.value.id);
     await router.push({
-        name: "admin-sekolah-submenu-minatbakat",
+        name: "admin-sekolah-submenu-ist",
         params: {
             sekolah_id: sekolah_id.value,
             kelas_id: inputCariKelas.value.id ? inputCariKelas.value.id : kelas_id.value,
@@ -190,14 +195,8 @@ const doPilihKelas = async () => {
 const getData = async () => {
     try {
         isLoading.value = true;
-        const response = await ApiIst.get(`/minatbakat/kelas/${getSekolahAktif.value.kelas_id}`);
-        // data.value = response.data;
-        const res = [];
-        for (const item of response.data) {
-            if (item) {
-                data.value.push(item);
-            }
-        }
+        const response = await ApiIst.get(`/ist/kelas/${getSekolahAktif.value.kelas_id}/cetak/hspq`);
+        data.value = response.data;
         isLoading.value = false;
     } catch (error) {
         isLoading.value = false;
@@ -207,14 +206,9 @@ const getData = async () => {
 };
 getData();
 
-const doCetakIst = () => {
+const doCetak = () => {
     window.open(
-        `${VITE_API_FE_REACT}minatbakat/data/cetak/${getSekolahAktif.value.kelas_id}`
-    );
-}
-const doCetakIstV2 = () => {
-    window.open(
-        `${VITE_API_FE_REACT}minatbakat/data/cetak/${getSekolahAktif.value.kelas_id}/v2`
+        `${VITE_API_FE_REACT}hspq/v1/cetak/${getSekolahAktif.value.kelas_id}/true`
     );
 }
 </script>
@@ -228,18 +222,16 @@ const doCetakIstV2 = () => {
     <span v-else>
         <div>
             <article class="prose lg:prose-sm max-w-screen-lg">
-                <h1>DATA MINAT & BAKAT KELAS {{ kelas_nama }}</h1>
+                <h1>DATA HSPQ KELAS {{ kelas_nama }}</h1>
             </article>
             <div class="space-x-2">
                 <RouterLink
                     :to="{ name: 'admin-sekolah-submenu-ist-import-migration', params: { sekolah_id: 0, kelas_id: 0 } }">
                     <button class="btn btn-sm ">
-                        IMPORT DATA IST/MINATBAKAT</button>
+                        IMPORT DATA IST/MINATBAKAT/Hspq</button>
                 </RouterLink>
-                <button class="btn btn-sm btn-success" @click="doCetakIst()">
-                    Cetak</button>
-                <button class="btn btn-sm btn-success" @click="doCetakIstV2()">
-                    Cetak V2</button>
+                <button class="btn btn-sm btn-success" @click="doCetak()">
+                    Cetak Hspq</button>
             </div>
 
             <div class="w-full bg-base-100 shadow-sm rounded-lg py-4 px-4">
@@ -300,44 +292,47 @@ const doCetakIstV2 = () => {
                                                 </button>
                                             </div> -->
                                         </span>
-                                        <span v-else-if="props.column.field == 'minatbakat'">
-                                            {{ props.row.minatbakat ? "Ada" : "-" }}
+                                        <span v-else-if="props.column.field == 'hspq'">
+                                            {{ props.row.hspq ? "Ada" : "-" }}
                                         </span>
-                                        <span v-else-if="props.column.field == 'mb_ou'">
-                                            {{ props.row.minatbakat ? props.row.minatbakat.mb_ou_val : "-" }}
+                                        <span v-else-if="props.column.field == 'hspq_a'">
+                                            {{ props.row.hspq ? props.row.hspq.hspq_a : "-" }}
                                         </span>
-                                        <span v-else-if="props.column.field == 'mb_me'">
-                                            {{ props.row.minatbakat ? props.row.minatbakat.mb_me_val : "-" }}
+                                        <span v-else-if="props.column.field == 'hspq_c'">
+                                            {{ props.row.hspq ? props.row.hspq.hspq_c : "-" }}
                                         </span>
-                                        <span v-else-if="props.column.field == 'mb_co'">
-                                            {{ props.row.minatbakat ? props.row.minatbakat.mb_co_val : "-" }}
+                                        <span v-else-if="props.column.field == 'hspq_d'">
+                                            {{ props.row.hspq ? props.row.hspq.hspq_d : "-" }}
                                         </span>
-                                        <span v-else-if="props.column.field == 'mb_sc'">
-                                            {{ props.row.minatbakat ? props.row.minatbakat.mb_sc_val : "-" }}
+                                        <span v-else-if="props.column.field == 'hspq_e'">
+                                            {{ props.row.hspq ? props.row.hspq.hspq_e : "-" }}
                                         </span>
-                                        <span v-else-if="props.column.field == 'mb_pc'">
-                                            {{ props.row.minatbakat ? props.row.minatbakat.mb_pc_val : "-" }}
+                                        <span v-else-if="props.column.field == 'hspq_f'">
+                                            {{ props.row.hspq ? props.row.hspq.hspq_f : "-" }}
                                         </span>
-                                        <span v-else-if="props.column.field == 'mb_as'">
-                                            {{ props.row.minatbakat ? props.row.minatbakat.mb_as_val : "-" }}
+                                        <span v-else-if="props.column.field == 'hspq_g'">
+                                            {{ props.row.hspq ? props.row.hspq.hspq_g : "-" }}
                                         </span>
-                                        <span v-else-if="props.column.field == 'mb_li'">
-                                            {{ props.row.minatbakat ? props.row.minatbakat.mb_li_val : "-" }}
+                                        <span v-else-if="props.column.field == 'hspq_h'">
+                                            {{ props.row.hspq ? props.row.hspq.hspq_h : "-" }}
                                         </span>
-                                        <span v-else-if="props.column.field == 'mb_mu'">
-                                            {{ props.row.minatbakat ? props.row.minatbakat.mb_mu_val : "-" }}
+                                        <span v-else-if="props.column.field == 'hspq_i'">
+                                            {{ props.row.hspq ? props.row.hspq.hspq_i : "-" }}
                                         </span>
-                                        <span v-else-if="props.column.field == 'mb_ss'">
-                                            {{ props.row.minatbakat ? props.row.minatbakat.mb_ss_val : "-" }}
+                                        <span v-else-if="props.column.field == 'hspq_j'">
+                                            {{ props.row.hspq ? props.row.hspq.hspq_j : "-" }}
                                         </span>
-                                        <span v-else-if="props.column.field == 'mb_cl'">
-                                            {{ props.row.minatbakat ? props.row.minatbakat.mb_cl_val : "-" }}
+                                        <span v-else-if="props.column.field == 'hspq_o'">
+                                            {{ props.row.hspq ? props.row.hspq.hspq_o : "-" }}
                                         </span>
-                                        <span v-else-if="props.column.field == 'mb_pr'">
-                                            {{ props.row.minatbakat ? props.row.minatbakat.mb_pr_val : "-" }}
+                                        <span v-else-if="props.column.field == 'hspq_q2'">
+                                            {{ props.row.hspq ? props.row.hspq.hspq_q2 : "-" }}
                                         </span>
-                                        <span v-else-if="props.column.field == 'mb_md'">
-                                            {{ props.row.minatbakat ? props.row.minatbakat.mb_md_val : "-" }}
+                                        <span v-else-if="props.column.field == 'hspq_q3'">
+                                            {{ props.row.hspq ? props.row.hspq.hspq_q3 : "-" }}
+                                        </span>
+                                        <span v-else-if="props.column.field == 'hspq_q4'">
+                                            {{ props.row.hspq ? props.row.hspq.hspq_q4 : "-" }}
                                         </span>
 
                                         <span v-else>

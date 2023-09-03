@@ -80,6 +80,11 @@ const AdminSekolahRoutes = [
                 component: () =>
                   import("@/views/minatbakat/DataMinatbakatPerkelas.vue"),
               },
+              {
+                path: "/pages/admin/mastering/sekolah/:sekolah_id/submenu/kelas/:kelas_id?/hspq",
+                name: "admin-sekolah-submenu-hspq",
+                component: () => import("@/views/hspq/DataHspqPerkelas.vue"),
+              },
               // ! DATA-MINATBAKAT-PROSES-END
             ],
           },
@@ -95,6 +100,12 @@ const AdminSekolahRoutes = [
         name: "admin-sekolah-submenu-ist-import-migration",
         component: () =>
           import("@/views/ist/import/IstImportIndex_migration.vue"),
+      },
+      // !hspq rumus generator
+      {
+        path: "/pages/admin/hspq/import/rumus",
+        name: "admin-hspq-import-rumus",
+        component: () => import("@/views/hspq/HspqImportRumus.vue"),
       },
     ],
   },
