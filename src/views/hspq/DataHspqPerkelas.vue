@@ -211,6 +211,11 @@ const doCetak = () => {
         `${VITE_API_FE_REACT}hspq/v1/cetak/${getSekolahAktif.value.kelas_id}/true`
     );
 }
+const doCetak_sq = () => {
+    window.open(
+        `${VITE_API_FE_REACT}hspq_sq/v1/cetak/${getSekolahAktif.value.kelas_id}/true`
+    );
+}
 </script>
 <template>
     <span v-if="isLoading">
@@ -231,7 +236,9 @@ const doCetak = () => {
                         IMPORT DATA IST/MINATBAKAT/Hspq</button>
                 </RouterLink>
                 <button class="btn btn-sm btn-success" @click="doCetak()">
-                    Cetak Hspq</button>
+                    Cetak Hspq Positif Negatif</button>
+                <button class="btn btn-sm btn-success" @click="doCetak_sq()">
+                    Cetak Hspq Eq Scq Sq</button>
             </div>
 
             <div class="w-full bg-base-100 shadow-sm rounded-lg py-4 px-4">
