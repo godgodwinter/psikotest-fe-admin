@@ -266,8 +266,8 @@ const columns = [
         type: "Number",
     },
     {
-        label: "mb_out",
-        field: "mb_out",
+        label: "mb_ou",
+        field: "mb_ou",
         type: "Number",
     },
     {
