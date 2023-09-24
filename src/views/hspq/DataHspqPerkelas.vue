@@ -180,7 +180,7 @@ const doPilihKelas = async () => {
     await getData()
     // console.log(inputCariKelas.value.id);
     await router.push({
-        name: "admin-sekolah-submenu-ist",
+        name: "admin-sekolah-submenu-hspq",
         params: {
             sekolah_id: sekolah_id.value,
             kelas_id: inputCariKelas.value.id ? inputCariKelas.value.id : kelas_id.value,
@@ -194,9 +194,17 @@ const doPilihKelas = async () => {
 
 const getData = async () => {
     try {
+        data.value = []
         isLoading.value = true;
         const response = await ApiIst.get(`/ist/kelas/${getSekolahAktif.value.kelas_id}/cetak/hspq`);
-        data.value = response.data;
+        // data.value = response.data;
+
+        const res = [];
+        for (const item of response.data) {
+            if (item) {
+                data.value.push(item);
+            }
+        }
         isLoading.value = false;
     } catch (error) {
         isLoading.value = false;
