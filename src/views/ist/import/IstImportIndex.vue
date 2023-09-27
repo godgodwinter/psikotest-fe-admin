@@ -124,6 +124,13 @@ function populateGrid(workbook) {
         AL: 'hspq_q2',
         AM: 'hspq_q3',
         AN: 'hspq_q4',
+        AO: 'ist_8km_ks_3',
+        AP: 'ist_8km_km',
+        AQ: 'ist_8km_kk',
+        AR: 'ist_8km_ki',
+        AS: 'ist_8km_ka',
+        AT: 'ist_8km_kn',
+        AU: 'ist_8km_kr',
     };
 
     var rowData = [];
@@ -390,6 +397,41 @@ const columns = [
         field: "hspq_q4",
         type: "Number",
     },
+    {
+        label: "ist_8km_ks_3",
+        field: "ist_8km_ks_3",
+        type: "Number",
+    },
+    {
+        label: "ist_8km_km",
+        field: "ist_8km_km",
+        type: "Number",
+    },
+    {
+        label: "ist_8km_kk",
+        field: "ist_8km_kk",
+        type: "Number",
+    },
+    {
+        label: "ist_8km_kl",
+        field: "ist_8km_kl",
+        type: "Number",
+    },
+    {
+        label: "ist_8km_ka",
+        field: "ist_8km_ka",
+        type: "Number",
+    },
+    {
+        label: "ist_8km_kn",
+        field: "ist_8km_kn",
+        type: "Number",
+    },
+    {
+        label: "ist_8km_kr",
+        field: "ist_8km_kr",
+        type: "Number",
+    },
 ];
 
 const doDelete = (index, nama) => {
@@ -482,7 +524,7 @@ const doStore = async () => {
             kelas_id: kelas_id.value,
             data: dataExcel.value
         }
-        // console.log(dataForm);
+        console.log(dataForm);
         try {
             const response = await ApiIst.post(
                 `ist/import`,
