@@ -80,10 +80,17 @@ const AdminSekolahRoutes = [
                 component: () =>
                   import("@/views/minatbakat/DataMinatbakatPerkelas.vue"),
               },
+              // !hspq
               {
                 path: "/pages/admin/mastering/sekolah/:sekolah_id/submenu/kelas/:kelas_id?/hspq",
                 name: "admin-sekolah-submenu-hspq",
                 component: () => import("@/views/hspq/DataHspqPerkelas.vue"),
+              },
+              // !8km
+              {
+                path: "/pages/admin/mastering/sekolah/:sekolah_id/submenu/kelas/:kelas_id?/8km",
+                name: "admin-sekolah-submenu-8km",
+                component: () => import("@/views/ist_8km/Data8kmPerkelas.vue"),
               },
               // ! DATA-MINATBAKAT-PROSES-END
             ],
