@@ -191,6 +191,11 @@ const doCetak_v2 = () => {
         `${VITE_API_FE_REACT}ist_8km_sq/v2_lengkap/cetak/${getSekolahAktif.value.kelas_id}/true`
     );
 }
+const doCetak_ist_8km_gabungan = () => {
+    window.open(
+        `${VITE_API_FE_REACT}ist_8km_sq/v_ist8km_gabungan/cetak/${getSekolahAktif.value.kelas_id}/true`
+    );
+}
 </script>
 <template>
     <span v-if="isLoading">
@@ -214,6 +219,8 @@ const doCetak_v2 = () => {
                     Cetak 8KM v1</button>
                 <button class="btn btn-sm btn-success" @click="doCetak_v2()">
                     Cetak 8KM V Lengkap</button>
+                <button class="btn btn-sm btn-success" @click="doCetak_ist_8km_gabungan()">
+                    Cetak 8KM+IST Gabungan</button>
             </div>
 
             <div class="w-full bg-base-100 shadow-sm rounded-lg py-4 px-4">

@@ -214,6 +214,12 @@ const doCetakIstJurusan = (ttd) => {
         `${VITE_API_FE_REACT}ist/jurusan/v3/cetak/${getSekolahAktif.value.kelas_id}/${ttd}`
     );
 }
+
+const doCetak_ist_8km_gabungan = () => {
+    window.open(
+        `${VITE_API_FE_REACT}ist_8km_sq/v_ist8km_gabungan/cetak/${getSekolahAktif.value.kelas_id}/true`
+    );
+}
 </script>
 <template>
     <span v-if="isLoading">
@@ -239,6 +245,8 @@ const doCetakIstJurusan = (ttd) => {
                     Cetak FAKULTAS v3</button>
                 <!-- <button class="btn btn-sm btn-secondary" @click="doCetakIstJurusan('false')">
                     Cetak FAKULTAS tanpa TTD</button> -->
+                <button class="btn btn-sm btn-success" @click="doCetak_ist_8km_gabungan()">
+                    Cetak 8KM+IST Gabungan</button>
             </div>
 
             <div class="w-full bg-base-100 shadow-sm rounded-lg py-4 px-4">
