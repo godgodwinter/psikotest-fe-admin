@@ -131,6 +131,9 @@ function populateGrid(workbook) {
         AS: 'ist_8km_ka',
         AT: 'ist_8km_kn',
         AU: 'ist_8km_kr',
+        AV: 'citacita_1',
+        AW: 'citacita_2',
+        AX: 'citacita_3',
     };
 
     var rowData = [];
@@ -220,6 +223,12 @@ const columns = [
     {
         label: "Nama",
         field: "nama",
+        type: "String",
+    },
+    
+    {
+        label: "umur",
+        field: "umur",
         type: "String",
     },
     {
@@ -431,6 +440,21 @@ const columns = [
         label: "ist_8km_kr",
         field: "ist_8km_kr",
         type: "Number",
+    },
+    {
+        label: "citacita_1",
+        field: "citacita_1",
+        type: "String",
+    },
+    {
+        label: "citacita_2",
+        field: "citacita_2",
+        type: "String",
+    },
+    {
+        label: "citacita_3",
+        field: "citacita_3",
+        type: "String",
     },
 ];
 

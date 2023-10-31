@@ -132,6 +132,24 @@ const columns = [
         field: "kn",
         type: "Number",
     },
+    
+    {
+        label: "citacita_1",
+        field: "citacita_1",
+        type: "String",
+    },
+    
+    {
+        label: "citacita_2",
+        field: "citacita_2",
+        type: "String",
+    },
+    
+    {
+        label: "citacita_3",
+        field: "citacita_3",
+        type: "String",
+    },
 ];
 
 const doPilihKelas = async () => {
@@ -307,6 +325,9 @@ const doCetak_ist_8km_gabungan = () => {
                                         </span>
                                         <span v-else-if="props.column.field == 'kn'">
                                             {{ props.row.data_8km ? props.row.data_8km.data_8km_proses.kn : "-" }}
+                                        </span>
+                                        <span v-else-if="props.column.field == 'citacita_1'">
+                                            {{ props.row.data_8km ? props.row.data_8km.citacita_1 : "-" }}
                                         </span>
 
                                         <span v-else>
