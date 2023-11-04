@@ -59,14 +59,16 @@ getData();
 
 const doDeleteData = async (id, index) => {
     if (confirm("Apakah anda yakin menghapus data ini?")) {
+        // console.log(paketsoal_id.value,aspek_id.value,id);
+        //! id=studi_v2_paketsoal_aspek_penilaian_id
         try {
-            const response = await Api.delete(`ujianstudi/paketsoal/${id}`);
-            if (response.status) {
+            const response = await Api.delete(`ujianstudi/paketsoal/${paketsoal_id.value}/aspek/penilaian/get/${id}`);
+            // if (response.status) {
                 Toast.warning("Berhasil", response.message);
                 // Toast.success("Info", "Data berhasil dihapus!");
-            } else {
-                Toast.warning("Gagal", response.message);
-            }
+            // } else {
+            //     Toast.warning("Gagal", response.message);
+            // }
             getData();
             return true;
         } catch (error) {
