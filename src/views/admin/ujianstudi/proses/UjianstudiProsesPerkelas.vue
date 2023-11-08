@@ -114,6 +114,12 @@ const columns = [
         type: "String",
     },
     {
+        label: "Tanggal Generate",
+        field: "created_at",
+        type: "String",
+    },
+    
+    {
         label: "Batas Tanggal Ujian",
         field: "tgl_ujian",
         type: "String",
@@ -799,6 +805,10 @@ const doCetakReactV2 = (ttd="true") => {
                                             </span>
                                         </span>
 
+                                        <span v-else-if="props.column.field == 'created_at'">
+                                            {{ props.row.progres?.created_at }}
+                                            {{ moment(props.row.progres?.created_at).format("DD MMMM YYYY HH:mm:ss") }}
+                                        </span>
                                         <span v-else-if="props.column.field == 'progres'">
                                             {{ props.row.progres?.status }}
                                         </span>
