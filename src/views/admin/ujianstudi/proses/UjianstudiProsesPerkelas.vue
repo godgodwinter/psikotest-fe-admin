@@ -156,6 +156,9 @@ const getData = async () => {
         isLoading.value = true;
         const response = await Api.get(`/ujianstudi/proses/sekolah/${sekolah_id.value}/kelas/${getSekolahAktif.value.kelas_id}`);
         data.value = response.data;
+        // console.log('====================================');
+        // console.log(data.value);
+        // console.log('====================================');
         isLoading.value = false;
     } catch (error) {
         isLoading.value = false;
@@ -806,7 +809,7 @@ const doCetakReactV2 = (ttd="true") => {
                                         </span>
 
                                         <span v-else-if="props.column.field == 'created_at'">
-                                            {{ props.row.progres?.created_at }}
+                                            <!-- {{ props.row.progres?.created_at }} -->
                                             {{ moment(props.row.progres?.created_at).format("DD MMMM YYYY HH:mm:ss") }}
                                         </span>
                                         <span v-else-if="props.column.field == 'progres'">
