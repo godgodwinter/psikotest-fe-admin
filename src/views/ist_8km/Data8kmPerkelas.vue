@@ -329,6 +329,12 @@ const doCetak_ist_8km_gabungan = () => {
                                         <span v-else-if="props.column.field == 'citacita_1'">
                                             {{ props.row.data_8km ? props.row.data_8km.citacita_1 : "-" }}
                                         </span>
+                                        <span v-else-if="props.column.field == 'citacita_2'">
+                                            {{ props.row.data_8km ? props.row.data_8km.citacita_2 : "-" }}
+                                        </span>
+                                        <span v-else-if="props.column.field == 'citacita_3'">
+                                            {{ props.row.data_8km ? props.row.data_8km.citacita_3 : "-" }}
+                                        </span>
 
                                         <span v-else>
                                             {{ props.formattedRow[props.column.field] }}
