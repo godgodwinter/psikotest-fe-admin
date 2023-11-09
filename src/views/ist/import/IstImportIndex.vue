@@ -422,8 +422,8 @@ const columns = [
         type: "Number",
     },
     {
-        label: "ist_8km_kl",
-        field: "ist_8km_kl",
+        label: "ist_8km_ki",
+        field: "ist_8km_ki",
         type: "Number",
     },
     {
