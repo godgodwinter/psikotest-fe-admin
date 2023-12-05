@@ -43,6 +43,14 @@ const UjianStudiBanksoalRoutes = [
                 "@/views/admin/ujiankhusus/banksoal/UjianKhususBanksoalAspekDetail_tambah.vue"
               ),
           },
+          {
+            path: "/pages/admin/ujiankhusus/banksoal/aspek_detail/edit/:aspek_detail_id",
+            name: "admin-ujiankhusus-banksoal-aspek_detail-edit",
+            component: () =>
+              import(
+                "@/views/admin/ujiankhusus/banksoal/UjianKhususBanksoalAspekDetail_edit.vue"
+              ),
+          },
           // ! ASPEKDETAIL-END
 
           // ! SOAL
@@ -52,6 +60,22 @@ const UjianStudiBanksoalRoutes = [
             component: () =>
               import(
                 "@/views/admin/ujiankhusus/banksoal/UjianKhususBanksoalSoal.vue"
+              ),
+          },
+          {
+            path: "/pages/admin/ujiankhusus/banksoal/aspek_detail/:aspek_detail_id/soal/tambah",
+            name: "admin-ujiankhusus-banksoal-aspek_detail-soal-tambah",
+            component: () =>
+              import(
+                "@/views/admin/ujiankhusus/banksoal/UjianKhususBanksoalSoal_tambah.vue"
+              ),
+          },
+          {
+            path: "/pages/admin/ujiankhusus/banksoal/aspek_detail/:aspek_detail_id/soal/edit/:soal_id",
+            name: "admin-ujiankhusus-banksoal-aspek_detail-soal-edit",
+            component: () =>
+              import(
+                "@/views/admin/ujiankhusus/banksoal/UjianKhususBanksoalSoal_edit.vue"
               ),
           },
           // ! SOAL-END

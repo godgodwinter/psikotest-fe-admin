@@ -2,7 +2,7 @@
 import { ref } from "vue"
 import Toast from "@/components/lib/Toast";
 import { Form, Field } from "vee-validate";
-import { useRouter } from "vue-router";
+import { useRouter,useRoute } from "vue-router";
 import fnValidasi from "@/components/lib/babengValidasi";
 import moment from "moment/min/moment-with-locales";
 import Api from "@/axios/axiosNode";
@@ -12,6 +12,8 @@ import localization from "moment/locale/id";
 moment.updateLocale("id", localization);
 
 const router = useRouter();
+const route = useRoute();
+const aspek_detail_id = ref(route.params.aspek_detail_id);
 const dataForm = ref({
     nama: "",
     desc: " ",
@@ -28,6 +30,32 @@ const dataForm = ref({
     random_soal: false,
     random_pilihanjawaban: false,
 });
+
+const getDataDetail = async () => {
+    try {
+        const response = await ApiUjianKhusus.get(`ujiankhusus/banksoal/aspek_detail/${aspek_detail_id.value}`);
+        // console.log(response);
+        // dataDetail.value = response.data;
+        dataForm.value.nama = response.data.nama;
+        dataForm.value.desc = response.data.desc;
+        dataForm.value.urutan = response.data.urutan;
+        dataForm.value.waktu = response.data.waktu;
+        dataForm.value.status = response.data.status;
+        dataForm.value.instruksiStatus = response.data.instruksi_status == true ? true : false;
+        dataForm.value.lembar_prasoalStatus = response.data.lembar_prasoal_status == true ? true : false;
+        dataForm.value.instruksi_pengerjaanStatus = response.data.instruksi_pengerjaan_status == true ? true : false;
+        dataForm.value.instruksi = response.data.instruksi;
+        dataForm.value.lembar_prasoal = response.data.lembar_prasoal;
+        dataForm.value.lembar_prasoal_timer = response.data.lembar_prasoal_timer;
+        dataForm.value.instruksi_pengerjaan = response.data.instruksi_pengerjaan;
+        dataForm.value.randomSoal = response.data.random_soal == true ? true : false;
+        dataForm.value.randomPilihanJawaban = response.data.random_pilihanjawaban == true ? true : false;
+        return response.data;
+    } catch (error) {
+        console.error(error);
+    }
+};
+getDataDetail();
 const onSubmit = async (values) => {
     values.nama = dataForm.value.nama;
     values.random_soal = dataForm.value.randomSoal
@@ -73,7 +101,7 @@ const onSubmit = async (values) => {
     };
     // console.log(dataForm.value);
     try {
-        const response = await ApiUjianKhusus.post(`ujiankhusus/banksoal/aspek_detail`, dataForm.value);
+        const response = await ApiUjianKhusus.put(`ujiankhusus/banksoal/aspek_detail/${aspek_detail_id.value}`, dataForm.value);
         // console.log(response);
         Toast.success("Info", "Data berhasil ditambahkan!");
         router.push({ name: "admin-ujiankhusus-banksoal-aspek_detail" });
@@ -86,7 +114,7 @@ const onSubmit = async (values) => {
 <template>
     <div>
         <article class="prose lg:prose-sm">
-            <h1>ASPEK DETAIL TAMBAH</h1>
+            <h1>ASPEK DETAIL EDIT</h1>
         </article>
 
         <Form v-slot="{ errors }" @submit="onSubmit">

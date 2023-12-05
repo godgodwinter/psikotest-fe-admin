@@ -58,13 +58,14 @@ getData();
 const doDeleteData = async (id, index) => {
     if (confirm("Apakah anda yakin menghapus data ini?")) {
         try {
-            const response = await Api.delete(`ujianstudi/banksoal/aspek_detail/${id}`);
-            if (response.status) {
+            const response = await ApiUjianKhusus.delete(`ujiankhusus/banksoal/aspek_detail/${id}`);
+            // if (response.status) {
+            //     Toast.warning("Berhasil", response.message);
+            //     // Toast.success("Info", "Data berhasil dihapus!");
+            // } else {
+            //     Toast.warning("Gagal", response.message);
+            // }
                 Toast.warning("Berhasil", response.message);
-                // Toast.success("Info", "Data berhasil dihapus!");
-            } else {
-                Toast.warning("Gagal", response.message);
-            }
             getData();
             return true;
         } catch (error) {
@@ -75,7 +76,7 @@ const doDeleteData = async (id, index) => {
 
 const doEditData = async (id, index) => {
     router.push({
-        name: "admin-ujianstudi-banksoal-aspek_detail-edit",
+        name: "admin-ujiankhusus-banksoal-aspek_detail-edit",
         params: { aspek_detail_id: id },
     });
 };

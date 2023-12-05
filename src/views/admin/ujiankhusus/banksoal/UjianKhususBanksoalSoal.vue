@@ -67,7 +67,10 @@ const columns = [
 const getData = async () => {
     try {
         const response = await ApiUjianKhusus.get(`ujiankhusus/banksoal/aspek_detail/${aspek_detail_id.value}/soal`);
-        data.value = response.data;
+        // data.value = response.data;
+        
+        const tempData=response.data;
+        data.value = tempData.map(fn_copy_id_for_mongo);
         console.log(data.value);
         aspek_detail.value = response.aspek_detail;
         // console.log(aspek_detail.value);
@@ -83,7 +86,7 @@ getData();
 const doDeleteData = async (id, index) => {
     if (confirm("Apakah anda yakin menghapus data ini?")) {
         try {
-            const response = await Api.delete(`ujianstudi/banksoal/aspek_detail/${aspek_detail_id.value}/soal/${id}`);
+            const response = await ApiUjianKhusus.delete(`ujiankhusus/banksoal/aspek_detail/${aspek_detail_id.value}/soal/${id}`);
             if (response.status) {
                 Toast.warning("Berhasil", response.message);
                 // Toast.success("Info", "Data berhasil dihapus!");
@@ -100,7 +103,7 @@ const doDeleteData = async (id, index) => {
 
 const doEditData = async (id, index) => {
     router.push({
-        name: "admin-ujianstudi-banksoal-aspek_detail-soal-edit",
+        name: "admin-ujiankhusus-banksoal-aspek_detail-soal-edit",
         params: { aspek_detail_id: aspek_detail_id.value, soal_id: id },
     });
 };
@@ -110,14 +113,15 @@ const doEditData = async (id, index) => {
         <div class="pt-4 px-10 md:flex justify-between">
             <div>
                 <article class="prose lg:prose-sm">
-                    <h1>MAPEL : {{ aspek_detail ? aspek_detail.aspek_detail : aspek_detail_id }}</h1>
+                    <h1>SOAL</h1>
+                    <h2>MAPEL : {{ aspek_detail ? aspek_detail.aspek_detail : aspek_detail_id }}</h2>
                 </article>
             </div>
             <div class="md:py-0 py-4">
                 <BreadCrumb>
                     <template v-slot:content>
                         <li>
-                            <router-link :to="{ name: 'admin-ujianstudi-banksoal-aspek_detail' }"><span
+                            <router-link :to="{ name: 'admin-ujiankhusus-banksoal-aspek_detail' }"><span
                                     class="font-semibold underline uppercase">Aspek</span></router-link>
                         </li>
                         <BreadCrumbSpace /> SOAL
@@ -125,20 +129,17 @@ const doEditData = async (id, index) => {
                 </BreadCrumb>
             </div>
         </div>
-        <div class="pt-4 px-10 md:flex justify-between">
+        <!-- <div class="pt-4 px-10 md:flex justify-between">
             <div class="space-x-2">
                 <router-link
                     :to="{ name: 'admin-ujianstudi-banksoal-aspek_detail-soal-import', params: { aspek_detail_id } }">
                     <button class="btn btn-sm btn-warning tooltip">
                         IMPORT
                     </button></router-link>
-                <!-- <button class="btn btn-sm btn-warning tooltip">
-                                    EXPORT
-                                </button> -->
             </div>
             <div class="md:py-0 py-4">
             </div>
-        </div>
+        </div> -->
         <span v-if="isLoading">
             <LoadingNavbar />
         </span>
@@ -159,7 +160,7 @@ const doEditData = async (id, index) => {
                                 <template #table-actions>
                                     <div class="space-x-1 space-y-1 gap-1">
                                         <router-link :to="{
-                                            name: 'admin-ujianstudi-banksoal-aspek_detail-soal-tambah',
+                                            name: 'admin-ujiankhusus-banksoal-aspek_detail-soal-tambah',
                                         }">
                                             <button class="btn btn-sm btn-primary tooltip" data-tip="Tambah SOAL">
                                                 TAMBAH SOAL
