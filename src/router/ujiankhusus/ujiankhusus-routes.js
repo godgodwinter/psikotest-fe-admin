@@ -35,7 +35,26 @@ const UjianStudiBanksoalRoutes = [
                 "@/views/admin/ujiankhusus/banksoal/UjianKhususBanksoalAspekDetail.vue"
               ),
           },
+          {
+            path: "/pages/admin/ujiankhusus/banksoal/aspek_detail/tambah",
+            name: "admin-ujiankhusus-banksoal-aspek_detail-tambah",
+            component: () =>
+              import(
+                "@/views/admin/ujiankhusus/banksoal/UjianKhususBanksoalAspekDetail_tambah.vue"
+              ),
+          },
           // ! ASPEKDETAIL-END
+
+          // ! SOAL
+          {
+            path: "/pages/admin/ujiankhusus/banksoal/aspek_detail/:aspek_detail_id/soal",
+            name: "admin-ujiankhusus-banksoal-aspek_detail-soal",
+            component: () =>
+              import(
+                "@/views/admin/ujiankhusus/banksoal/UjianKhususBanksoalSoal.vue"
+              ),
+          },
+          // ! SOAL-END
         ],
       },
     ],

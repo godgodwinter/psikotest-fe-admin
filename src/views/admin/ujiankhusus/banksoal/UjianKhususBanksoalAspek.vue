@@ -1,8 +1,10 @@
 <script setup>
 import { ref, defineAsyncComponent } from "vue"
-import Api from "@/axios/axiosNode";
 import Toast from "@/components/lib/Toast";
 import { useRouter } from "vue-router";
+import Api from "@/axios/axiosNode";
+import ApiUjianKhusus from "@/axios/axiosIst";
+import {fn_copy_id_for_mongo} from "@/lib/FungsiBasic.js"
 
 const LoadingNavbar = defineAsyncComponent(() =>
     import('@/components/alert/AlertLoading.vue')
@@ -35,8 +37,10 @@ const columns = [
 
 const getData = async () => {
     try {
-        const response = await Api.get(`ujianstudi/banksoal/aspek`);
-        data.value = response.data;
+        const response = await ApiUjianKhusus.get(`ujiankhusus/banksoal/aspek`);
+        // console.log(response);
+        const tempData=response.data;
+        data.value = tempData.map(fn_copy_id_for_mongo);
         isLoading.value = false;
         return response.data;
     } catch (error) {
