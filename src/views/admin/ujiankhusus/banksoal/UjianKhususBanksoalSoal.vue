@@ -114,7 +114,7 @@ const doEditData = async (id, index) => {
             <div>
                 <article class="prose lg:prose-sm">
                     <h1>SOAL</h1>
-                    <h2>MAPEL : {{ aspek_detail ? aspek_detail.aspek_detail : aspek_detail_id }}</h2>
+                    <h2>ASPEK DETAIL : {{ aspek_detail ? aspek_detail.aspek_detail : aspek_detail_id }}</h2>
                 </article>
             </div>
             <div class="md:py-0 py-4">

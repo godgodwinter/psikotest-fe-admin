@@ -266,11 +266,11 @@ const doClearImgPertanyaan = () => {
                 <!-- Pilihan Jawaban -->
                 <div class="px-4">
                     <div class="space-x-2">
-                        <span class="btn btn-danger btn-sm btn-outline" @click="doHapusPilihanJawaban()">
-                            Hapus
+                        <span class="btn btn-error btn-sm btn-outline" @click="doHapusPilihanJawaban()">
+                            Hapus Pilihan Jawaban
                         </span>
                         <span class="btn btn-primary btn-sm btn-outline" @click="doTambahPilihanJawaban()">
-                            Tambah
+                            Tambah Pilihan Jawaban
                         </span>
                     </div>
                 </div>

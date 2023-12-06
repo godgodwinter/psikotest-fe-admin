@@ -84,7 +84,8 @@ const doEditData = async (id, index) => {
 <template>
     <div>
         <article class="prose lg:prose-sm">
-            <h1>UJIAN KHUSUS : ASPEK DETAIL</h1>
+            <h1>ASPEK DETAIL</h1>
+            <h5>UJIAN KHUSUS</h5>
         </article>
         <span v-if="isLoading">
             <LoadingNavbar />

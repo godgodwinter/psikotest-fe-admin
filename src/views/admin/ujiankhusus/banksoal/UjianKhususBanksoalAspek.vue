@@ -33,6 +33,11 @@ const columns = [
         field: "nama",
         type: "String",
     },
+    {
+        label: "Status",
+        field: "status",
+        type: "String",
+    },
 ];
 
 const getData = async () => {
@@ -54,7 +59,7 @@ getData();
 const doDeleteData = async (id, index) => {
     if (confirm("Apakah anda yakin menghapus data ini?")) {
         try {
-            const response = await Api.delete(`ujianstudi/banksoal/aspek/${id}`);
+            const response = await ApiUjianKhusus.delete(`ujiankhusus/banksoal/aspek/${id}`);
             if (response.status) {
                 Toast.warning("Berhasil", response.message);
                 // Toast.success("Info", "Data berhasil dihapus!");
@@ -71,7 +76,7 @@ const doDeleteData = async (id, index) => {
 
 const doEditData = async (id, index) => {
     router.push({
-        name: "admin-ujianstudi-banksoal-aspek-edit",
+        name: "admin-ujiankhusus-banksoal-aspek-edit",
         params: { aspek_id: id },
     });
 };
@@ -80,6 +85,7 @@ const doEditData = async (id, index) => {
     <div>
         <article class="prose lg:prose-sm">
             <h1>ASPEK</h1>
+            <h5>UJIAN KHUSUS</h5>
         </article>
         <span v-if="isLoading">
             <LoadingNavbar />
@@ -101,7 +107,7 @@ const doEditData = async (id, index) => {
                                 <template #table-actions>
                                     <div class="space-x-1 space-y-1 gap-1">
                                         <router-link :to="{
-                                            name: 'admin-ujianstudi-banksoal-aspek-tambah',
+                                            name: 'admin-ujiankhusus-banksoal-aspek-tambah',
                                         }">
                                             <button class="btn btn-sm btn-primary tooltip" data-tip="Tambah">
                                                 TAMBAH
