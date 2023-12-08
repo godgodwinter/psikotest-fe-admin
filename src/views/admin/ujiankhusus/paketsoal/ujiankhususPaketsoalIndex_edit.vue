@@ -5,30 +5,42 @@ import ApiUjianKhusus from "@/axios/axiosIst";
 import {fn_copy_id_for_mongo} from "@/lib/FungsiBasic.js"
 import Toast from "@/components/lib/Toast";
 import { Form, Field } from "vee-validate";
-import { useRouter } from "vue-router";
+import { useRouter, useRoute } from "vue-router";
 import fnValidasi from "@/components/lib/babengValidasi";
 import moment from "moment/min/moment-with-locales";
 import localization from "moment/locale/id";
 moment.updateLocale("id", localization);
 
 const router = useRouter();
+const route = useRoute();
+const paketsoal_id = ref(route.params.paketsoal_id);
 const dataForm = ref({
     nama: null,
-    urutan: 1,
     status: true,
-    // status: "Aktif",
 });
+
+const getDataDetail = async () => {
+    try {
+        const response = await ApiUjianKhusus.get(`ujiankhusus/paketsoal/${paketsoal_id.value}`);
+        dataForm.value = response.data;
+       dataForm.value.status = response.data.status=="Aktif"?true:false;
+        return response.data;
+    } catch (error) {
+        console.error(error);
+    }
+};
+getDataDetail();
+
 const onSubmit = async (values) => {
     let dataFormSend = {
         nama: dataForm.value.nama,
-        urutan: dataForm.value.urutan || 1,
         status: dataForm.value.status ?"Aktif":"Nonaktif",
     };
     try {
-        const response = await ApiUjianKhusus.post(`ujiankhusus/banksoal/aspek`, dataFormSend);
+        const response = await ApiUjianKhusus.put(`ujiankhusus/paketsoal/${paketsoal_id.value}`, dataFormSend);
         // console.log(response);
-        Toast.success("Info", "Data berhasil ditambahkan!");
-        router.push({ name: "admin-ujiankhusus-banksoal-aspek" });
+        Toast.success("Info", "Data berhasil diupdate!");
+        router.push({ name: "admin-ujiankhusus-paketsoal" });
         return true;
     } catch (error) {
         console.error(error);
@@ -38,7 +50,7 @@ const onSubmit = async (values) => {
 <template>
     <div>
         <article class="prose lg:prose-sm">
-            <h1>ASPEK TAMBAH</h1>
+            <h1>PAKETSOAL EDIT</h1>
             <h5>UJIAN KHUSUS</h5>
         </article>
 
@@ -55,23 +67,13 @@ const onSubmit = async (values) => {
                             </div>
                         </div>
                     </div>
-                    <div class="flex flex-col">
-                        <label>Urutan :</label>
-                        <div>
-                            <Field v-model="dataForm.urutan" name="urutan" type="text"
-                                class="input input-bordered w-11/12" />
-                            <div class="text-xs text-red-600 mt-1">
-                                {{ errors.urutan }}
-                            </div>
-                        </div>
-                    </div>
                     
                     <div class="flex flex-col">
                         <div class="max-w-xs py-2">
                             <div class="form-control">
                                 <label class="label cursor-pointer">
-                                    <span class="label-text">Status</span>
-                                    <input type="checkbox" class="toggle" v-model="dataForm.status" name="status" />
+                                    <span class="label-text">Tampilkan</span>
+                                    <input type="checkbox" class="toggle" v-model="dataForm.status" name="randomSoal" />
                                 </label>
                             </div>
                         </div>

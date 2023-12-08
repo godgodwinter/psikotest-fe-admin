@@ -97,7 +97,7 @@ const doLogout = async () => {
                                 UJIAN KHUSUS
                             </h3>
                         </li>
-                        <li class="lg:w-full py-0" :class="[pagesActive == 'ujianstudi-banksoal' ? pagesActiveClass : '']">
+                        <li class="lg:w-full py-0" :class="[pagesActive == 'ujiankhusus-banksoal' ? pagesActiveClass : '']">
                             <router-link :to="{ name: 'admin-ujiankhusus-banksoal-aspek_detail' }"
                                 class="text-base-content font-normal rounded-lg flex items-center p-2 group hover:link">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20"
@@ -108,8 +108,8 @@ const doLogout = async () => {
                                 <span class="ml-3">Banksoal Ujian Khusus </span>
                             </router-link>
                         </li>
-                        <li class="lg:w-full py-0" :class="[pagesActive == 'ujianstudi-paketsoal' ? pagesActiveClass : '']">
-                            <router-link :to="{ name: 'admin-ujianstudi-paketsoal' }"
+                        <li class="lg:w-full py-0" :class="[pagesActive == 'ujiankhusus-paketsoal' ? pagesActiveClass : '']">
+                            <router-link :to="{ name: 'admin-ujiankhusus-paketsoal' }"
                                 class="text-base-content font-normal rounded-lg flex items-center p-2 group hover:link">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20"
                                     fill="currentColor">
