@@ -1,6 +1,8 @@
 <script setup>
 import { ref } from "vue"
 import Api from "@/axios/axiosNode";
+import ApiUjianKhusus from "@/axios/axiosIst";
+import {fn_copy_id_for_mongo} from "@/lib/FungsiBasic.js"
 import Toast from "@/components/lib/Toast";
 import { Form, Field } from "vee-validate";
 import { useRoute, useRouter } from "vue-router";
@@ -11,60 +13,112 @@ moment.updateLocale("id", localization);
 
 const router = useRouter();
 const route = useRoute();
-const paketsoal_id = ref(route.params.paketsoal_id)
+const paketsoal_id = ref(route.params.paketsoal_id) 
+// const aspek_detail_id = ref(null)
+const aspek_detail_id = ref(null); //!dari banksoal untuk relasi
+const aspekDetail_id = ref(route.params.aspek_detail_id); //!dari route 
 const studi_v2_banksoal_aspek_detail_id = ref(null);
 const dataForm = ref({
-    nama: null,
-    urutan: null,
+    khusus_banksoal_aspek_detail_id:aspek_detail_id.value,
+    nama: "",
+    desc: " ",
+    urutan: 1,
+    waktu: 600,
+    status: "Aktif",
+    instruksi: "",
+    lembar_prasoal: "",
+    lembar_prasoal_timer: 0,
+    instruksi_pengerjaan: "",
+    instruksiStatus: false,
+    lembar_prasoalStatus: false,
+    instruksi_pengerjaanStatus: false,
+    random_soal: false,
+    random_pilihanjawaban: false,
 });
+
+const getDataDetail = async () => {
+    try {
+        const response = await ApiUjianKhusus.get(`ujiankhusus/paketsoal/${paketsoal_id.value}/aspek_detail/${aspekDetail_id.value}`);
+        dataForm.value = response.data;
+        aspek_detail_id.value =response.data.khusus_banksoal_aspek_detail_id;
+        dataForm.value.nama = response.data.nama;
+        dataForm.value.desc = response.data.desc;
+        dataForm.value.urutan = response.data.urutan;
+        dataForm.value.waktu = response.data.waktu;
+        dataForm.value.status = response.data.status;
+        dataForm.value.instruksiStatus = response.data.instruksi_status == true ? true : false;
+        dataForm.value.lembar_prasoalStatus = response.data.lembar_prasoal_status == true ? true : false;
+        dataForm.value.instruksi_pengerjaanStatus = response.data.instruksi_pengerjaan_status == true ? true : false;
+        dataForm.value.instruksi = response.data.instruksi;
+        dataForm.value.lembar_prasoal = response.data.lembar_prasoal;
+        dataForm.value.lembar_prasoal_timer = response.data.lembar_prasoal_timer;
+        dataForm.value.instruksi_pengerjaan = response.data.instruksi_pengerjaan;
+        dataForm.value.randomSoal = response.data.random_soal == true ? true : false;
+        dataForm.value.randomPilihanJawaban = response.data.random_pilihanjawaban == true ? true : false;
+        // console.log(response.data);
+       dataForm.value.status = response.data.status=="Aktif"?true:false;
+        return response.data;
+    } catch (error) {
+        console.error(error);
+    }
+};
+getDataDetail();
 const onSubmit = async (values) => {
     values.nama = dataForm.value.nama;
     values.random_soal = dataForm.value.randomSoal
+        ? true
+        : false;
+    values.status = dataForm.value.status
         ? "Aktif"
         : "Nonaktif";
     values.random_pilihanjawaban = dataForm.value.randomPilihanJawaban
-        ? "Aktif"
-        : "Nonaktif";
+        ? true
+        : false;
     values.instruksi_status = dataForm.value.instruksiStatus
-        ? "Aktif"
-        : "Nonaktif";
+        ? true
+        : false;
     values.lembar_prasoal_status = dataForm.value.lembar_prasoalStatus
-        ? "Aktif"
-        : "Nonaktif";
+        ? true
+        : false;
     values.instruksi_pengerjaan_status = dataForm.value.instruksi_pengerjaanStatus
-        ? "Aktif"
-        : "Nonaktif";
+        ? true
+        : false;
     // console.log(values);
     values.instruksi = dataForm.value.instruksi;
     values.lembar_prasoal = dataForm.value.lembar_prasoal;
     values.instruksi_pengerjaan = dataForm.value.instruksi_pengerjaan;
+    values.lembar_prasoal_timer = dataForm.value.lembar_prasoal_timer;
     // console.log(values);
 
-    let dataFormSend = {
+    dataForm.value = {
+        khusus_banksoal_aspek_detail_id:aspek_detail_id.value,
         nama: values.nama,
+        desc: values.desc,
+        urutan: values.urutan,
         waktu: values.waktu,
+        status: values.status,
         instruksi: values.instruksi,
         instruksi_status: values.instruksi_status,
         lembar_prasoal: values.lembar_prasoal,
-        random_soal: values.random_soal,
-        random_pilihanjawaban: values.random_pilihanjawaban,
         lembar_prasoal_status: values.lembar_prasoal_status,
+        lembar_prasoal_timer: values.lembar_prasoal_timer,
         instruksi_pengerjaan: values.instruksi_pengerjaan,
         instruksi_pengerjaan_status: values.instruksi_pengerjaan_status,
-        studi_v2_banksoal_aspek_detail_id: studi_v2_banksoal_aspek_detail_id.value,
-        kode: dataForm.value.kode
+        random_soal: values.random_soal,
+        random_pilihanjawaban: values.random_pilihanjawaban,
     };
     // console.log('====================================');
-    // console.log(dataFormSend);
+    // console.log(dataForm.value);
     // console.log('====================================');
     try {
-        const response = await Api.post(`ujianstudi/paketsoal/${paketsoal_id.value}/aspek_detail`, dataFormSend);
+        const response = await ApiUjianKhusus.put(`ujiankhusus/paketsoal/${paketsoal_id.value}/aspek_detail/${aspekDetail_id.value}`, dataForm.value);
         // console.log(response);
         Toast.success("Info", "Data berhasil ditambahkan!");
-        router.push({ name: "admin-ujianstudi-paketsoal-aspek_detail", params: { paketsoal_id: paketsoal_id.value } });
+        router.push({ name: "admin-ujiankhusus-paketsoal-aspek_detail", params: { paketsoal_id: paketsoal_id.value } });
         return true;
     } catch (error) {
-        console.error(error);
+        // console.error(error.response.data.data);
+        Toast.success(`ERROR`,`${error?.response?.data?.data}`);
     }
 };
 const dataDetail = ref([])
@@ -73,9 +127,11 @@ const dataAspek = ref(null)
 // get Kelas
 const getDataBanksoalAspek = async (sekolah_id) => {
     try {
-        const response = await Api.get(`ujianstudi/banksoal/aspek_detail`);
+        const response = await ApiUjianKhusus.get(`ujiankhusus/banksoal/aspek_detail`);
 
-        dataAspek.value = response.data;
+        const tempData=response.data;
+        dataAspek.value = tempData.map(fn_copy_id_for_mongo);
+        // dataAspek.value = response.data;
         dataAspek.value.forEach((item) => {
             pilihAspek.value.push({
                 label: item.nama,
@@ -95,42 +151,49 @@ const getDataBanksoalAspek = async (sekolah_id) => {
 };
 getDataBanksoalAspek();
 const doPilihAspek = (banksoal_aspek_id) => {
+    // console.log(banksoal_aspek_id);
     studi_v2_banksoal_aspek_detail_id.value = banksoal_aspek_id;
     dataForm.value.nama = dataForm.value.banksoal_aspek_id.label;
-    let cari = dataAspek.value.filter((x) => x.id === banksoal_aspek_id)
-    console.log(cari[0]);
+    let cari = dataAspek.value.filter((x) => x.id == banksoal_aspek_id)
+    // console.log(cari[0]);banksoal_aspek_id
+    aspek_detail_id.value=cari[0]._id;
+    console.log(cari[0]._id);
     dataForm.value.waktu = cari[0].waktu || 10;
     dataForm.value.instruksi = cari[0].instruksi;
-    dataForm.value.instruksiStatus = cari[0].instruksi_status == "Aktif" ? true : false;
+    dataForm.value.desc = cari[0].desc;
+    dataForm.value.instruksiStatus = cari[0].instruksi_status == true ? true : false;
     dataForm.value.lembar_prasoal = cari[0].lembar_prasoal;
-    dataForm.value.lembar_prasoalStatus = cari[0].lembar_prasoal_status == "Aktif" ? true : false;
+    dataForm.value.lembar_prasoal_timer = cari[0].lembar_prasoal_timer;
+    dataForm.value.lembar_prasoalStatus = cari[0].lembar_prasoal_status == true ? true : false;
     dataForm.value.instruksi_pengerjaan = cari[0].instruksi_pengerjaan;
-    dataForm.value.instruksi_pengerjaanStatus = cari[0].instruksi_pengerjaan_status == "Aktif" ? true : false;
-    dataForm.value.randomSoal = cari[0].random_soal == "Aktif" ? true : false;
-    dataForm.value.randomPilihanJawaban = cari[0].random_pilihanjawaban == "Aktif" ? true : false;
+    dataForm.value.instruksi_pengerjaanStatus = cari[0].instruksi_pengerjaan_status == true ? true : false;
+    dataForm.value.randomSoal = cari[0].random_soal == true ? true : false;
+    dataForm.value.randomPilihanJawaban = cari[0].random_pilihanjawaban == true ? true : false;
     dataForm.value.kode = cari[0].kode || null;
 }
 </script>
 <template>
     <div>
         <article class="prose lg:prose-sm">
-            <h1>MAPEL TAMBAH</h1>
+            <h1>ASPEK DETAIL EDIT 
+                <!-- : {{ aspek_detail_id }} -->
+            </h1>
+            <h5>UJIAN KHUSUS</h5>
         </article>
 
         <Form v-slot="{ errors }" @submit="onSubmit">
             <div class="py-2 lg:py-4 px-4">
-                <div class="flex flex-col">
+                <!-- <div class="flex flex-col">
                     <label> Pilih Aspek : </label>
                     <div class="flex space-x-2 w-full">
-                        <v-select class="py-2 px-3 w-full lg:w-1/2 mx-auto md:mx-0" :options="pilihAspek"
-                            v-model="dataForm.banksoal_aspek_id" v-bind:class="{ disabled: false }"></v-select>
+                        <Field :rules="fnValidasi.validateData" v-model="dataForm?.banksoal_aspek_id?.label" name="nama" type="text"
+                                class="input input-bordered w-11/12" readonly />
 
                         <div class="text-xs text-red-600 mt-1">
                             {{ errors.select }}
                         </div>
-                        <span class="btn" @click="doPilihAspek(dataForm.banksoal_aspek_id.id)">Pilih</span>
                     </div>
-                </div>
+                </div> -->
                 <div class="space-y-4">
                     <div class="flex flex-col">
                         <label>Nama :</label>
@@ -144,9 +207,31 @@ const doPilihAspek = (banksoal_aspek_id) => {
                     </div>
 
                 </div>
+                  
+                <div class="flex flex-col">
+                        <label>Deskripsi :</label>
+                        <div>
+                            <Field :rules="fnValidasi.validateData" v-model="dataForm.desc" name="desc" type="text"
+                                class="input input-bordered w-11/12" />
+                            <div class="text-xs text-red-600 mt-1">
+                                {{ errors.desc }}
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="flex flex-col">
+                        <label>Urutan :</label>
+                        <div>
+                            <Field :rules="fnValidasi.validateDataNumber" v-model="dataForm.urutan" name="urutan" type="text"
+                                max="1000" min="0" class="input input-bordered w-11/12" />
+                            <div class="text-xs text-red-600 mt-1">
+                                {{ errors.urutan }}
+                            </div>
+                        </div>
+                    </div>
 
                 <div class="flex flex-col">
-                    <label>Waktu : (menit)</label>
+                    <label>Waktu : (detik)</label>
                     <div>
                         <Field :rules="fnValidasi.validateDataNumber" v-model="dataForm.waktu" name="waktu" type="text"
                             max="1000" min="0" class="input input-bordered w-11/12" />
@@ -224,6 +309,16 @@ const doPilihAspek = (banksoal_aspek_id) => {
                         </div>
                     </div>
                 </div>
+                <div class="flex flex-col" v-if="dataForm.lembar_prasoalStatus">
+                        <label>Waktu Lembar Prasoal : (detik)</label>
+                        <div>
+                            <Field :rules="fnValidasi.validateDataNumber" v-model="dataForm.lembar_prasoal_timer" name="lembar_prasoal_timer" type="text"
+                                max="1000" min="0" class="input input-bordered w-11/12" />
+                            <div class="text-xs text-red-600 mt-1">
+                                {{ errors.lembar_prasoal_timer }}
+                            </div>
+                        </div>
+                    </div>
                 <div class="flex flex-col">
                     <div class="max-w-xs py-2">
                         <div class="form-control">

@@ -217,16 +217,29 @@ const doEditData = async (id, index) => {
                                 <template #table-row="props">
                                     <span v-if="props.column.field == 'actions'">
                                         <div class="text-sm font-medium text-center flex justify-center space-x-1">
-                                            <!-- <RouterLink
-                                                :to="{ name: 'admin-ujiankhusus-paketsoal-aspek_detail-soal', params: { paketsoal_id, aspek_detail_id: props.row.id, banksoal_aspek_detail_id: props.row.studi_v2_banksoal_aspek_detail_id } }">
+                                            <RouterLink
+                                                :to="{ name: 'admin-ujiankhusus-paketsoal-aspek_detail-soal', params: { paketsoal_id, aspek_detail_id: props.row.id, banksoal_aspek_detail_id: props.row.khusus_banksoal_aspek_detail_id } }">
                                                 <button class="btn btn-sm btn-primary tooltip" data-tip="Detail Soal">
                                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
                                                         viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                                         <path stroke-linecap="round" stroke-linejoin="round"
                                                             d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
                                                     </svg></button>
-                                            </RouterLink> -->
-                                            <button class="btn btn-sm btn-warning" @click="doEditMapel(props.row.id,props.index,props.row.nama)">EDIT</button>
+                                            </RouterLink>
+                                            <!-- {{ props.row.id }} -->
+                                            <RouterLink
+                                                :to="{ name: 'admin-ujiankhusus-paketsoal-aspek_detail-edit', params: { paketsoal_id, aspek_detail_id: props.row.id } }">
+                                                <button class="btn btn-sm btn-warning tooltip" data-tip="Detail Soal">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20"
+                                                    fill="currentColor">
+                                                    <path
+                                                        d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z" />
+                                                    <path fill-rule="evenodd"
+                                                        d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"
+                                                        clip-rule="evenodd" />
+                                                </svg></button>
+                                            </RouterLink>
+                                            <!-- <button class="btn btn-sm btn-warning" @click="doEditMapel(props.row.id,props.index,props.row.nama)">EDIT</button> -->
                                             <button class="btn btn-sm btn-danger"
                                                 @click="doDeleteData(props.row.id, props.index)">
                                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20"

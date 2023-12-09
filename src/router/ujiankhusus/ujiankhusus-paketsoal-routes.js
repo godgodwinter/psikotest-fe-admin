@@ -98,6 +98,14 @@ const ujiankhususPaketsoalRoutes = [
                     "@/views/admin/ujiankhusus/paketsoal/detail/ujiankhususPaketsoalAspekDetail_tambah.vue"
                   ),
               },
+              {
+                path: "/pages/admin/ujiankhusus/paketsoal/detail/:paketsoal_id/aspek_detail/edit/:aspek_detail_id",
+                name: "admin-ujiankhusus-paketsoal-aspek_detail-edit",
+                component: () =>
+                  import(
+                    "@/views/admin/ujiankhusus/paketsoal/detail/ujiankhususPaketsoalAspekDetail_edit.vue"
+                  ),
+              },
 
               {
                 path: "/pages/admin/ujiankhusus/paketsoal/detail/:paketsoal_id/aspek_detail/:aspek_detail_id/bank/:banksoal_aspek_detail_id/soal",

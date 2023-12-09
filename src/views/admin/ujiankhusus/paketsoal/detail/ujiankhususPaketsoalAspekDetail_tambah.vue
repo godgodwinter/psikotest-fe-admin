@@ -88,7 +88,7 @@ const onSubmit = async (values) => {
         return true;
     } catch (error) {
         // console.error(error.response.data.data);
-        Toast.success(`ERROR`,`${error?.response?.data?.data}`);
+        Toast.success(`Gagal!`,`${error?.response?.data?.data}`);
     }
 };
 const dataDetail = ref([])
