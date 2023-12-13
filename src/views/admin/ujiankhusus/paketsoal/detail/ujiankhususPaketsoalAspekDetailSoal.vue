@@ -17,6 +17,7 @@ const router = useRouter();
 const route = useRoute();
 const paketsoal_id = ref(route.params.paketsoal_id)
 const aspek_detail_id = ref(route.params.aspek_detail_id)
+const aspek_detail=ref()
 const banksoal_aspek_detail_id = ref(route.params.banksoal_aspek_detail_id)
 const data = ref();
 const isLoading = ref(true);
@@ -39,15 +40,47 @@ const columns = [
     },
     {
         label: "Jumlah Pilihan jawaban",
-        field: "pilihanjawaban_jml",
-        type: "number",
+        field: "jml_pilihanjawaban",
+        type: "Number",
+    },
+    {
+        label: "jawaban benar",
+        field: "jml_jawaban_benar",
+        type: "Number",
     },
 ];
 
+const hitungJumlahSkorPositif = (pilihanJawaban) => {
+    // console.log('====================================');
+    // console.log(pilihanJawaban);
+    // console.log('====================================');
+    let result=0;
+    for(const[index,item] of pilihanJawaban.entries()){
+        if(item.skor>0){
+            result++;
+            }
+    }
+    return result;
+};
 const getData = async () => {
     try {
         const response = await ApiUjianKhusus.get(`ujiankhusus/paketsoal/${paketsoal_id.value}/aspek_detail/${aspek_detail_id.value}/soal`);
-        data.value = response.data;
+        const tempData= response.data?.soal;
+        data.value = tempData.map(fn_copy_id_for_mongo);
+        aspek_detail.value = tempData.map(fn_copy_id_for_mongo);
+        // data.value = response.data?.soal;
+        // aspek_detail.value= response.data;
+        // console.log(aspek_detail.value);
+        
+        let jml_jawaban_benar
+        for(const[index,item] of data.value.entries()){
+            const jumlahSkorPositif = hitungJumlahSkorPositif(item.pilihan_jawaban);
+            // console.log(jumlahSkorPositif);
+            item.jml_jawaban_benar=jumlahSkorPositif;
+            // console.log('====================================');
+            // console.log(item);
+            // console.log('====================================');
+        }
         isLoading.value = false;
         return response.data;
     } catch (error) {
@@ -87,6 +120,7 @@ const doEditData = async (id, index) => {
     <div>
         <article class="prose lg:prose-sm">
             <h1>SOAL</h1>
+            <h5>UJIAN KHUSUS</h5>
         </article>
         <span v-if="isLoading">
             <LoadingNavbar />
@@ -150,6 +184,13 @@ const doEditData = async (id, index) => {
                                         </div>
                                     </span>
 
+                                    <span v-else-if="props.column.field == 'jml_pilihanjawaban'">
+                                        <span>{{ props.row.pilihan_jawaban.length }}</span>
+                                    </span>
+                                    <span v-else-if="props.column.field == 'jml_jawaban_benar'"><span>
+                                        {{ props.row.jml_jawaban_benar }}
+                                    </span>
+                                    </span>
 
                                     <span v-else>
                                         {{ props.formattedRow[props.column.field] }}

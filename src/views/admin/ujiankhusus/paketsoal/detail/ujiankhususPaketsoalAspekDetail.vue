@@ -251,8 +251,9 @@ const doEditData = async (id, index) => {
                                             </button>
                                         </div>
                                     </span>
-
-
+                                    <span v-if="props.column.field=='soal_jml'">
+                                        {{ props.row.soal?props.row.soal.length:"Tidak ditemukan" }}
+                                    </span>
                                     <span v-else>
                                         {{ props.formattedRow[props.column.field] }}
                                     </span>

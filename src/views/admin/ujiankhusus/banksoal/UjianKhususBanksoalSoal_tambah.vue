@@ -130,7 +130,7 @@ const doTambahPilihanJawaban = () => {
     dataPilihanJawaban.value.push({
         // id: dataPilihanJawaban.value.length+1,
         kode_pilihan_jawaban:uuidv4(),
-        jawaban: "-",
+        jawaban: " ",
         // status: "Salah",
         skor: 0,
     });
