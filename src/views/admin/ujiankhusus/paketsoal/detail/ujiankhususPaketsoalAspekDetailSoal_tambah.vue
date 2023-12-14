@@ -110,11 +110,11 @@ const doAdd = async () => {
     // console.log(dataId);
     dataForm.value = dataId;
     console.log('====================================');
-    console.log(dataForm.value);
+    console.log(dataForm.value,"11");
     console.log('====================================');
     // dataForm.value = { listId: dataId };
     // console.log(aspek_id);
-    const response = await ApiUjianKhusus.post(`ujiankhusus/paketsoal/${paketsoal_id.value}/aspek_detail/${aspek_detail_id.value}/soal/banksoal/${banksoal_aspek_detail_id.value}`,dataForm.valuez);
+    const response = await ApiUjianKhusus.post(`ujiankhusus/paketsoal/${paketsoal_id.value}/aspek_detail/${aspek_detail_id.value}/soal/banksoal/${banksoal_aspek_detail_id.value}`,dataForm.value);
     // const response = await ApiPaketsoalKategori.doStoreDataSoal(
     //     kategori_id,
     //     dataId
