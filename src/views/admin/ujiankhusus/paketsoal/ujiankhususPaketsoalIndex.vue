@@ -5,6 +5,9 @@ import { useRouter } from "vue-router";
 import Api from "@/axios/axiosNode";
 import ApiUjianKhusus from "@/axios/axiosIst";
 import {fn_copy_id_for_mongo} from "@/lib/FungsiBasic.js"
+import moment from "moment/min/moment-with-locales";
+import localization from "moment/locale/id";
+moment.updateLocale("id", localization);
 
 const LoadingNavbar = defineAsyncComponent(() =>
     import('@/components/alert/AlertLoading.vue')
@@ -15,6 +18,7 @@ const AlertFailed = defineAsyncComponent(() =>
 
 const router = useRouter();
 const data = ref();
+const paketsoal_aktif = ref();
 const isLoading = ref(true);
 const isError = ref(false);
 
@@ -54,6 +58,12 @@ const getData = async () => {
     }
 };
 getData();
+const getDataPaketsoalAktif = async () => {
+    let getDataPaket=localStorage.getItem("ujiankhusus_paketsoal_aktif");
+    paketsoal_aktif.value=getDataPaket?JSON.parse(getDataPaket):null;
+    console.log(paketsoal_aktif.value);
+};
+getDataPaketsoalAktif();
 
 const doDeleteData = async (id, index) => {
     if (confirm("Apakah anda yakin menghapus data ini?")) {
@@ -80,7 +90,7 @@ const doEditData = async (id, index) => {
     });
 };
 
-const paketsoal_aktif = ref(null);
+// const paketsoal_aktif = ref(null);
 // const getPaketAktif = async (id) => {
 //     let dataFormSend = {}
 //     try {
@@ -99,22 +109,31 @@ const paketsoal_aktif = ref(null);
 //     }
 // };
 // getPaketAktif();
-// const doAktifkanPaket = async (id) => {
-//     if (confirm("Apakah anda yakin aktifkan paketsoal ini?")) {
-//         let dataFormSend = {}
-//         try {
-//             isLoading.value = true;
-//             const response = await Api.get(`redis/studiv2/paketsoal/${id}/aktifkan`, dataFormSend);
-//             Toast.babeng("Berhasil", 'Paket berhasil diAktifkan!');
-//             getPaketAktif();
-//             isLoading.value = false;
-//         } catch (error) {
-//             isLoading.value = false;
-//             isError.value = true;
-//             console.error(error);
-//         }
-//     }
-// };
+const doAktifkanPaket = async (id,nama) => {
+    if (confirm("Apakah anda yakin aktifkan paketsoal ini?")) {
+        let paketsoal_aktif={
+            id,
+            nama,
+            tgl_batas_mulai: moment(),
+            tgl_batas_terakhir: moment().add(7, 'days')
+        }
+        // console.log(paketsoal_aktif);
+        localStorage.setItem("ujiankhusus_paketsoal_aktif",JSON.stringify(paketsoal_aktif))
+        getDataPaketsoalAktif()
+        // let dataFormSend = {}
+        // try {
+        //     isLoading.value = true;
+        //     const response = await Api.get(`redis/studiv2/paketsoal/${id}/aktifkan`, dataFormSend);
+        //     Toast.babeng("Berhasil", 'Paket berhasil diAktifkan!');
+        //     getPaketAktif();
+        //     isLoading.value = false;
+        // } catch (error) {
+        //     isLoading.value = false;
+        //     isError.value = true;
+        //     console.error(error);
+        // }
+    }
+};
 
 // const doDeletPaketAktif = async () => {
 //     if (confirm("Apakah anda yakin menghapus paketsoal ini?")) {
@@ -209,7 +228,7 @@ const paketsoal_aktif = ref(null);
 
 
                                             <button class="btn btn-sm btn-info tooltip" data-tip="Aktifkan Paket"
-                                                @click="doAktifkanPaket(props.row.id)">
+                                                @click="doAktifkanPaket(props.row.id,props.row.nama)">
                                                 Aktifkan </button>
 
                                         </div>

@@ -66,6 +66,26 @@ const AdminSekolahRoutes = [
 
               // ! UJIANSTUDI-PROSES-END
 
+              // ! ujiankhusus-PROSES
+              {
+                path: "/pages/admin/mastering/sekolah/:sekolah_id/submenu/kelas/:kelas_id?/ujiankhusus",
+                name: "admin-sekolah-submenu-ujiankhusus",
+                component: () =>
+                  import(
+                    "@/views/admin/ujiankhusus/proses/UjiankhususProsesPerkelas.vue"
+                  ),
+              },
+              {
+                path: "/pages/admin/mastering/sekolah/:sekolah_id/submenu/kelas/:kelas_id?/ujiankhusus/siswa/:siswa_id",
+                name: "admin-sekolah-submenu-ujiankhusus-persiswa",
+                component: () =>
+                  import(
+                    "@/views/admin/ujiankhusus/proses/UjiankhususProsesPerSiswa.vue"
+                  ),
+              },
+
+              // ! UJIANSTUDI-PROSES-END
+
               // ! DATA-IST-PROSES
               {
                 path: "/pages/admin/mastering/sekolah/:sekolah_id/submenu/kelas/:kelas_id?/ist",

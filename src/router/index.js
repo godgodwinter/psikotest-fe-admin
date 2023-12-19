@@ -14,7 +14,7 @@ routes.push(
   ...AdminRoutes,
   ...AdminSekolahRoutes,
   ...UjianStudiRoutes,
-  ...LandingRoutes,
+  ...LandingRoutes
 );
 
 const router = createRouter({
