@@ -76,6 +76,14 @@ const AdminSekolahRoutes = [
                   ),
               },
               {
+                path: "/pages/admin/mastering/sekolah/:sekolah_id/submenu/kelas/:kelas_id?/ujiankhusus/siswa/:siswa_id/reset",
+                name: "admin-sekolah-submenu-ujiankhusus-persiswa-reset",
+                component: () =>
+                  import(
+                    "@/views/admin/ujiankhusus/proses/UjiankhususProsesPerSiswa_reset.vue"
+                  ),
+              },
+              {
                 path: "/pages/admin/mastering/sekolah/:sekolah_id/submenu/kelas/:kelas_id?/ujiankhusus/siswa/:siswa_id",
                 name: "admin-sekolah-submenu-ujiankhusus-persiswa",
                 component: () =>

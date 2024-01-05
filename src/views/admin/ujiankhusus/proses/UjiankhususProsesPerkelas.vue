@@ -161,7 +161,7 @@ const getData = async () => {
         
         // const tempData=response.data;
         // data.value = tempData.map(fn_copy_id_for_mongo);
-        console.log(data.value);
+        // console.log(data.value);
         isLoading.value = false;
     } catch (error) {
         isLoading.value = false;
@@ -290,9 +290,9 @@ const doPilihPaket = () => {
 
 const doGenerateSiswa = async (id, index) => {
     if (confirm("Apakah anda yakin generate data ini?")) {
-        console.log('====================================');
-        console.log(paketsoal_aktif.value.id);
-        console.log('====================================');
+        // console.log('====================================');
+        // console.log(paketsoal_aktif.value.id);
+        // console.log('====================================');
         let dataFormSend = {
             paketsoal_id:paketsoal_aktif.value.id,
             tgl_batas_mulai:dataForm.value.tgl_batas_mulai,
@@ -301,7 +301,8 @@ const doGenerateSiswa = async (id, index) => {
         try {
             isLoading.value = true;
             const response = await ApiUjianKhusus.post(`ujiankhusus/proses/sekolah/${sekolah_id.value}/kelas/${getSekolahAktif.value.kelas_id}/siswa/${id}`, dataFormSend);
-            // console.log(response?.data);
+            console.log(response?.data);
+
             Toast.babeng("Berhasil", 'Data berhasil digenerate!');
             getData();
         } catch (error) {
@@ -749,8 +750,16 @@ const doCetakReactV2 = (ttd="true") => {
                                         </span>
 
                                         <span v-else-if="props.column.field == 'hasil'">
+                                            <RouterLink
+                                                    :to="{ name: 'admin-sekolah-submenu-ujiankhusus-persiswa-reset', params: { sekolah_id, kelas_id, siswa_id: props.row.id } }"> <button class="btn btn-sm btn-warning tooltip" data-tip="MENU RESET"
+                                                    v-if="props.row.paketsoal_nama">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+  <path stroke-linecap="round" stroke-linejoin="round" d="m9 9 6-6m0 0 6 6m-6-6v12a6 6 0 0 1-12 0v-3" />
+</svg>
 
-                                            <span v-if="props.row.hasil" class="gap-1 space-x-0 space-y-1">
+                                                </button>
+                                            </RouterLink>
+                                            <!-- <span v-if="props.row.hasil" class="gap-1 space-x-0 space-y-1">
                                                 <RouterLink
                                                     :to="{ name: 'admin-sekolah-submenu-ujianstudi-persiswa', params: { sekolah_id, kelas_id, siswa_id: props.row.id } }">
                                                     <button class="btn btn-sm btn-success tooltip" data-tip="Lihat Hasil">
@@ -783,7 +792,7 @@ const doCetakReactV2 = (ttd="true") => {
 
                                                 </button>
                                                 <span v-else>-</span>
-                                            </span>
+                                            </span> -->
                                         </span>
 
                                         <span v-else-if="props.column.field == 'kelas_nama'">

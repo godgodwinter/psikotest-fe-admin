@@ -34,6 +34,11 @@ const columns = [
         type: "String",
     },
     {
+        label: "Desc",
+        field: "desc",
+        type: "String",
+    },
+    {
         label: "Jumlah Soal",
         field: "soal_jml",
         type: "String",

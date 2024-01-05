@@ -43,6 +43,11 @@ const columns = [
         type: "String",
     },
     {
+        label: "Desc",
+        field: "desc",
+        type: "String",
+    },
+    {
         label: "Waktu",
         field: "waktu",
         type: "String",
