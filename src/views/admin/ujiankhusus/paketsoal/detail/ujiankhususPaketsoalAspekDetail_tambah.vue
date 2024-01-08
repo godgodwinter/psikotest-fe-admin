@@ -141,6 +141,30 @@ const doPilihAspek = (banksoal_aspek_id) => {
     dataForm.value.randomPilihanJawaban = cari[0].random_pilihanjawaban == true ? true : false;
     dataForm.value.kode = cari[0].kode || null;
 }
+
+const toolbarOptions = [['image'],
+["bold", "italic", "underline", "strike"], // toggled buttons
+["blockquote", "code-block"],
+
+[{ header: 1 }, { header: 2 }], // custom button values
+[{ list: "ordered" }, { list: "bullet" }],
+[{ script: "sub" }, { script: "super" }], // superscript/subscript
+[{ indent: "-1" }, { indent: "+1" }], // outdent/indent
+[{ direction: "rtl" }], // text direction
+
+[{ size: ["small", false, "large", "huge"] }], // custom dropdown
+[{ header: [1, 2, 3, 4, 5, 6, false] }],
+
+[{ color: [] }, { background: [] }], // dropdown with defaults from theme
+[{ font: [] }],
+[{ align: [] }],
+
+["clean"], // remove formatting button
+];
+
+const editorPertanyaan = ref("<b>tes123</b>");
+
+const pagesActive = ref("tulis");
 </script>
 <template>
     <div>
@@ -266,19 +290,25 @@ const doPilihAspek = (banksoal_aspek_id) => {
                             </label>
                         </div>
                     </div>
-                    <div>
-                        <!-- <Field v-if="dataForm.lembar_prasoalStatus" :rules="fnValidasi.validateData"
-                                                                                                                                                                                          v-model="dataForm.lembar_prasoal" name="lembar_prasoal" type="text"
-                                                                                                                                                                                          class="input input-bordered w-11/12" /> -->
-
-                        <textarea v-if="dataForm.lembar_prasoalStatus" v-model="dataForm.lembar_prasoal"
-                            :rules="fnValidasi.validateData" name="lembar_prasoal" ref="lembar_prasoal"
-                            class="textarea textarea-bordered md:w-full  w-11/12" placeholder="">
-                                                                                                                                                                                        </textarea>
-                        <div class="text-xs text-red-600 mt-1">
-                            {{ errors.lembar_prasoal }}
-                        </div>
+                
+            <div v-if="dataForm.lembar_prasoalStatus">
+                <div class="py-10 w-full bg-base-100 shadow-sm">
+                    <div class="tabs">
+                        <a class="tab tab-bordered" @click="pagesActive = 'tulis'"
+                            :class="{ 'tab-active': pagesActive == 'tulis' }">Tulis</a>
+                        <a class="tab tab-bordered" @click="pagesActive = 'preview'"
+                            :class="{ 'tab-active': pagesActive == 'preview' }">Preview</a>
                     </div>
+                </div>
+                <div v-if="pagesActive == 'tulis'">
+                    <label>Pertanyaan :</label>
+                    <QuillEditor theme="snow" :toolbar="toolbarOptions" v-model:content="dataForm.lembar_prasoal"
+                        contentType="html" class="ql-editor2">
+
+                    </QuillEditor>
+
+                </div>
+                </div>
                 </div>
                 <div class="flex flex-col" v-if="dataForm.lembar_prasoalStatus">
                         <label>Waktu Lembar Prasoal : (detik)</label>

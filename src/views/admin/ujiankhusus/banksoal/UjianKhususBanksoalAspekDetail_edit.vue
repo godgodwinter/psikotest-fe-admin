@@ -110,9 +110,36 @@ const onSubmit = async (values) => {
         console.error(error);
     }
 };
+
+
+const toolbarOptions = [['image'],
+["bold", "italic", "underline", "strike"], // toggled buttons
+["blockquote", "code-block"],
+
+[{ header: 1 }, { header: 2 }], // custom button values
+[{ list: "ordered" }, { list: "bullet" }],
+[{ script: "sub" }, { script: "super" }], // superscript/subscript
+[{ indent: "-1" }, { indent: "+1" }], // outdent/indent
+[{ direction: "rtl" }], // text direction
+
+[{ size: ["small", false, "large", "huge"] }], // custom dropdown
+[{ header: [1, 2, 3, 4, 5, 6, false] }],
+
+[{ color: [] }, { background: [] }], // dropdown with defaults from theme
+[{ font: [] }],
+[{ align: [] }],
+
+["clean"], // remove formatting button
+];
+
+const editorPertanyaan = ref("<b>tes123</b>");
+
+const pagesActive = ref("tulis");
+
 </script>
 <template>
     <div>
+        
         <article class="prose lg:prose-sm">
             <h1>ASPEK DETAIL EDIT</h1>
         </article>
@@ -217,20 +244,34 @@ const onSubmit = async (values) => {
                                 </label>
                             </div>
                         </div>
-                        <div>
-                            <!-- <Field v-if="dataForm.lembar_prasoalStatus" :rules="fnValidasi.validateData"
-                                                                  v-model="dataForm.lembar_prasoal" name="lembar_prasoal" type="text"
-                                                                  class="input input-bordered w-11/12" /> -->
+                <div v-if="dataForm.lembar_prasoalStatus">
+                <div class="py-10 w-full bg-base-100 shadow-sm">
+                    <div class="tabs">
+                        <a class="tab tab-bordered" @click="pagesActive = 'tulis'"
+                            :class="{ 'tab-active': pagesActive == 'tulis' }">Tulis</a>
+                        <a class="tab tab-bordered" @click="pagesActive = 'preview'"
+                            :class="{ 'tab-active': pagesActive == 'preview' }">Preview</a>
+                    </div>
+                </div>
+                <div v-if="pagesActive == 'tulis'">
+                    <label>Pertanyaan :</label>
+                    <QuillEditor theme="snow" :toolbar="toolbarOptions" v-model:content="dataForm.lembar_prasoal"
+                        contentType="html" class="ql-editor2">
 
-                            <textarea v-if="dataForm.lembar_prasoalStatus" v-model="dataForm.lembar_prasoal"
-                                :rules="fnValidasi.validateData" name="lembar_prasoal" ref="lembar_prasoal"
-                                class="textarea textarea-bordered md:w-full  w-11/12" placeholder="">
-                                                                </textarea>
+                    </QuillEditor>
+
+                </div>
+
+                <div class="shadow-sm py-4 px-4 space-y-4" v-else>
+                    <label for="" class="underline">Preview : </label>
+                    <div class="w-full border-2 min-h-16 p-10" v-html="dataForm.lembar_prasoal"></div>
+                </div>
+
                             <div class="text-xs text-red-600 mt-1">
                                 {{ errors.lembar_prasoal }}
                             </div>
                         </div>
-                    </div>
+            </div>
                     
                     <div class="flex flex-col" v-if="dataForm.lembar_prasoalStatus">
                         <label>Waktu Lembar Prasoal : (detik)</label>
