@@ -78,49 +78,49 @@ const UjianStudiBanksoalRoutes = [
                 "@/views/admin/ujiankhusus/banksoal/minat/UjianKhususBanksoalMinat.vue"
               ),
           },
-          {
-            path: "/pages/admin/ujiankhusus/banksoal/minat/tambah",
-            name: "admin-ujiankhusus-banksoal-minat-tambah",
-            component: () =>
-              import(
-                "@/views/admin/ujiankhusus/banksoal/minat/UjianKhususBanksoalMinat_tambah.vue"
-              ),
-          },
-          {
-            path: "/pages/admin/ujiankhusus/banksoal/minat/edit/:banksoal_minatbakat_id",
-            name: "admin-ujiankhusus-banksoal-minat-edit",
-            component: () =>
-              import(
-                "@/views/admin/ujiankhusus/banksoal/minat/UjianKhususBanksoalMinat_edit.vue"
-              ),
-          },
+          // {
+          //   path: "/pages/admin/ujiankhusus/banksoal/minat/tambah",
+          //   name: "admin-ujiankhusus-banksoal-minat-tambah",
+          //   component: () =>
+          //     import(
+          //       "@/views/admin/ujiankhusus/banksoal/minat/UjianKhususBanksoalMinat_tambah.vue"
+          //     ),
+          // },
+          // {
+          //   path: "/pages/admin/ujiankhusus/banksoal/minat/edit/:banksoal_minatbakat_id",
+          //   name: "admin-ujiankhusus-banksoal-minat-edit",
+          //   component: () =>
+          //     import(
+          //       "@/views/admin/ujiankhusus/banksoal/minat/UjianKhususBanksoalMinat_edit.vue"
+          //     ),
+          // },
           // ! banksoal minat dan bakat-END
 
           // ! banksoal kreatifitas
-          {
-            path: "/pages/admin/ujiankhusus/banksoal/kr",
-            name: "admin-ujiankhusus-banksoal-kr",
-            component: () =>
-              import(
-                "@/views/admin/ujiankhusus/banksoal/kr/UjianKhususBanksoalKr.vue"
-              ),
-          },
-          {
-            path: "/pages/admin/ujiankhusus/banksoal/kr/tambah",
-            name: "admin-ujiankhusus-banksoal-kr-tambah",
-            component: () =>
-              import(
-                "@/views/admin/ujiankhusus/banksoal/kr/UjianKhususBanksoalKr_tambah.vue"
-              ),
-          },
-          {
-            path: "/pages/admin/ujiankhusus/banksoal/kr/edit/:banksoal_krbakat_id",
-            name: "admin-ujiankhusus-banksoal-kr-edit",
-            component: () =>
-              import(
-                "@/views/admin/ujiankhusus/banksoal/kr/UjianKhususBanksoalKr_edit.vue"
-              ),
-          },
+          // {
+          //   path: "/pages/admin/ujiankhusus/banksoal/kr",
+          //   name: "admin-ujiankhusus-banksoal-kr",
+          //   component: () =>
+          //     import(
+          //       "@/views/admin/ujiankhusus/banksoal/kr/UjianKhususBanksoalKr.vue"
+          //     ),
+          // },
+          // {
+          //   path: "/pages/admin/ujiankhusus/banksoal/kr/tambah",
+          //   name: "admin-ujiankhusus-banksoal-kr-tambah",
+          //   component: () =>
+          //     import(
+          //       "@/views/admin/ujiankhusus/banksoal/kr/UjianKhususBanksoalKr_tambah.vue"
+          //     ),
+          // },
+          // {
+          //   path: "/pages/admin/ujiankhusus/banksoal/kr/edit/:banksoal_krbakat_id",
+          //   name: "admin-ujiankhusus-banksoal-kr-edit",
+          //   component: () =>
+          //     import(
+          //       "@/views/admin/ujiankhusus/banksoal/kr/UjianKhususBanksoalKr_edit.vue"
+          //     ),
+          // },
           // ! banksoal kreatifitas-END
 
           // ! SOAL
