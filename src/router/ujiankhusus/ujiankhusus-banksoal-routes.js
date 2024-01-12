@@ -78,22 +78,77 @@ const UjianStudiBanksoalRoutes = [
                 "@/views/admin/ujiankhusus/banksoal/minat/UjianKhususBanksoalMinat.vue"
               ),
           },
-          // {
-          //   path: "/pages/admin/ujiankhusus/banksoal/minat/tambah",
-          //   name: "admin-ujiankhusus-banksoal-minat-tambah",
-          //   component: () =>
-          //     import(
-          //       "@/views/admin/ujiankhusus/banksoal/minat/UjianKhususBanksoalMinat_tambah.vue"
-          //     ),
-          // },
-          // {
-          //   path: "/pages/admin/ujiankhusus/banksoal/minat/edit/:banksoal_minatbakat_id",
-          //   name: "admin-ujiankhusus-banksoal-minat-edit",
-          //   component: () =>
-          //     import(
-          //       "@/views/admin/ujiankhusus/banksoal/minat/UjianKhususBanksoalMinat_edit.vue"
-          //     ),
-          // },
+          {
+            path: "/pages/admin/ujiankhusus/banksoal/minat/tambah",
+            name: "admin-ujiankhusus-banksoal-minat-tambah",
+            component: () =>
+              import(
+                "@/views/admin/ujiankhusus/banksoal/minat/UjianKhususBanksoalMinat_tambah.vue"
+              ),
+          },
+          {
+            path: "/pages/admin/ujiankhusus/banksoal/minat/edit/:banksoal_minatbakat_id",
+            name: "admin-ujiankhusus-banksoal-minat-edit",
+            component: () =>
+              import(
+                "@/views/admin/ujiankhusus/banksoal/minat/UjianKhususBanksoalMinat_edit.vue"
+              ),
+          },
+
+          // !kelompok
+          {
+            path: "/pages/admin/ujiankhusus/banksoal/minat/detail/:banksoal_minatbakat_id/kelompok",
+            name: "admin-ujiankhusus-banksoal-minat-kelompok",
+            component: () =>
+              import(
+                "@/views/admin/ujiankhusus/banksoal/minat/kelompok/UjianKhususBanksoalMinat_Kelompok.vue"
+              ),
+          },
+          {
+            path: "/pages/admin/ujiankhusus/banksoal/minat/detail/:banksoal_minatbakat_id/kelompok/tambah",
+            name: "admin-ujiankhusus-banksoal-minat-kelompok-tambah",
+            component: () =>
+              import(
+                "@/views/admin/ujiankhusus/banksoal/minat/kelompok/UjianKhususBanksoalMinat_Kelompok_tambah.vue"
+              ),
+          },
+          {
+            path: "/pages/admin/ujiankhusus/banksoal/minat/detail/:banksoal_minatbakat_id/kelompok/edit/:kelompok_id",
+            name: "admin-ujiankhusus-banksoal-minat-kelompok-edit",
+            component: () =>
+              import(
+                "@/views/admin/ujiankhusus/banksoal/minat/kelompok/UjianKhususBanksoalMinat_Kelompok_edit.vue"
+              ),
+          },
+          // !kelompok-end
+
+          // !profesi
+          {
+            path: "/pages/admin/ujiankhusus/banksoal/minat/detail/:banksoal_minatbakat_id/kelompok/:kelompok_id/profesi",
+            name: "admin-ujiankhusus-banksoal-minat-kelompok-profesi",
+            component: () =>
+              import(
+                "@/views/admin/ujiankhusus/banksoal/minat/kelompok/profesi/Profesi_index.vue"
+              ),
+          },
+          {
+            path: "/pages/admin/ujiankhusus/banksoal/minat/detail/:banksoal_minatbakat_id/kelompok/:kelompok_id/profesi/tambah",
+            name: "admin-ujiankhusus-banksoal-minat-kelompok-profesi-tambah",
+            component: () =>
+              import(
+                "@/views/admin/ujiankhusus/banksoal/minat/kelompok/profesi/Profesi_tambah.vue"
+              ),
+          },
+          {
+            path: "/pages/admin/ujiankhusus/banksoal/minat/detail/:banksoal_minatbakat_id/kelompok/:kelompok_id/profesi/edit/:profesi_id",
+            name: "admin-ujiankhusus-banksoal-minat-kelompok-profesi-edit",
+            component: () =>
+              import(
+                "@/views/admin/ujiankhusus/banksoal/minat/kelompok/profesi/Profesi_edit.vue"
+              ),
+          },
+          // !profesi-end
+
           // ! banksoal minat dan bakat-END
 
           // ! banksoal kreatifitas

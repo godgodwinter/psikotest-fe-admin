@@ -1,7 +1,7 @@
 <script setup>
 import { ref, defineAsyncComponent } from "vue"
 import Toast from "@/components/lib/Toast";
-import { useRouter } from "vue-router";
+import { useRouter,useRoute } from "vue-router";
 import Api from "@/axios/axiosNode";
 import ApiUjianKhusus from "@/axios/axiosIst";
 import {fn_copy_id_for_mongo} from "@/lib/FungsiBasic.js"
@@ -14,6 +14,9 @@ const AlertFailed = defineAsyncComponent(() =>
 )
 
 const router = useRouter();
+const route = useRoute();
+const banksoal_minatbakat_id = ref(route.params.banksoal_minatbakat_id)
+const kelompok_id = ref(route.params.kelompok_id)
 const data = ref();
 const isLoading = ref(true);
 const isError = ref(false);
@@ -30,18 +33,17 @@ const columns = [
     },
     {
         label: "Nama",
-        field: "nama",
+        field: "profesi_nama",
         type: "String",
     },
     {
-        label: "waktu",
-        field: "waktu",
+        label: "KODE",
+        field: "profesi_kode",
         type: "String",
     },
-    
     {
-        label: "Jumlah Kelompok",
-        field: "kelompok_jml",
+        label: "urutan",
+        field: "urutan",
         type: "String",
     },
     {
@@ -53,10 +55,11 @@ const columns = [
 
 const getData = async () => {
     try {
-        const response = await ApiUjianKhusus.get(`ujiankhusus/minatbakat/banksoal/index`);
+        const response = await ApiUjianKhusus.get(`ujiankhusus/minatbakat/banksoal/index/${banksoal_minatbakat_id.value}/kelompok/${kelompok_id.value}/profesi`);
         // console.log(response);
         const tempData=response.data;
         data.value = tempData.map(fn_copy_id_for_mongo);
+        // data.value=tempData;
         isLoading.value = false;
         return response.data;
     } catch (error) {
@@ -70,7 +73,7 @@ getData();
 const doDeleteData = async (id, index) => {
     if (confirm("Apakah anda yakin menghapus data ini?")) {
         try {
-            const response = await ApiUjianKhusus.delete(`ujiankhusus/minatbakat/banksoal/index/${id}`);
+            const response = await ApiUjianKhusus.delete(`ujiankhusus/minatbakat/banksoal/index/${banksoal_minatbakat_id.value}/kelompok/${kelompok_id.value}/profesi/${id}`);
                 Toast.warning("Berhasil", response.message);
             getData();
             return true;
@@ -82,15 +85,15 @@ const doDeleteData = async (id, index) => {
 
 const doEditData = async (id, index) => {
     router.push({
-        name: "admin-ujiankhusus-banksoal-minat-edit",
-        params: { banksoal_minatbakat_id: id },
+        name: "admin-ujiankhusus-banksoal-minat-kelompok-profesi-edit",
+        params: { banksoal_minatbakat_id: banksoal_minatbakat_id.value,kelompok_id:kelompok_id,profesi_id:id },
     });
 };
 </script>
 <template>
     <div>
         <article class="prose lg:prose-sm">
-            <h1>BANK SOAL MINAT DAN BAKAT </h1>
+            <h1>PROFESI </h1>
             <h5>UJIAN KHUSUS</h5>
         </article>
         
@@ -99,14 +102,14 @@ const doEditData = async (id, index) => {
         
         <!-- <article class="prose lg:prose-sm">
             <h5>MENU BANKSOAL MINAT BAKAT</h5>
-        </article>
+        </article> -->
         <RouterLink :to="{ name: 'admin-ujiankhusus-banksoal-minat' }">
-            <button class="btn btn-info btn-sm">Beranda Minat Bakat</button>
+            <button class="btn btn-secondary btn-sm">Kembali Beranda Minat Bakat</button>
         </RouterLink>
-        <RouterLink :to="{ name: 'admin-ujiankhusus-banksoal-minat' }">
-            <button class="btn btn-info btn-sm">KELOMPOK</button>
+        <RouterLink :to="{ name: 'admin-ujiankhusus-banksoal-minat-kelompok',params:{banksoal_minatbakat_id:banksoal_minatbakat_id} }">
+            <button class="btn btn-secondary btn-sm">Kembali ke Menu Kelompok</button>
         </RouterLink>
-        <div class="divider"></div> -->
+        <div class="divider"></div>
     </div>
         <span v-if="isLoading">
             <LoadingNavbar />
@@ -128,7 +131,7 @@ const doEditData = async (id, index) => {
                                 <template #table-actions>
                                     <div class="space-x-1 space-y-1 gap-1">
                                         <router-link :to="{
-                                            name: 'admin-ujiankhusus-banksoal-minat-tambah',
+                                            name: 'admin-ujiankhusus-banksoal-minat-kelompok-profesi-tambah',params:{banksoal_minatbakat_id,kelompok_id}
                                         }">
                                             <button class="btn btn-sm btn-primary tooltip" data-tip="Tambah">
                                                 TAMBAH
@@ -139,18 +142,8 @@ const doEditData = async (id, index) => {
                                 <template #table-row="props">
                                     <span v-if="props.column.field == 'actions'">
                                         <div class="text-sm font-medium text-center flex justify-center space-x-1">
-                                            
-                                            <RouterLink
-                                                :to="{ name: 'admin-ujiankhusus-banksoal-minat-kelompok', params: { banksoal_minatbakat_id: props.row.id } }">
-                                                <button class="btn btn-sm btn-primary tooltip" data-tip="Detail Kelompok">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
-                                                        viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                                            d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                                    </svg></button>
-                                            </RouterLink>
                                             <button class="btn btn-sm btn-warning tooltip" data-tip="Edit"
-                                                @click="doEditData(props.row.id, props.index)">
+                                                @click="doEditData(props.row.profesi_id, props.index)">
                                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20"
                                                     fill="currentColor">
                                                     <path
@@ -160,7 +153,7 @@ const doEditData = async (id, index) => {
                                                         clip-rule="evenodd" />
                                                 </svg></button>
                                             <button class="btn btn-sm btn-danger"
-                                                @click="doDeleteData(props.row.id, props.index)">
+                                                @click="doDeleteData(props.row.profesi_id, props.index)">
                                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20"
                                                     fill="currentColor">
                                                     <path fill-rule="evenodd"
@@ -170,7 +163,7 @@ const doEditData = async (id, index) => {
                                             </button>
                                         </div>
                                     </span>
-                                    <span v-else-if="props.column.field=='kelompok_jml'">{{ props.row.kelompok? props.row.kelompok.length: 0 }} Kelompok</span>
+                                    <span v-else-if="props.column.field=='profesi_jml'">{{ props.row.profesi? props.row.profesi.length: 0 }} Profesi</span>
 
 
                                     <span v-else>
