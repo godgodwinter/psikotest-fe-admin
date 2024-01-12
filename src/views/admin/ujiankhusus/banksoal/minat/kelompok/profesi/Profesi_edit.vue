@@ -5,6 +5,8 @@ import { useRouter,useRoute } from "vue-router";
 import Api from "@/axios/axiosNode";
 import ApiUjianKhusus from "@/axios/axiosIst";
 import {fn_copy_id_for_mongo} from "@/lib/FungsiBasic.js"
+import { Form, Field } from "vee-validate";
+import fnValidasi from "@/components/lib/babengValidasi";
 
 const LoadingNavbar = defineAsyncComponent(() =>
     import('@/components/alert/AlertLoading.vue')
@@ -17,78 +19,88 @@ const router = useRouter();
 const route = useRoute();
 const banksoal_minatbakat_id = ref(route.params.banksoal_minatbakat_id)
 const kelompok_id = ref(route.params.kelompok_id)
+const profesi_id = ref(route.params.profesi_id)
 const data = ref();
 const isLoading = ref(true);
 const isError = ref(false);
 
+const dataDetail = ref(null)
 
-const columns = [
-    {
-        label: "Actions",
-        field: "actions",
-        sortable: false,
-        width: "50px",
-        tdClass: "text-center",
-        thClass: "text-center",
-    },
-    {
-        label: "Nama",
-        field: "profesi_nama",
-        type: "String",
-    },
-    {
-        label: "KODE",
-        field: "profesi_kode",
-        type: "String",
-    },
-    {
-        label: "urutan",
-        field: "urutan",
-        type: "String",
-    },
-    {
-        label: "Status",
-        field: "status",
-        type: "String",
-    },
-];
-
-const getData = async () => {
+const getDataDetail = async () => {
     try {
-        const response = await ApiUjianKhusus.get(`ujiankhusus/minatbakat/banksoal/index/${banksoal_minatbakat_id.value}/kelompok/${kelompok_id.value}/profesi`);
-        // console.log(response);
-        const tempData=response.data;
-        data.value = tempData.map(fn_copy_id_for_mongo);
-        // data.value=tempData;
-        isLoading.value = false;
+        const response = await ApiUjianKhusus.get(`ujiankhusus/minatbakat/banksoal/index/${banksoal_minatbakat_id.value}/kelompok/${kelompok_id.value}/profesi/${profesi_id.value}`);
+        dataDetail.value = response.data;
+        dataForm.value.profesi_nama = response.data.profesi_nama;
+        dataForm.value.profesi_desc = response.data.profesi_desc;
+        dataForm.value.urutan = response.data.urutan;
+        dataForm.value.waktu = response.data.waktu;
+        dataForm.value.status = response.data.status;
         return response.data;
     } catch (error) {
-        isLoading.value = false;
-        isError.value = true;
         console.error(error);
     }
 };
-getData();
+getDataDetail()
 
-const doDeleteData = async (id, index) => {
-    if (confirm("Apakah anda yakin menghapus data ini?")) {
-        try {
-            const response = await ApiUjianKhusus.delete(`ujiankhusus/minatbakat/banksoal/index/${banksoal_minatbakat_id.value}/kelompok/${id}`);
-                Toast.warning("Berhasil", response.message);
-            getData();
-            return true;
-        } catch (error) {
-            console.error(error);
-        }
+const dataForm = ref({
+    profesi_nama: null,
+    profesi_desc: null,
+    profesi_kode: "OU",
+    urutan: 1,
+    status: true,
+});
+const onSubmit = async (values) => {
+    values.profesi_nama = dataForm.value.profesi_nama;
+    values.profesi_desc = dataForm.value.profesi_desc;
+    values.profesi_kode = dataForm.value.profesi_kode;
+    values.status = dataForm.value.status
+        ?true
+        : false;
+    values.urutan = dataForm.value.urutan;
+
+    let dataFormSend = {
+        profesi_nama: dataForm.value.profesi_nama,
+        profesi_desc: dataForm.value.profesi_desc,
+        profesi_kode: dataForm.value.profesi_kode,
+        urutan: dataForm.value.urutan || 1,
+        status: values.status,
+    };
+    try {
+        const response = await ApiUjianKhusus.put(`ujiankhusus/minatbakat/banksoal/index/${banksoal_minatbakat_id.value}/kelompok/${kelompok_id.value}/profesi/${profesi_id.value}`, dataFormSend);
+        // console.log(response);
+        Toast.success("Info", "Data berhasil ditambahkan!");
+        router.push({ name: "admin-ujiankhusus-banksoal-minat-kelompok-profesi",params:{banksoal_minatbakat_id:banksoal_minatbakat_id.value,kelompok_id:kelompok_id.value} });
+        return true;
+    } catch (error) {
+        console.error(error);
     }
 };
 
-const doEditData = async (id, index) => {
-    // router.push({
-    //     name: "admin-ujiankhusus-banksoal-minat-kelompok-edit",
-    //     params: { banksoal_minatbakat_id: banksoal_minatbakat_id.value,kelompok_id:id },
-    // });
-};
+
+
+const toolbarOptions = [['image'],
+["bold", "italic", "underline", "strike"], // toggled buttons
+["blockquote", "code-block"],
+
+[{ header: 1 }, { header: 2 }], // custom button values
+[{ list: "ordered" }, { list: "bullet" }],
+[{ script: "sub" }, { script: "super" }], // superscript/subscript
+[{ indent: "-1" }, { indent: "+1" }], // outdent/indent
+[{ direction: "rtl" }], // text direction
+
+[{ size: ["small", false, "large", "huge"] }], // custom dropdown
+[{ header: [1, 2, 3, 4, 5, 6, false] }],
+
+[{ color: [] }, { background: [] }], // dropdown with defaults from theme
+[{ font: [] }],
+[{ align: [] }],
+
+["clean"], // remove formatting button
+];
+
+const editorPertanyaan = ref("<b>tes123</b>");
+
+const pagesActive = ref("tulis");
 </script>
 <template>
     <div>
@@ -98,5 +110,95 @@ const doEditData = async (id, index) => {
         </article>
         
         <div class="divider"></div>
+  
+        <Form v-slot="{ errors }" @submit="onSubmit">
+            <div class="py-2 lg:py-4 px-4">
+                <div class="space-y-4">
+                    <div class="flex flex-col">
+                        <label>Nama Profesi :</label>
+                        <div>
+                            <Field :rules="fnValidasi.validateData" v-model="dataForm.profesi_nama" name="profesi_nama" type="text"
+                                class="input input-bordered w-11/12" />
+                            <div class="text-xs text-red-600 mt-1">
+                                {{ errors.profesi_nama }}
+                            </div>
+                        </div>
+                    </div>
+                   <div>
+                    <label className="form-control w-full max-w-xs">
+  <div className="label">
+    <span className="label-text">Kode : </span>
+  </div>
+  <select className="select select-bordered" v-model="dataForm.profesi_kode">
+    <option selected>OU</option>
+    <option>ME</option>
+    <option>CO</option>
+    <option>SC</option>
+    <option>PC</option>
+    <option>AS</option>
+    <option>LI</option>
+    <option>MU</option>
+    <option>SS</option>
+    <option>CL</option>
+    <option>PR</option>
+    <option>MD</option>
+  </select>
+  <div className="label">
+    <!-- <span className="label-text-alt">Alt label</span> -->
+  </div>
+</label>
+                   </div> 
+                <div class="py-10 w-full bg-base-100 shadow-sm">
+                    <div class="tabs">
+                        <a class="tab tab-bordered" @click="pagesActive = 'tulis'"
+                            :class="{ 'tab-active': pagesActive == 'tulis' }">Tulis</a>
+                        <a class="tab tab-bordered" @click="pagesActive = 'preview'"
+                            :class="{ 'tab-active': pagesActive == 'preview' }">Preview</a>
+                    </div>
+                </div>
+                <div v-if="pagesActive == 'tulis'">
+                    <label>Deskripsi Profesi :</label>
+                    <QuillEditor theme="snow" :toolbar="toolbarOptions" v-model:content="dataForm.profesi_desc"
+                        contentType="html" class="ql-editor2">
+
+                    </QuillEditor>
+
+                </div>
+                
+                <div class="shadow-sm py-4 px-4 space-y-4" v-else>
+                    <label for="" class="underline">Preview : </label>
+                    <div class="w-full border-2 min-h-16 p-10" v-html="dataForm.profesi_desc"></div>
+                </div>
+                    <div class="flex flex-col">
+                        <label>Urutan :</label>
+                        <div>
+                            <Field v-model="dataForm.urutan" name="urutan" type="text"
+                                class="input input-bordered w-11/12" />
+                            <div class="text-xs text-red-600 mt-1">
+                                {{ errors.urutan }}
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="flex flex-col">
+                        <div class="max-w-xs py-2">
+                            <div class="form-control">
+                                <label class="label cursor-pointer">
+                                    <span class="label-text">Status</span>
+                                    <input type="checkbox" class="toggle" v-model="dataForm.status" name="status" />
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                    
+            </div>
+
+            <div class="w-full flex justify-end py-10 px-10 gap-4">
+                <span @click="router.go(-1)">
+                    <span class="btn btn-secondary">Batal</span></span>
+                <button class="btn btn-primary">Simpan</button>
+            </div>
+        </Form>
     </div>
 </template>

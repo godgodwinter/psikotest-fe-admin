@@ -86,7 +86,7 @@ const doDeleteData = async (id, index) => {
 const doEditData = async (id, index) => {
     router.push({
         name: "admin-ujiankhusus-banksoal-minat-kelompok-profesi-edit",
-        params: { banksoal_minatbakat_id: banksoal_minatbakat_id.value,kelompok_id:kelompok_id,profesi_id:id },
+        params: { banksoal_minatbakat_id: banksoal_minatbakat_id.value,kelompok_id:kelompok_id.value,profesi_id:id },
     });
 };
 </script>
