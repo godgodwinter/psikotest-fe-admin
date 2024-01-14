@@ -187,10 +187,10 @@ const doAktifkanPaket = async (id,nama) => {
                                                 TAMBAH
                                             </button>
                                         </router-link>
-                                        <button class="btn btn-sm btn-warning tooltip" data-tip="Clear"
+                                        <!-- <button class="btn btn-sm btn-warning tooltip" data-tip="Clear"
                                             @click="doDeletPaketAktif()">
                                             CLEAR PAKETAKTIF
-                                        </button>
+                                        </button> -->
 
                                     </div>
                                 </template>

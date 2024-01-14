@@ -47,16 +47,16 @@ const columns = [
         field: "pilihanjawaban_jml",
         type: "String",
     },
-    {
-        label: "Aspek",
-        field: "aspek_nama",
-        type: "String",
-    },
-    {
-        label: "Sub",
-        field: "aspek_detail_nama",
-        type: "String",
-    },
+    // {
+    //     label: "Aspek",
+    //     field: "aspek_nama",
+    //     type: "String",
+    // },
+    // {
+    //     label: "Sub",
+    //     field: "aspek_detail_nama",
+    //     type: "String",
+    // },
     {
         label: "Status",
         field: "status",
@@ -192,7 +192,12 @@ const doEditData = async (id, index) => {
                                             </button>
                                         </div>
                                     </span>
-
+                                    <span v-else-if="props.column.field == 'pilihanjawaban_jml'">
+{{ props.row.pilihan_jawaban?props.row.pilihan_jawaban.length:0 }} Pilihan Jawaban                                    
+</span>
+                                    <!-- <span v-else-if="props.column.field == 'pilihanjawaban_jml_benar'">
+{{ props.row.pilihan_jawaban?props.row.pilihan_jawaban.length:0 }}  Jawaban Benar                                   
+</span> -->
                                     <span v-else-if="props.column.field == 'pertanyaan'"><span
                                             v-html="props.row.pertanyaan"></span>
                                     </span>

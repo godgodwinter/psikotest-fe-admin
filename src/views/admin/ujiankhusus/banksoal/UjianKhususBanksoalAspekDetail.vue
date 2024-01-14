@@ -48,7 +48,7 @@ const columns = [
 const getData = async () => {
     try {
         const response = await ApiUjianKhusus.get(`ujiankhusus/banksoal/aspek_detail`);
-        // console.log(response);
+        console.log(response);
         const tempData=response.data;
         data.value = tempData.map(fn_copy_id_for_mongo);
         isLoading.value = false;
@@ -153,8 +153,9 @@ const doEditData = async (id, index) => {
                                             </button>
                                         </div>
                                     </span>
-
-
+                                    <span v-else-if="props.column.field == 'soal_jml'">
+{{ props.row.soal_jml||0 }} Soal                                    
+</span>
                                     <span v-else>
                                         {{ props.formattedRow[props.column.field] }}
                                     </span>

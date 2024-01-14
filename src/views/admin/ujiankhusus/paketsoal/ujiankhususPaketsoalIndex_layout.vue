@@ -8,12 +8,9 @@ const paketsoal_id = ref(route.params.paketsoal_id)
     <div class="space-x-2">
         <div class="pt-0 px-10 md:flex justify-between gap-2 space-y-2 md:space-y-0">
             <div class="space-x-2">
-                <RouterLink :to="{ name: 'admin-ujianstudi-paketsoal-aspek_detail', params: { paketsoal_id } }">
-                    <button class="btn btn-info btn-sm">Mapel</button>
-                </RouterLink>
-                <RouterLink :to="{ name: 'admin-ujianstudi-paketsoal-aspek', params: { paketsoal_id } }">
-                    <button class="btn btn-info btn-sm">Aspek</button>
-                </RouterLink>
+                <!-- <RouterLink :to="{ name: 'admin-ujiankhusus-paketsoal', params: { paketsoal_id } }">
+                    <button class="btn btn-info btn-sm">Beranda Paketsoal</button>
+                </RouterLink> -->
                 <!-- <RouterLink :to="{ name: 'admin-ujianstudi-paketsoal-penilaian', params: { paketsoal_id } }">
                         <button class="btn btn-info btn-sm">Penilaian</button>
                     </RouterLink> -->

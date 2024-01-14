@@ -124,10 +124,10 @@ const doAdd = async () => {
     // console.log('====================================');
 
     Toast.babeng("Data berhasil ditambahkan", "Berhasil");
-    // router.push({
-    //     name: "admin-ujiankhusus-paketsoal-aspek_detail-soal",
-    //     params: { paketsoal_id: paketsoal_id.value, aspek_detail_id: aspek_detail_id.value, banksoal_aspek_detail_id: banksoal_aspek_detail_id },
-    // });
+    router.push({
+        name: "admin-ujiankhusus-paketsoal-aspek_detail-soal",
+        params: { paketsoal_id: paketsoal_id.value, aspek_detail_id: aspek_detail_id.value, banksoal_aspek_detail_id: banksoal_aspek_detail_id.value },
+    });
 
     // console.log(myTable.value.selectedRows, dataId);
 };

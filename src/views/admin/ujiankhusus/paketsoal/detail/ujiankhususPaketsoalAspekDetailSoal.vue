@@ -123,6 +123,12 @@ const doEditData = async (id, index) => {
             <h1>SOAL</h1>
             <h5>UJIAN KHUSUS</h5>
         </article>
+        
+        <div>
+            <RouterLink :to="{ name: 'admin-ujiankhusus-paketsoal-aspek_detail', params: { paketsoal_id } }">
+                    <button class="btn btn-info btn-sm">Kembali ke ASPEK DETAIL</button>
+                </RouterLink>
+        </div>
         <span v-if="isLoading">
             <LoadingNavbar />
         </span>
