@@ -23,7 +23,7 @@ const getDataDetail = async () => {
     try {
         const response = await ApiUjianKhusus.get(`ujiankhusus/paketsoal/${paketsoal_id.value}`);
         dataForm.value = response.data;
-       dataForm.value.status = response.data.status=="Aktif"?true:false;
+       dataForm.value.status = response.data.status?true:false;
         return response.data;
     } catch (error) {
         console.error(error);
@@ -34,7 +34,10 @@ getDataDetail();
 const onSubmit = async (values) => {
     let dataFormSend = {
         nama: dataForm.value.nama,
-        status: dataForm.value.status ?"Aktif":"Nonaktif",
+        status: dataForm.value.status,
+        minat_id:"659f6e3f205ede754f5e527b",
+        // minat_id:null,
+        kr_id:null
     };
     try {
         const response = await ApiUjianKhusus.put(`ujiankhusus/paketsoal/${paketsoal_id.value}`, dataFormSend);
@@ -78,6 +81,40 @@ const onSubmit = async (values) => {
                             </div>
                         </div>
                     </div>
+                    
+<div>
+<label className="form-control w-full max-w-xs">
+<div className="label">
+<span className="label-text">Minat Bakat : </span>
+<span className="label-text"><code class="text-red-600 font-light text-xs">Kosongkan jika tidak ada.</code> </span>
+</div>
+<select className="select select-bordered" v-model="dataForm.minatList">
+<option selected></option>
+<option>Minat Bakat 1</option>
+<option>Minat Bakat 2</option>
+</select>
+<div className="label">
+<!-- <span className="label-text-alt">Alt label</span> -->
+</div>
+</label>
+</div> 
+
+<div>
+<label className="form-control w-full max-w-xs">
+<div className="label">
+<span className="label-text">KR : </span>
+<span className="label-text"><code class="text-red-600 font-light text-xs">Kosongkan jika tidak ada.</code> </span>
+</div>
+<select className="select select-bordered" v-model="dataForm.krList">
+<option selected></option>
+<option>KR 1</option>
+<option>KR 2</option>
+</select>
+<div className="label">
+<!-- <span className="label-text-alt">Alt label</span> -->
+</div>
+</label>
+</div> 
 
                 </div>
             </div>

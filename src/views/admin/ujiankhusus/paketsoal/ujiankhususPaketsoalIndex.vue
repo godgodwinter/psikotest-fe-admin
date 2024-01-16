@@ -37,6 +37,16 @@ const columns = [
         field: "nama",
         type: "String",
     },
+    {
+        label: "Minat Bakat",
+        field: "minatbakat",
+        type: "String",
+    },
+    {
+        label: "Kreatifitas",
+        field: "kr",
+        type: "String",
+    },
     // {
     //     label: "Status",
     //     field: "status",
@@ -61,7 +71,7 @@ getData();
 const getDataPaketsoalAktif = async () => {
     let getDataPaket=localStorage.getItem("ujiankhusus_paketsoal_aktif");
     paketsoal_aktif.value=getDataPaket?JSON.parse(getDataPaket):null;
-    console.log(paketsoal_aktif.value);
+    // console.log(paketsoal_aktif.value);
 };
 getDataPaketsoalAktif();
 
