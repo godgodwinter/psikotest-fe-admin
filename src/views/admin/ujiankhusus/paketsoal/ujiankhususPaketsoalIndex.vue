@@ -39,12 +39,12 @@ const columns = [
     },
     {
         label: "Minat Bakat",
-        field: "minatbakat",
+        field: "minatList",
         type: "String",
     },
     {
         label: "Kreatifitas",
-        field: "kr",
+        field: "krList",
         type: "String",
     },
     // {
@@ -243,7 +243,10 @@ const doAktifkanPaket = async (id,nama) => {
 
                                         </div>
                                     </span>
-
+                                    <span v-else-if="props.column.field == 'minatList'">
+                                    {{ props.row.minatList?props.row.minatList.nama:"-" }}</span>
+                                    <span v-else-if="props.column.field == 'krList'">
+                                    {{ props.row.krList?props.row.krList.nama:"-" }}</span>
 
                                     <span v-else>
                                         {{ props.formattedRow[props.column.field] }}
