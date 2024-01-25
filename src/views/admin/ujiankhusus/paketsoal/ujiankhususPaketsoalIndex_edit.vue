@@ -44,7 +44,7 @@ const onSubmit = async (values) => {
     let dataFormSend = {
         nama: dataForm.value.nama,
         status: dataForm.value.status,
-        minat_id:"659f6e3f205ede754f5e527b",
+        minat_id:inputSelectMinat.value.id,
         // minat_id:null,
         kr_id:null
     };
