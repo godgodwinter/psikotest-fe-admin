@@ -127,6 +127,16 @@ const columns = [
         type: "String",
     },
     {
+        label: "Username",
+        field: "username",
+        type: "String",
+    },
+    {
+        label: "Password Default",
+        field: "passworddefault",
+        type: "String",
+    },
+    {
         label: "Status",
         field: "status",
         type: "String",
@@ -140,16 +150,6 @@ const columns = [
         label: "progres",
         field: "progres_angka",
         type: "number",
-    },
-    {
-        label: "Username",
-        field: "username",
-        type: "String",
-    },
-    {
-        label: "Password Default",
-        field: "passworddefault",
-        type: "String",
     },
 ];
 
