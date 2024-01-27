@@ -32,6 +32,8 @@ const getDataDetail = async () => {
         dataDetail.value = response.data;
         dataForm.value.profesi_nama = response.data.profesi_nama;
         dataForm.value.profesi_desc = response.data.profesi_desc;
+        dataForm.value.profesi_nama_p = response.data.profesi_nama_p;
+        dataForm.value.profesi_desc_p = response.data.profesi_desc_p;
         dataForm.value.urutan = response.data.urutan;
         dataForm.value.waktu = response.data.waktu;
         dataForm.value.status = response.data.status;
@@ -45,6 +47,8 @@ getDataDetail()
 const dataForm = ref({
     profesi_nama: null,
     profesi_desc: null,
+    profesi_nama_p: null,
+    profesi_desc_p: null,
     profesi_kode: "OU",
     urutan: 1,
     status: true,
@@ -52,6 +56,8 @@ const dataForm = ref({
 const onSubmit = async (values) => {
     values.profesi_nama = dataForm.value.profesi_nama;
     values.profesi_desc = dataForm.value.profesi_desc;
+    values.profesi_nama_p = dataForm.value.profesi_nama_p;
+    values.profesi_desc_p = dataForm.value.profesi_desc_p;
     values.profesi_kode = dataForm.value.profesi_kode;
     values.status = dataForm.value.status
         ?true
@@ -61,10 +67,13 @@ const onSubmit = async (values) => {
     let dataFormSend = {
         profesi_nama: dataForm.value.profesi_nama,
         profesi_desc: dataForm.value.profesi_desc,
+        profesi_nama_p: dataForm.value.profesi_nama_p,
+        profesi_desc_p: dataForm.value.profesi_desc_p,
         profesi_kode: dataForm.value.profesi_kode,
         urutan: dataForm.value.urutan || 1,
         status: values.status,
     };
+    console.log(dataFormSend);
     try {
         const response = await ApiUjianKhusus.put(`ujiankhusus/minatbakat/banksoal/index/${banksoal_minatbakat_id.value}/kelompok/${kelompok_id.value}/profesi/${profesi_id.value}`, dataFormSend);
         // console.log(response);
@@ -98,9 +107,11 @@ const toolbarOptions = [['image'],
 ["clean"], // remove formatting button
 ];
 
-const editorPertanyaan = ref("<b>tes123</b>");
+const editorPertanyaan = ref("<b> - </b>");
+const editorPertanyaan_p = ref("<b> - </b>");
 
 const pagesActive = ref("tulis");
+const pagesActive_p = ref("tulis");
 </script>
 <template>
     <div>
@@ -113,18 +124,6 @@ const pagesActive = ref("tulis");
   
         <Form v-slot="{ errors }" @submit="onSubmit">
             <div class="py-2 lg:py-4 px-4">
-                <div class="space-y-4">
-                    <div class="flex flex-col">
-                        <label>Nama Profesi :</label>
-                        <div>
-                            <Field :rules="fnValidasi.validateData" v-model="dataForm.profesi_nama" name="profesi_nama" type="text"
-                                class="input input-bordered w-11/12" />
-                            <div class="text-xs text-red-600 mt-1">
-                                {{ errors.profesi_nama }}
-                            </div>
-                        </div>
-                    </div>
-                   <div>
                     <label className="form-control w-full max-w-xs">
   <div className="label">
     <span className="label-text">Kode : </span>
@@ -147,8 +146,21 @@ const pagesActive = ref("tulis");
     <!-- <span className="label-text-alt">Alt label</span> -->
   </div>
 </label>
-                   </div> 
-                <div class="py-10 w-full bg-base-100 shadow-sm">
+                <div class="space-y-4">
+                    <div class="flex flex-col">
+                        <label>Nama Profesi :</label>
+                        <div>
+                            <Field :rules="fnValidasi.validateData" v-model="dataForm.profesi_nama" name="profesi_nama" type="text"
+                                class="input input-bordered w-11/12" />
+                            <div class="text-xs text-red-600 mt-1">
+                                {{ errors.profesi_nama }}
+                            </div>
+                        </div>
+                    </div>
+                   <div>
+               
+    </div> 
+                <div class="pb-10 w-full bg-base-100 shadow-sm">
                     <div class="tabs">
                         <a class="tab tab-bordered" @click="pagesActive = 'tulis'"
                             :class="{ 'tab-active': pagesActive == 'tulis' }">Tulis</a>
@@ -165,10 +177,46 @@ const pagesActive = ref("tulis");
 
                 </div>
                 
-                <div class="shadow-sm py-4 px-4 space-y-4" v-else>
+                <div class="shadow-sm pb-4 px-4 space-b-4" v-else>
                     <label for="" class="underline">Preview : </label>
                     <div class="w-full border-2 min-h-16 p-10" v-html="dataForm.profesi_desc"></div>
                 </div>
+
+     
+                <div class="space-y-4 pt-10">
+                    <div class="flex flex-col">
+                        <label>Nama Profesi untuk Perempuan :</label>
+                        <div>
+                            <Field :rules="fnValidasi.validateData" v-model="dataForm.profesi_nama_p" name="profesi_nama_p" type="text"
+                                class="input input-bordered w-11/12" />
+                            <div class="text-xs text-red-600 mt-1">
+                                {{ errors.profesi_nama_p }}
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                <div class="pb-10 w-full bg-base-100 shadow-sm">
+                    <div class="tabs">
+                        <a class="tab tab-bordered" @click="pagesActive_p = 'tulis'"
+                            :class="{ 'tab-active': pagesActive_p == 'tulis' }">Tulis</a>
+                        <a class="tab tab-bordered" @click="pagesActive_p = 'preview'"
+                            :class="{ 'tab-active': pagesActive_p == 'preview' }">Preview</a>
+                    </div>
+                </div>
+                <div v-if="pagesActive_p == 'tulis'">
+                    <label>Deskripsi Profesi untuk Perempuan:</label>
+                    <QuillEditor theme="snow" :toolbar="toolbarOptions" v-model:content="dataForm.profesi_desc_p"
+                        contentType="html" class="ql-editor2">
+
+                    </QuillEditor>
+
+                </div>
+                
+                <div class="shadow-sm py-4 px-4 space-y-4" v-else>
+                    <label for="" class="underline">Preview : </label>
+                    <div class="w-full border-2 min-h-16 p-10" v-html="dataForm.profesi_desc_p"></div>
+                </div>
+
                     <div class="flex flex-col">
                         <label>Urutan :</label>
                         <div>
