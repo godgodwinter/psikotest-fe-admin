@@ -17,6 +17,8 @@ const dataForm = ref({
     status: true,
     // status: "Aktif",
 });
+const inputSelectMinat = ref({ id: null, label: null })
+const inputSelectKr = ref({ id: null, label: null })
 const onSubmit = async (values) => {
     let dataFormSend = {
         nama: dataForm.value.nama,

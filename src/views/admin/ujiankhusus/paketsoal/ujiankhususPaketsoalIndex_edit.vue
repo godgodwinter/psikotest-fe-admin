@@ -15,6 +15,7 @@ const router = useRouter();
 const route = useRoute();
 const paketsoal_id = ref(route.params.paketsoal_id);
 const inputSelectMinat = ref({ id: null, label: null })
+const inputSelectKr = ref({ id: null, label: null })
 const dataForm = ref({
     nama: null,
     status: true,
@@ -31,6 +32,10 @@ const getDataDetail = async () => {
         id:response.data.minatList._id,
         label:response.data.minatList.nama
        };
+       inputSelectKr.value={
+        id:response.data.krList._id,
+        label:response.data.krList.nama
+       };
     //    dataForm.value.minatList_nama=response.data.minatList.nama;
     //    dataForm.value.minatList_id=response.data.minatList._id;
         return response.data;
@@ -46,7 +51,7 @@ const onSubmit = async (values) => {
         status: dataForm.value.status,
         minat_id:inputSelectMinat.value.id,
         // minat_id:null,
-        kr_id:null
+        kr_id:inputSelectKr.value.id
     };
     try {
         const response = await ApiUjianKhusus.put(`ujiankhusus/paketsoal/${paketsoal_id.value}`, dataFormSend);
@@ -78,6 +83,26 @@ const getDataMinat = async () => {
     }
 };
 getDataMinat();
+
+const dataKrList=ref([]);
+const krList=ref([]);
+const getDataKr = async () => {
+    try {
+        const response = await ApiUjianKhusus.get(`ujiankhusus/kr/banksoal/index`);
+    dataKrList.value=response.data;
+    dataKrList.value.forEach((item) => {
+        krList.value.push({
+                    label: item.nama,
+                    id: item._id,
+                });
+            });
+    // console.log(response);
+        return response.data;
+    } catch (error) {
+        console.error(error);
+    }
+};
+getDataKr();
 </script>
 <template>
     <div>
@@ -145,11 +170,18 @@ getDataMinat();
 <span className="label-text">KR : </span>
 <span className="label-text"><code class="text-red-600 font-light text-xs">Kosongkan jika tidak ada.</code> </span>
 </div>
-<select className="select select-bordered" v-model="dataForm.krList">
-<option selected></option>
-<option>KR 1</option>
-<option>KR 2</option>
-</select>
+
+<div class="w-full bg-base-100 shadow-sm rounded-lg py-4 px-4">
+    <div class="flex justify-center">
+        <v-select class="py-2 px-3 w-72 mx-auto md:mx-0" :options="krList" v-model="inputSelectKr"
+            v-bind:class="{ disabled: false }"></v-select>
+        <!-- <div class="py-2">
+            <button class="btn btn-sm btn-info p-2" @click="doPilihKelas()">
+                Cari
+            </button>
+        </div> -->
+    </div>
+</div>
 <div className="label">
 <!-- <span className="label-text-alt">Alt label</span> -->
 </div>

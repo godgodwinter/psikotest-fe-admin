@@ -279,6 +279,7 @@ const doPilihPaket = () => {
         nama: paketsoal_aktif.value.nama,
         tgl_batas_mulai: dataForm.value.tgl_batas_mulai,
         tgl_batas_terakhir: dataForm.value.tgl_batas_terakhir,
+        tipeCitacita:inputSelectTipeCitacita.value,
     }
         localStorage.setItem("ujiankhusus_paketsoal_aktif",JSON.stringify(tempDataSave))
     // console.log('====================================');
@@ -297,6 +298,7 @@ const doGenerateSiswa = async (id, index) => {
             paketsoal_id:paketsoal_aktif.value.id,
             tgl_batas_mulai:dataForm.value.tgl_batas_mulai,
             tgl_batas_terakhir:dataForm.value.tgl_batas_terakhir,
+            tipeCitacita:inputSelectTipeCitacita.value
         }
         try {
             isLoading.value = true;
@@ -334,6 +336,7 @@ const doGenerateSiswaPerkelas = async (id, index) => {
             paketsoal_id:paketsoal_aktif.value.id,
             tgl_batas_mulai:paketsoal_aktif.value.tgl_batas_mulai,
             tgl_batas_terakhir:paketsoal_aktif.value.tgl_batas_terakhir,
+            tipeCitacita:inputSelectTipeCitacita.value
         }
         try {
             isLoading.value = true;
@@ -520,6 +523,32 @@ const doCetakReactV2 = (ttd="true") => {
         `${VITE_API_FE_REACT}lintasstudi/v2/cetak/${getSekolahAktif.value.kelas_id}/${ttd}`
     );
 }
+
+
+// const dataTipeCitacita=ref([]);
+const tipeCitacitaList=ref([
+    {
+        id:1,
+        label:"Kelas 1-8",
+    },
+    {
+        id:2,
+        label:"Kelas 9-10",
+    },
+    {
+        id:3,
+        label:"Kelas 11-12",
+    },
+    {
+        id:4,
+        label:"Dewasa ( Diploma,Sarjana, Umum)",
+    },
+]);
+const dataTemp=JSON.parse(localStorage.getItem("ujiankhusus_paketsoal_aktif"));
+const inputSelectTipeCitacita= ref( dataTemp?.tipeCitacita||{
+        id:2,
+        label:"Kelas 9-10",
+    },)
 </script>
 <template>
     <span v-if="isLoading">
@@ -547,6 +576,25 @@ const doCetakReactV2 = (ttd="true") => {
                 </div>
             </div>
             <!-- !PENGATURAN -->
+            <div class=" flex  space-x-2 justify-start">
+<label className="form-control w-full max-w-xs">
+<div className="label">
+<span className="label-text">Tipe Cita cita:</span>
+</div>
+</label>
+
+<div class="w-full bg-base-100 shadow-sm rounded-lg py-4 px-4">
+    <div class="flex justify-start">
+        <v-select class="py-2 px-3 w-72 mx-auto md:mx-0" :options="tipeCitacitaList" v-model="inputSelectTipeCitacita"
+            v-bind:class="{ disabled: false }"></v-select>
+        <!-- <div class="py-2">
+            <button class="btn btn-sm btn-info p-2" @click="doPilihKelas()">
+                Cari
+            </button>
+        </div> -->
+    </div>
+</div>
+                </div>
             <div class="flex justify-start w-full space-x-2 content-center py-2">
                 <!-- <div class="w-96">
                     <div class="flex justify-center">
@@ -555,6 +603,7 @@ const doCetakReactV2 = (ttd="true") => {
 
                     </div>
                 </div> -->
+          
                 <div class="w-1/2 flex  space-x-2">
                     <div>
                         <VueDatePicker v-model="dataForm.tgl_batas_mulai"></VueDatePicker>
@@ -562,6 +611,7 @@ const doCetakReactV2 = (ttd="true") => {
                     <div>
                         <VueDatePicker v-model="dataForm.tgl_batas_terakhir"></VueDatePicker>
                     </div>
+                    
                     <div>
                         <p class="py-2">{{ paketsoal_aktif?.nama }}</p>
                     </div>
