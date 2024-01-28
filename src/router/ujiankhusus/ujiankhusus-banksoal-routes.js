@@ -149,6 +149,68 @@ const UjianStudiBanksoalRoutes = [
           },
           // !profesi-end
 
+          // !kreativitas
+          {
+            path: "/pages/admin/ujiankhusus/banksoal/kr",
+            name: "admin-ujiankhusus-banksoal-kr",
+            component: () =>
+              import(
+                "@/views/admin/ujiankhusus/banksoal/kr/UjianKhususBanksoalKr.vue"
+              ),
+          },
+          {
+            path: "/pages/admin/ujiankhusus/banksoal/kr/tambah",
+            name: "admin-ujiankhusus-banksoal-kr-tambah",
+            component: () =>
+              import(
+                "@/views/admin/ujiankhusus/banksoal/kr/UjianKhususBanksoalKr_tambah.vue"
+              ),
+          },
+          {
+            path: "/pages/admin/ujiankhusus/banksoal/kr/edit/:kr_id",
+            name: "admin-ujiankhusus-banksoal-kr-edit",
+            component: () =>
+              import(
+                "@/views/admin/ujiankhusus/banksoal/kr/UjianKhususBanksoalKr_edit.vue"
+              ),
+          },
+          // !kr-pj
+          {
+            path: "/pages/admin/ujiankhusus/banksoal/kr/edit/:kr_id/pj",
+            name: "admin-ujiankhusus-banksoal-kr-pj",
+            component: () =>
+              import(
+                "@/views/admin/ujiankhusus/banksoal/kr/pj/Kr_pj_index.vue"
+              ),
+          },
+
+          {
+            path: "/pages/admin/ujiankhusus/banksoal/kr/detail/:kr_id/pj",
+            name: "admin-ujiankhusus-banksoal-kr-pj",
+            component: () =>
+              import(
+                "@/views/admin/ujiankhusus/banksoal/kr/pj/Kr_pj_index.vue"
+              ),
+          },
+
+          {
+            path: "/pages/admin/ujiankhusus/banksoal/kr/detail/:kr_id/pj/:pj_id",
+            name: "admin-ujiankhusus-banksoal-kr-pj-edit",
+            component: () =>
+              import("@/views/admin/ujiankhusus/banksoal/kr/pj/Kr_pj_edit.vue"),
+          },
+
+          {
+            path: "/pages/admin/ujiankhusus/banksoal/kr/detail/:kr_id/pj_tambah",
+            name: "admin-ujiankhusus-banksoal-kr-pj-tambah",
+            component: () =>
+              import(
+                "@/views/admin/ujiankhusus/banksoal/kr/pj/Kr_pj_tambah.vue"
+              ),
+          },
+          // !kr-pj-end
+          // !kreativitas-end
+
           // ! banksoal minat dan bakat-END
 
           // ! banksoal kreatifitas

@@ -1,7 +1,7 @@
 <script setup>
 import { ref, defineAsyncComponent } from "vue"
 import Toast from "@/components/lib/Toast";
-import { useRouter } from "vue-router";
+import { useRouter,useRoute } from "vue-router";
 import Api from "@/axios/axiosNode";
 import ApiUjianKhusus from "@/axios/axiosIst";
 import {fn_copy_id_for_mongo} from "@/lib/FungsiBasic.js"
@@ -14,9 +14,11 @@ const AlertFailed = defineAsyncComponent(() =>
 )
 
 const router = useRouter();
+const route = useRoute();
 const data = ref();
 const isLoading = ref(true);
 const isError = ref(false);
+const kr_id = ref(route.params.kr_id)
 
 
 const columns = [
@@ -33,18 +35,12 @@ const columns = [
         field: "nama",
         type: "String",
     },
-    
     {
-        label: "Jumlah Pilihan Jawaban",
-        field: "pj_jml",
+        label: "Skor",
+        field: "skor",
         type: "Number",
     },
     
-    {
-        label: "Jumlah Benar",
-        field: "pj_jml_benar",
-        type: "Number",
-    },
     {
         label: "Status",
         field: "status",
@@ -54,7 +50,7 @@ const columns = [
 
 const getData = async () => {
     try {
-        const response = await ApiUjianKhusus.get(`ujiankhusus/kr/banksoal/index`);
+        const response = await ApiUjianKhusus.get(`ujiankhusus/kr/banksoal/index/${kr_id.value}/pj`);
         // console.log(response);
         const tempData=response.data;
         data.value = tempData.map(fn_copy_id_for_mongo);
@@ -71,8 +67,9 @@ getData();
 const doDeleteData = async (id, index) => {
     if (confirm("Apakah anda yakin menghapus data ini?")) {
         try {
-            const response = await ApiUjianKhusus.delete(`ujiankhusus/kr/banksoal/index/${id}`);
+            const response = await ApiUjianKhusus.delete(`ujiankhusus/kr/banksoal/index/${kr_id.value}/pj/${id}`);
                 Toast.warning("Berhasil", response.message);
+                // Toast.success("Info", "Data berhasil dihapus!");
             getData();
             return true;
         } catch (error) {
@@ -83,17 +80,23 @@ const doDeleteData = async (id, index) => {
 
 const doEditData = async (id, index) => {
     router.push({
-        name: "admin-ujiankhusus-banksoal-kr-edit",
-        params: { kr_id: id },
+        name: "admin-ujiankhusus-banksoal-kr-pj-edit",
+        params: { kr_id: kr_id.value,pj_id:id },
     });
 };
 </script>
 <template>
     <div>
         <article class="prose lg:prose-sm">
-            <h1>BANK SOAL KREATIFITAS (KR) </h1>
+            <h1> KREATIFITAS (KR) DETAIL PJ </h1>
             <h5>UJIAN KHUSUS</h5>
-        </article>
+        </article>     
+           <div class="divider"></div>
+    <div class="space-x-2">
+        <RouterLink :to="{ name: 'admin-ujiankhusus-banksoal-kr' }">
+            <button class="btn btn-secondary btn-sm">Kembali Beranda KR</button>
+        </RouterLink>
+    </div>
         
         <div class="divider"></div>
 
@@ -117,7 +120,7 @@ const doEditData = async (id, index) => {
                                 <template #table-actions>
                                     <div class="space-x-1 space-y-1 gap-1">
                                         <router-link :to="{
-                                            name: 'admin-ujiankhusus-banksoal-kr-tambah',
+                                            name: 'admin-ujiankhusus-banksoal-kr-pj-tambah',params:{kr_id:kr_id}
                                         }">
                                             <button class="btn btn-sm btn-primary tooltip" data-tip="Tambah">
                                                 TAMBAH
@@ -128,18 +131,8 @@ const doEditData = async (id, index) => {
                                 <template #table-row="props">
                                     <span v-if="props.column.field == 'actions'">
                                         <div class="text-sm font-medium text-center flex justify-center space-x-1">
-                                            <RouterLink
-                                                :to="{ name: 'admin-ujiankhusus-banksoal-kr-pj', params: { kr_id: props.row.id } }">
-                                                <button class="btn btn-sm btn-primary tooltip" data-tip="Detail Pilihan Jawaban">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
-                                                        viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                                            d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                                    </svg></button>
-                                            </RouterLink>
-
                                             <button class="btn btn-sm btn-warning tooltip" data-tip="Edit"
-                                                @click="doEditData(props.row.id, props.index)">
+                                                @click="doEditData(props.row.pilihan_jawaban_id, props.index)">
                                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20"
                                                     fill="currentColor">
                                                     <path
@@ -149,7 +142,7 @@ const doEditData = async (id, index) => {
                                                         clip-rule="evenodd" />
                                                 </svg></button>
                                             <button class="btn btn-sm btn-danger"
-                                                @click="doDeleteData(props.row.id, props.index)">
+                                                @click="doDeleteData(props.row.pilihan_jawaban_id, props.index)">
                                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20"
                                                     fill="currentColor">
                                                     <path fill-rule="evenodd"
