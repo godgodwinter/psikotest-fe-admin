@@ -61,8 +61,8 @@ const onSubmit = async (values) => {
 
     let dataFormSend = {
         nama: dataForm.value.nama,
-        urutan: dataForm.value.urutan || 1,
-        skor: dataForm.value.skor || 1,
+        urutan: dataForm.value.urutan ,
+        skor: dataForm.value.skor ,
         status: values.status,
     };
     try {
