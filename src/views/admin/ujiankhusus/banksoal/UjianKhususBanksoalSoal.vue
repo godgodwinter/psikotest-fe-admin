@@ -43,6 +43,11 @@ const columns = [
         type: "String",
     },
     {
+        label: "kode_soal_offline",
+        field: "kode_soal_offline",
+        type: "String",
+    },
+    {
         label: "Jumlah Pilihan",
         field: "pilihanjawaban_jml",
         type: "String",

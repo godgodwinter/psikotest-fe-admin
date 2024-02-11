@@ -121,12 +121,9 @@ const doDeleteData = async (id, index) => {
     if (confirm("Apakah anda yakin menghapus data ini?")) {
         try {
             const response = await ApiUjianKhusus.delete(`ujiankhusus/paketsoal/${paketsoal_id.value}/aspek_detail/${id}`);
-            if (response.status) {
                 Toast.warning("Berhasil", response.message);
                 // Toast.success("Info", "Data berhasil dihapus!");
-            } else {
-                Toast.warning("Gagal", response.message);
-            }
+        
             getData();
             return true;
         } catch (error) {
