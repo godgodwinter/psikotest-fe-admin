@@ -191,6 +191,9 @@ const doEditData = async (id, index) => {
                                         </div>
                                     </span>
 
+                                    <span v-else-if="props.column.field == 'pertanyaan'"><span
+                                            v-html="props.row.pertanyaan"></span>
+                                    </span>
                                     <span v-else-if="props.column.field == 'jml_pilihanjawaban'">
                                         <span>{{ props.row.pilihan_jawaban.length }}</span>
                                     </span>
