@@ -36,6 +36,12 @@ const columns = [
         field: "profesi_nama",
         type: "String",
     },
+    
+    {
+        label: "Nama P",
+        field: "profesi_nama_p",
+        type: "String",
+    },
     {
         label: "KODE",
         field: "profesi_kode",
