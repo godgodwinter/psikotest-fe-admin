@@ -116,6 +116,11 @@ const columns = [
         type: "number",
     },
     {
+        label: "desc",
+        field: "desc",
+        type: "string",
+    },
+    {
         label: "Tipe",
         field: "tipe",
         type: "string",

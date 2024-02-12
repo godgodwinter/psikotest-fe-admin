@@ -136,20 +136,20 @@ const columns = [
         field: "passworddefault",
         type: "String",
     },
-    {
-        label: "Status",
-        field: "status",
-        type: "String",
-    },
-    {
-        label: "progres",
-        field: "progres_status",
-        type: "String",
-    },
+    // {
+    //     label: "Status",
+    //     field: "status",
+    //     type: "String",
+    // },
     {
         label: "progres",
         field: "progres_angka",
         type: "number",
+    },
+    {
+        label: "Progres Status",
+        field: "progres_status",
+        type: "String",
     },
 ];
 
@@ -524,6 +524,12 @@ const doCetakReactV2 = (ttd="true") => {
     );
 }
 
+const doExportExcel = (ttd) => {
+    window.open(
+        `${VITE_API_FE_REACT}ujiankhusus/v1/export/sekolah/${getSekolahAktif.value.sekolah_id}/kelas/${getSekolahAktif.value.kelas_id}`
+    );
+    // console.log("belum");
+}
 
 // const dataTipeCitacita=ref([]);
 const tipeCitacitaList=ref([
@@ -637,7 +643,7 @@ const inputSelectTipeCitacita= ref( dataTemp?.tipeCitacita||{
                     Caching UJIAN KHUSUS Per Kelas
                 </button>
             </div>
-            <div class="space-x-2 space-y-2 shadow-sm">
+            <!-- <div class="space-x-2 space-y-2 shadow-sm">
                 <button class="btn btn-sm btn-error p-2" @click="doDeleteHasilSiswaPerkelas()">
                     Delete Hasil Per Kelas
                 </button>
@@ -647,8 +653,16 @@ const inputSelectTipeCitacita= ref( dataTemp?.tipeCitacita||{
                 <button class="btn btn-sm btn-primary p-2" @click="doGenerateHasilSiswaPerkelasComplete()">
                     Generate Hasil (Complete Only)
                 </button>
-            </div>
-            <div class="space-x-2 space-y-0 shadow-sm flex justify-start ">
+            </div> -->
+            <div class="space-x-2 space-y-0 shadow-sm flex justify-start "> 
+                <div class="space-x-2 space-y-2 shadow-sm py-1">
+                    <button class="btn btn-sm btn-info tooltip" data-tip="Export Excel Format IST" @click="doExportExcel()">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M12 9.75v6.75m0 0-3-3m3 3 3-3m-8.25 6a4.5 4.5 0 0 1-1.41-8.775 5.25 5.25 0 0 1 10.233-2.33 3 3 0 0 1 3.758 3.848A3.752 3.752 0 0 1 18 19.5H6.75Z" />
+</svg>
+
+                    </button>
+                </div>
                 <!-- <div class="space-x-2 space-y-2 shadow-sm py-1">
                     <button class="btn btn-sm btn-primary tooltip" data-tip="CETAK Hasil" @click="doCetak()">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
@@ -677,7 +691,7 @@ const inputSelectTipeCitacita= ref( dataTemp?.tipeCitacita||{
                         </svg>
                     </button>
                 </div> -->
-                <div class="space-x-2 space-y-2 shadow-sm py-1">
+                <!-- <div class="space-x-2 space-y-2 shadow-sm py-1">
                     <button class="btn btn-sm btn-primary tooltip" data-tip="Export Jawaban Siswa"
                         @click="doExportJawabanSiswa()">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -687,7 +701,7 @@ const inputSelectTipeCitacita= ref( dataTemp?.tipeCitacita||{
                         </svg>
 
                     </button>
-                </div>
+                </div> -->
             </div>
             <div class="space-x-2 space-y-0 shadow-sm flex justify-start ">
 
@@ -712,7 +726,7 @@ const inputSelectTipeCitacita= ref( dataTemp?.tipeCitacita||{
                     </button>
                 </div> -->
                 
-                <div class="space-x-2 space-y-2 shadow-sm py-1">
+                <!-- <div class="space-x-2 space-y-2 shadow-sm py-1">
                     <button class="btn btn-sm btn-success tooltip" data-tip="CETAK HASIL REACT V2"
                         @click="doCetakReactV2()">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
@@ -721,7 +735,7 @@ const inputSelectTipeCitacita= ref( dataTemp?.tipeCitacita||{
                                 d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
                         </svg>
                     </button>
-                </div>
+                </div> -->
 
             </div>
             <!-- !PENGATURAN-END -->
@@ -857,12 +871,12 @@ const inputSelectTipeCitacita= ref( dataTemp?.tipeCitacita||{
                                             <!-- {{ props.row.ujiankhusus?.tgl_batas_terakhir }} -->
                                             {{ props.row.ujiankhusus?.tgl_batas_terakhir ? moment(props.row.ujiankhusus?.tgl_batas_terakhir).format("DD MMMM YYYY HH:mm:ss"):"-" }}
                                         </span>
-                                        <span v-else-if="props.column.field == 'progres'">
-                                            {{ props.row.progres?.status }}
+                                        <span v-else-if="props.column.field == 'progres_status'">
+                                            {{ props.row.progres_status }}
                                         </span>
                                         <span v-else-if="props.column.field == 'progres_angka'">
-                                            {{ props.row.progres?.selesai }}/{{
-                                                props.row.progres?.total }}
+                                            {{ props.row.progres_angka?.progres }}/{{
+                                                props.row.progres_angka?.total }}
                                         </span>
                                         <span v-else-if="props.column.field == 'username'">
                                             <div class="flex justify-center gap-2">
