@@ -11,6 +11,7 @@ import { fn_studi_ket, fn_studi_ket_singkatan } from "@/components/lib/Psikotest
 import { Field, Form } from "vee-validate";
 import fnValidasi from "@/components/lib/babengValidasi";
 import {fn_copy_id_for_mongo} from "@/lib/FungsiBasic.js"
+import ApiUjianKhusus from "@/axios/axiosIst";
 
 import moment from "moment/min/moment-with-locales";
 import localization from "moment/locale/id";
@@ -51,9 +52,11 @@ const getData = async () => {
         data.value = tempData.map(fn_copy_id_for_mongo);
         //  "umum"; //!umum,minat,kr
         response.data.ujiankhusus.minatList.tipe="minat"
+        response.data.ujiankhusus.minatList.desc="MINAT"
         data.value.push(response.data.ujiankhusus.minatList)
         
         response.data.ujiankhusus.krList.tipe="kr"
+        response.data.ujiankhusus.krList.desc="KR"
         data.value.push(response.data.ujiankhusus.krList)
         }
         // data.value = response.data.ujiankhusus.aspek_detail;
@@ -81,6 +84,13 @@ const columns = [
         thClass: "text-center",
     },
     {
+        label: "revisi",
+        field: "revisi",
+        sortable: false,
+        tdClass: "text-center",
+        thClass: "text-center",
+    },
+    {
         label: "Nama",
         field: "nama",
         type: "String",
@@ -103,6 +113,12 @@ const columns = [
     {
         label: "Skor",
         field: "skor_jml",
+        type: "number",
+    },
+    
+    {
+        label: "Skor Revisi",
+        field: "revisi_nilai",
         type: "number",
     },
     {
@@ -226,6 +242,43 @@ const kr_doResetAll = async (proses_detail_id,) => {
         }
     }
 }
+const dataForm = ref({
+    desc: null,
+    revisi_nilai:0,
+});
+
+const getDataDetail = async () => {
+    try {
+        const response = await ApiUjianKhusus.get(`ujiankhusus/banksoal/aspek/${aspek_id.value}`);
+        dataForm.value = response.data;
+       dataForm.value.status = response.data.status=="Aktif"?true:false;
+        return response.data;
+    } catch (error) {
+        console.error(error);
+    }
+};
+getDataDetail();
+const onRevisi=async(desc,skor_jml,revisi_nilai)=>{
+    dataForm.value.desc=desc;
+    dataForm.value.skor_jml=skor_jml;
+    dataForm.value.revisi_nilai=revisi_nilai||skor_jml;
+}
+const onSubmit = async (values) => {
+    let dataFormSend = {
+        desc: dataForm.value.desc,
+        revisi_nilai: dataForm.value.revisi_nilai,
+    };
+    try {
+        const response = await ApiUjianKhusus.post(`ujiankhusus/revisi/sekolah/${sekolah_id.value}/kelas/${kelas_id.value}/siswa/${siswa_id.value}`, dataFormSend);
+        // console.log(response);
+        Toast.success("Info", "Data berhasil diupdate!");
+        // router.push({ name: "admin-ujiankhusus-banksoal-aspek" });
+        // return true;
+        getData()
+    } catch (error) {
+        console.error(error);
+    }
+};
 </script>
 
 <template>
@@ -245,7 +298,7 @@ const kr_doResetAll = async (proses_detail_id,) => {
                             d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
                     </svg>
                 </button> -->
-                <button class="btn hover:shadow-lg shadow text-white hover:text-gray-100 gap-2"
+                <button class="btn hover:shadow-lg shadow   hover:text-gray-100 gap-2"
                     @click="router.go(-1)">Kembali</button>
 
             </div>
@@ -301,6 +354,70 @@ const kr_doResetAll = async (proses_detail_id,) => {
                     </div>
                 </div>
             </div>
+                <!-- <div v-if="dataForm.desc" class="w-96 lg:w-4/6">
+        <Form v-slot="{ errors }" @submit="onSubmit">
+                    REVISI NILAI {{ dataForm.desc }}
+                    <div>
+                    <div class="flex flex-col">
+                        <label>Nilai Asli :</label>
+                        <div>
+                            <input v-model="dataForm.skor_jml" name="skor_jml" type="text"
+                                class="input input-bordered w-11/12" />
+                        </div>
+                    </div>
+                    <div class="flex flex-col">
+                        <label>Nilai Baru :</label>
+                        <div>
+                            <Field v-model="dataForm.revisi_nilai" name="revisi_nilai" type="text"
+                                class="input input-bordered w-11/12" />
+                            <div class="text-xs text-red-600 mt-1">
+                                {{ errors.revisi_nilai }}
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                    <div class="flex justify-end w-96 space-x-1">
+                    <button class="btn btn-secondary">Batal</button>
+                    <button class="btn btn-primary">Update Nilai</button></div>
+                </Form>
+                </div> -->
+                <!-- The button to open modal -->
+<input type="checkbox" id="my_modal_6" class="modal-toggle" />
+<div class="modal" role="dialog">
+  <div class="modal-box">
+    <Form v-slot="{ errors }" @submit="onSubmit" class="space-y-1">
+
+        <div>
+            <h2 class="font-bold">
+                REVISI NILAI {{ dataForm.desc }}
+            </h2>
+                    <div class="flex flex-col space-y-1">
+                        <label>Nilai Asli :</label>
+                        <div>
+                            <input v-model="dataForm.skor_jml" name="skor_jml" type="text"
+                                class="input input-bordered w-11/12" />
+                        </div>
+                    </div>
+                    <div class="flex flex-col">
+                        <label>Nilai Baru :</label>
+                        <div>
+                            <Field v-model="dataForm.revisi_nilai" name="revisi_nilai" type="text"
+                                class="input input-bordered w-11/12" />
+                            <div class="text-xs text-red-600 mt-1">
+                                {{ errors.revisi_nilai }}
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                    <div class="flex justify-end w-96 space-x-1">
+                    <button class="btn btn-primary" v-if="dataForm.desc">Update Nilai</button>
+                </div>
+                </Form>
+    <div class="modal-action">
+      <label for="my_modal_6" class="btn">Close!</label>
+    </div>
+  </div>
+</div>
             <div v-if="data">
                 <div class="w-full lg:w-full">
                     <div class="bg-white shadow rounded-lg px-4 py-4" >
@@ -394,6 +511,22 @@ const kr_doResetAll = async (proses_detail_id,) => {
                                         </div>
                                         </div>
                                     </span>
+                                    <span v-if="props.column.field == 'revisi'">
+                                        <div class="text-sm font-medium text-center flex justify-center space-x-1">
+                                            <!-- {{ props.row.status }} -->
+                                            <div  class="text-sm font-medium text-center flex justify-center space-x-1" v-if="props.row.status=='Selesai'||props.row.waktu<=0">
+                                                <!-- <button class="btn btn-sm btn-secondary tooltip" data-tip="Revisi Nilai" @click="onRevisi(props.row.desc,props.row.skor_jml)"
+                                                >
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M8.625 12a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+</svg>
+
+                                            </button> -->
+                                            <label for="my_modal_6" class="btn" @click="onRevisi(props.row.desc,props.row.skor_jml,props.row.revisi_nilai)" v-if="props.row.revisi">Revisi</label>
+                                        </div>
+                                        </div>
+                                    </span>
+
 
 
                                     <span v-else>

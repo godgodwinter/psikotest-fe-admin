@@ -27,7 +27,7 @@ adminPagesStore.$subscribe((mutation, state) => {
 </script>
 <template>
     <div>
-        <div class="bg-base-100 p-3 hover:shadow shadow-sm">
+        <div class="bg-white p-3 hover:shadow shadow-sm">
             <div class="flex items-center space-x-3 font-semibold text-base-content text-xl leading-8">
                 <span class="text-green-500">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
@@ -40,7 +40,7 @@ adminPagesStore.$subscribe((mutation, state) => {
             </div>
             <div class="px-2">
                 <ul class="space-y-0 pb-2 lg:flex flex-wrap px-0 gap-0 justify-between">
-                    <li class="bg-base-100 lg:w-full py-0 pt-2">
+                    <li class="bg-white lg:w-full py-0 pt-2">
                         <router-link :to="{ name: 'admin-sekolah-submenu-dashboard', params: { sekolah_id } }"
                             class="text-base-content font-normal rounded-lg flex items-center p-2 group hover:link">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
@@ -50,7 +50,7 @@ adminPagesStore.$subscribe((mutation, state) => {
                             <span class="ml-1">Dashboard</span>
                         </router-link>
                     </li>
-                    <li class="bg-base-100 lg:w-full py-0">
+                    <li class="bg-white lg:w-full py-0">
                         <router-link :to="{ name: 'admin-sekolah-submenu-kelas', params: { sekolah_id } }"
                             class="text-base-content font-normal rounded-lg flex items-center p-2 group hover:link">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
@@ -60,7 +60,7 @@ adminPagesStore.$subscribe((mutation, state) => {
                             <span class="ml-1">Kelas</span>
                         </router-link>
                     </li>
-                    <li class="bg-base-100 lg:w-full py-0">
+                    <li class="bg-white lg:w-full py-0">
                         <router-link :to="{ name: 'admin-sekolah-submenu-siswa', params: { sekolah_id, kelas_id } }"
                             class="text-base-content font-normal rounded-lg flex items-center p-2 group hover:link">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
@@ -73,7 +73,7 @@ adminPagesStore.$subscribe((mutation, state) => {
                 </ul>
             </div>
         </div>
-        <div class="bg-base-100 p-3 hover:shadow shadow-sm">
+        <div class="bg-white p-3 hover:shadow shadow-sm">
             <div class="flex items-center space-x-3 font-semibold text-base-content text-xl leading-8">
                 <span class="text-green-500">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
@@ -86,7 +86,7 @@ adminPagesStore.$subscribe((mutation, state) => {
             </div>
             <div class="px-2">
                 <ul class="space-y-0 pb-2 lg:flex flex-wrap px-0 gap-0 justify-between">
-                    <li class="bg-base-100 lg:w-full py-0 pt-2 ">
+                    <li class="bg-white lg:w-full py-0 pt-2 ">
                         <router-link :to="{ name: 'admin-sekolah-submenu-ujianstudi', params: { sekolah_id, kelas_id } }"
                             class="text-base-content font-normal rounded-lg flex items-center p-2 group hover:link">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
@@ -96,7 +96,7 @@ adminPagesStore.$subscribe((mutation, state) => {
                             <span class="ml-1 capitalize">Ujian Lintas Studi</span>
                         </router-link>
                     </li>
-                    <li class="bg-base-100 lg:w-full py-0">
+                    <li class="bg-white lg:w-full py-0">
                         <router-link :to="{ name: 'admin-sekolah-submenu-ujiankhusus', params: { sekolah_id, kelas_id } }"
                             class="text-base-content font-normal rounded-lg flex items-center p-2 group hover:link">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
@@ -106,7 +106,7 @@ adminPagesStore.$subscribe((mutation, state) => {
                             <span class="ml-1">Ujian Khusus</span>
                         </router-link>
                     </li>
-                    <!-- <li class="bg-base-100 lg:w-full py-0">
+                    <!-- <li class="bg-white lg:w-full py-0">
                         <router-link :to="{ name: 'admin-sekolah-submenu-dashboard', params: { sekolah_id } }"
                             class="text-base-content font-normal rounded-lg flex items-center p-2 group hover:link">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
@@ -116,7 +116,7 @@ adminPagesStore.$subscribe((mutation, state) => {
                             <span class="ml-1">Ujian Skolastik </span>
                         </router-link>
                     </li>
-                    <li class="bg-base-100 lg:w-full py-0">
+                    <li class="bg-white lg:w-full py-0">
                         <router-link :to="{ name: 'admin-sekolah-submenu-dashboard', params: { sekolah_id } }"
                             class="text-base-content font-normal rounded-lg flex items-center p-2 group hover:link">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
@@ -126,7 +126,7 @@ adminPagesStore.$subscribe((mutation, state) => {
                             <span class="ml-1">Ujian KFace</span>
                         </router-link>
                     </li> -->
-                    <li class="bg-base-100 lg:w-full py-0">
+                    <li class="bg-white lg:w-full py-0">
                         <router-link :to="{ name: 'admin-sekolah-submenu-ist', params: { sekolah_id, kelas_id } }"
                             class="text-base-content font-normal rounded-lg flex items-center p-2 group hover:link">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
@@ -136,7 +136,7 @@ adminPagesStore.$subscribe((mutation, state) => {
                             <span class="ml-1">Data IST</span>
                         </router-link>
                     </li>
-                    <li class="bg-base-100 lg:w-full py-0">
+                    <li class="bg-white lg:w-full py-0">
                         <router-link :to="{ name: 'admin-sekolah-submenu-minatbakat', params: { sekolah_id, kelas_id } }"
                             class="text-base-content font-normal rounded-lg flex items-center p-2 group hover:link">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
@@ -146,7 +146,7 @@ adminPagesStore.$subscribe((mutation, state) => {
                             <span class="ml-1">Data Minat & Bakat</span>
                         </router-link>
                     </li>
-                    <li class="bg-base-100 lg:w-full py-0">
+                    <li class="bg-white lg:w-full py-0">
                         <router-link :to="{ name: 'admin-sekolah-submenu-hspq', params: { sekolah_id, kelas_id } }"
                             class="text-base-content font-normal rounded-lg flex items-center p-2 group hover:link">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
@@ -156,7 +156,7 @@ adminPagesStore.$subscribe((mutation, state) => {
                             <span class="ml-1">Data HSPQ Deteksi</span>
                         </router-link>
                     </li>
-                    <li class="bg-base-100 lg:w-full py-0">
+                    <li class="bg-white lg:w-full py-0">
                         <router-link :to="{ name: 'admin-sekolah-submenu-8km', params: { sekolah_id, kelas_id } }"
                             class="text-base-content font-normal rounded-lg flex items-center p-2 group hover:link">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">

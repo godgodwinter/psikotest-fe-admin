@@ -524,6 +524,19 @@ const doCetakReactV2 = (ttd="true") => {
     );
 }
 
+const doGenerateHasilPerkelas =async (ttd) => {
+    if (confirm("Apakah anda yakin generate Hasil Kelas Ini?")) {
+      
+        try {
+            const response = await ApiUjianKhusus.post(`/ujiankhusus/hasil/generate/sekolah/${sekolah_id.value}/kelas/${kelas_id.value}`);
+            Toast.babeng("Berhasil", 'Generate Hasil Ujian telah berhasil!');
+            getData();
+            return true;
+        } catch (error) {
+            console.error(error);
+        }
+    }
+}
 const doExportExcel = (ttd) => {
     window.open(
         `${VITE_API_FE_REACT}ujiankhusus/v1/export/sekolah/${getSekolahAktif.value.sekolah_id}/kelas/${getSekolahAktif.value.kelas_id}`
@@ -589,7 +602,7 @@ const inputSelectTipeCitacita= ref( dataTemp?.tipeCitacita||{
 </div>
 </label>
 
-<div class="w-full bg-base-100 shadow-sm rounded-lg py-4 px-4">
+<div class="w-full bg-white shadow-sm rounded-lg py-4 px-4">
     <div class="flex justify-start">
         <v-select class="py-2 px-3 w-72 mx-auto md:mx-0" :options="tipeCitacitaList" v-model="inputSelectTipeCitacita"
             v-bind:class="{ disabled: false }"></v-select>
@@ -655,6 +668,15 @@ const inputSelectTipeCitacita= ref( dataTemp?.tipeCitacita||{
                 </button>
             </div> -->
             <div class="space-x-2 space-y-0 shadow-sm flex justify-start "> 
+                <div class="space-x-2 space-y-2 shadow-sm py-1">
+                    <button class="btn btn-sm btn-warning tooltip" data-tip="Generate Hasil Ujian " @click="doGenerateHasilPerkelas()">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 15.75V18m-7.5-6.75h.008v.008H8.25v-.008Zm0 2.25h.008v.008H8.25V13.5Zm0 2.25h.008v.008H8.25v-.008Zm0 2.25h.008v.008H8.25V18Zm2.498-6.75h.007v.008h-.007v-.008Zm0 2.25h.007v.008h-.007V13.5Zm0 2.25h.007v.008h-.007v-.008Zm0 2.25h.007v.008h-.007V18Zm2.504-6.75h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V13.5Zm0 2.25h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V18Zm2.498-6.75h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V13.5ZM8.25 6h7.5v2.25h-7.5V6ZM12 2.25c-1.892 0-3.758.11-5.593.322C5.307 2.7 4.5 3.65 4.5 4.757V19.5a2.25 2.25 0 0 0 2.25 2.25h10.5a2.25 2.25 0 0 0 2.25-2.25V4.757c0-1.108-.806-2.057-1.907-2.185A48.507 48.507 0 0 0 12 2.25Z" />
+</svg>
+
+
+                    </button>
+                </div>
                 <div class="space-x-2 space-y-2 shadow-sm py-1">
                     <button class="btn btn-sm btn-info tooltip" data-tip="Export Excel Format IST" @click="doExportExcel()">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
@@ -747,7 +769,7 @@ const inputSelectTipeCitacita= ref( dataTemp?.tipeCitacita||{
             </span>
             <span v-else>
                 <div class="md:py-2 px-4 lg:flex flex-wrap gap-4" v-if="data">
-                    <div class="w-full lg:w-full">
+                    <div class="w-full">
                         <div class="bg-white shadow rounded-lg px-4 py-4">
                             <div v-if="data">
                                 <vue-good-table :line-numbers="true" :columns="columns" :rows="data" :search-options="{
@@ -815,7 +837,8 @@ const inputSelectTipeCitacita= ref( dataTemp?.tipeCitacita||{
 
                                         <span v-else-if="props.column.field == 'hasil'">
                                             <RouterLink
-                                                    :to="{ name: 'admin-sekolah-submenu-ujiankhusus-persiswa-reset', params: { sekolah_id, kelas_id, siswa_id: props.row.id } }"> <button class="btn btn-sm btn-warning tooltip" data-tip="MENU RESET"
+                                                    :to="{ name: 'admin-sekolah-submenu-ujiankhusus-persiswa-reset', params: { sekolah_id, kelas_id, siswa_id: props.row.id } }" v-if="props.row.progres_angka?.total">
+                                                     <button class="btn btn-sm btn-warning tooltip" data-tip="MENU RESET"
                                                     v-if="props.row.paketsoal_nama">
                                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
   <path stroke-linecap="round" stroke-linejoin="round" d="m9 9 6-6m0 0 6 6m-6-6v12a6 6 0 0 1-12 0v-3" />

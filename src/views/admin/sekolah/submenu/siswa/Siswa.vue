@@ -194,7 +194,7 @@ const doPilihKelas = async () => {
             <h1>SISWA KELAS {{ kelas_nama }}</h1>
         </article>
 
-        <div class="w-full bg-base-100 shadow-sm rounded-lg py-4 px-4">
+        <div class="w-full bg-white shadow-sm rounded-lg py-4 px-4">
             <div class="flex justify-center">
                 <v-select class="py-2 px-3 w-72 mx-auto md:mx-0" :options="pilihKelas" v-model="inputCariKelas"
                     v-bind:class="{ disabled: false }"></v-select>

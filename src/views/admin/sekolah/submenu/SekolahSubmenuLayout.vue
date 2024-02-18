@@ -71,7 +71,7 @@ const fn_periksaLocalStrg_sekolahAktif = async () => {
                         <input type="checkbox" class="peer" />
                         <div
                             class="collapse-title bg-slate-50 text-primary-content peer-checked:bg-green-50 peer-checked:text-secondary-content">
-                            <div class="bg-base-100 p-2 border-t-4 border-green-400 shadow-sm">
+                            <div class=" p-2 border-t-4 border-green-400 shadow-sm">
                                 <span class="flex space-x-2 justify-center items-center">
                                     <p
                                         class=" text-base-content font-bold text-lg hover:text-gray-600 leading-6 text-center pt-2">

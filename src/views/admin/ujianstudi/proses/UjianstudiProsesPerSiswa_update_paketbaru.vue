@@ -272,7 +272,7 @@ const doRefreshData = () => {
                                             </svg>
 
                                         </button> -->
-                <button class="btn hover:shadow-lg shadow text-white hover:text-gray-100 gap-2"
+                <button class="btn hover:shadow-lg shadow   hover:text-gray-100 gap-2"
                     @click="router.go(-1)">Kembali</button>
 
             </div>
