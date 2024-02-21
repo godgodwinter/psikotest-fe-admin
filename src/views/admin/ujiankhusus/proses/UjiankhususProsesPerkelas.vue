@@ -334,8 +334,8 @@ const doGenerateSiswaPerkelas = async (id, index) => {
     if (confirm("Apakah anda yakin generate data ini?")) {
         let dataFormSend = {
             paketsoal_id:paketsoal_aktif.value.id,
-            tgl_batas_mulai:paketsoal_aktif.value.tgl_batas_mulai,
-            tgl_batas_terakhir:paketsoal_aktif.value.tgl_batas_terakhir,
+            tgl_batas_mulai:dataForm.value.tgl_batas_mulai,
+            tgl_batas_terakhir:dataForm.value.tgl_batas_terakhir,
             tipeCitacita:inputSelectTipeCitacita.value
         }
         try {
@@ -528,11 +528,14 @@ const doGenerateHasilPerkelas =async (ttd) => {
     if (confirm("Apakah anda yakin generate Hasil Kelas Ini?")) {
       
         try {
+            isLoading.value = true;
             const response = await ApiUjianKhusus.post(`/ujiankhusus/hasil/generate/sekolah/${sekolah_id.value}/kelas/${kelas_id.value}`);
             Toast.babeng("Berhasil", 'Generate Hasil Ujian telah berhasil!');
             getData();
             return true;
         } catch (error) {
+            isLoading.value = false;
+            isError.value = true;
             console.error(error);
         }
     }
