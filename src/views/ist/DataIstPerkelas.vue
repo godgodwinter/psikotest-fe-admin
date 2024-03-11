@@ -220,6 +220,11 @@ const doCetak_ist_8km_gabungan = () => {
         `${VITE_API_FE_REACT}ist_8km/v_ist8km_gabungan/cetak/${getSekolahAktif.value.kelas_id}/true`
     );
 }
+const doCetakIstLengkap_v4 = () => {
+    window.open(
+        `${VITE_API_FE_REACT}ist_8km/v_ist_lengkap_v4/cetak/${getSekolahAktif.value.kelas_id}/true`
+    );
+}
 </script>
 <template>
     <span v-if="isLoading">
@@ -247,6 +252,9 @@ const doCetak_ist_8km_gabungan = () => {
                     Cetak FAKULTAS tanpa TTD</button> -->
                 <button class="btn btn-sm btn-success" @click="doCetak_ist_8km_gabungan()">
                     Cetak 8KM+IST Gabungan</button>
+
+                <button class="btn btn-sm btn-secondary" @click="doCetakIstLengkap_v4()">
+                    Cetak Ist Lengkap Versi Lama</button>
             </div>
 
             <div class="w-full bg-base-100 shadow-sm rounded-lg py-4 px-4">
