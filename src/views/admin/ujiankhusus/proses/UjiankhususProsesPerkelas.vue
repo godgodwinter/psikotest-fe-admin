@@ -1,7 +1,7 @@
 <script setup>
 import Api from "@/axios/axiosNode";
 import ApiUjianKhusus from "@/axios/axiosIst";
-import {fn_copy_id_for_mongo} from "@/lib/FungsiBasic.js"
+import { fn_copy_id_for_mongo } from "@/lib/FungsiBasic.js"
 import { ref, defineAsyncComponent } from "vue";
 import BreadCrumb from "@/components/atoms/BreadCrumb.vue";
 import BreadCrumbSpace from "@/components/atoms/BreadCrumbSpace.vue";
@@ -101,29 +101,29 @@ const columns = [
         type: "String",
     },
     {
-        label: "Kelas",
-        field: "kelas_nama",
-        type: "String",
-    },
-    {
         label: "Hasil",
         field: "hasil",
         type: "String",
     },
+
     {
-        label: "Paket",
-        field: "paketsoal_nama",
+        label: "IQ IST",
+        field: "proses_iq_ist",
         type: "String",
     },
     {
-        label: "Tanggal Bisa Memulai",
-        field: "tgl_batas_mulai",
+        label: "IQ 8KM",
+        field: "proses_iq_8km",
         type: "String",
     },
-    
     {
-        label: "Batas Tanggal Pengerjaan",
-        field: "tgl_batas_terakhir",
+        label: "progres",
+        field: "progres_angka",
+        type: "number",
+    },
+    {
+        label: "Progres Status",
+        field: "progres_status",
         type: "String",
     },
     {
@@ -136,19 +136,30 @@ const columns = [
         field: "passworddefault",
         type: "String",
     },
+    {
+        label: "Tanggal Bisa Memulai",
+        field: "tgl_batas_mulai",
+        type: "String",
+    },
+
+    {
+        label: "Batas Tanggal Pengerjaan",
+        field: "tgl_batas_terakhir",
+        type: "String",
+    },
     // {
     //     label: "Status",
     //     field: "status",
     //     type: "String",
     // },
     {
-        label: "progres",
-        field: "progres_angka",
-        type: "number",
+        label: "Paket",
+        field: "paketsoal_nama",
+        type: "String",
     },
     {
-        label: "Progres Status",
-        field: "progres_status",
+        label: "Kelas",
+        field: "kelas_nama",
         type: "String",
     },
 ];
@@ -158,7 +169,7 @@ const getData = async () => {
         isLoading.value = true;
         const response = await ApiUjianKhusus.get(`/ujiankhusus/proses/sekolah/${sekolah_id.value}/kelas/${getSekolahAktif.value.kelas_id}`);
         data.value = response.data;
-        
+
         // const tempData=response.data;
         // data.value = tempData.map(fn_copy_id_for_mongo);
         // console.log(data.value);
@@ -264,10 +275,10 @@ const dataPaket = ref([])
 const paketsoal_aktif = ref(null);
 const getPaketAktif = async (id) => {
     // !ambil data dari localstorage
-    let getDataPaket=localStorage.getItem("ujiankhusus_paketsoal_aktif");
-    paketsoal_aktif.value=getDataPaket?JSON.parse(getDataPaket):null;
-    dataForm.value.tgl_batas_mulai=paketsoal_aktif.value.tgl_batas_mulai||moment();
-    dataForm.value.tgl_batas_terakhir=paketsoal_aktif.value.tgl_batas_terakhir||moment().add(7, 'days');
+    let getDataPaket = localStorage.getItem("ujiankhusus_paketsoal_aktif");
+    paketsoal_aktif.value = getDataPaket ? JSON.parse(getDataPaket) : null;
+    dataForm.value.tgl_batas_mulai = paketsoal_aktif.value.tgl_batas_mulai || moment();
+    dataForm.value.tgl_batas_terakhir = paketsoal_aktif.value.tgl_batas_terakhir || moment().add(7, 'days');
     console.log(paketsoal_aktif.value);
     // console.log(paketsoal_aktif.value);
 };
@@ -279,9 +290,9 @@ const doPilihPaket = () => {
         nama: paketsoal_aktif.value.nama,
         tgl_batas_mulai: dataForm.value.tgl_batas_mulai,
         tgl_batas_terakhir: dataForm.value.tgl_batas_terakhir,
-        tipeCitacita:inputSelectTipeCitacita.value,
+        tipeCitacita: inputSelectTipeCitacita.value,
     }
-        localStorage.setItem("ujiankhusus_paketsoal_aktif",JSON.stringify(tempDataSave))
+    localStorage.setItem("ujiankhusus_paketsoal_aktif", JSON.stringify(tempDataSave))
     // console.log('====================================');
     console.log(tempDataSave);
     // console.log('====================================');
@@ -295,10 +306,10 @@ const doGenerateSiswa = async (id, index) => {
         // console.log(paketsoal_aktif.value.id);
         // console.log('====================================');
         let dataFormSend = {
-            paketsoal_id:paketsoal_aktif.value.id,
-            tgl_batas_mulai:dataForm.value.tgl_batas_mulai,
-            tgl_batas_terakhir:dataForm.value.tgl_batas_terakhir,
-            tipeCitacita:inputSelectTipeCitacita.value
+            paketsoal_id: paketsoal_aktif.value.id,
+            tgl_batas_mulai: dataForm.value.tgl_batas_mulai,
+            tgl_batas_terakhir: dataForm.value.tgl_batas_terakhir,
+            tipeCitacita: inputSelectTipeCitacita.value
         }
         try {
             isLoading.value = true;
@@ -333,10 +344,10 @@ const doDeleteProsesSiswa = async (id, proses_id) => {
 const doGenerateSiswaPerkelas = async (id, index) => {
     if (confirm("Apakah anda yakin generate data ini?")) {
         let dataFormSend = {
-            paketsoal_id:paketsoal_aktif.value.id,
-            tgl_batas_mulai:dataForm.value.tgl_batas_mulai,
-            tgl_batas_terakhir:dataForm.value.tgl_batas_terakhir,
-            tipeCitacita:inputSelectTipeCitacita.value
+            paketsoal_id: paketsoal_aktif.value.id,
+            tgl_batas_mulai: dataForm.value.tgl_batas_mulai,
+            tgl_batas_terakhir: dataForm.value.tgl_batas_terakhir,
+            tipeCitacita: inputSelectTipeCitacita.value
         }
         try {
             isLoading.value = true;
@@ -518,15 +529,15 @@ const doCetakReact = (ttd) => {
         `${VITE_API_FE_REACT}lintasstudi/v1/a/data/cetak/${getSekolahAktif.value.kelas_id}/${ttd}`
     );
 }
-const doCetakReactV2 = (ttd="true") => {
+const doCetakReactV2 = (ttd = "true") => {
     window.open(
         `${VITE_API_FE_REACT}lintasstudi/v2/cetak/${getSekolahAktif.value.kelas_id}/${ttd}`
     );
 }
 
-const doGenerateHasilPerkelas =async (ttd) => {
+const doGenerateHasilPerkelas = async (ttd) => {
     if (confirm("Apakah anda yakin generate Hasil Kelas Ini?")) {
-      
+
         try {
             isLoading.value = true;
             const response = await ApiUjianKhusus.post(`/ujiankhusus/hasil/generate/sekolah/${sekolah_id.value}/kelas/${kelas_id.value}`);
@@ -548,29 +559,31 @@ const doExportExcel = (ttd) => {
 }
 
 // const dataTipeCitacita=ref([]);
-const tipeCitacitaList=ref([
+const tipeCitacitaList = ref([
     {
-        id:1,
-        label:"Kelas 1-8",
+        id: 1,
+        label: "Kelas 1-8",
     },
     {
-        id:2,
-        label:"Kelas 9-10",
+        id: 2,
+        label: "Kelas 9-10",
     },
     {
-        id:3,
-        label:"Kelas 11-12",
+        id: 3,
+        label: "Kelas 11-12",
     },
     {
-        id:4,
-        label:"Dewasa ( Diploma,Sarjana, Umum)",
+        id: 4,
+        label: "Dewasa ( Diploma,Sarjana, Umum)",
     },
 ]);
-const dataTemp=JSON.parse(localStorage.getItem("ujiankhusus_paketsoal_aktif"));
-const inputSelectTipeCitacita= ref( dataTemp?.tipeCitacita||{
-        id:2,
-        label:"Kelas 9-10",
-    },)
+const dataTemp = JSON.parse(localStorage.getItem("ujiankhusus_paketsoal_aktif"));
+const inputSelectTipeCitacita = ref(dataTemp?.tipeCitacita || {
+    id: 2,
+    label: "Kelas 9-10",
+},)
+
+const formatTanggal = "DD MMMM YYYY HH:mm:ss";
 </script>
 <template>
     <span v-if="isLoading">
@@ -599,24 +612,24 @@ const inputSelectTipeCitacita= ref( dataTemp?.tipeCitacita||{
             </div>
             <!-- !PENGATURAN -->
             <div class=" flex  space-x-2 justify-start">
-<label className="form-control w-full max-w-xs">
-<div className="label">
-<span className="label-text">Tipe Cita cita:</span>
-</div>
-</label>
+                <label className="form-control w-full max-w-xs">
+                    <div className="label">
+                        <span className="label-text">Tipe Cita cita:</span>
+                    </div>
+                </label>
 
-<div class="w-full bg-white shadow-sm rounded-lg py-4 px-4">
-    <div class="flex justify-start">
-        <v-select class="py-2 px-3 w-72 mx-auto md:mx-0" :options="tipeCitacitaList" v-model="inputSelectTipeCitacita"
-            v-bind:class="{ disabled: false }"></v-select>
-        <!-- <div class="py-2">
+                <div class="w-full bg-white shadow-sm rounded-lg py-4 px-4">
+                    <div class="flex justify-start">
+                        <v-select class="py-2 px-3 w-72 mx-auto md:mx-0" :options="tipeCitacitaList"
+                            v-model="inputSelectTipeCitacita" v-bind:class="{ disabled: false }"></v-select>
+                        <!-- <div class="py-2">
             <button class="btn btn-sm btn-info p-2" @click="doPilihKelas()">
                 Cari
             </button>
         </div> -->
-    </div>
-</div>
+                    </div>
                 </div>
+            </div>
             <div class="flex justify-start w-full space-x-2 content-center py-2">
                 <!-- <div class="w-96">
                     <div class="flex justify-center">
@@ -625,7 +638,7 @@ const inputSelectTipeCitacita= ref( dataTemp?.tipeCitacita||{
 
                     </div>
                 </div> -->
-          
+
                 <div class="w-1/2 flex  space-x-2">
                     <div>
                         <VueDatePicker v-model="dataForm.tgl_batas_mulai"></VueDatePicker>
@@ -633,7 +646,7 @@ const inputSelectTipeCitacita= ref( dataTemp?.tipeCitacita||{
                     <div>
                         <VueDatePicker v-model="dataForm.tgl_batas_terakhir"></VueDatePicker>
                     </div>
-                    
+
                     <div>
                         <p class="py-2">{{ paketsoal_aktif?.nama }}</p>
                     </div>
@@ -670,21 +683,26 @@ const inputSelectTipeCitacita= ref( dataTemp?.tipeCitacita||{
                     Generate Hasil (Complete Only)
                 </button>
             </div> -->
-            <div class="space-x-2 space-y-0 shadow-sm flex justify-start "> 
+            <div class="space-x-2 space-y-0 shadow-sm flex justify-start ">
                 <div class="space-x-2 space-y-2 shadow-sm py-1">
-                    <button class="btn btn-sm btn-warning tooltip" data-tip="Generate Hasil Ujian " @click="doGenerateHasilPerkelas()">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-  <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 15.75V18m-7.5-6.75h.008v.008H8.25v-.008Zm0 2.25h.008v.008H8.25V13.5Zm0 2.25h.008v.008H8.25v-.008Zm0 2.25h.008v.008H8.25V18Zm2.498-6.75h.007v.008h-.007v-.008Zm0 2.25h.007v.008h-.007V13.5Zm0 2.25h.007v.008h-.007v-.008Zm0 2.25h.007v.008h-.007V18Zm2.504-6.75h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V13.5Zm0 2.25h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V18Zm2.498-6.75h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V13.5ZM8.25 6h7.5v2.25h-7.5V6ZM12 2.25c-1.892 0-3.758.11-5.593.322C5.307 2.7 4.5 3.65 4.5 4.757V19.5a2.25 2.25 0 0 0 2.25 2.25h10.5a2.25 2.25 0 0 0 2.25-2.25V4.757c0-1.108-.806-2.057-1.907-2.185A48.507 48.507 0 0 0 12 2.25Z" />
-</svg>
+                    <button class="btn btn-sm btn-warning tooltip" data-tip="Generate Hasil Ujian "
+                        @click="doGenerateHasilPerkelas()">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                            stroke="currentColor" class="w-6 h-6">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M15.75 15.75V18m-7.5-6.75h.008v.008H8.25v-.008Zm0 2.25h.008v.008H8.25V13.5Zm0 2.25h.008v.008H8.25v-.008Zm0 2.25h.008v.008H8.25V18Zm2.498-6.75h.007v.008h-.007v-.008Zm0 2.25h.007v.008h-.007V13.5Zm0 2.25h.007v.008h-.007v-.008Zm0 2.25h.007v.008h-.007V18Zm2.504-6.75h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V13.5Zm0 2.25h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V18Zm2.498-6.75h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V13.5ZM8.25 6h7.5v2.25h-7.5V6ZM12 2.25c-1.892 0-3.758.11-5.593.322C5.307 2.7 4.5 3.65 4.5 4.757V19.5a2.25 2.25 0 0 0 2.25 2.25h10.5a2.25 2.25 0 0 0 2.25-2.25V4.757c0-1.108-.806-2.057-1.907-2.185A48.507 48.507 0 0 0 12 2.25Z" />
+                        </svg>
 
 
                     </button>
                 </div>
                 <div class="space-x-2 space-y-2 shadow-sm py-1">
                     <button class="btn btn-sm btn-info tooltip" data-tip="Export Excel Format IST" @click="doExportExcel()">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-  <path stroke-linecap="round" stroke-linejoin="round" d="M12 9.75v6.75m0 0-3-3m3 3 3-3m-8.25 6a4.5 4.5 0 0 1-1.41-8.775 5.25 5.25 0 0 1 10.233-2.33 3 3 0 0 1 3.758 3.848A3.752 3.752 0 0 1 18 19.5H6.75Z" />
-</svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                            stroke="currentColor" class="w-6 h-6">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M12 9.75v6.75m0 0-3-3m3 3 3-3m-8.25 6a4.5 4.5 0 0 1-1.41-8.775 5.25 5.25 0 0 1 10.233-2.33 3 3 0 0 1 3.758 3.848A3.752 3.752 0 0 1 18 19.5H6.75Z" />
+                        </svg>
 
                     </button>
                 </div>
@@ -750,7 +768,7 @@ const inputSelectTipeCitacita= ref( dataTemp?.tipeCitacita||{
                         </svg>
                     </button>
                 </div> -->
-                
+
                 <!-- <div class="space-x-2 space-y-2 shadow-sm py-1">
                     <button class="btn btn-sm btn-success tooltip" data-tip="CETAK HASIL REACT V2"
                         @click="doCetakReactV2()">
@@ -797,7 +815,8 @@ const inputSelectTipeCitacita= ref( dataTemp?.tipeCitacita||{
                                     <template #table-row="props">
                                         <span v-if="props.column.field == 'actions'">
                                             <div class="text-sm font-medium text-center flex justify-center space-x-1">
-                                                <button class="btn btn-sm btn-danger tooltip" data-tip="Caching UJIAN KHUSUS"
+                                                <button class="btn btn-sm btn-danger tooltip"
+                                                    data-tip="Caching UJIAN KHUSUS"
                                                     @click="doCachingRedisPerSiswa(props.row.id)">
                                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                                         stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
@@ -840,12 +859,15 @@ const inputSelectTipeCitacita= ref( dataTemp?.tipeCitacita||{
 
                                         <span v-else-if="props.column.field == 'hasil'">
                                             <RouterLink
-                                                    :to="{ name: 'admin-sekolah-submenu-ujiankhusus-persiswa-reset', params: { sekolah_id, kelas_id, siswa_id: props.row.id } }" v-if="props.row.progres_angka?.total">
-                                                     <button class="btn btn-sm btn-warning tooltip" data-tip="MENU RESET"
+                                                :to="{ name: 'admin-sekolah-submenu-ujiankhusus-persiswa-reset', params: { sekolah_id, kelas_id, siswa_id: props.row.id } }"
+                                                v-if="props.row.progres_angka?.total">
+                                                <button class="btn btn-sm btn-warning tooltip" data-tip="MENU RESET"
                                                     v-if="props.row.paketsoal_nama">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-  <path stroke-linecap="round" stroke-linejoin="round" d="m9 9 6-6m0 0 6 6m-6-6v12a6 6 0 0 1-12 0v-3" />
-</svg>
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                                        stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                                            d="m9 9 6-6m0 0 6 6m-6-6v12a6 6 0 0 1-12 0v-3" />
+                                                    </svg>
 
                                                 </button>
                                             </RouterLink>
@@ -887,15 +909,26 @@ const inputSelectTipeCitacita= ref( dataTemp?.tipeCitacita||{
 
                                         <span v-else-if="props.column.field == 'kelas_nama'">
                                             <!-- {{ props.row.progres?.created_at }} -->
-                                            {{ props.row.kelas ? props.row.kelas?.nama :"-" }}
+                                            {{ props.row.kelas ? props.row.kelas?.nama : "-" }}
                                         </span>
                                         <span v-else-if="props.column.field == 'tgl_batas_mulai'">
                                             <!-- {{ props.row.progres?.created_at }} -->
-                                            {{ props.row.ujiankhusus?.tgl_batas_mulai ? moment(props.row.ujiankhusus?.tgl_batas_mulai).format("DD MMMM YYYY HH:mm:ss") :"-" }}
+                                            {{ props.row.ujiankhusus?.tgl_batas_mulai ?
+                                                moment(props.row.ujiankhusus?.tgl_batas_mulai).format("DD MMMM YYYY HH:mm:ss")
+                                                : "-" }}
                                         </span>
                                         <span v-else-if="props.column.field == 'tgl_batas_terakhir'">
+                                            {{ props && props.row && props.row.ujiankhusus &&
+                                                props.row.ujiankhusus.tgl_batas_terakhir
+                                                ?
+                                                moment(props.row.ujiankhusus?.tgl_batas_terakhir).format(formatTanggal)
+                                                : " - " }}
+
                                             <!-- {{ props.row.ujiankhusus?.tgl_batas_terakhir }} -->
-                                            {{ props.row.ujiankhusus?.tgl_batas_terakhir ? moment(props.row.ujiankhusus?.tgl_batas_terakhir).format("DD MMMM YYYY HH:mm:ss"):"-" }}
+
+                                            <!-- {{ props.row.ujiankhusus?.tgl_batas_terakhir
+                                                ? moment(props.row.ujiankhusus?.tgl_batas_terakhir).format("DD MMMM YYYY
+                                                                                        HH: mm: ss"):" - " }} -->
                                         </span>
                                         <span v-else-if="props.column.field == 'progres_status'">
                                             {{ props.row.progres_status }}
