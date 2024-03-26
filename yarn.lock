@@ -763,6 +763,13 @@ object-keys@^1.1.1:
   resolved "https://registry.npmjs.org/object-keys/-/object-keys-1.1.1.tgz"
   integrity sha512-NuAESUOUMrlIXOfHKzD6bpPu3tYt3xvjNdRIQ+FeT0lNb4K8WR70CaDxhuNguS2XG+GjkyMwOzsN5ZktImfhLA==
 
+oh-vue-icons@^1.0.0-rc3:
+  version "1.0.0-rc3"
+  resolved "https://registry.npmjs.org/oh-vue-icons/-/oh-vue-icons-1.0.0-rc3.tgz"
+  integrity sha512-+k2YC6piK7sEZnwbkQF3UokFPMmgqpiLP6f/H0ovQFLl20QA5V4U8EcI6EclD2Lt5NMQ3k6ilLGo8XyXqdVSvg==
+  dependencies:
+    vue-demi "^0.12.5"
+
 parchment@^1.1.4:
   version "1.1.4"
   resolved "https://registry.npmjs.org/parchment/-/parchment-1.1.4.tgz"
@@ -1060,6 +1067,11 @@ vue-demi@*, vue-demi@^0.13.11:
   resolved "https://registry.npmjs.org/vue-demi/-/vue-demi-0.13.11.tgz"
   integrity sha512-IR8HoEEGM65YY3ZJYAjMlKygDQn25D5ajNFNoKh9RSDMQtlzCxtfQjdQgv9jjK+m3377SsJXY8ysq8kLCZL25A==
 
+vue-demi@^0.12.5:
+  version "0.12.5"
+  resolved "https://registry.npmjs.org/vue-demi/-/vue-demi-0.12.5.tgz"
+  integrity sha512-BREuTgTYlUr0zw0EZn3hnhC3I6gPWv+Kwh4MCih6QcAeaTlaIX0DwOVN0wHej7hSvDPecz4jygy/idsgKfW58Q==
+
 vue-good-table-next@^0.2.1:
   version "0.2.1"
   resolved "https://registry.npmjs.org/vue-good-table-next/-/vue-good-table-next-0.2.1.tgz"
@@ -1080,7 +1092,7 @@ vue-select@^4.0.0-beta.6:
   resolved "https://registry.npmjs.org/vue-select/-/vue-select-4.0.0-beta.6.tgz"
   integrity sha512-K+zrNBSpwMPhAxYLTCl56gaMrWZGgayoWCLqe5rWwkB8aUbAUh7u6sXjIR7v4ckp2WKC7zEEUY27g6h1MRsIHw==
 
-"vue@^2.5.0 || ^3.0.0", "vue@^2.6.14 || ^3.2.0", vue@^3.0.0, "vue@^3.0.0-0 || ^2.6.0", vue@^3.0.1, vue@^3.0.5, vue@^3.2.0, vue@^3.2.25, vue@^3.2.41, vue@^3.2.45, vue@>=3.2.0, vue@3.2.47, vue@3.x:
+"vue@^2.0.0 || >=3.0.0", "vue@^2.5.0 || ^3.0.0", "vue@^2.6.14 || ^3.2.0", vue@^3.0.0, "vue@^3.0.0-0 || ^2.6.0", vue@^3.0.1, vue@^3.0.5, vue@^3.2.0, vue@^3.2.25, vue@^3.2.41, vue@^3.2.45, vue@>=3.2.0, vue@3.2.47, vue@3.x:
   version "3.2.47"
   resolved "https://registry.npmjs.org/vue/-/vue-3.2.47.tgz"
   integrity sha512-60188y/9Dc9WVrAZeUVSDxRQOZ+z+y5nO2ts9jWXSTkMvayiWxCWOWtBQoYjLeccfXkiiPZWAHcV+WTPhkqJHQ==

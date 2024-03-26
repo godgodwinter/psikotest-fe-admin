@@ -20,6 +20,9 @@ import "@vuepic/vue-datepicker/dist/main.css";
 
 // import { VueSelect } from "vue-select";
 import vSelect from "vue-select";
+import { OhVueIcon, addIcons } from "oh-vue-icons";
+import { FaFlag, RiZhihuFill, IoApps } from "oh-vue-icons/icons";
+addIcons(FaFlag, RiZhihuFill, IoApps);
 
 // style
 
@@ -33,5 +36,6 @@ app.use(VueQueryPlugin);
 app.component("v-select", vSelect);
 app.component("QuillEditor", QuillEditor);
 app.component("VueDatePicker", VueDatePicker);
+app.component("v-icon", OhVueIcon);
 
 app.mount("#app");
