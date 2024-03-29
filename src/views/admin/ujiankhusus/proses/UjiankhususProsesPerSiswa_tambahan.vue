@@ -15,6 +15,7 @@ import ApiUjianKhusus from "@/axios/axiosIst";
 
 import moment from "moment/min/moment-with-locales";
 import localization from "moment/locale/id";
+import { fn_avg_data, fn_deteksi_sq } from "@/lib/IqHelper.js"
 moment.updateLocale("id", localization);
 
 const BASE_URL_CETAK = import.meta.env.VITE_API_URL_CETAK
@@ -38,6 +39,8 @@ const sekolah_id = ref(route.params.sekolah_id)
 const kelas_id = ref(route.params.kelas_id)
 const siswa_id = ref(route.params.siswa_id)
 const data = ref();
+const dataIq = ref();
+const dataForm = ref({});
 const siswa = ref();
 const isLoading = ref(true);
 const isError = ref(false);
@@ -45,30 +48,32 @@ const isError = ref(false);
 const getData = async () => {
     try {
         isLoading.value = true;
-        const response = await Api.get(`/ujiankhusus/proses/sekolah/${sekolah_id.value}/kelas/${kelas_id.value}/siswa/${siswa_id.value}`);
+        const response = await Api.get(`/ist_tambahan/saran/kelas/${kelas_id.value}/siswa/${siswa_id.value}`);
         siswa.value = response.data;
-        if (response.data.ujiankhusus) {
-            const tempData = response.data.ujiankhusus.aspek_detail;
-            data.value = tempData.map(fn_copy_id_for_mongo);
-            //  "umum"; //!umum,minat,kr
-            response.data.ujiankhusus.minatList.tipe = "minat"
-            response.data.ujiankhusus.minatList.desc = "MINAT"
-            data.value.push(response.data.ujiankhusus.minatList)
-
-            response.data.ujiankhusus.krList.tipe = "kr"
-            response.data.ujiankhusus.krList.desc = "KR"
-            data.value.push(response.data.ujiankhusus.krList)
+        if (response.data?.tambahan_saran) {
+            dataForm.value = response.data?.tambahan_saran?.dataTambahan
         }
-        // data.value = response.data.ujiankhusus.aspek_detail;
-        console.log(response.data.ujiankhusus.minatList, data.value);
-        // console.log('====================================');
-        // console.log(data.value[0]?.soal_jml);
-        // console.log('====================================');
+        // console.log(dataForm.value);
         isLoading.value = false;
+        getData_Iq()
         return response.data;
     } catch (error) {
         isLoading.value = false;
         isError.value = true;
+        console.error(error);
+    }
+};
+
+const getData_Iq = async () => {
+    try {
+        isLoading.value = true;
+        const response = await Api.get(`/ist/8km/kelas/${kelas_id.value}/v3/gabungan/siswa/${siswa_id.value}`);
+        dataIq.value = response.data;
+        isLoading.value = false;
+        // return response.data;
+    } catch (error) {
+        isLoading.value = false;
+        // isError.value = true;
         console.error(error);
     }
 };
@@ -147,183 +152,23 @@ const doRefreshData = () => {
     getData();
 }
 
-const doResetSalah = async (proses_detail_id,) => {
-    if (confirm("Apakah anda yakin mereset jawban salah dan waktu data ini?")) {
-
-        try {
-            const response = await Api.post(`/ujiankhusus/proses/sekolah/${sekolah_id.value}/kelas/${kelas_id.value}/siswa/${siswa_id.value}/reset/${proses_detail_id}/salah`);
-            Toast.babeng("Berhasil", 'Reset Salah berhasil!');
-            getData();
-            return true;
-        } catch (error) {
-            console.error(error);
-        }
-    }
-}
-const doResetWaktu = async (proses_detail_id,) => {
-    if (confirm("Apakah anda yakin mereset jawban salah dan waktu data ini?")) {
-
-        try {
-            const response = await Api.post(`/ujiankhusus/proses/sekolah/${sekolah_id.value}/kelas/${kelas_id.value}/siswa/${siswa_id.value}/reset/${proses_detail_id}/waktu`);
-            Toast.babeng("Berhasil", 'Reset Waktu berhasil!');
-            getData();
-            return true;
-        } catch (error) {
-            console.error(error);
-        }
-    }
-}
-const doForceFinish = async (proses_detail_id,) => {
-    if (confirm("Apakah anda yakin mereset jawban salah dan waktu data ini?")) {
-
-        try {
-            const response = await Api.post(`/ujiankhusus/proses/sekolah/${sekolah_id.value}/kelas/${kelas_id.value}/siswa/${siswa_id.value}/reset/${proses_detail_id}/forceFinish`);
-            Toast.babeng("Berhasil", 'Reset Waktu berhasil!');
-            getData();
-            return true;
-        } catch (error) {
-            console.error(error);
-        }
-    }
-}
-const doResetAll = async (proses_detail_id,) => {
-    if (confirm("Apakah anda yakin mereset jawban salah dan waktu data ini?")) {
-
-        try {
-            const response = await Api.post(`/ujiankhusus/proses/sekolah/${sekolah_id.value}/kelas/${kelas_id.value}/siswa/${siswa_id.value}/reset/${proses_detail_id}/semua`);
-            Toast.babeng("Berhasil", 'Reset Waktu dan Semua jawaban berhasil dilakukan!');
-            getData();
-            return true;
-        } catch (error) {
-            console.error(error);
-        }
-    }
-}
-
-const minat_doResetWaktu = async (proses_detail_id,) => {
-    if (confirm("Apakah anda yakin mereset jawban salah dan waktu data ini?")) {
-
-        try {
-            const response = await Api.post(`/ujiankhusus/proses/sekolah/${sekolah_id.value}/kelas/${kelas_id.value}/siswa/${siswa_id.value}/minat/reset/waktu`);
-            Toast.babeng("Berhasil", 'Reset Waktu Minat berhasil!');
-            getData();
-            return true;
-        } catch (error) {
-            console.error(error);
-        }
-    }
-}
-const minat_doForceFinish = async (proses_detail_id,) => {
-    if (confirm("Apakah anda yakin mereset jawban salah dan waktu data ini?")) {
-
-        try {
-            const response = await Api.post(`/ujiankhusus/proses/sekolah/${sekolah_id.value}/kelas/${kelas_id.value}/siswa/${siswa_id.value}/minat/reset/forceFinish`);
-            Toast.babeng("Berhasil", 'Reset Waktu Minat berhasil!');
-            getData();
-            return true;
-        } catch (error) {
-            console.error(error);
-        }
-    }
-}
-const minat_doResetAll = async (proses_detail_id,) => {
-    if (confirm("Apakah anda yakin mereset jawban salah dan waktu data ini?")) {
-
-        try {
-            const response = await Api.post(`/ujiankhusus/proses/sekolah/${sekolah_id.value}/kelas/${kelas_id.value}/siswa/${siswa_id.value}/minat/reset/all`);
-            Toast.babeng("Berhasil", 'Reset All Minat berhasil!');
-            getData();
-            return true;
-        } catch (error) {
-            console.error(error);
-        }
-    }
-}
-
-const kr_doResetWaktu = async (proses_detail_id,) => {
-    if (confirm("Apakah anda yakin mereset jawban salah dan waktu data ini?")) {
-
-        try {
-            const response = await Api.post(`/ujiankhusus/proses/sekolah/${sekolah_id.value}/kelas/${kelas_id.value}/siswa/${siswa_id.value}/kr/reset/waktu`);
-            Toast.babeng("Berhasil", 'Reset Waktu kr berhasil!');
-            getData();
-            return true;
-        } catch (error) {
-            console.error(error);
-        }
-    }
-}
-const kr_doForceFinish = async (proses_detail_id,) => {
-    if (confirm("Apakah anda yakin mereset jawban salah dan waktu data ini?")) {
-
-        try {
-            const response = await Api.post(`/ujiankhusus/proses/sekolah/${sekolah_id.value}/kelas/${kelas_id.value}/siswa/${siswa_id.value}/kr/reset/forceFinish`);
-            Toast.babeng("Berhasil", 'Reset Waktu kr berhasil!');
-            getData();
-            return true;
-        } catch (error) {
-            console.error(error);
-        }
-    }
-}
-
-const kr_doResetSalah = async (proses_detail_id,) => {
-    if (confirm("Apakah anda yakin mereset jawban salah dan waktu data ini?")) {
-
-        try {
-            const response = await Api.post(`/ujiankhusus/proses/sekolah/${sekolah_id.value}/kelas/${kelas_id.value}/siswa/${siswa_id.value}/kr/reset/salah`);
-            Toast.babeng("Berhasil", 'Reset Salah kr berhasil!');
-            getData();
-            return true;
-        } catch (error) {
-            console.error(error);
-        }
-    }
-}
-
-const kr_doResetAll = async (proses_detail_id,) => {
-    if (confirm("Apakah anda yakin mereset jawban salah dan waktu data ini?")) {
-
-        try {
-            const response = await Api.post(`/ujiankhusus/proses/sekolah/${sekolah_id.value}/kelas/${kelas_id.value}/siswa/${siswa_id.value}/kr/reset/all`);
-            Toast.babeng("Berhasil", 'Reset All kr berhasil!');
-            getData();
-            return true;
-        } catch (error) {
-            console.error(error);
-        }
-    }
-}
-const dataForm = ref({
-    desc: null,
-    revisi_nilai: 0,
-});
-
-const getDataDetail = async () => {
-    try {
-        const response = await ApiUjianKhusus.get(`ujiankhusus/banksoal/aspek/${aspek_id.value}`);
-        dataForm.value = response.data;
-        dataForm.value.status = response.data.status == "Aktif" ? true : false;
-        return response.data;
-    } catch (error) {
-        console.error(error);
-    }
-};
-getDataDetail();
-const onRevisi = async (desc, skor_jml, revisi_nilai) => {
-    dataForm.value.desc = desc;
-    dataForm.value.skor_jml = skor_jml;
-    dataForm.value.revisi_nilai = revisi_nilai || skor_jml;
-}
 const onSubmit = async (values) => {
     let dataFormSend = {
-        desc: dataForm.value.desc,
-        revisi_nilai: dataForm.value.revisi_nilai,
+        kesimpulan_saran_tambahan: dataForm.value.kesimpulan_saran_tambahan,
+        studi_1: dataForm.value.studi_1,
+        jurusan_1: dataForm.value.jurusan_1,
+        studi_2: dataForm.value.studi_2,
+        jurusan_2: dataForm.value.jurusan_2,
+        fakultas_1: dataForm.value.fakultas_1,
+        prodi_1: dataForm.value.prodi_1,
+        fakultas_2: dataForm.value.fakultas_2,
+        prodi_2: dataForm.value.prodi_2,
     };
+    // console.log(values, dataFormSend);
     try {
-        const response = await ApiUjianKhusus.post(`ujiankhusus/revisi/sekolah/${sekolah_id.value}/kelas/${kelas_id.value}/siswa/${siswa_id.value}`, dataFormSend);
+        const response = await ApiUjianKhusus.put(`ist_tambahan/saran/kelas/${kelas_id.value}/siswa/${siswa_id.value}`, dataFormSend);
         // console.log(response);
-        Toast.success("Info", "Data berhasil diupdate!");
+        Toast.success("Info", "Data berhasil disimpan!");
         // router.push({ name: "admin-ujiankhusus-banksoal-aspek" });
         // return true;
         getData()
@@ -405,154 +250,182 @@ const onSubmit = async (values) => {
                             </div>
                         </div>
                         <div class="grid-cols-1   md:col-span-2">
-                            <div class=" shadow rounded-lg p-1  ">
-                                <div class="grid grid-cols-2 gap-2">
-                                    <div class="grid-cols-1 md:col-span-2">
-                                        <label class="form-control">
-                                            <div class="label">
-                                                <span class="label-text">Tambahan Kesimpulan -> utk semua jenjang</span>
-                                            </div>
-                                            <textarea class="textarea textarea-bordered h-24" placeholder=""></textarea>
-                                            <div class="label">
-                                                <!-- <span class="label-text-alt">Your bio</span> -->
-                                            </div>
-                                        </label>
-                                    </div>
-                                    <div class="grid-cols-1">
-                                        <label class="form-control w-full max-w-xs">
-                                            <div class="label">
-                                                <span class="label-text">studi_1 -> kelas 9</span>
-                                            </div>
-                                            <input type="text" placeholder=""
-                                                class="input input-bordered w-full max-w-xs" />
-                                            <div class="label">
-                                                <!-- <span class="label-text-alt">Bottom Left label</span> -->
-                                            </div>
-                                        </label>
-                                    </div>
-                                    <div class="grid-cols-1">
-                                        <label class="form-control w-full max-w-xs">
-                                            <div class="label">
-                                                <span class="label-text">jurusan_1 -> kelas 9</span>
-                                            </div>
-                                            <input type="text" placeholder=""
-                                                class="input input-bordered w-full max-w-xs" />
-                                            <div class="label">
-                                                <!-- <span class="label-text-alt">Bottom Left label</span> -->
-                                            </div>
-                                        </label>
-                                    </div>
+                            <Form v-slot="{ errors }" @submit="onSubmit">
+                                <div class=" shadow rounded-lg p-1  ">
+                                    <div class="grid grid-cols-2 gap-2">
+                                        <div class="grid-cols-1 md:col-span-2">
+                                            <label class="form-control">
+                                                <div class="label">
+                                                    <span class="label-text">Tambahan Kesimpulan -> utk semua
+                                                        jenjang</span>
+                                                </div>
+                                                <textarea v-model="dataForm.kesimpulan_saran_tambahan"
+                                                    class="textarea textarea-bordered h-24" placeholder=""></textarea>
+                                                <div class="label">
+                                                    <!-- <span class="label-text-alt">Your bio</span> -->
+                                                </div>
+                                            </label>
+                                        </div>
+                                        <div class="grid-cols-1">
+                                            <label class="form-control w-full max-w-xs">
+                                                <div class="label">
+                                                    <span class="label-text">studi_1 -> kelas 9</span>
+                                                </div>
+                                                <Field v-model="dataForm.studi_1" name="studi_1" type="string"
+                                                    class="input input-bordered w-full max-w-xs" />
+                                                <div class="label">
+                                                    <!-- <span class="label-text-alt">Bottom Left label</span> -->
+                                                </div>
+                                            </label>
+                                        </div>
+                                        <div class="grid-cols-1">
+                                            <label class="form-control w-full max-w-xs">
+                                                <div class="label">
+                                                    <span class="label-text">jurusan_1 -> kelas 9</span>
+                                                </div>
 
-                                    <div class="grid-cols-1">
-                                        <label class="form-control w-full max-w-xs">
-                                            <div class="label">
-                                                <span class="label-text">studi_2 -> kelas 9</span>
-                                            </div>
-                                            <input type="text" placeholder=""
-                                                class="input input-bordered w-full max-w-xs" />
-                                            <div class="label">
-                                                <!-- <span class="label-text-alt">Bottom Left label</span> -->
-                                            </div>
-                                        </label>
-                                    </div>
-                                    <div class="grid-cols-1">
-                                        <label class="form-control w-full max-w-xs">
-                                            <div class="label">
-                                                <span class="label-text">jurusan_2 -> kelas 9</span>
-                                            </div>
-                                            <input type="text" placeholder=""
-                                                class="input input-bordered w-full max-w-xs" />
-                                            <div class="label">
-                                                <!-- <span class="label-text-alt">Bottom Left label</span> -->
-                                            </div>
-                                        </label>
-                                    </div>
+                                                <Field v-model="dataForm.jurusan_1" name="jurusan_1" type="string"
+                                                    class="input input-bordered w-full max-w-xs" />
+                                                <div class="label">
+                                                    <!-- <span class="label-text-alt">Bottom Left label</span> -->
+                                                </div>
+                                            </label>
+                                        </div>
 
+                                        <div class="grid-cols-1">
+                                            <label class="form-control w-full max-w-xs">
+                                                <div class="label">
+                                                    <span class="label-text">studi_2 -> kelas 9</span>
+                                                </div>
 
-                                    <div class="grid-cols-1">
-                                        <label class="form-control w-full max-w-xs">
-                                            <div class="label">
-                                                <span class="label-text">fakultas_1 -> kelas 10,11,12, umum</span>
-                                            </div>
-                                            <input type="text" placeholder=""
-                                                class="input input-bordered w-full max-w-xs" />
-                                            <div class="label">
-                                                <!-- <span class="label-text-alt">Bottom Left label</span> -->
-                                            </div>
-                                        </label>
-                                    </div>
-                                    <div class="grid-cols-1">
-                                        <label class="form-control w-full max-w-xs">
-                                            <div class="label">
-                                                <span class="label-text"> prodi_1 -> kelas 10,11,12, umum</span>
-                                            </div>
-                                            <input type="text" placeholder=""
-                                                class="input input-bordered w-full max-w-xs" />
-                                            <div class="label">
-                                                <!-- <span class="label-text-alt">Bottom Left label</span> -->
-                                            </div>
-                                        </label>
-                                    </div>
+                                                <Field v-model="dataForm.studi_2" name="studi_2" type="string"
+                                                    class="input input-bordered w-full max-w-xs" />
+                                                <div class="label">
+                                                    <!-- <span class="label-text-alt">Bottom Left label</span> -->
+                                                </div>
+                                            </label>
+                                        </div>
+                                        <div class="grid-cols-1">
+                                            <label class="form-control w-full max-w-xs">
+                                                <div class="label">
+                                                    <span class="label-text">jurusan_2 -> kelas 9</span>
+                                                </div>
+                                                <Field v-model="dataForm.jurusan_2" name="jurusan_2" type="string"
+                                                    class="input input-bordered w-full max-w-xs" />
+                                                <div class="label">
+                                                    <!-- <span class="label-text-alt">Bottom Left label</span> -->
+                                                </div>
+                                            </label>
+                                        </div>
 
 
-                                    <div class="grid-cols-1">
-                                        <label class="form-control w-full max-w-xs">
-                                            <div class="label">
-                                                <span class="label-text">fakultas_2 -> kelas 10,11,12, umum</span>
-                                            </div>
-                                            <input type="text" placeholder=""
-                                                class="input input-bordered w-full max-w-xs" />
-                                            <div class="label">
-                                                <!-- <span class="label-text-alt">Bottom Left label</span> -->
-                                            </div>
-                                        </label>
-                                    </div>
-                                    <div class="grid-cols-1">
-                                        <label class="form-control w-full max-w-xs">
-                                            <div class="label">
-                                                <span class="label-text"> prodi_2 -> kelas 10,11,12, umum</span>
-                                            </div>
-                                            <input type="text" placeholder=""
-                                                class="input input-bordered w-full max-w-xs" />
-                                            <div class="label">
-                                                <!-- <span class="label-text-alt">Bottom Left label</span> -->
-                                            </div>
-                                        </label>
-                                    </div>
+                                        <div class="grid-cols-1">
+                                            <label class="form-control w-full max-w-xs">
+                                                <div class="label">
+                                                    <span class="label-text">fakultas_1 -> kelas 10,11,12, umum</span>
+                                                </div>
+                                                <Field v-model="dataForm.fakultas_1" name="fakultas_1" type="string"
+                                                    class="input input-bordered w-full max-w-xs" />
+                                                <div class="label">
+                                                    <!-- <span class="label-text-alt">Bottom Left label</span> -->
+                                                </div>
+                                            </label>
+                                        </div>
+                                        <div class="grid-cols-1">
+                                            <label class="form-control w-full max-w-xs">
+                                                <div class="label">
+                                                    <span class="label-text"> prodi_1 -> kelas 10,11,12, umum</span>
+                                                </div>
+                                                <Field v-model="dataForm.prodi_1" name="prodi_1" type="string"
+                                                    class="input input-bordered w-full max-w-xs" />
+                                                <div class="label">
+                                                    <!-- <span class="label-text-alt">Bottom Left label</span> -->
+                                                </div>
+                                            </label>
+                                        </div>
 
 
+                                        <div class="grid-cols-1">
+                                            <label class="form-control w-full max-w-xs">
+                                                <div class="label">
+                                                    <span class="label-text">fakultas_2 -> kelas 10,11,12, umum</span>
+                                                </div>
+                                                <Field v-model="dataForm.fakultas_2" name="fakultas_2" type="string"
+                                                    class="input input-bordered w-full max-w-xs" />
+                                                <div class="label">
+                                                    <!-- <span class="label-text-alt">Bottom Left label</span> -->
+                                                </div>
+                                            </label>
+                                        </div>
+                                        <div class="grid-cols-1">
+                                            <label class="form-control w-full max-w-xs">
+                                                <div class="label">
+                                                    <span class="label-text"> prodi_2 -> kelas 10,11,12, umum</span>
+                                                </div>
+                                                <Field v-model="dataForm.prodi_2" name="prodi_2" type="string"
+                                                    class="input input-bordered w-full max-w-xs" />
+                                                <div class="label">
+                                                    <!-- <span class="label-text-alt">Bottom Left label</span> -->
+                                                </div>
+                                            </label>
+                                        </div>
+
+
+                                    </div>
+                                    <div class="w-full flex justify-end py-10 px-10 gap-4">
+                                        <span @click="router.go(-1)">
+                                            <span class="btn btn-secondary">Batal</span></span>
+                                        <button class="btn btn-primary">Simpan</button>
+                                    </div>
                                 </div>
+                            </Form>
 
-                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="md:py-2 px-1 lg:flex flex-wrap gap-4">
-                    <div class="w-full grid grid-cols-1 lg:grid-cols-3 space-x-4 space-y-2">
-                        <div class=" shadow rounded-lg p-1 grid-cols-1">
+                <div class="md:py-2 px-1 lg:flex flex-wrap gap-4" v-if="dataIq">
+                    <div class="w-full  lg:grid-cols-3 space-x-4 space-y-2">
+                        <div class=" shadow rounded-lg p-1 ">
                             <div class="overflow-x-auto">
                                 <table class="table table-compact">
                                     <tbody>
                                         <tr>
                                             <td class="whitespace-nowrap w-1/12">IQ IST</td>
                                             <td class="whitespace-nowrap w-1/12">:</td>
-                                            <td class="whitespace-nowrap w-10/12">
+                                            <td class="whitespace-nowrap w-10/12"> {{
+                        dataIq?.fn_get_data_ist?.ist.iq_val }}
+                                                <!-- {{
+                        dataIq?.fn_get_data_ist?.ist.iq_ket }} -->
                                             </td>
                                         </tr>
                                         <tr>
                                             <td>IQ 8KM</td>
                                             <td>:</td>
-                                            <td></td>
+                                            <td>{{ dataIq?.data_8km.iq }}</td>
                                         </tr>
                                         <tr>
-                                            <td>SQ</td>
+                                            <td>EQ</td>
                                             <td>:</td>
-                                            <td></td>
+                                            <td>{{ Math.round(
+                        fn_avg_data(
+                            fn_deteksi_sq(
+                                dataIq.fn_get_hspq_sq?.deteksi_untuk_cetak_sqscqeq,
+                                "eq"
+                            )
+                        )
+                    ) }}</td>
                                         </tr>
                                         <tr>
                                             <td>ScQ</td>
                                             <td>:</td>
-                                            <td></td>
+                                            <td>{{ Math.round(
+                        fn_avg_data(
+                            fn_deteksi_sq(
+                                dataIq.fn_get_hspq_sq?.deteksi_untuk_cetak_sqscqeq,
+                                                "scq"
+                                                )
+                                                )
+                                                )}}</td>
                                         </tr>
                                     </tbody>
                                 </table>
