@@ -406,26 +406,28 @@ const onSubmit = async (values) => {
                                         <tr>
                                             <td>EQ</td>
                                             <td>:</td>
-                                            <td>{{ Math.round(
+                                            <td>
+                                                <span v-if="dataIq.fn_get_hspq_sq">{{ Math.round(
                         fn_avg_data(
                             fn_deteksi_sq(
                                 dataIq.fn_get_hspq_sq?.deteksi_untuk_cetak_sqscqeq,
                                 "eq"
                             )
                         )
-                    ) }}</td>
+                    ) }}</span>
+                                            </td>
                                         </tr>
                                         <tr>
                                             <td>ScQ</td>
                                             <td>:</td>
-                                            <td>{{ Math.round(
+                                            <td><span v-if="dataIq.fn_get_hspq_sq">{{ Math.round(
                         fn_avg_data(
                             fn_deteksi_sq(
-                                dataIq.fn_get_hspq_sq?.deteksi_untuk_cetak_sqscqeq,
-                                                "scq"
-                                                )
-                                                )
-                                                )}}</td>
+                                                    dataIq.fn_get_hspq_sq?.deteksi_untuk_cetak_sqscqeq,
+                                                    "scq"
+                                                    )
+                                                    )
+                                                    )}}</span></td>
                                         </tr>
                                     </tbody>
                                 </table>
