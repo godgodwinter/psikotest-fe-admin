@@ -646,7 +646,7 @@ const formatTanggal = "DD MMMM YYYY HH:mm:ss";
                     </div>
                 </div> -->
 
-                <div class="w-1/2 flex  space-x-2">
+                <div class="w-1/2 md:flex  space-x-2 space-y-2 md:space-y-0">
                     <div>
                         <VueDatePicker v-model="dataForm.tgl_batas_mulai"></VueDatePicker>
                     </div>

@@ -134,6 +134,9 @@ function populateGrid(workbook) {
         AV: 'citacita_1',
         AW: 'citacita_2',
         AX: 'citacita_3',
+        AY: 'iq_ist',
+        AZ: 'iq_8km',
+        BA: 'tgllahir',
     };
 
     var rowData = [];
@@ -225,7 +228,11 @@ const columns = [
         field: "nama",
         type: "String",
     },
-    
+    {
+        label: "tgllahir",
+        field: "tgllahir",
+        type: "String",
+    },
     {
         label: "umur",
         field: "umur",
@@ -627,7 +634,7 @@ const doStore = async () => {
                 </div>
             </div>
         </div>
-        <div class="space-x-2">
+        <div class="space-x-2 py-1 space-y-2">
             <input name="fileUpload" @change="onChangefileUpload($event)" type="file"
                 class="file-input file-input-bordered file-input-info w-full max-w-xs" />
             <!-- <button @click="doPeriksaDariApiWebUjianLama()" class="btn btn-sm btn-primary">
@@ -666,17 +673,17 @@ const doStore = async () => {
                 <div class="bg-white shadow rounded-lg px-4 py-4 ">
                     <div v-if="dataExcel">
                         <vue-good-table :line-numbers="true" :columns="columns" :rows="dataExcel" :search-options="{
-                            enabled: true,
-                        }" :pagination-options="{
-    enabled: true,
-    perPageDropdown: [100, 200, 500],
-}" styleClass="vgt-table striped bordered condensed" class="py-0">
+                    enabled: true,
+                }" :pagination-options="{
+                    enabled: true,
+                    perPageDropdown: [100, 200, 500],
+                }" styleClass="vgt-table striped bordered condensed" class="py-0">
                             <template #table-row="props">
                                 <span v-if="props.column.field == 'actions'">
                                     <div class="text-sm font-medium text-center flex justify-center space-x-1">
                                         <button class="btn btn-sm btn-warning" @click="
-                                            doDelete(props.index, props.row.nama)
-                                            ">
+                    doDelete(props.index, props.row.nama)
+                    ">
                                             Delete
                                         </button>
                                     </div>
@@ -685,23 +692,25 @@ const doStore = async () => {
                                 <span v-else-if="props.column.field == 'tgl_import'">
                                     <div class="text-center">
                                         {{
-                                            props.row.tgl_import ? moment(props.row.tgl_import).format("DD MMMM YYYY") : null
-                                        }}
+                    props.row.tgl_import ? moment(props.row.tgl_import).format("DD MMMM YYYY") :
+                        null
+                }}
                                     </div>
                                 </span>
                                 <span v-else-if="props.column.field == 'data_sertifikat'">
                                     <div class="text-center">
                                         {{
-                                            props.row.data_sertifikat ? 'Ada' : "-"
-                                        }}
-                                        <button class="btn btn-sm btn-info" @click="fnPeriksaDataSertifikat(props.index)"
+                    props.row.data_sertifikat ? 'Ada' : "-"
+                }}
+                                        <button class="btn btn-sm btn-info"
+                                            @click="fnPeriksaDataSertifikat(props.index)"
                                             v-if="props.row.data_sertifikat">Periksa</button>
                                     </div>
                                 </span>
                                 <span v-else-if="props.column.field == 'data_deteksi'">
                                     <div class="text-center">
                                         {{
-                                            props.row.data_deteksi ? "Ada" : "-"
+                    props.row.data_deteksi ? "Ada" : "-"
                                         }}
                                         <button class="btn btn-sm btn-info" @click="fnPeriksaDataDeteksi(props.index)"
                                             v-if="props.row.data_deteksi">Periksa</button>
