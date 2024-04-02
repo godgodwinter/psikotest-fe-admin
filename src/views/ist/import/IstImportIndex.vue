@@ -647,6 +647,17 @@ const doStore = async () => {
                 Reset
             </button>
         </div>
+        <div>
+            <span>
+                <p class="text-xs font-semibold text-red-600">- Jika Nama , Nomer Induk dan Kelas Sama maka data JK dan
+                    tgl lahir akan di update</p>
+                <p class="text-xs font-semibold text-red-600">- Jika tgllahir diisi maka field Umur tidak digunakan
+                    (otomatis Menghitung dari tgl lahir)</p>
+
+                <p class="text-xs font-semibold text-red-600">- Kosongkan field tgl lahir jika menggunakan field umur
+                </p>
+            </span>
+        </div>
         <!-- <div class="w-full flex flex-wrap justify-center">
             <div class="w-1/2 flex justify-center gap-10">
                 <div>
