@@ -9,6 +9,7 @@ import { useRouter, useRoute } from "vue-router";
 import Toast from "@/components/lib/Toast";
 import { useAdminPagesStore } from '@/stores/admin/adminPagesStore'
 
+import useClipboard from 'vue-clipboard3'
 import moment from "moment/min/moment-with-locales";
 import localization from "moment/locale/id";
 moment.updateLocale("id", localization);
@@ -118,7 +119,7 @@ const columns = [
         field: "created_at",
         type: "String",
     },
-    
+
     {
         label: "Batas Tanggal Ujian",
         field: "tgl_ujian",
@@ -208,14 +209,30 @@ const unsecuredCopyToClipboard = (text) => { const textArea = document.createEle
  * Check if using HTTPS and navigator.clipboard is available
  * Then uses standard clipboard API, otherwise uses fallback
 */
-const doCopyClipboard = (content) => {
-    // if (window.isSecureContext && navigator.clipboard) {
-    //     navigator.clipboard.writeText(content);
-    //     Toast.babeng("Info 2", `${content} berhasil disalin`);
-    // } else {
-    unsecuredCopyToClipboard(content);
-    Toast.babeng("Info 2", `${content} berhasil disalin`);
-    // }
+// const doCopyClipboard = (content) => {
+//     // if (window.isSecureContext && navigator.clipboard) {
+//     //     navigator.clipboard.writeText(content);
+//     //     Toast.babeng("Info 2", `${content} berhasil disalin`);
+//     // } else {
+//     unsecuredCopyToClipboard(content);
+//     Toast.babeng("Info 2", `${content} berhasil disalin`);
+//     // }
+// };
+
+
+const { toClipboard } = useClipboard()
+const doCopyClipboard = async (item) => {
+    try {
+        await toClipboard(item)
+        Toast.babeng("Info", `${item} berhasil disalin`);
+        console.log('Copied to clipboard')
+    } catch (e) {
+
+        Toast.babeng("Error", `${item} Gagal disalin`);
+        console.error(e)
+    }
+    // navigator.clipboard.writeText(item);
+    // Toast.babeng("Info", `${item} berhasil disalin`);
 };
 
 
@@ -543,7 +560,7 @@ const doCetakReact = (ttd) => {
         `${VITE_API_FE_REACT}lintasstudi/v1/a/data/cetak/${getSekolahAktif.value.kelas_id}/${ttd}`
     );
 }
-const doCetakReactV2 = (ttd="true") => {
+const doCetakReactV2 = (ttd = "true") => {
     window.open(
         `${VITE_API_FE_REACT}lintasstudi/v2/cetak/${getSekolahAktif.value.kelas_id}/${ttd}`
     );
@@ -682,7 +699,7 @@ const doCetakReactV2 = (ttd="true") => {
                         </svg>
                     </button>
                 </div> -->
-                
+
                 <div class="space-x-2 space-y-2 shadow-sm py-1">
                     <button class="btn btn-sm btn-success tooltip" data-tip="CETAK HASIL REACT V2"
                         @click="doCetakReactV2()">
@@ -708,17 +725,17 @@ const doCetakReactV2 = (ttd="true") => {
                         <div class="bg-white shadow rounded-lg px-4 py-4">
                             <div v-if="data">
                                 <vue-good-table :line-numbers="true" :columns="columns" :rows="data" :search-options="{
-                                    enabled: true,
-                                }" :pagination-options="{
-    enabled: true,
-    perPageDropdown: [50, 100, 150, 200],
-}" styleClass="vgt-table striped bordered condensed" class="py-0">
+        enabled: true,
+    }" :pagination-options="{
+        enabled: true,
+        perPageDropdown: [50, 100, 150, 200],
+    }" styleClass="vgt-table striped bordered condensed" class="py-0">
                                     <template #table-actions>
                                         <div class="space-x-1 space-y-1 gap-1">
                                             <button class="btn btn-sm btn-secondary tooltip" data-tip="Refresh Data"
                                                 @click="getData()">
-                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20"
-                                                    fill="currentColor">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5"
+                                                    viewBox="0 0 20 20" fill="currentColor">
                                                     <path fill-rule="evenodd"
                                                         d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z"
                                                         clip-rule="evenodd" />
@@ -729,19 +746,23 @@ const doCetakReactV2 = (ttd="true") => {
                                     <template #table-row="props">
                                         <span v-if="props.column.field == 'actions'">
                                             <div class="text-sm font-medium text-center flex justify-center space-x-1">
-                                                <button class="btn btn-sm btn-danger tooltip" data-tip="Caching UJIANSTUDI"
+                                                <button class="btn btn-sm btn-danger tooltip"
+                                                    data-tip="Caching UJIANSTUDI"
                                                     @click="doCachingRedisPerSiswa(props.row.id)">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                                        stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                        viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                                                        class="w-6 h-6">
                                                         <path stroke-linecap="round" stroke-linejoin="round"
                                                             d="M9 8.25H7.5a2.25 2.25 0 00-2.25 2.25v9a2.25 2.25 0 002.25 2.25h9a2.25 2.25 0 002.25-2.25v-9a2.25 2.25 0 00-2.25-2.25H15M9 12l3 3m0 0l3-3m-3 3V2.25" />
                                                     </svg>
 
                                                 </button>
                                                 <button class="btn btn-sm btn-warning tooltip"
-                                                    data-tip="Generate UJIANSTUDI" @click="doGenerateSiswa(props.row.id)">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                                        stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                                    data-tip="Generate UJIANSTUDI"
+                                                    @click="doGenerateSiswa(props.row.id)">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                        viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                                                        class="w-6 h-6">
                                                         <path stroke-linecap="round" stroke-linejoin="round"
                                                             d="M3 7.5L7.5 3m0 0L12 7.5M7.5 3v13.5m13.5 0L16.5 21m0 0L12 16.5m4.5 4.5V7.5" />
                                                     </svg>
@@ -751,17 +772,20 @@ const doCetakReactV2 = (ttd="true") => {
                                                 <RouterLink
                                                     :to="{ name: 'admin-sekolah-submenu-ujianstudi-persiswa', params: { sekolah_id, kelas_id, siswa_id: props.row.id } }">
                                                     <button class="btn btn-sm btn-primary tooltip" data-tip="Detail">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
-                                                            viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5"
+                                                            fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                                                            stroke-width="2">
                                                             <path stroke-linecap="round" stroke-linejoin="round"
                                                                 d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
                                                         </svg></button>
                                                 </RouterLink>
-                                                <button class="btn btn-sm btn-error tooltip" data-tip="Delete Ujianstudi"
+                                                <button class="btn btn-sm btn-error tooltip"
+                                                    data-tip="Delete Ujianstudi"
                                                     @click="doDeleteProsesSiswa(props.row.id, props.row.proses_id)"
                                                     v-if="props.row.paketsoal_nama">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                                        stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                        viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                                                        class="w-6 h-6">
                                                         <path stroke-linecap="round" stroke-linejoin="round"
                                                             d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
                                                     </svg>
@@ -775,18 +799,22 @@ const doCetakReactV2 = (ttd="true") => {
                                             <span v-if="props.row.hasil" class="gap-1 space-x-0 space-y-1">
                                                 <RouterLink
                                                     :to="{ name: 'admin-sekolah-submenu-ujianstudi-persiswa', params: { sekolah_id, kelas_id, siswa_id: props.row.id } }">
-                                                    <button class="btn btn-sm btn-success tooltip" data-tip="Lihat Hasil">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
-                                                            viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                                    <button class="btn btn-sm btn-success tooltip"
+                                                        data-tip="Lihat Hasil">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5"
+                                                            fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                                                            stroke-width="2">
                                                             <path stroke-linecap="round" stroke-linejoin="round"
                                                                 d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
                                                         </svg></button>
                                                 </RouterLink>
-                                                <button class="btn btn-sm btn-error tooltip" data-tip="Delete Hasil Ujian"
+                                                <button class="btn btn-sm btn-error tooltip"
+                                                    data-tip="Delete Hasil Ujian"
                                                     @click="doDeleteHasilSiswa(props.row.id, props.row.proses_id)"
                                                     v-if="props.row.paketsoal_nama">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                                        stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                        viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                                                        class="w-6 h-6">
                                                         <path stroke-linecap="round" stroke-linejoin="round"
                                                             d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
                                                     </svg>
@@ -797,8 +825,9 @@ const doCetakReactV2 = (ttd="true") => {
                                                 <button class="btn btn-sm btn-primary tooltip" data-tip="Generate Hasil"
                                                     @click="doGenerateHasilSiswa(props.row.id)"
                                                     v-if="props.row.paketsoal_nama">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                                        stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                        viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                                                        class="w-6 h-6">
                                                         <path stroke-linecap="round" stroke-linejoin="round"
                                                             d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" />
                                                     </svg>
@@ -817,12 +846,13 @@ const doCetakReactV2 = (ttd="true") => {
                                         </span>
                                         <span v-else-if="props.column.field == 'progres_angka'">
                                             {{ props.row.progres?.selesai }}/{{
-                                                props.row.progres?.total }}
+        props.row.progres?.total }}
                                         </span>
                                         <span v-else-if="props.column.field == 'username'">
                                             <div class="flex justify-center gap-2">
                                                 <div class="text-center">{{ props.row.username }}</div>
-                                                <span v-if="props.row.username" @click="doCopyClipboard(props.row.username)"
+                                                <span v-if="props.row.username"
+                                                    @click="doCopyClipboard(props.row.username)"
                                                     class="hover:text-primary cursor-pointer">
                                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
                                                         viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">

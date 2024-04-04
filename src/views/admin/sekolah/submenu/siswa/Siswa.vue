@@ -164,7 +164,7 @@ const doEditData = async (id, index) => {
 const { toClipboard } = useClipboard()
 const doCopyClipboard = async (item) => {
     try {
-        await toClipboard('Any text you like')
+        await toClipboard(item)
         Toast.babeng("Info", `${item} berhasil disalin`);
         console.log('Copied to clipboard')
     } catch (e) {

@@ -11,6 +11,7 @@ import { useRouter, useRoute } from "vue-router";
 import Toast from "@/components/lib/Toast";
 import { useAdminPagesStore } from '@/stores/admin/adminPagesStore'
 
+import useClipboard from 'vue-clipboard3'
 import moment from "moment/min/moment-with-locales";
 import localization from "moment/locale/id";
 moment.updateLocale("id", localization);
@@ -222,14 +223,29 @@ const unsecuredCopyToClipboard = (text) => { const textArea = document.createEle
  * Check if using HTTPS and navigator.clipboard is available
  * Then uses standard clipboard API, otherwise uses fallback
 */
-const doCopyClipboard = (content) => {
-    // if (window.isSecureContext && navigator.clipboard) {
-    //     navigator.clipboard.writeText(content);
-    //     Toast.babeng("Info 2", `${content} berhasil disalin`);
-    // } else {
-    unsecuredCopyToClipboard(content);
-    Toast.babeng("Info 2", `${content} berhasil disalin`);
-    // }
+// const doCopyClipboard = (content) => {
+//     // if (window.isSecureContext && navigator.clipboard) {
+//     //     navigator.clipboard.writeText(content);
+//     //     Toast.babeng("Info 2", `${content} berhasil disalin`);
+//     // } else {
+//     unsecuredCopyToClipboard(content);
+//     Toast.babeng("Info 2", `${content} berhasil disalin`);
+//     // }
+// };
+
+const { toClipboard } = useClipboard()
+const doCopyClipboard = async (item) => {
+    try {
+        await toClipboard('Any text you like')
+        Toast.babeng("Info", `${item} berhasil disalin`);
+        console.log('Copied to clipboard')
+    } catch (e) {
+
+        Toast.babeng("Error", `${item} Gagal disalin`);
+        console.error(e)
+    }
+    // navigator.clipboard.writeText(item);
+    // Toast.babeng("Info", `${item} berhasil disalin`);
 };
 
 
