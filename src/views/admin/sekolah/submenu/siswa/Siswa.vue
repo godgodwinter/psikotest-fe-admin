@@ -8,6 +8,7 @@ import ButtonDelete from "@/components/atoms/ButtonDel.vue";
 import { useRouter, useRoute } from "vue-router";
 import Toast from "@/components/lib/Toast";
 import { useAdminPagesStore } from '@/stores/admin/adminPagesStore'
+import useClipboard from 'vue-clipboard3'
 
 
 const BASE_URL = import.meta.env.VITE_API_URL;
@@ -84,11 +85,11 @@ const columns = [
         field: "nama",
         type: "String",
     },
-    {
-        label: "Kelas",
-        field: "kelas_nama",
-        type: "String",
-    },
+    // {
+    //     label: "Kelas",
+    //     field: "kelas_nama",
+    //     type: "String",
+    // },
     {
         label: "Username",
         field: "username",
@@ -160,9 +161,19 @@ const doEditData = async (id, index) => {
     });
 };
 
-const doCopyClipboard = (item) => {
-    navigator.clipboard.writeText(item);
-    Toast.babeng("Info", `${item} berhasil disalin`);
+const { toClipboard } = useClipboard()
+const doCopyClipboard = async (item) => {
+    try {
+        await toClipboard('Any text you like')
+        Toast.babeng("Info", `${item} berhasil disalin`);
+        console.log('Copied to clipboard')
+    } catch (e) {
+
+        Toast.babeng("Error", `${item} Gagal disalin`);
+        console.error(e)
+    }
+    // navigator.clipboard.writeText(item);
+    // Toast.babeng("Info", `${item} berhasil disalin`);
 };
 const doPilihKelas = async () => {
     let newDataSekolahAktif = {
@@ -217,11 +228,11 @@ const doPilihKelas = async () => {
                     <div class="bg-white shadow rounded-lg px-4 py-4">
                         <div v-if="data">
                             <vue-good-table :line-numbers="true" :columns="columns" :rows="data" :search-options="{
-                                enabled: true,
-                            }" :pagination-options="{
-    enabled: true,
-    perPageDropdown: [50, 100, 150, 200],
-}" styleClass="vgt-table striped bordered condensed" class="py-0">
+                enabled: true,
+            }" :pagination-options="{
+                enabled: true,
+                perPageDropdown: [50, 100, 150, 200],
+            }" styleClass="vgt-table striped bordered condensed" class="py-0">
                                 <template #table-actions>
                                     <div class="space-x-1 space-y-1 gap-1">
                                         <!-- <router-link :to="{
