@@ -236,7 +236,7 @@ const unsecuredCopyToClipboard = (text) => { const textArea = document.createEle
 const { toClipboard } = useClipboard()
 const doCopyClipboard = async (item) => {
     try {
-        await toClipboard('Any text you like')
+        await toClipboard(item)
         Toast.babeng("Info", `${item} berhasil disalin`);
         console.log('Copied to clipboard')
     } catch (e) {
@@ -567,6 +567,25 @@ const doGenerateHasilPerkelas = async (ttd) => {
         }
     }
 }
+const doGenerateHasilPerkelas_false = async (ttd) => {
+    if (confirm("Apakah anda yakin generate Hasil Kelas Ini?")) {
+
+        try {
+            isLoading.value = true;
+            let dataFormSend = {
+                replace: false
+            };
+            const response = await ApiUjianKhusus.post(`/ujiankhusus/hasil/generate/sekolah/${sekolah_id.value}/kelas/${kelas_id.value}`, dataFormSend);
+            Toast.babeng("Berhasil", 'Generate Hasil Ujian telah berhasil!');
+            getData();
+            return true;
+        } catch (error) {
+            isLoading.value = false;
+            isError.value = true;
+            console.error(error);
+        }
+    }
+}
 const doExportExcel = (ttd) => {
     window.open(
         `${VITE_API_FE_REACT}ujiankhusus/v1/export/sekolah/${getSekolahAktif.value.sekolah_id}/kelas/${getSekolahAktif.value.kelas_id}`
@@ -710,6 +729,16 @@ const formatTanggal = "DD MMMM YYYY HH:mm:ss";
                 <div class="space-x-2 space-y-2 shadow-sm py-1">
                     <button class="btn btn-sm btn-warning tooltip" data-tip="Generate Hasil Ujian "
                         @click="doGenerateHasilPerkelas()">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                            stroke="currentColor" class="w-6 h-6">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M15.75 15.75V18m-7.5-6.75h.008v.008H8.25v-.008Zm0 2.25h.008v.008H8.25V13.5Zm0 2.25h.008v.008H8.25v-.008Zm0 2.25h.008v.008H8.25V18Zm2.498-6.75h.007v.008h-.007v-.008Zm0 2.25h.007v.008h-.007V13.5Zm0 2.25h.007v.008h-.007v-.008Zm0 2.25h.007v.008h-.007V18Zm2.504-6.75h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V13.5Zm0 2.25h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V18Zm2.498-6.75h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V13.5ZM8.25 6h7.5v2.25h-7.5V6ZM12 2.25c-1.892 0-3.758.11-5.593.322C5.307 2.7 4.5 3.65 4.5 4.757V19.5a2.25 2.25 0 0 0 2.25 2.25h10.5a2.25 2.25 0 0 0 2.25-2.25V4.757c0-1.108-.806-2.057-1.907-2.185A48.507 48.507 0 0 0 12 2.25Z" />
+                        </svg>
+
+
+                    </button>
+                    <button class="btn btn-sm btn-secondary tooltip" data-tip="Generate Hasil Ujian Tanpa Replace"
+                        @click="doGenerateHasilPerkelas_false()">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor" class="w-6 h-6">
                             <path stroke-linecap="round" stroke-linejoin="round"
