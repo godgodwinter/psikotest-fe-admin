@@ -76,7 +76,7 @@ const onSubmit = async (values) => {
         const response = await ApiUjianKhusus.post(`cfit/banksoal/aspek_detail`, dataForm.value);
         // console.log(response);
         Toast.success("Info", "Data berhasil ditambahkan!");
-        router.push({ name: "admin-ujiankhusus-banksoal-multijawaban-aspek_detail-soal" });
+        router.push({ name: "admin-ujiankhusus-banksoal-multijawaban" });
         return true;
     } catch (error) {
         console.error(error);
