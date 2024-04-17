@@ -68,6 +68,32 @@ const UjianStudiBanksoalRoutes = [
               ),
           },
           // ! ASPEKDETAIL-END
+          // ! SOAL
+          {
+            path: "/pages/admin/ujiankhusus/banksoal/aspek_detail/:aspek_detail_id/soal",
+            name: "admin-ujiankhusus-banksoal-aspek_detail-soal",
+            component: () =>
+              import(
+                "@/views/admin/ujiankhusus/banksoal/UjianKhususBanksoalSoal.vue"
+              ),
+          },
+          {
+            path: "/pages/admin/ujiankhusus/banksoal/aspek_detail/:aspek_detail_id/soal/tambah",
+            name: "admin-ujiankhusus-banksoal-aspek_detail-soal-tambah",
+            component: () =>
+              import(
+                "@/views/admin/ujiankhusus/banksoal/UjianKhususBanksoalSoal_tambah.vue"
+              ),
+          },
+          {
+            path: "/pages/admin/ujiankhusus/banksoal/aspek_detail/:aspek_detail_id/soal/edit/:soal_id",
+            name: "admin-ujiankhusus-banksoal-aspek_detail-soal-edit",
+            component: () =>
+              import(
+                "@/views/admin/ujiankhusus/banksoal/UjianKhususBanksoalSoal_edit.vue"
+              ),
+          },
+          // ! SOAL-END
 
           // ! banksoal minat dan bakat
           {
@@ -211,6 +237,63 @@ const UjianStudiBanksoalRoutes = [
           // !kr-pj-end
           // !kreativitas-end
 
+          // !multijawaban
+          {
+            path: "/pages/admin/ujiankhusus/banksoal/multijawaban",
+            name: "admin-ujiankhusus-banksoal-multijawaban",
+            component: () =>
+              import(
+                "@/views/admin/ujiankhusus/banksoal/multijawaban/UjianKhususBanksoalMultijawaban.vue"
+              ),
+          },
+          {
+            path: "/pages/admin/ujiankhusus/banksoal/multijawaban/tambah",
+            name: "admin-ujiankhusus-banksoal-multijawaban-tambah",
+            component: () =>
+              import(
+                "@/views/admin/ujiankhusus/banksoal/multijawaban/UjianKhususBanksoalMultijawaban_tambah.vue"
+              ),
+          },
+          {
+            path: "/pages/admin/ujiankhusus/banksoal/multijawaban/edit/:multijawaban_id",
+            name: "admin-ujiankhusus-banksoal-multijawaban-edit",
+            component: () =>
+              import(
+                "@/views/admin/ujiankhusus/banksoal/multijawaban/UjianKhususBanksoalMultijawaban_edit.vue"
+              ),
+          },
+          // ! MULTIJAWABAN-SOAL
+          {
+            path: "/pages/admin/ujiankhusus/banksoal/multijawaban/aspek_detail/:aspek_detail_id/soal",
+            name: "admin-ujiankhusus-banksoal-multijawaban-aspek_detail-soal",
+            component: () =>
+              import(
+                "@/views/admin/ujiankhusus/banksoal/multijawaban/soal/BanksoalMultijawabanSoal.vue"
+              ),
+          },
+          {
+            path: "/pages/admin/ujiankhusus/banksoal/multijawaban/aspek_detail/:aspek_detail_id/soal/tambah",
+            name: "admin-ujiankhusus-banksoal-multijawaban-aspek_detail-soal-tambah",
+            component: () =>
+              import(
+                "@/views/admin/ujiankhusus/banksoal/multijawaban/soal/BanksoalMultijawabanSoal_tambah.vue"
+              ),
+          },
+          {
+            path: "/pages/admin/ujiankhusus/banksoal/multijawaban/aspek_detail/:aspek_detail_id/soal/edit/:soal_id",
+            name: "admin-ujiankhusus-banksoal-multijawaban-aspek_detail-soal-edit",
+            component: () =>
+              import(
+                "@/views/admin/ujiankhusus/banksoal/multijawaban/soal/BanksoalMultijawabanSoal_edit.vue"
+              ),
+          },
+          // ! MULTIJAWABAN-SOAL-END
+          // !multijawaban-soal
+
+          // !multijawaban-soal-end
+
+          // !multijawaban
+
           // ! banksoal minat dan bakat-END
 
           // ! banksoal kreatifitas
@@ -239,33 +322,6 @@ const UjianStudiBanksoalRoutes = [
           //     ),
           // },
           // ! banksoal kreatifitas-END
-
-          // ! SOAL
-          {
-            path: "/pages/admin/ujiankhusus/banksoal/aspek_detail/:aspek_detail_id/soal",
-            name: "admin-ujiankhusus-banksoal-aspek_detail-soal",
-            component: () =>
-              import(
-                "@/views/admin/ujiankhusus/banksoal/UjianKhususBanksoalSoal.vue"
-              ),
-          },
-          {
-            path: "/pages/admin/ujiankhusus/banksoal/aspek_detail/:aspek_detail_id/soal/tambah",
-            name: "admin-ujiankhusus-banksoal-aspek_detail-soal-tambah",
-            component: () =>
-              import(
-                "@/views/admin/ujiankhusus/banksoal/UjianKhususBanksoalSoal_tambah.vue"
-              ),
-          },
-          {
-            path: "/pages/admin/ujiankhusus/banksoal/aspek_detail/:aspek_detail_id/soal/edit/:soal_id",
-            name: "admin-ujiankhusus-banksoal-aspek_detail-soal-edit",
-            component: () =>
-              import(
-                "@/views/admin/ujiankhusus/banksoal/UjianKhususBanksoalSoal_edit.vue"
-              ),
-          },
-          // ! SOAL-END
         ],
       },
     ],
