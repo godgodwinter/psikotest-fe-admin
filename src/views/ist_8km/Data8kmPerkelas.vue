@@ -132,19 +132,19 @@ const columns = [
         field: "kn",
         type: "Number",
     },
-    
+
     {
         label: "citacita_1",
         field: "citacita_1",
         type: "String",
     },
-    
+
     {
         label: "citacita_2",
         field: "citacita_2",
         type: "String",
     },
-    
+
     {
         label: "citacita_3",
         field: "citacita_3",
@@ -214,6 +214,16 @@ const doCetak_ist_8km_gabungan = () => {
         `${VITE_API_FE_REACT}ist_8km/v_ist8km_gabungan/cetak/${getSekolahAktif.value.kelas_id}/true`
     );
 }
+const doCetak_ist_8km_gabungan_v5 = () => {
+    window.open(
+        `${VITE_API_FE_REACT}ist_8km/v_ist_lengkap_v5/cetak/${getSekolahAktif.value.kelas_id}/true`
+    );
+}
+const doCetak_ist_8km_gabungan_v6 = () => {
+    window.open(
+        `${VITE_API_FE_REACT}ist_8km/v_ist_lengkap_v6/cetak/${getSekolahAktif.value.kelas_id}/true`
+    );
+}
 </script>
 <template>
     <span v-if="isLoading">
@@ -227,7 +237,7 @@ const doCetak_ist_8km_gabungan = () => {
             <article class="prose lg:prose-sm max-w-screen-lg">
                 <h1>DATA 8KM KELAS {{ kelas_nama }}</h1>
             </article>
-            <div class="space-x-2">
+            <div class="space-x-2 space-y-2">
                 <RouterLink
                     :to="{ name: 'admin-sekolah-submenu-ist-import-migration', params: { sekolah_id: 0, kelas_id: 0 } }">
                     <button class="btn btn-sm ">
@@ -239,6 +249,10 @@ const doCetak_ist_8km_gabungan = () => {
                     Cetak 8KM V Lengkap</button>
                 <button class="btn btn-sm btn-success" @click="doCetak_ist_8km_gabungan()">
                     Cetak 8KM+IST Gabungan</button>
+                <button class="btn btn-sm btn-success" @click="doCetak_ist_8km_gabungan_v5()">
+                    Cetak 8KM+IST Gabungan Baru Selain Mahasiswa/Dewasa</button>
+                <button class="btn btn-sm btn-success" @click="doCetak_ist_8km_gabungan_v6()">
+                    Cetak 8KM+IST Gabungan Khusus Mahasiswa/Dewasa</button>
             </div>
 
             <div class="w-full bg-base-100 shadow-sm rounded-lg py-4 px-4">
@@ -267,17 +281,17 @@ const doCetak_ist_8km_gabungan = () => {
                         <div class="bg-white shadow rounded-lg px-4 py-4">
                             <div v-if="data">
                                 <vue-good-table :line-numbers="true" :columns="columns" :rows="data" :search-options="{
-                                    enabled: true,
-                                }" :pagination-options="{
-    enabled: true,
-    perPageDropdown: [50, 100, 150, 200],
-}" styleClass="vgt-table striped bordered condensed" class="py-0">
+        enabled: true,
+    }" :pagination-options="{
+        enabled: true,
+        perPageDropdown: [50, 100, 150, 200],
+    }" styleClass="vgt-table striped bordered condensed" class="py-0">
                                     <template #table-actions>
                                         <div class="space-x-1 space-y-1 gap-1">
                                             <button class="btn btn-sm btn-secondary tooltip" data-tip="Refresh Data"
                                                 @click="getData()">
-                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20"
-                                                    fill="currentColor">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5"
+                                                    viewBox="0 0 20 20" fill="currentColor">
                                                     <path fill-rule="evenodd"
                                                         d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z"
                                                         clip-rule="evenodd" />
@@ -303,13 +317,16 @@ const doCetak_ist_8km_gabungan = () => {
                                             {{ props.row.data_8km ? "Ada" : "-" }}
                                         </span>
                                         <span v-else-if="props.column.field == 'kb'">
-                                            {{ props.row.data_8km ? props.row.data_8km.data_8km_proses.gabungan_kb : "-" }}
+                                            {{ props.row.data_8km ? props.row.data_8km.data_8km_proses.gabungan_kb : "-"
+                                            }}
                                         </span>
                                         <span v-else-if="props.column.field == 'lm'">
-                                            {{ props.row.data_8km ? props.row.data_8km.data_8km_proses.gabungan_lm : "-" }}
+                                            {{ props.row.data_8km ? props.row.data_8km.data_8km_proses.gabungan_lm : "-"
+                                            }}
                                         </span>
                                         <span v-else-if="props.column.field == 'ks'">
-                                            {{ props.row.data_8km ? props.row.data_8km.data_8km_proses.gabungan_ks : "-" }}
+                                            {{ props.row.data_8km ? props.row.data_8km.data_8km_proses.gabungan_ks : "-"
+                                            }}
                                         </span>
                                         <span v-else-if="props.column.field == 'km'">
                                             {{ props.row.data_8km ? props.row.data_8km.data_8km_proses.km : "-" }}
