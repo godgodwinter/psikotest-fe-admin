@@ -592,6 +592,12 @@ const doExportExcel = (ttd) => {
     );
     // console.log("belum");
 }
+const doExportExcel_v2 = (ttd) => {
+    window.open(
+        `${VITE_API_FE_REACT}ujiankhusus/v1/export/sekolah/${getSekolahAktif.value.sekolah_id}/kelas/${getSekolahAktif.value.kelas_id}/v2`
+    );
+    // console.log("belum");
+}
 const doExport1010 = (ttd) => {
     console.log(paketsoal_aktif.value.id);
     window.open(
@@ -758,8 +764,15 @@ const formatTanggal = "DD MMMM YYYY HH:mm:ss";
                         </svg>
 
                     </button>
-                </div>
-                <div class="space-x-2 space-y-2 shadow-sm py-1">
+                    <button class="btn btn-sm btn-success tooltip" data-tip="Export Excel Format IST (v2)"
+                        @click="doExportExcel_v2()">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                            stroke="currentColor" class="w-6 h-6">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M12 9.75v6.75m0 0-3-3m3 3 3-3m-8.25 6a4.5 4.5 0 0 1-1.41-8.775 5.25 5.25 0 0 1 10.233-2.33 3 3 0 0 1 3.758 3.848A3.752 3.752 0 0 1 18 19.5H6.75Z" />
+                        </svg>
+
+                    </button>
                     <button class="btn btn-sm btn-info tooltip" data-tip="Export Excel 1010" @click="doExport1010()">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor" class="w-6 h-6">
@@ -770,45 +783,6 @@ const formatTanggal = "DD MMMM YYYY HH:mm:ss";
 
                     </button>
                 </div>
-                <!-- <div class="space-x-2 space-y-2 shadow-sm py-1">
-                    <button class="btn btn-sm btn-primary tooltip" data-tip="CETAK Hasil" @click="doCetak()">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                            stroke="currentColor" stroke-width="2">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
-                        </svg>
-                    </button>
-                </div>
-                <div class="space-x-2 space-y-2 shadow-sm py-1">
-                    <button class="btn btn-sm btn-warning tooltip" data-tip="CETAK Hasil v2" @click="doCetakLess()">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                            stroke="currentColor" stroke-width="2">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
-                        </svg>
-                    </button>
-                </div>
-                <div class="space-x-2 space-y-2 shadow-sm py-1">
-                    <button class="btn btn-sm btn-warning tooltip" data-tip="CETAK Hasil v2 tanpa ttd"
-                        @click="doCetakLess_tanpa_ttd()">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                            stroke="currentColor" stroke-width="2">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
-                        </svg>
-                    </button>
-                </div> -->
-                <!-- <div class="space-x-2 space-y-2 shadow-sm py-1">
-                    <button class="btn btn-sm btn-primary tooltip" data-tip="Export Jawaban Siswa"
-                        @click="doExportJawabanSiswa()">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                            stroke="currentColor" class="w-6 h-6">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M12 9.75v6.75m0 0l-3-3m3 3l3-3m-8.25 6a4.5 4.5 0 01-1.41-8.775 5.25 5.25 0 0110.233-2.33 3 3 0 013.758 3.848A3.752 3.752 0 0118 19.5H6.75z" />
-                        </svg>
-
-                    </button>
-                </div> -->
             </div>
             <div class="space-x-2 space-y-0 shadow-sm flex justify-start ">
 
