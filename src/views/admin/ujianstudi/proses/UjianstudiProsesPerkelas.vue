@@ -841,6 +841,9 @@ const doCetakReactV2 = (ttd = "true") => {
                                             <!-- {{ props.row.progres?.created_at }} -->
                                             {{ moment(props.row.progres?.created_at).format("DD MMMM YYYY HH:mm:ss") }}
                                         </span>
+                                        <span v-else-if="props.column.field == 'kelas_nama'">
+                                            {{ props.row.kelas?.nama }}
+                                        </span>
                                         <span v-else-if="props.column.field == 'progres'">
                                             {{ props.row.progres?.status }}
                                         </span>
