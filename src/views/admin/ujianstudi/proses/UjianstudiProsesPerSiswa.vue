@@ -66,6 +66,9 @@ const getDataHasil = async () => {
     try {
         // isLoading.value = true;
         const response = await Api.get(`/ujianstudi/hasil/sekolah/${sekolah_id.value}/kelas/${kelas_id.value}/siswa/${siswa_id.value}`);
+        console.log('====================================');
+        console.log(response);
+        console.log('====================================');
         dataUjian.value = response.data;
         if (dataUjian.value) {
             for (const [index, item] of dataUjian.value.entries()) {
@@ -332,13 +335,13 @@ const doRefreshData = () => {
 
                         <div v-if="data">
                             <vue-good-table :line-numbers="true" :columns="columns" :rows="data" :search-options="{
-                                enabled: true,
-                            }
-                                " :pagination-options="{
-        enabled: true,
-        perPageDropdown: [50, 100, 150, 200],
-    }
-        " styleClass="vgt-table striped bordered condensed" class="py-0">
+                    enabled: true,
+                }
+                    " :pagination-options="{
+                    enabled: true,
+                    perPageDropdown: [50, 100, 150, 200],
+                }
+                    " styleClass="vgt-table striped bordered condensed" class="py-0">
                                 <template #table-actions>
                                     <div class="space-x-1 space-y-1 gap-1">
                                         <button class="btn btn-sm btn-secondary tooltip" data-tip="Refresh Data"
@@ -363,8 +366,8 @@ const doRefreshData = () => {
                                                         d="M19.5 12c0-1.232-.046-2.453-.138-3.662a4.006 4.006 0 00-3.7-3.7 48.678 48.678 0 00-7.324 0 4.006 4.006 0 00-3.7 3.7c-.017.22-.032.441-.046.662M19.5 12l3-3m-3 3l-3-3m-12 3c0 1.232.046 2.453.138 3.662a4.006 4.006 0 003.7 3.7 48.656 48.656 0 007.324 0 4.006 4.006 0 003.7-3.7c.017-.22.032-.441.046-.662M4.5 12l3 3m-3-3l-3 3" />
                                                 </svg>
                                             </button>
-                                            <button class="btn btn-sm btn-success tooltip" data-tip="Reset Jawaban Salah"
-                                                @click="doResetSalah(props.row.id)">
+                                            <button class="btn btn-sm btn-success tooltip"
+                                                data-tip="Reset Jawaban Salah" @click="doResetSalah(props.row.id)">
                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                                     stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                                                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -391,10 +394,10 @@ const doRefreshData = () => {
                         <div class="md:py-2 px-4 lg:flex flex-wrap gap-4" v-for=" item, index  in  dataUjian "
                             :key="item.id">
 
-                            <p class="font-bold "> {{ index + 1 }}. {{ item.aspek_nama }}
-                                : {{ item.aspek_avg }} - {{ fn_studi_ket(item.aspek_avg) }} ( {{
-                                    fn_studi_ket_singkatan(item.aspek_avg)
-                                }})
+                            <p class="font-bold "> {{ index + 1 }}. {{ item?.aspek_nama }}
+                                : {{ item.aspek_avg }} - {{ fn_studi_ket(item?.aspek_avg) }} ( {{
+                    fn_studi_ket_singkatan(item?.aspek_avg)
+                }})
                             </p>
                             <div class="w-full lg:w-full">
                                 <div class="bg-white shadow rounded-lg px-4 py-4">
@@ -420,8 +423,8 @@ const doRefreshData = () => {
                                                             {{ mapel.nilai_akhir }}
                                                             -
                                                             {{ fn_studi_ket(mapel.nilai_akhir) }} ( {{
-                                                                fn_studi_ket_singkatan(mapel.nilai_akhir)
-                                                            }})
+                    fn_studi_ket_singkatan(mapel.nilai_akhir)
+                }})
                                                             <!-- {{ mapel.nilai_akhir }}
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     -
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     {{ fn_studi_ket(mapel.nilai_akhir) }} ( {{
@@ -453,17 +456,17 @@ const doRefreshData = () => {
                     <p class="indent-8">
                         Potensi kemampuan Akademik Subyek saat ini terkuat dibidang studi yang terkait dengan <span
                             class="font-bold">{{
-                                dataJurusan[0].aspek_nama
-                            }}</span>,
+                    dataJurusan[0].aspek_nama
+                }}</span>,
                         maka dalam mengambil jurusan cenderung disarankan bidang <span class="font-bold">{{
-                            dataJurusan[0].aspek_nama
-                        }}</span>,
+                        dataJurusan[0].aspek_nama
+                    }}</span>,
                         dan dipertimbangkan untuk mengambil jurusan dibidang <span class="font-bold">{{
-                            dataJurusan[1].aspek_nama
-                        }}</span>,
+                        dataJurusan[1].aspek_nama
+                    }}</span>,
                         serta tidak disarankan untuk mengambil jurusan dibidang <span class="font-bold">{{
-                            dataJurusan[2].aspek_nama
-                        }}</span>
+                        dataJurusan[2].aspek_nama
+                    }}</span>
                     </p>
                 </div>
 
