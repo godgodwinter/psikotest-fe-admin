@@ -43,20 +43,15 @@ const columns = [
         type: "String",
     },
     {
-        label: "Kreatifitas",
-        field: "krList",
+        label: "Multi Jawaban",
+        field: "aspek_multijawaban",
         type: "String",
     },
-    // {
-    //     label: "Status",
-    //     field: "status",
-    //     type: "String",
-    // },
 ];
 
 const getData = async () => {
     try {
-        const response = await ApiUjianKhusus.get(`ujiankhusus/paketsoal`);
+        const response = await ApiUjianKhusus.get(`cfit/paketsoal`);
         const tempData = response.data;
         data.value = tempData.map(fn_copy_id_for_mongo);
         isLoading.value = false;
@@ -69,7 +64,7 @@ const getData = async () => {
 };
 getData();
 const getDataPaketsoalAktif = async () => {
-    let getDataPaket = localStorage.getItem("ujiankhusus_paketsoal_aktif");
+    let getDataPaket = localStorage.getItem("ujiancfit_paketsoal_aktif");
     paketsoal_aktif.value = getDataPaket ? JSON.parse(getDataPaket) : null;
     // console.log(paketsoal_aktif.value);
 };
@@ -78,7 +73,7 @@ getDataPaketsoalAktif();
 const doDeleteData = async (id, index) => {
     if (confirm("Apakah anda yakin menghapus data ini?")) {
         try {
-            const response = await ApiUjianKhusus.delete(`ujiankhusus/paketsoal/${id}`);
+            const response = await ApiUjianKhusus.delete(`cfit/paketsoal/${id}`);
             if (response.status) {
                 Toast.warning("Berhasil", response.message);
                 // Toast.success("Info", "Data berhasil dihapus!");
@@ -95,30 +90,11 @@ const doDeleteData = async (id, index) => {
 
 const doEditData = async (id, index) => {
     router.push({
-        name: "admin-ujiankhusus-paketsoal-edit",
+        name: "admin-ujiancfit-paketsoal-edit",
         params: { paketsoal_id: id },
     });
 };
 
-// const paketsoal_aktif = ref(null);
-// const getPaketAktif = async (id) => {
-//     let dataFormSend = {}
-//     try {
-//         isLoading.value = true;
-//         const response = await Api.get(`redis/studiv2/paketsoal_aktif/get/less`, dataFormSend);
-//         if (response?.data) {
-//             paketsoal_aktif.value = response.data;
-//         } else {
-//             paketsoal_aktif.value = null;
-//         }
-//         isLoading.value = false;
-//     } catch (error) {
-//         isLoading.value = false;
-//         isError.value = true;
-//         console.error(error);
-//     }
-// };
-// getPaketAktif();
 const doAktifkanPaket = async (id, nama) => {
     if (confirm("Apakah anda yakin aktifkan paketsoal ini?")) {
         let paketsoal_aktif = {
@@ -128,45 +104,17 @@ const doAktifkanPaket = async (id, nama) => {
             tgl_batas_terakhir: moment().add(7, 'days')
         }
         // console.log(paketsoal_aktif);
-        localStorage.setItem("ujiankhusus_paketsoal_aktif", JSON.stringify(paketsoal_aktif))
+        localStorage.setItem("ujiancfit_paketsoal_aktif", JSON.stringify(paketsoal_aktif))
         getDataPaketsoalAktif()
-        // let dataFormSend = {}
-        // try {
-        //     isLoading.value = true;
-        //     const response = await Api.get(`redis/studiv2/paketsoal/${id}/aktifkan`, dataFormSend);
-        //     Toast.babeng("Berhasil", 'Paket berhasil diAktifkan!');
-        //     getPaketAktif();
-        //     isLoading.value = false;
-        // } catch (error) {
-        //     isLoading.value = false;
-        //     isError.value = true;
-        //     console.error(error);
-        // }
     }
 };
 
-// const doDeletPaketAktif = async () => {
-//     if (confirm("Apakah anda yakin menghapus paketsoal ini?")) {
-//         let dataFormSend = {}
-//         try {
-//             isLoading.value = true;
-//             const response = await Api.delete(`redis/studiv2/paketsoal_aktif/delete`, dataFormSend);
-//             Toast.babeng("Berhasil", 'Paket berhasil dihapus!');
-//             getPaketAktif();
-//             isLoading.value = false;
-//         } catch (error) {
-//             isLoading.value = false;
-//             isError.value = true;
-//             console.error(error);
-//         }
-//     }
-// };
 </script>
 <template>
     <div>
         <article class="prose lg:prose-sm">
-            <h1>PAKETSOAL UJIANKHUSUS</h1>
-            <h5>UJIAN KHUSUS</h5>
+            <h1>PAKETSOAL CFIT</h1>
+            <h5>UJIAN CFIT</h5>
             <div v-if="paketsoal_aktif">
                 <h4>PAKETSOAL AKTIF : {{ paketsoal_aktif?.nama }}</h4>
             </div>
@@ -191,7 +139,7 @@ const doAktifkanPaket = async (id, nama) => {
                                 <template #table-actions>
                                     <div class="space-x-1 space-y-1 gap-1">
                                         <router-link :to="{
-                name: 'admin-ujiankhusus-paketsoal-tambah',
+                name: 'admin-ujiancfit-paketsoal-tambah',
             }">
                                             <button class="btn btn-sm btn-primary tooltip" data-tip="Tambah">
                                                 TAMBAH
@@ -208,8 +156,19 @@ const doAktifkanPaket = async (id, nama) => {
                                     <span v-if="props.column.field == 'actions'">
                                         <div class="text-sm font-medium text-center flex justify-center space-x-1">
                                             <RouterLink
-                                                :to="{ name: 'admin-ujiankhusus-paketsoal-aspek_detail', params: { paketsoal_id: props.row.id } }">
-                                                <button class="btn btn-sm btn-primary tooltip" data-tip="Detail Soal">
+                                                :to="{ name: 'admin-ujiancfit-paketsoal-aspek_detail', params: { paketsoal_id: props.row.id } }">
+                                                <button class="btn btn-sm btn-primary tooltip"
+                                                    data-tip="Detail Tipe Umum">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
+                                                        viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                                            d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                                    </svg></button>
+                                            </RouterLink>
+                                            <RouterLink
+                                                :to="{ name: 'admin-ujiancfit-paketsoal-aspek_detail', params: { paketsoal_id: props.row.id } }">
+                                                <button class="btn btn-sm btn-success tooltip"
+                                                    data-tip="Detail Tipe Multi">
                                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
                                                         viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                                         <path stroke-linecap="round" stroke-linejoin="round"
@@ -245,8 +204,9 @@ const doAktifkanPaket = async (id, nama) => {
                                     </span>
                                     <span v-else-if="props.column.field == 'minatList'">
                                         {{ props.row.minatList ? props.row.minatList.nama : "-" }}</span>
-                                    <span v-else-if="props.column.field == 'krList'">
-                                        {{ props.row.krList ? props.row.krList.nama : "-" }}</span>
+                                    <span v-else-if="props.column.field == 'aspek_multijawaban'">
+                                        {{ props.row.aspek_multijawaban?.length > 0 ? "Ada" : "-"
+                                        }}</span>
 
                                     <span v-else>
                                         {{ props.formattedRow[props.column.field] }}

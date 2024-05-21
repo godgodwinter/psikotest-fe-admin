@@ -63,7 +63,8 @@ const doLogout = async () => {
                                 UJIAN STUDI V2
                             </h3>
                         </li>
-                        <li class="lg:w-full py-0" :class="[pagesActive == 'ujianstudi-banksoal' ? pagesActiveClass : '']">
+                        <li class="lg:w-full py-0"
+                            :class="[pagesActive == 'ujianstudi-banksoal' ? pagesActiveClass : '']">
                             <router-link :to="{ name: 'admin-ujianstudi-banksoal-aspek_detail' }"
                                 class="text-base-content font-normal rounded-lg flex items-center p-2 group hover:link">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20"
@@ -74,7 +75,8 @@ const doLogout = async () => {
                                 <span class="ml-3">Banksoal Ujian Studi </span>
                             </router-link>
                         </li>
-                        <li class="lg:w-full py-0" :class="[pagesActive == 'ujianstudi-paketsoal' ? pagesActiveClass : '']">
+                        <li class="lg:w-full py-0"
+                            :class="[pagesActive == 'ujianstudi-paketsoal' ? pagesActiveClass : '']">
                             <router-link :to="{ name: 'admin-ujianstudi-paketsoal' }"
                                 class="text-base-content font-normal rounded-lg flex items-center p-2 group hover:link">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20"
@@ -94,10 +96,11 @@ const doLogout = async () => {
                         <li class="lg:w-full py-0">
                             <h3
                                 class="text-base-content font-bold rounded-lg flex items-center pt-4  group hover:link underline">
-                                UJIAN KHUSUS
+                                UJIAN KHUSUS & CFIT
                             </h3>
                         </li>
-                        <li class="lg:w-full py-0" :class="[pagesActive == 'ujiankhusus-banksoal' ? pagesActiveClass : '']">
+                        <li class="lg:w-full py-0"
+                            :class="[pagesActive == 'ujiankhusus-banksoal' ? pagesActiveClass : '']">
                             <router-link :to="{ name: 'admin-ujiankhusus-banksoal-aspek_detail' }"
                                 class="text-base-content font-normal rounded-lg flex items-center p-2 group hover:link">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20"
@@ -108,7 +111,8 @@ const doLogout = async () => {
                                 <span class="ml-3">Banksoal Ujian Khusus </span>
                             </router-link>
                         </li>
-                        <li class="lg:w-full py-0" :class="[pagesActive == 'ujiankhusus-paketsoal' ? pagesActiveClass : '']">
+                        <li class="lg:w-full py-0"
+                            :class="[pagesActive == 'ujiankhusus-paketsoal' ? pagesActiveClass : '']">
                             <router-link :to="{ name: 'admin-ujiankhusus-paketsoal' }"
                                 class="text-base-content font-normal rounded-lg flex items-center p-2 group hover:link">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20"
@@ -117,6 +121,18 @@ const doLogout = async () => {
                                         clip-rule="evenodd" />
                                 </svg>
                                 <span class="ml-3">Paketsoal Ujian Khusus </span>
+                            </router-link>
+                        </li>
+                        <li class="lg:w-full py-0"
+                            :class="[pagesActive == 'ujiankhusus-paketsoal' ? pagesActiveClass : '']">
+                            <router-link :to="{ name: 'admin-ujiancfit-paketsoal' }"
+                                class="text-base-content font-normal rounded-lg flex items-center p-2 group hover:link">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20"
+                                    fill="currentColor">
+                                    <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
+                                        clip-rule="evenodd" />
+                                </svg>
+                                <span class="ml-3">Paketsoal CFIT </span>
                             </router-link>
                         </li>
                         <li class="lg:w-full py-0">
@@ -145,7 +161,8 @@ const doLogout = async () => {
                         </li>
 
                         <li class="lg:w-full py-0" :class="[pagesActive == 'ujiankhusus' ? pagesActiveClass : '']">
-                            <router-link :to="{ name: 'admin-hspq-import-rumus', params: { sekolah_id: 0, kelas_id: 0 } }"
+                            <router-link
+                                :to="{ name: 'admin-hspq-import-rumus', params: { sekolah_id: 0, kelas_id: 0 } }"
                                 class="text-base-content font-normal rounded-lg flex items-center p-2 group hover:link">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20"
                                     fill="currentColor">
