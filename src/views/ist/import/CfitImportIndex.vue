@@ -90,53 +90,53 @@ function populateGrid(workbook) {
         D: 'nama',
         E: 'jk',
         F: 'umur',
-        G: 'wa',
-        H: 'an',
-        I: 'ra',
-        J: 'zr',
-        K: 'fa',
-        L: 'wu',
-        M: 'se',
-        N: 'me',
-        O: 'ge',
-        P: 'mb_ou',
-        Q: 'mb_me',
-        R: 'mb_co',
-        S: 'mb_sc',
-        T: 'mb_pc',
-        U: 'mb_as',
-        V: 'mb_li',
-        W: 'mb_mu',
-        X: 'mb_ss',
-        Y: 'mb_cl',
-        Z: 'mb_pr',
-        AA: 'mb_md',
-        AB: 'hspq_a',
-        AC: 'hspq_c',
-        AD: 'hspq_d',
-        AE: 'hspq_e',
-        AF: 'hspq_f',
-        AG: 'hspq_g',
-        AH: 'hspq_h',
-        AI: 'hspq_i',
-        AJ: 'hspq_j',
-        AK: 'hspq_o',
-        AL: 'hspq_q2',
-        AM: 'hspq_q3',
-        AN: 'hspq_q4',
-        AO: 'ist_8km_ks_3',
-        AP: 'ist_8km_km',
-        AQ: 'ist_8km_kk',
-        AR: 'ist_8km_ki',
-        AS: 'ist_8km_ka',
-        AT: 'ist_8km_kn',
-        AU: 'ist_8km_kr',
-        AV: 'citacita_1',
-        AW: 'citacita_2',
-        AX: 'citacita_3',
-        AY: 'iq_ist',
-        AZ: 'iq_8km',
-        BA: 'tgllahir',
+        G: 'tgllahir',
+        H: 'cfit',
+        I: 'sub_1',
+        J: 'sub_2',
+        K: 'sub_3',
+        L: 'sub_4',
+        M: 'mb_ou',
+        N: 'mb_me',
+        O: 'mb_co',
+        P: 'mb_sc',
+        Q: 'mb_pc',
+        R: 'mb_as',
+        S: 'mb_li',
+        T: 'mb_mu',
+        U: 'mb_ss',
+        V: 'mb_cl',
+        W: 'mb_pr',
+        X: 'mb_md',
+        Y: 'hspq_a',
+        Z: 'hspq_c',
+        AA: 'hspq_d',
+        AB: 'hspq_e',
+        AC: 'hspq_f',
+        AD: 'hspq_g',
+        AE: 'hspq_h',
+        AF: 'hspq_i',
+        AG: 'hspq_j',
+        AH: 'hspq_o',
+        AI: 'hspq_q2',
+        AJ: 'hspq_q3',
+        AK: 'hspq_q4',
+        AL: 'auditif',
+        AM: 'visual',
+        AN: 'kinestetik',
+        AO: 'pohon',
+        AP: 'citacita_1',
+        AQ: 'citacita_2',
+        AR: 'citacita_3'
+        // AS: '',
+        // AT: '',
+        // AU: '',
+        // AV: '',
+        // AW: '',
+        // AX: '',
+        // AY: '',
+        // AZ: '',
+        // BA: '',
     };
 
     var rowData = [];
@@ -145,7 +145,6 @@ function populateGrid(workbook) {
     var rowIndex = 2;
 
     // iterate over the worksheet pulling out the columns we're expecting
-
     while (worksheet['A' + rowIndex]) {
         var row = {};
         let periksaRow = null;
@@ -163,16 +162,6 @@ function populateGrid(workbook) {
 
         rowIndex++;
     }
-    // while (worksheet['A' + rowIndex]) {
-    //     var row = {};
-    //     Object.keys(columns).forEach(function (column) {
-    //         row[columns[column]] = worksheet[column + rowIndex]?.w;
-    //     });
-
-    //     rowData.push(row);
-
-    //     rowIndex++;
-    // }
 
     // finally, set the imported rowData into the grid
     // gridOptions.api.setRowData(rowData);
@@ -257,48 +246,28 @@ const columns = [
         type: "String",
     },
     {
-        label: "wa",
-        field: "wa",
+        label: "cfit",
+        field: "cfit",
         type: "Number",
     },
     {
-        label: "an",
-        field: "an",
+        label: "sub_1",
+        field: "sub_1",
         type: "Number",
     },
     {
-        label: "ra",
-        field: "ra",
+        label: "sub_2",
+        field: "sub_2",
         type: "Number",
     },
     {
-        label: "zr",
-        field: "zr",
+        label: "sub_3",
+        field: "sub_3",
         type: "Number",
     },
     {
-        label: "fa",
-        field: "fa",
-        type: "Number",
-    },
-    {
-        label: "wu",
-        field: "wu",
-        type: "Number",
-    },
-    {
-        label: "se",
-        field: "se",
-        type: "Number",
-    },
-    {
-        label: "me",
-        field: "me",
-        type: "Number",
-    },
-    {
-        label: "ge",
-        field: "ge",
+        label: "sub_4",
+        field: "sub_4",
         type: "Number",
     },
     {
@@ -432,38 +401,23 @@ const columns = [
         type: "Number",
     },
     {
-        label: "ist_8km_ks_3",
-        field: "ist_8km_ks_3",
+        label: "auditif",
+        field: "auditif",
         type: "Number",
     },
     {
-        label: "ist_8km_km",
-        field: "ist_8km_km",
+        label: "visual",
+        field: "visual",
         type: "Number",
     },
     {
-        label: "ist_8km_kk",
-        field: "ist_8km_kk",
+        label: "kinestetik",
+        field: "kinestetik",
         type: "Number",
     },
     {
-        label: "ist_8km_ki",
-        field: "ist_8km_ki",
-        type: "Number",
-    },
-    {
-        label: "ist_8km_ka",
-        field: "ist_8km_ka",
-        type: "Number",
-    },
-    {
-        label: "ist_8km_kn",
-        field: "ist_8km_kn",
-        type: "Number",
-    },
-    {
-        label: "ist_8km_kr",
-        field: "ist_8km_kr",
+        label: "pohon",
+        field: "pohon",
         type: "Number",
     },
     {
@@ -576,11 +530,11 @@ const doStore = async () => {
         console.log(dataForm);
         try {
             const response = await ApiIst.post(
-                `ist/import`,
+                `cfit/hasil/import_offline`,
                 dataForm
             );
             // dataExcel.value = []
-            // console.log(response.data);
+            console.log(response.data);
             if (response.data) {
                 dataExcel.value = response.data;
             }
@@ -597,15 +551,15 @@ const doStore = async () => {
 <template>
     <div class="px-2">
         <article class="prose lg:prose-sm">
-            <h1>IMPORT DATA IST</h1>
+            <h1>IMPORT DATA CFIT</h1>
         </article>
-        <div>
+        <!-- <div>
             <RouterLink
                 :to="{ name: 'admin-sekolah-submenu-ist-import-migration', params: { sekolah_id: 0, kelas_id: 0 } }">
                 <button class="btn btn-sm ">
                     Migrasi</button>
             </RouterLink>
-        </div>
+        </div> -->
 
         <div>
             <div class="pt-0 px-0">
@@ -702,17 +656,17 @@ const doStore = async () => {
                 <div class="bg-white shadow rounded-lg px-4 py-4 ">
                     <div v-if="dataExcel">
                         <vue-good-table :line-numbers="true" :columns="columns" :rows="dataExcel" :search-options="{
-                    enabled: true,
-                }" :pagination-options="{
-                    enabled: true,
-                    perPageDropdown: [100, 200, 500],
-                }" styleClass="vgt-table striped bordered condensed" class="py-0">
+                                    enabled: true,
+                                }" :pagination-options="{
+                                    enabled: true,
+                                    perPageDropdown: [100, 200, 500],
+                                }" styleClass="vgt-table striped bordered condensed" class="py-0">
                             <template #table-row="props">
                                 <span v-if="props.column.field == 'actions'">
                                     <div class="text-sm font-medium text-center flex justify-center space-x-1">
                                         <button class="btn btn-sm btn-warning" @click="
-                    doDelete(props.index, props.row.nama)
-                    ">
+                                    doDelete(props.index, props.row.nama)
+                                    ">
                                             Delete
                                         </button>
                                     </div>
@@ -721,16 +675,16 @@ const doStore = async () => {
                                 <span v-else-if="props.column.field == 'tgl_import'">
                                     <div class="text-center">
                                         {{
-                    props.row.tgl_import ? moment(props.row.tgl_import).format("DD MMMM YYYY") :
-                        null
-                }}
+                                    props.row.tgl_import ? moment(props.row.tgl_import).format("DD MMMM YYYY") :
+                                        null
+                                }}
                                     </div>
                                 </span>
                                 <span v-else-if="props.column.field == 'data_sertifikat'">
                                     <div class="text-center">
                                         {{
-                    props.row.data_sertifikat ? 'Ada' : "-"
-                }}
+                                    props.row.data_sertifikat ? 'Ada' : "-"
+                                }}
                                         <button class="btn btn-sm btn-info"
                                             @click="fnPeriksaDataSertifikat(props.index)"
                                             v-if="props.row.data_sertifikat">Periksa</button>
@@ -739,8 +693,8 @@ const doStore = async () => {
                                 <span v-else-if="props.column.field == 'data_deteksi'">
                                     <div class="text-center">
                                         {{
-                    props.row.data_deteksi ? "Ada" : "-"
-                                        }}
+                                    props.row.data_deteksi ? "Ada" : "-"
+                                }}
                                         <button class="btn btn-sm btn-info" @click="fnPeriksaDataDeteksi(props.index)"
                                             v-if="props.row.data_deteksi">Periksa</button>
                                     </div>

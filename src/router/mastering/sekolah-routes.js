@@ -140,6 +140,11 @@ const AdminSekolahRoutes = [
         component: () => import("@/views/ist/import/IstImportIndex.vue"),
       },
       {
+        path: "/pages/admin/mastering/sekolah/:sekolah_id?/submenu/kelas/:kelas_id?/cfit/import",
+        name: "admin-sekolah-submenu-cfit-import",
+        component: () => import("@/views/ist/import/CfitImportIndex.vue"),
+      },
+      {
         path: "/pages/admin/mastering/sekolah/:sekolah_id?/submenu/kelas/:kelas_id?/ist/import/migrasi",
         name: "admin-sekolah-submenu-ist-import-migration",
         component: () =>
