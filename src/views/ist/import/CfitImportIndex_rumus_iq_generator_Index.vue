@@ -84,52 +84,22 @@ function populateGrid(workbook) {
 
     // we expect the following columns to be present
     var columns = {
-        A: 'no',
-        B: 'kelas',
-        C: 'no_induk',
-        D: 'nama',
-        E: 'jk',
-        F: 'umur',
-        G: 'tgllahir',
-        H: 'cfit',
-        I: 'sub_1',
-        J: 'sub_2',
-        K: 'sub_3',
-        L: 'sub_4',
-        M: 'mb_ou',
-        N: 'mb_me',
-        O: 'mb_co',
-        P: 'mb_sc',
-        Q: 'mb_pc',
-        R: 'mb_as',
-        S: 'mb_li',
-        T: 'mb_mu',
-        U: 'mb_ss',
-        V: 'mb_cl',
-        W: 'mb_pr',
-        X: 'mb_md',
-        Y: 'hspq_a',
-        Z: 'hspq_c',
-        AA: 'hspq_d',
-        AB: 'hspq_e',
-        AC: 'hspq_f',
-        AD: 'hspq_g',
-        AE: 'hspq_h',
-        AF: 'hspq_i',
-        AG: 'hspq_j',
-        AH: 'hspq_o',
-        AI: 'hspq_q2',
-        AJ: 'hspq_q3',
-        AK: 'hspq_q4',
-        AL: 'linguistik',
-        AM: 'musikal',
-        AN: 'spasial',
-        AO: 'kinestetik',
-        AP: 'pohon_1',
-        AQ: 'pohon_2',
-        AR: 'citacita_1',
-        AS: 'citacita_2',
-        AT: 'citacita_3'
+        A: 'nilai',
+        B: 'a',
+        C: 'b',
+        D: 'c',
+        E: 'd',
+        F: 'e',
+        G: 'f',
+        H: 'g',
+        I: 'h',
+        J: 'i',
+        K: 'j',
+        L: 'k',
+        M: 'l',
+        N: 'm',
+        O: 'n',
+        P: 'o',
     };
 
     var rowData = [];
@@ -145,7 +115,7 @@ function populateGrid(workbook) {
             row[columns[column]] = worksheet[column + rowIndex]?.w;
             if (column == 'A' && worksheet[column + rowIndex]?.w) {
                 periksaRow = 1;
-                console.log(worksheet[column + rowIndex]?.w, column + rowIndex);
+                // console.log(worksheet[column + rowIndex]?.w, column + rowIndex);
             }
         });
 
@@ -224,215 +194,99 @@ const columns = [
         thClass: "text-center",
     },
     {
-        label: "Nama",
-        field: "nama",
-        type: "String",
-    },
-    {
-        label: "tgllahir",
-        field: "tgllahir",
-        type: "String",
-    },
-    {
-        label: "umur",
-        field: "umur",
-        type: "String",
-    },
-    {
-        label: "cfit",
-        field: "cfit",
+        label: "Nilai",
+        field: "nilai",
         type: "Number",
     },
     {
-        label: "sub_1",
-        field: "sub_1",
+        label: "a",
+        field: "a",
         type: "Number",
     },
     {
-        label: "sub_2",
-        field: "sub_2",
+        label: "b",
+        field: "b",
+        type: "Number",
+    },
+
+    {
+        label: "c",
+        field: "c",
         type: "Number",
     },
     {
-        label: "sub_3",
-        field: "sub_3",
+        label: "d",
+        field: "d",
         type: "Number",
     },
+
     {
-        label: "sub_4",
-        field: "sub_4",
+        label: "e",
+        field: "e",
         type: "Number",
     },
+
     {
-        label: "siswa_id",
-        field: "siswa_id",
+        label: "f",
+        field: "f",
         type: "Number",
     },
+
     {
-        label: "mb_ou",
-        field: "mb_ou",
+        label: "g",
+        field: "g",
         type: "Number",
     },
+
     {
-        label: "mb_me",
-        field: "mb_me",
+        label: "h",
+        field: "h",
         type: "Number",
     },
+
     {
-        label: "mb_co",
-        field: "mb_co",
+        label: "i",
+        field: "i",
         type: "Number",
     },
+
     {
-        label: "mb_sc",
-        field: "mb_sc",
+        label: "j",
+        field: "j",
         type: "Number",
     },
+
     {
-        label: "mb_pc",
-        field: "mb_pc",
+        label: "k",
+        field: "k",
         type: "Number",
     },
+
     {
-        label: "mb_as",
-        field: "mb_as",
+        label: "l",
+        field: "l",
         type: "Number",
     },
+
     {
-        label: "mb_li",
-        field: "mb_li",
+        label: "m",
+        field: "m",
         type: "Number",
     },
+
     {
-        label: "mb_mu",
-        field: "mb_mu",
+        label: "n",
+        field: "n",
         type: "Number",
     },
+
     {
-        label: "mb_ss",
-        field: "mb_ss",
+        label: "o",
+        field: "o",
         type: "Number",
     },
-    {
-        label: "mb_cl",
-        field: "mb_cl",
-        type: "Number",
-    },
-    {
-        label: "mb_pr",
-        field: "mb_pr",
-        type: "Number",
-    },
-    {
-        label: "mb_md",
-        field: "mb_md",
-        type: "Number",
-    },
-    {
-        label: "hspq_a",
-        field: "hspq_a",
-        type: "Number",
-    },
-    {
-        label: "hspq_c",
-        field: "hspq_c",
-        type: "Number",
-    },
-    {
-        label: "hspq_d",
-        field: "hspq_d",
-        type: "Number",
-    },
-    {
-        label: "hspq_e",
-        field: "hspq_e",
-        type: "Number",
-    },
-    {
-        label: "hspq_f",
-        field: "hspq_f",
-        type: "Number",
-    },
-    {
-        label: "hspq_g",
-        field: "hspq_g",
-        type: "Number",
-    },
-    {
-        label: "hspq_h",
-        field: "hspq_h",
-        type: "Number",
-    },
-    {
-        label: "hspq_i",
-        field: "hspq_i",
-        type: "Number",
-    },
-    {
-        label: "hspq_j",
-        field: "hspq_j",
-        type: "Number",
-    },
-    {
-        label: "hspq_o",
-        field: "hspq_o",
-        type: "Number",
-    },
-    {
-        label: "hspq_q2",
-        field: "hspq_q2",
-        type: "Number",
-    },
-    {
-        label: "hspq_q3",
-        field: "hspq_q3",
-        type: "Number",
-    },
-    {
-        label: "hspq_q4",
-        field: "hspq_q4",
-        type: "Number",
-    },
-    {
-        label: "linguistik",
-        field: "linguistik",
-        type: "Number",
-    },
-    {
-        label: "musikal",
-        field: "musikal",
-        type: "Number",
-    },
-    {
-        label: "spasial",
-        field: "spasial",
-        type: "Number",
-    },
-    {
-        label: "pohon_1",
-        field: "pohon_1",
-        type: "Number",
-    },
-    {
-        label: "pohon_2",
-        field: "pohon_2",
-        type: "Number",
-    },
-    {
-        label: "citacita_1",
-        field: "citacita_1",
-        type: "String",
-    },
-    {
-        label: "citacita_2",
-        field: "citacita_2",
-        type: "String",
-    },
-    {
-        label: "citacita_3",
-        field: "citacita_3",
-        type: "String",
-    },
+
+
 ];
 
 const doDelete = (index, nama) => {
@@ -460,46 +314,6 @@ const dataSekolah = ref([]);
 const pilihKelas = ref([]);
 const pilihSekolah = ref([]);
 
-// get Sekolah
-const getDataSekolah = async () => {
-    try {
-        const response = await Api.get(`owner/sekolah`);
-        // console.log(response);
-        dataSekolah.value = response.data;
-        dataSekolah.value.forEach((item) => {
-            pilihSekolah.value.push({
-                label: item.nama,
-                id: item.id,
-            });
-        });
-        return response;
-    } catch (error) {
-        Toast.danger("Warning", "Data Gagal dimuat");
-        console.error(error);
-    }
-};
-getDataSekolah();
-// get Kelas
-const getDataKelas = async (sekolah_id) => {
-    try {
-        pilihKelas.value = [];
-        const response = await Api.get(`owner/datasekolah/${sekolah_id}/kelas`);
-        // console.log(response);
-        dataKelas.value = response.data;
-        dataKelas.value.forEach((item) => {
-            pilihKelas.value.push({
-                label: item.nama,
-                id: item.id,
-            });
-        });
-        return response;
-    } catch (error) {
-        Toast.danger("Warning", "Data Gagal dimuat");
-        console.error(error);
-    }
-};
-// getDataKelas(idTemp.value);
-
 const changedValue = (value) => {
     dataDetail.value.kelas_id = null;
     if (dataDetail.value.sekolah_id) {
@@ -518,38 +332,84 @@ const doApply = (sekolah, kelas) => {
 
 
 const doStore = async () => {
-    if (sekolah_id.value) {
+    // if (sekolah_id.value) {
 
-        const dataForm = {
-            sekolah_id: sekolah_id.value,
-            kelas_id: kelas_id.value,
-            data: dataExcel.value
+    // console.log(dataExcel.value);
+    let dataAsli = dataExcel.value;
+    let datarow_a = []
+    let datarow_b = []
+    let datarow_c = []
+    let datarow_d = []
+    let datarow_e = []
+    let datarow_f = []
+    for (let i = 0; i < dataAsli.length; i++) {
+        // console.log(dataAsli[i]);
+        let dataInput_a = {
+            id: i,
+            nilai: parseInt(dataAsli[i].nilai),
+            iq: parseInt(dataAsli[i].a),
         }
-        console.log(dataForm);
-        try {
-            const response = await ApiIst.post(
-                `cfit/hasil/import_offline`,
-                dataForm
-            );
-            // dataExcel.value = []
-            console.log(response.data);
-            if (response.data) {
-                dataExcel.value = response.data;
-            }
+        datarow_a.push(dataInput_a)
+        let dataInput_b = {
+            id: i,
+            nilai: parseInt(dataAsli[i].nilai),
+            iq: parseInt(dataAsli[i].b),
+        }
+        datarow_b.push(dataInput_b)
 
-        } catch (error) {
-            // Toast.danger("Warning", "Data gagal ditambahkan!");
-            console.error(error);
+        let dataInput_c = {
+            id: i,
+            nilai: parseInt(dataAsli[i].nilai),
+            iq: parseInt(dataAsli[i].c),
         }
-    } else {
-        Toast.danger("Pilih sekolah terlebih dahulu!")
+        datarow_c.push(dataInput_c)
+
+        let dataInput_d = {
+            id: i,
+            nilai: parseInt(dataAsli[i].nilai),
+            iq: parseInt(dataAsli[i].d),
+        }
+        datarow_d.push(dataInput_d)
+
+        let dataInput_e = {
+            id: i,
+            nilai: parseInt(dataAsli[i].nilai),
+            iq: parseInt(dataAsli[i].e),
+        }
+        datarow_e.push(dataInput_e)
+
+        let dataInput_f = {
+            id: i,
+            nilai: parseInt(dataAsli[i].nilai),
+            iq: parseInt(dataAsli[i].f),
+        }
+        datarow_f.push(dataInput_f)
     }
+    console.log(datarow_f);
+    // try {
+    //     const response = await ApiIst.post(
+    //         `cfit/hasil/import_offline`,
+    //         dataForm
+    //     );
+    //     // dataExcel.value = []
+    //     console.log(response.data);
+    //     if (response.data) {
+    //         dataExcel.value = response.data;
+    //     }
+
+    // } catch (error) {
+    //     // Toast.danger("Warning", "Data gagal ditambahkan!");
+    //     console.error(error);
+    // }
+    // } else {
+    //     Toast.danger("Pilih sekolah terlebih dahulu!")
+    //     }
 }
 </script>
 <template>
     <div class="px-2">
         <article class="prose lg:prose-sm">
-            <h1>IMPORT DATA CFIT</h1>
+            <h1>IMPORT DATA CFIT RUMUS GENERATOR</h1>
         </article>
         <!-- <div>
             <RouterLink
@@ -559,7 +419,7 @@ const doStore = async () => {
             </RouterLink>
         </div> -->
 
-        <div>
+        <!-- <div>
             <div class="pt-0 px-0">
                 <div class="w-full mx-0 lg:w-10/12">
                     <div class="bg-white rounded-lg p-0 sm:p-6 xl:p-0">
@@ -603,7 +463,7 @@ const doStore = async () => {
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
         <div class="space-x-2 py-1 space-y-2">
             <input name="fileUpload" @change="onChangefileUpload($event)" type="file"
                 class="file-input file-input-bordered file-input-info w-full max-w-xs" />
@@ -617,7 +477,7 @@ const doStore = async () => {
                 Reset
             </button>
         </div>
-        <div>
+        <!-- <div>
             <span>
                 <p class="text-xs font-semibold text-red-600">- Jika Nama , Nomer Induk dan Kelas Sama maka data JK dan
                     tgl lahir akan di update</p>
@@ -627,7 +487,7 @@ const doStore = async () => {
                 <p class="text-xs font-semibold text-red-600">- Kosongkan field tgl lahir jika menggunakan field umur
                 </p>
             </span>
-        </div>
+        </div> -->
         <!-- <div class="w-full flex flex-wrap justify-center">
             <div class="w-1/2 flex justify-center gap-10">
                 <div>
@@ -654,17 +514,17 @@ const doStore = async () => {
                 <div class="bg-white shadow rounded-lg px-4 py-4 ">
                     <div v-if="dataExcel">
                         <vue-good-table :line-numbers="true" :columns="columns" :rows="dataExcel" :search-options="{
-                                    enabled: true,
-                                }" :pagination-options="{
-                                    enabled: true,
-                                    perPageDropdown: [100, 200, 500],
-                                }" styleClass="vgt-table striped bordered condensed" class="py-0">
+                enabled: true,
+            }" :pagination-options="{
+                enabled: true,
+                perPageDropdown: [100, 200, 500],
+            }" styleClass="vgt-table striped bordered condensed" class="py-0">
                             <template #table-row="props">
                                 <span v-if="props.column.field == 'actions'">
                                     <div class="text-sm font-medium text-center flex justify-center space-x-1">
                                         <button class="btn btn-sm btn-warning" @click="
-                                    doDelete(props.index, props.row.nama)
-                                    ">
+                doDelete(props.index, props.row.nama)
+                ">
                                             Delete
                                         </button>
                                     </div>
@@ -673,16 +533,16 @@ const doStore = async () => {
                                 <span v-else-if="props.column.field == 'tgl_import'">
                                     <div class="text-center">
                                         {{
-                                    props.row.tgl_import ? moment(props.row.tgl_import).format("DD MMMM YYYY") :
-                                        null
-                                }}
+                props.row.tgl_import ? moment(props.row.tgl_import).format("DD MMMM YYYY") :
+                    null
+            }}
                                     </div>
                                 </span>
                                 <span v-else-if="props.column.field == 'data_sertifikat'">
                                     <div class="text-center">
                                         {{
-                                    props.row.data_sertifikat ? 'Ada' : "-"
-                                }}
+                props.row.data_sertifikat ? 'Ada' : "-"
+            }}
                                         <button class="btn btn-sm btn-info"
                                             @click="fnPeriksaDataSertifikat(props.index)"
                                             v-if="props.row.data_sertifikat">Periksa</button>
@@ -691,8 +551,8 @@ const doStore = async () => {
                                 <span v-else-if="props.column.field == 'data_deteksi'">
                                     <div class="text-center">
                                         {{
-                                    props.row.data_deteksi ? "Ada" : "-"
-                                }}
+                props.row.data_deteksi ? "Ada" : "-"
+                                        }}
                                         <button class="btn btn-sm btn-info" @click="fnPeriksaDataDeteksi(props.index)"
                                             v-if="props.row.data_deteksi">Periksa</button>
                                     </div>

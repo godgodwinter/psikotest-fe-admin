@@ -129,6 +129,12 @@ const AdminSekolahRoutes = [
                 name: "admin-sekolah-submenu-8km",
                 component: () => import("@/views/ist_8km/Data8kmPerkelas.vue"),
               },
+              // !cfit
+              {
+                path: "/pages/admin/mastering/sekolah/:sekolah_id/submenu/kelas/:kelas_id?/cfit",
+                name: "admin-sekolah-submenu-cfit",
+                component: () => import("@/views/cfit/DataCfitPerkelas.vue"),
+              },
               // ! DATA-MINATBAKAT-PROSES-END
             ],
           },
@@ -143,6 +149,14 @@ const AdminSekolahRoutes = [
         path: "/pages/admin/mastering/sekolah/:sekolah_id?/submenu/kelas/:kelas_id?/cfit/import",
         name: "admin-sekolah-submenu-cfit-import",
         component: () => import("@/views/ist/import/CfitImportIndex.vue"),
+      },
+      {
+        path: "/pages/admin/mastering/sekolah/:sekolah_id?/submenu/kelas/:kelas_id?/cfit/import_iq_generator",
+        name: "admin-sekolah-submenu-cfit-import-iq-generator",
+        component: () =>
+          import(
+            "@/views/ist/import/CfitImportIndex_rumus_iq_generator_Index.vue"
+          ),
       },
       {
         path: "/pages/admin/mastering/sekolah/:sekolah_id?/submenu/kelas/:kelas_id?/ist/import/migrasi",
