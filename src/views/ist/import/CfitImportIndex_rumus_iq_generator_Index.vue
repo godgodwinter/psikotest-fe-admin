@@ -342,6 +342,15 @@ const doStore = async () => {
     let datarow_d = []
     let datarow_e = []
     let datarow_f = []
+    let datarow_g = []
+    let datarow_h = []
+    let datarow_i = []
+    let datarow_j = []
+    let datarow_k = []
+    let datarow_l = []
+    let datarow_m = []
+    let datarow_n = []
+    let datarow_o = []
     for (let i = 0; i < dataAsli.length; i++) {
         // console.log(dataAsli[i]);
         let dataInput_a = {
@@ -384,8 +393,71 @@ const doStore = async () => {
             iq: parseInt(dataAsli[i].f),
         }
         datarow_f.push(dataInput_f)
+
+        let dataInput_g = {
+            id: i,
+            nilai: parseInt(dataAsli[i].nilai),
+            iq: parseInt(dataAsli[i].g),
+        }
+        datarow_g.push(dataInput_g)
+
+        let dataInput_h = {
+            id: i,
+            nilai: parseInt(dataAsli[i].nilai),
+            iq: parseInt(dataAsli[i].h),
+        }
+        datarow_h.push(dataInput_h)
+
+        let dataInput_i = {
+            id: i,
+            nilai: parseInt(dataAsli[i].nilai),
+            iq: parseInt(dataAsli[i].i),
+        }
+        datarow_i.push(dataInput_i)
+
+        let dataInput_j = {
+            id: i,
+            nilai: parseInt(dataAsli[i].nilai),
+            iq: parseInt(dataAsli[i].j),
+        }
+        datarow_j.push(dataInput_j)
+
+        let dataInput_k = {
+            id: i,
+            nilai: parseInt(dataAsli[i].nilai),
+            iq: parseInt(dataAsli[i].k),
+        }
+        datarow_k.push(dataInput_k)
+
+        let dataInput_l = {
+            id: i,
+            nilai: parseInt(dataAsli[i].nilai),
+            iq: parseInt(dataAsli[i].l),
+        }
+        datarow_l.push(dataInput_l)
+
+        let dataInput_m = {
+            id: i,
+            nilai: parseInt(dataAsli[i].nilai),
+            iq: parseInt(dataAsli[i].m),
+        }
+        datarow_m.push(dataInput_m)
+
+        let dataInput_n = {
+            id: i,
+            nilai: parseInt(dataAsli[i].nilai),
+            iq: parseInt(dataAsli[i].n),
+        }
+        datarow_n.push(dataInput_n)
+
+        let dataInput_o = {
+            id: i,
+            nilai: parseInt(dataAsli[i].nilai),
+            iq: parseInt(dataAsli[i].o),
+        }
+        datarow_o.push(dataInput_o)
     }
-    console.log(datarow_f);
+    console.log(datarow_g);
     // try {
     //     const response = await ApiIst.post(
     //         `cfit/hasil/import_offline`,

@@ -88,9 +88,19 @@ const columns = [
         type: "String",
     },
     {
-        label: "cfit",
-        field: "cfit",
+        label: "Tanggal Lahir",
+        field: "tgllahir",
         type: "String",
+    },
+    {
+        label: "cfit tipe",
+        field: "cfit",
+        type: "Number",
+    },
+    {
+        label: "IQ",
+        field: "iq",
+        type: "Number",
     },
     {
         label: "sub_1",
@@ -116,16 +126,6 @@ const columns = [
         type: "Number",
     },
     {
-        label: "pohon_1",
-        field: "pohon_1",
-        type: "Number",
-    },
-    {
-        label: "pohon_2",
-        field: "pohon_2",
-        type: "Number",
-    },
-    {
         label: "citacita_1",
         field: "citacita_1",
         type: "String",
@@ -141,6 +141,16 @@ const columns = [
         label: "citacita_3",
         field: "citacita_3",
         type: "String",
+    },
+    {
+        label: "pohon_1",
+        field: "pohon_1",
+        type: "Number",
+    },
+    {
+        label: "pohon_2",
+        field: "pohon_2",
+        type: "Number",
     },
 ];
 
@@ -173,7 +183,7 @@ const getData = async () => {
     try {
         data.value = []
         isLoading.value = true;
-        const response = await ApiIst.get(`ist/8km/kelas/${getSekolahAktif.value.kelas_id}`);
+        const response = await ApiIst.get(`cfit/hasil/sekolah/${getSekolahAktif.value.sekolah_id}/kelas/${getSekolahAktif.value.kelas_id}`);
         // data.value = response.data;
         console.log(response);
         const res = [];
@@ -196,24 +206,10 @@ const doCetak = () => {
         `${VITE_API_FE_REACT}cfit/v1/cetak/${getSekolahAktif.value.kelas_id}/true`
     );
 }
-const doCetak_v2 = () => {
+
+const doCetak_pohon = () => {
     window.open(
-        `${VITE_API_FE_REACT}ist_8km/v2_lengkap/cetak/${getSekolahAktif.value.kelas_id}/true`
-    );
-}
-const doCetak_ist_8km_gabungan = () => {
-    window.open(
-        `${VITE_API_FE_REACT}ist_8km/v_ist8km_gabungan/cetak/${getSekolahAktif.value.kelas_id}/true`
-    );
-}
-const doCetak_ist_8km_gabungan_v5 = () => {
-    window.open(
-        `${VITE_API_FE_REACT}ist_8km/v_ist_lengkap_v5/cetak/${getSekolahAktif.value.kelas_id}/true`
-    );
-}
-const doCetak_ist_8km_gabungan_v6 = () => {
-    window.open(
-        `${VITE_API_FE_REACT}ist_8km/v_ist_lengkap_v6/cetak/${getSekolahAktif.value.kelas_id}/true`
+        `${VITE_API_FE_REACT}cfit/v1/cetak/${getSekolahAktif.value.kelas_id}/true/pohon`
     );
 }
 </script>
@@ -235,7 +231,9 @@ const doCetak_ist_8km_gabungan_v6 = () => {
                         IMPORT CFIT Offline</button>
                 </RouterLink>
                 <button class="btn btn-sm btn-success" @click="doCetak()">
-                    Cetak CFIT</button>
+                    Cetak CFIT Hspq</button>
+                <button class="btn btn-sm btn-success" @click="doCetak_pohon()">
+                    Cetak CFIT Pohon</button>
             </div>
 
             <div class="w-full bg-base-100 shadow-sm rounded-lg py-4 px-4">
@@ -296,46 +294,65 @@ const doCetak_ist_8km_gabungan_v6 = () => {
                                                 </button>
                                             </div> -->
                                         </span>
-                                        <span v-else-if="props.column.field == '8km'">
-                                            {{ props.row.data_8km ? "Ada" : "-" }}
-                                        </span>
-                                        <span v-else-if="props.column.field == 'kb'">
-                                            {{ props.row.data_8km ? props.row.data_8km.data_8km_proses.gabungan_kb : "-"
-                                            }}
-                                        </span>
-                                        <span v-else-if="props.column.field == 'lm'">
-                                            {{ props.row.data_8km ? props.row.data_8km.data_8km_proses.gabungan_lm : "-"
-                                            }}
-                                        </span>
-                                        <span v-else-if="props.column.field == 'ks'">
-                                            {{ props.row.data_8km ? props.row.data_8km.data_8km_proses.gabungan_ks : "-"
-                                            }}
-                                        </span>
-                                        <span v-else-if="props.column.field == 'km'">
-                                            {{ props.row.data_8km ? props.row.data_8km.data_8km_proses.km : "-" }}
-                                        </span>
-                                        <span v-else-if="props.column.field == 'kk'">
-                                            {{ props.row.data_8km ? props.row.data_8km.data_8km_proses.kk : "-" }}
-                                        </span>
-                                        <span v-else-if="props.column.field == 'ki'">
-                                            {{ props.row.data_8km ? props.row.data_8km.data_8km_proses.ki : "-" }}
-                                        </span>
-                                        <span v-else-if="props.column.field == 'ka'">
-                                            {{ props.row.data_8km ? props.row.data_8km.data_8km_proses.ka : "-" }}
-                                        </span>
-                                        <span v-else-if="props.column.field == 'kn'">
-                                            {{ props.row.data_8km ? props.row.data_8km.data_8km_proses.kn : "-" }}
-                                        </span>
-                                        <span v-else-if="props.column.field == 'citacita_1'">
-                                            {{ props.row.data_8km ? props.row.data_8km.citacita_1 : "-" }}
-                                        </span>
-                                        <span v-else-if="props.column.field == 'citacita_2'">
-                                            {{ props.row.data_8km ? props.row.data_8km.citacita_2 : "-" }}
-                                        </span>
-                                        <span v-else-if="props.column.field == 'citacita_3'">
-                                            {{ props.row.data_8km ? props.row.data_8km.citacita_3 : "-" }}
+                                        <span v-else-if="props.column.field == 'nama'">
+                                            {{ props.row.data_user ? props.row.data_user?.nama : "-" }}
                                         </span>
 
+                                        <span v-else-if="props.column.field == 'tgllahir'">
+                                            {{ props.row.data_user ? props.row.data_user?.tgllahir : "-" }}
+                                            ( {{ props.row.data_user ? props.row.data_user?.tahun : "-" }} -
+                                            {{ props.row.data_user ? props.row.data_user?.bulan : "-" }})
+                                        </span>
+                                        <span v-else-if="props.column.field == 'tahun'">
+                                            {{ props.row.data_user ? props.row.data_user?.tahun : "-" }}
+                                        </span>
+                                        <span v-else-if="props.column.field == 'bulan'">
+                                            {{ props.row.data_user ? props.row.data_user?.bulan : "-" }}
+                                        </span>
+
+
+                                        <span v-else-if="props.column.field == 'cfit'">
+                                            {{ props.row.data_cfit ? props.row.data_cfit?.cfit : "-" }}
+                                        </span>
+
+                                        <span v-else-if="props.column.field == 'iq'">
+                                            {{ props.row.data_cfit_hitung ? props.row.data_cfit_hitung?.data?.iq?.value
+        : "-"
+                                            }}
+                                        </span>
+                                        <span v-else-if="props.column.field == 'sub_1'">
+                                            {{ props.row.data_cfit ? props.row.data_cfit?.sub_1 : "-" }}
+                                        </span>
+
+                                        <span v-else-if="props.column.field == 'sub_2'">
+                                            {{ props.row.data_cfit ? props.row.data_cfit?.sub_2 : "-" }}
+                                        </span>
+
+                                        <span v-else-if="props.column.field == 'sub_3'">
+                                            {{ props.row.data_cfit ? props.row.data_cfit?.sub_3 : "-" }}
+                                        </span>
+
+                                        <span v-else-if="props.column.field == 'sub_4'">
+                                            {{ props.row.data_cfit ? props.row.data_cfit?.sub_4 : "-" }}
+                                        </span>
+
+                                        <span v-else-if="props.column.field == 'citacita_1'">
+                                            {{ props.row.data_cfit ? props.row.data_cfit?.citacita_1 : "-" }}
+                                        </span>
+
+                                        <span v-else-if="props.column.field == 'citacita_2'">
+                                            {{ props.row.data_cfit ? props.row.data_cfit?.citacita_2 : "-" }}
+                                        </span>
+
+                                        <span v-else-if="props.column.field == 'citacita_3'">
+                                            {{ props.row.data_cfit ? props.row.data_cfit?.citacita_3 : "-" }}
+                                        </span>
+                                        <span v-else-if="props.column.field == 'pohon_1'">
+                                            {{ props.row.data_cfit ? props.row.data_cfit?.pohon_1 : "-" }}
+                                        </span>
+                                        <span v-else-if="props.column.field == 'pohon_2'">
+                                            {{ props.row.data_cfit ? props.row.data_cfit?.pohon_2 : "-" }}
+                                        </span>
                                         <span v-else>
                                             {{ props.formattedRow[props.column.field] }}
                                         </span>
