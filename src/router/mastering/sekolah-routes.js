@@ -158,6 +158,15 @@ const AdminSekolahRoutes = [
             "@/views/ist/import/CfitImportIndex_rumus_iq_generator_Index.vue"
           ),
       },
+
+      {
+        path: "/pages/admin/mastering/sekolah/:sekolah_id?/submenu/kelas/:kelas_id?/cfit/import_pohon_generator",
+        name: "admin-sekolah-submenu-cfit-import-pohon-generator",
+        component: () =>
+          import(
+            "@/views/ist/import/CfitImportIndex_rumus_pohon_generator_Index.vue"
+          ),
+      },
       {
         path: "/pages/admin/mastering/sekolah/:sekolah_id?/submenu/kelas/:kelas_id?/ist/import/migrasi",
         name: "admin-sekolah-submenu-ist-import-migration",
