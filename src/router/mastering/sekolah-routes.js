@@ -19,6 +19,12 @@ const AdminSekolahRoutes = [
             name: "admin-sekolah",
             component: () => import("@/views/admin/sekolah/SekolahIndex.vue"),
           },
+
+          {
+            path: "/pages/admin/mastering/sekolah/tambah",
+            name: "admin-sekolah-tambah",
+            component: () => import("@/views/admin/sekolah/SekolahTambah.vue"),
+          },
           {
             path: "/pages/admin/mastering/sekolah/dashboard",
             name: "admin-sekolah-submenu",

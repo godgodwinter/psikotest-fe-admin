@@ -118,20 +118,20 @@ const doEditData = async (id, index) => {
                     <div class="bg-white shadow rounded-lg px-4 py-4">
                         <div v-if="data">
                             <vue-good-table :line-numbers="true" :columns="columns" :rows="data" :search-options="{
-                                enabled: true,
-                            }" :pagination-options="{
-    enabled: true,
-    perPageDropdown: [50, 100, 150, 200],
-}" styleClass="vgt-table striped bordered condensed" class="py-0">
+            enabled: true,
+        }" :pagination-options="{
+            enabled: true,
+            perPageDropdown: [50, 100, 150, 200],
+        }" styleClass="vgt-table striped bordered condensed" class="py-0">
                                 <template #table-actions>
                                     <div class="space-x-1 space-y-1 gap-1">
-                                        <!-- <router-link :to="{
-                                                        name: 'admin-ujianstudi-paketsoal-tambah',
-                                                    }">
-                                                        <button class="btn btn-sm btn-primary tooltip" data-tip="Tambah">
-                                                            TAMBAH
-                                                        </button>
-                                                    </router-link> -->
+                                        <router-link :to="{
+            name: 'admin-sekolah-tambah',
+        }">
+                                            <button class="btn btn-sm btn-primary tooltip" data-tip="Tambah">
+                                                TAMBAH
+                                            </button>
+                                        </router-link>
                                     </div>
                                 </template>
                                 <template #table-row="props">
