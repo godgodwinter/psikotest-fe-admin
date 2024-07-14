@@ -161,6 +161,8 @@ const doResetSalah = async (proses_detail_id,) => {
     }
 }
 const doResetWaktu = async (proses_detail_id,) => {
+    console.log('id mapel', proses_detail_id);
+    console.log(`/ujiankhusus/proses/sekolah/${sekolah_id.value}/kelas/${kelas_id.value}/siswa/${siswa_id.value}/reset/${proses_detail_id}/waktu`);
     if (confirm("Apakah anda yakin mereset jawban salah dan waktu data ini?")) {
 
         try {
