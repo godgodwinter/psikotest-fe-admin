@@ -409,7 +409,8 @@ const onSubmit = async (values) => {
                     </div>
                 </div>
                 <div>
-                    <p class="text-sm font-bold">Catatan : Tombol Reset waktu dan Force Finish bisa digunakan ketika ada
+                    <p class="text-sm font-bold">Catatan : Tombol Reset waktu , reset salah dan Force Finish bisa
+                        digunakan ketika ada
                         data
                         dari redis / ujian
                         aktif sesuai tanggal batas ujian</p>
