@@ -90,6 +90,25 @@ const AdminSekolahRoutes = [
                   ),
               },
 
+              // ! UJIANSTUDI-PROSES versi ringan
+
+              {
+                path: "/pages/admin/mastering/sekolah/:sekolah_id/submenu/kelas/:kelas_id?/ujiankhusus/v2",
+                name: "admin-sekolah-submenu-ujiankhusus-v2",
+                component: () =>
+                  import(
+                    "@/views/admin/ujiankhusus/proses/UjiankhususProsesPerkelas_v2.vue"
+                  ),
+              },
+              {
+                path: "/pages/admin/mastering/sekolah/:sekolah_id/submenu/kelas/:kelas_id?/ujiankhusus/v2/siswa/:siswa_id/reset",
+                name: "admin-sekolah-submenu-ujiankhusus-persiswa-reset-v2",
+                component: () =>
+                  import(
+                    "@/views/admin/ujiankhusus/proses/UjiankhususProsesPerSiswa_reset_v2.vue"
+                  ),
+              },
+
               {
                 path: "/pages/admin/mastering/sekolah/:sekolah_id/submenu/kelas/:kelas_id?/ujiankhusus/siswa/:siswa_id/tambahan",
                 name: "admin-sekolah-submenu-ujiankhusus-persiswa-tambahan",
