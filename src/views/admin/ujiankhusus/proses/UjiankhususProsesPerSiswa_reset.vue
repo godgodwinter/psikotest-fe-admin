@@ -408,6 +408,12 @@ const onSubmit = async (values) => {
                         </div>
                     </div>
                 </div>
+                <div>
+                    <p class="text-sm font-bold">Catatan : Tombol Reset waktu dan Force Finish bisa digunakan ketika ada
+                        data
+                        dari redis / ujian
+                        aktif sesuai tanggal batas ujian</p>
+                </div>
             </div>
             <!-- <div v-if="dataForm.desc" class="w-96 lg:w-4/6">
         <Form v-slot="{ errors }" @submit="onSubmit">
