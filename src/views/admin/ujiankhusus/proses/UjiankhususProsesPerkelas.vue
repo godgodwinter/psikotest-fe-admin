@@ -586,6 +586,26 @@ const doGenerateHasilPerkelas_false = async (ttd) => {
         }
     }
 }
+
+const do_Sinkron_dataRedis = async (ttd) => {
+    if (confirm("Apakah anda yakin sinkron data Redis  Kelas Ini?")) {
+
+        try {
+            isLoading.value = true;
+            // let dataFormSend = {
+            //     replace: false
+            // };
+            const response = await ApiUjianKhusus.post(`/ujiankhusus/hasil/sinkron_redis/sekolah/${sekolah_id.value}/kelas/${kelas_id.value}`);
+            Toast.babeng("Berhasil", 'Sinkron Ujian telah berhasil!');
+            getData();
+            return true;
+        } catch (error) {
+            isLoading.value = false;
+            isError.value = true;
+            console.error(error);
+        }
+    }
+}
 const doExportExcel = (ttd) => {
     window.open(
         `${VITE_API_FE_REACT}ujiankhusus/v1/export/sekolah/${getSekolahAktif.value.sekolah_id}/kelas/${getSekolahAktif.value.kelas_id}`
@@ -782,7 +802,17 @@ const formatTanggal = "DD MMMM YYYY HH:mm:ss";
 
 
                     </button>
+
                 </div>
+            </div>
+
+            <div class="space-x-2 space-y-2 shadow-sm py-1">
+
+                <button class="btn btn-sm btn-info tooltip" data-tip=" Sinkron Data Redis"
+                    @click="do_Sinkron_dataRedis()">
+                    Sinkron Data Redis
+                </button>
+
             </div>
             <div class="space-x-2 space-y-0 shadow-sm flex justify-start ">
 

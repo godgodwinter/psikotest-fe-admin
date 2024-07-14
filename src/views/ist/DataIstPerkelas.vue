@@ -231,6 +231,11 @@ const doCetakIstLengkap_v4 = () => {
         `${VITE_API_FE_REACT}ist_8km/v_ist_lengkap_v4/cetak/${getSekolahAktif.value.kelas_id}/true`
     );
 }
+const doCetakIstLengkap_v4_tanpa_aspek = () => {
+    window.open(
+        `${VITE_API_FE_REACT}ist_8km/v_ist_lengkap_v4/cetak/${getSekolahAktif.value.kelas_id}/true/tanpa_aspek`
+    );
+}
 </script>
 <template>
     <span v-if="isLoading">
@@ -244,7 +249,7 @@ const doCetakIstLengkap_v4 = () => {
             <article class="prose lg:prose-sm">
                 <h1>DATA IST KELAS {{ kelas_nama }}</h1>
             </article>
-            <div class="space-x-2">
+            <div class="space-x-2 space-y-2">
                 <RouterLink
                     :to="{ name: 'admin-sekolah-submenu-ist-import-migration', params: { sekolah_id: 0, kelas_id: 0 } }">
                     <button class="btn btn-sm ">
@@ -260,7 +265,10 @@ const doCetakIstLengkap_v4 = () => {
                     Cetak 8KM+IST Gabungan</button>
 
                 <button class="btn btn-sm btn-secondary" @click="doCetakIstLengkap_v4()">
-                    Cetak Ist Lengkap Versi Lama</button>
+                    Cetak Ist Lengkap Versi Lama Lengkap </button>
+
+                <button class="btn btn-sm btn-secondary" @click="doCetakIstLengkap_v4_tanpa_aspek()">
+                    Cetak Ist Lengkap Versi Lama (Tanpa Aspek / baru)</button>
             </div>
 
             <div class="w-full bg-base-100 shadow-sm rounded-lg py-4 px-4">

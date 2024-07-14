@@ -62,7 +62,7 @@ const onSubmit = async (values) => {
         const response = await Api.post(`master/sekolah`, dataStore);
         console.log(response);
         Toast.success("Info", "Data berhasil ditambahkan!");
-        // router.push({ name: "admin-sekolahs" });
+        router.push({ name: "admin-sekolah" });
         return true;
     } catch (error) {
         console.error(error);
