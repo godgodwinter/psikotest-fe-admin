@@ -85,7 +85,7 @@ adminPagesStore.$subscribe((mutation, state) => {
                             d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
                     </svg>
                 </span>
-                <span>PROSES</span>
+                <span>MENU UJIAN</span>
             </div>
             <div class="px-2">
                 <ul class="space-y-0 pb-2 lg:flex flex-wrap px-0 gap-0 justify-between">
@@ -99,18 +99,6 @@ adminPagesStore.$subscribe((mutation, state) => {
                                     d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
                             </svg>
                             <span class="ml-1 capitalize">Ujian Lintas Studi</span>
-                        </router-link>
-                    </li>
-                    <li class="bg-white lg:w-full py-0">
-                        <router-link
-                            :to="{ name: 'admin-sekolah-submenu-ujiankhusus', params: { sekolah_id, kelas_id } }"
-                            class="text-base-content font-normal rounded-lg flex items-center p-2 group hover:link">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20"
-                                fill="currentColor">
-                                <path
-                                    d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
-                            </svg>
-                            <span class="ml-1">Ujian Khusus</span>
                         </router-link>
                     </li>
 
@@ -200,6 +188,30 @@ adminPagesStore.$subscribe((mutation, state) => {
                                     d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
                             </svg>
                             <span class="ml-1">Data CFIT</span>
+                        </router-link>
+                    </li>
+
+
+                    <div class="flex items-center space-x-3 font-semibold text-base-content text-xl leading-8">
+                        <span class="text-green-500">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                                stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
+                            </svg>
+                        </span>
+                        <span>SEDANG DIPERBAIKI</span>
+                    </div>
+                    <li class="bg-white lg:w-full py-0">
+                        <router-link
+                            :to="{ name: 'admin-sekolah-submenu-ujiankhusus', params: { sekolah_id, kelas_id } }"
+                            class="text-base-content font-normal rounded-lg flex items-center p-2 group hover:link">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20"
+                                fill="currentColor">
+                                <path
+                                    d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
+                            </svg>
+                            <span class="ml-1">Ujian Khusus V1</span>
                         </router-link>
                     </li>
                 </ul>

@@ -606,6 +606,28 @@ const do_Sinkron_dataRedis = async (ttd) => {
         }
     }
 }
+const do_GenerateDataMentah = async (ttd) => {
+    window.open(
+        `${VITE_API_FE_REACT}ujiankhusus/v1/export_data_mentah/sekolah/${getSekolahAktif.value.sekolah_id}/kelas/${getSekolahAktif.value.kelas_id}`
+    );
+    // if (confirm("Apakah anda yakin generate export data mentah  Kelas Ini?")) {
+
+    //     try {
+    //         isLoading.value = true;
+    //         // let dataFormSend = {
+    //         //     replace: false
+    //         // };
+    //         const response = await ApiUjianKhusus.post(`/ujiankhusus/hasil/sekolah/${sekolah_id.value}/kelas/${kelas_id.value}/generate_export_data_mentah`);
+    //         // Toast.babeng("Berhasil", 'E Data Mentah berhasil!');
+    //         getData();
+    //         return true;
+    //     } catch (error) {
+    //         isLoading.value = false;
+    //         isError.value = true;
+    //         console.error(error);
+    //     }
+    // }
+}
 const doExportExcel = (ttd) => {
     window.open(
         `${VITE_API_FE_REACT}ujiankhusus/v1/export/sekolah/${getSekolahAktif.value.sekolah_id}/kelas/${getSekolahAktif.value.kelas_id}`
@@ -811,6 +833,10 @@ const formatTanggal = "DD MMMM YYYY HH:mm:ss";
                 <button class="btn btn-sm btn-info tooltip" data-tip=" Sinkron Data Redis"
                     @click="do_Sinkron_dataRedis()">
                     Sinkron Data Redis
+                </button>
+                <button class="btn btn-sm btn-info tooltip" data-tip=" Export Data Mentah Hasil Ujian"
+                    @click="do_GenerateDataMentah()">
+                    Export Data Mentah Hasil Ujian
                 </button>
 
             </div>
