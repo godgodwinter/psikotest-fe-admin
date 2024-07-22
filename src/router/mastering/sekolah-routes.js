@@ -100,6 +100,15 @@ const AdminSekolahRoutes = [
                     "@/views/admin/ujiankhusus/proses/UjiankhususProsesPerkelas_v2.vue"
                   ),
               },
+
+              {
+                path: "/pages/admin/mastering/sekolah/:sekolah_id/submenu/kelas/:kelas_id?/ujiankhusus/v3",
+                name: "admin-sekolah-submenu-ujiankhusus-v3",
+                component: () =>
+                  import(
+                    "@/views/admin/ujiankhusus/proses/UjiankhususProsesPerkelas_v3.vue"
+                  ),
+              },
               {
                 path: "/pages/admin/mastering/sekolah/:sekolah_id/submenu/kelas/:kelas_id?/ujiankhusus/v2/siswa/:siswa_id/reset",
                 name: "admin-sekolah-submenu-ujiankhusus-persiswa-reset-v2",
