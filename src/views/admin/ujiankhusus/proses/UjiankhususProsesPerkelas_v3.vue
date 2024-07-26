@@ -320,7 +320,7 @@ const doPilihPaket = () => {
 
 
 const doGenerateSiswa = async (id, index) => {
-    if (confirm("Apakah anda yakin generate data ini?")) {
+    if (confirm("Apakah anda yakin generate data ini (v3)?")) {
         // console.log('====================================');
         // console.log(paketsoal_aktif.value.id);
         // console.log('====================================');
@@ -332,7 +332,7 @@ const doGenerateSiswa = async (id, index) => {
         }
         try {
             isLoading.value = true;
-            const response = await ApiUjianKhusus.post(`ujiankhusus/proses/sekolah/${sekolah_id.value}/kelas/${getSekolahAktif.value.kelas_id}/siswa/${id}`, dataFormSend);
+            const response = await ApiUjianKhusus.post(`ujiankhusus/proses/v3/sekolah/${sekolah_id.value}/kelas/${getSekolahAktif.value.kelas_id}/siswa/${id}`, dataFormSend);
             console.log(response?.data);
 
             Toast.babeng("Berhasil", 'Data berhasil digenerate!');
@@ -927,7 +927,7 @@ const formatTanggal = "DD MMMM YYYY HH:mm:ss";
 
                                                 </button>
                                                 <button class="btn btn-sm btn-warning tooltip"
-                                                    data-tip="Generate UJIAN KHUSUS"
+                                                    data-tip="Generate UJIAN KHUSUS v3"
                                                     @click="doGenerateSiswa(props.row.id)">
                                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none"
                                                         viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
