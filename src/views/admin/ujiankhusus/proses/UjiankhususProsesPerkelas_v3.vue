@@ -330,6 +330,9 @@ const doGenerateSiswa = async (id, index) => {
             tgl_batas_terakhir: dataForm.value.tgl_batas_terakhir,
             tipeCitacita: inputSelectTipeCitacita.value
         }
+        console.log('====================================');
+        console.log(dataFormSend);
+        console.log('====================================');
         try {
             isLoading.value = true;
             const response = await ApiUjianKhusus.post(`ujiankhusus/proses/v3/sekolah/${sekolah_id.value}/kelas/${getSekolahAktif.value.kelas_id}/siswa/${id}`, dataFormSend);
@@ -348,7 +351,7 @@ const doDeleteProsesSiswa = async (id, proses_id) => {
     if (confirm("Apakah anda yakin menghapus data ujian ini?")) {
         try {
             isLoading.value = true;
-            const response = await ApiUjianKhusus.delete(`ujiankhusus/proses/sekolah/${sekolah_id.value}/kelas/${getSekolahAktif.value.kelas_id}/siswa/${id}`);
+            const response = await ApiUjianKhusus.delete(`ujiankhusus/proses/v3/sekolah/${sekolah_id.value}/kelas/${getSekolahAktif.value.kelas_id}/siswa/${id}`);
             Toast.babeng("Berhasil", 'Data berhasil di hapus!');
             getData();
         } catch (error) {
@@ -387,7 +390,7 @@ const doDeleteProsesSiswaPerkelas = async (id) => {
     if (confirm("Apakah anda yakin menghapus data ujian ini?")) {
         try {
             isLoading.value = true;
-            const response = await ApiUjianKhusus.delete(`ujiankhusus/proses/sekolah/${sekolah_id.value}/kelas/${getSekolahAktif.value.kelas_id}`);
+            const response = await ApiUjianKhusus.delete(`ujiankhusus/proses/v3/sekolah/${sekolah_id.value}/kelas/${getSekolahAktif.value.kelas_id}`);
             Toast.babeng("Berhasil", 'Data berhasil di hapus!');
             getData();
         } catch (error) {
@@ -518,7 +521,7 @@ const doCachingRedisPerSiswa = async (id, index) => {
         let dataFormSend = {}
         try {
             isLoading.value = true;
-            const response = await ApiUjianKhusus.post(`ujiankhusus/proses/redis/siswa/${id}`);
+            const response = await ApiUjianKhusus.post(`ujiankhusus/proses/v3/sekolah/${sekolah_id.value}/kelas/${getSekolahAktif.value.kelas_id}/siswa/${id}/caching`);
             Toast.babeng("Berhasil", 'Cacing proses Ujian berhasil digenerate!');
             getData();
         } catch (error) {
@@ -534,7 +537,7 @@ const doCachingRedisPerKelas = async () => {
         let dataFormSend = {}
         try {
             isLoading.value = true;
-            const response = await ApiUjianKhusus.post(`ujiankhusus/proses/redis/kelas/${getSekolahAktif.value.kelas_id}`);
+            const response = await ApiUjianKhusus.post(`ujiankhusus/proses/v3/sekolah/${sekolah_id.value}/kelas/${getSekolahAktif.value.kelas_id}/caching`);
             // const response = await Api.get(`redis/studiv2/proses_kelas/${getSekolahAktif.value.kelas_id}/store`, dataFormSend);
             Toast.babeng("Berhasil", 'Cacing proses Ujian berhasil digenerate!');
             getData();
@@ -759,7 +762,7 @@ const formatTanggal = "DD MMMM YYYY HH:mm:ss";
             </div>
             <div class="space-x-2 shadow-sm">
                 <button class="btn btn-sm btn-error p-2" @click="doDeleteProsesSiswaPerkelas()">
-                    Delete Per Kelas
+                    Delete Per Kelas V3
                 </button>
                 <button class="btn btn-sm btn-info p-2" @click="doGenerateSiswaPerkelas()">
                     Generate UJIAN KHUSUS Per Kelas V3
@@ -916,7 +919,7 @@ const formatTanggal = "DD MMMM YYYY HH:mm:ss";
                                         <span v-if="props.column.field == 'actions'">
                                             <div class="text-sm font-medium text-center flex justify-center space-x-1">
                                                 <button class="btn btn-sm btn-danger tooltip"
-                                                    data-tip="Caching UJIAN KHUSUS"
+                                                    data-tip="Caching UJIAN KHUSUS v3"
                                                     @click="doCachingRedisPerSiswa(props.row.id)">
                                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none"
                                                         viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
@@ -948,7 +951,7 @@ const formatTanggal = "DD MMMM YYYY HH:mm:ss";
                                                         </svg></button>
                                                 </RouterLink> -->
                                                 <button class="btn btn-sm btn-error tooltip"
-                                                    data-tip="Delete UJIAN KHUSUS"
+                                                    data-tip="Delete UJIAN KHUSUS v3"
                                                     @click="doDeleteProsesSiswa(props.row.id, props.row.proses_id)"
                                                     v-if="props.row.paketsoal_nama">
                                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none"
