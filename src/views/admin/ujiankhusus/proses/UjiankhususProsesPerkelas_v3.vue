@@ -163,6 +163,12 @@ const columns = [
         field: "kelas_nama",
         type: "String",
     },
+
+    {
+        label: "Siswa Id",
+        field: "id",
+        type: "String",
+    },
 ];
 
 const getData = async () => {
@@ -968,24 +974,21 @@ const formatTanggal = "DD MMMM YYYY HH:mm:ss";
                                         <span v-else-if="props.column.field == 'hasil'">
                                             <div class="text-sm font-medium text-center flex justify-center space-x-1">
                                                 <RouterLink
-                                                    :to="{ name: 'admin-sekolah-submenu-ujiankhusus-persiswa-reset', params: { sekolah_id, kelas_id, siswa_id: props.row.id } }">
+                                                    :to="{ name: 'admin-sekolah-submenu-ujiankhusus-persiswa-reset-v3', params: { sekolah_id, kelas_id, siswa_id: props.row.id } }">
                                                     <button class="btn btn-sm btn-warning tooltip"
-                                                        data-tip="MENU RESET v1">
-                                                        V1
-
-                                                    </button>
-                                                </RouterLink>
-                                                <RouterLink
-                                                    :to="{ name: 'admin-sekolah-submenu-ujiankhusus-persiswa-reset-v2', params: { sekolah_id, kelas_id, siswa_id: props.row.id } }">
-                                                    <button class="btn btn-sm btn-primary tooltip"
-                                                        data-tip="MENU RESET v2">
-                                                        V2
+                                                        data-tip="MENU RESET v3">
+                                                        V3
 
                                                     </button>
                                                 </RouterLink>
                                             </div>
                                         </span>
 
+                                        <span v-else-if="props.column.field == 'paketsoal_nama'">
+                                            <!-- {{ props.row.progres?.created_at }} -->
+                                            {{ props.row.ujiankhusus ? props.row.ujiankhusus?.khusus_paketsoal_nama :
+        "-" }}
+                                        </span>
                                         <span v-else-if="props.column.field == 'kelas_nama'">
                                             <!-- {{ props.row.progres?.created_at }} -->
                                             {{ props.row.kelas ? props.row.kelas?.nama : "-" }}
