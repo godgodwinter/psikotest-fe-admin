@@ -152,7 +152,7 @@ const doResetSalah = async (proses_detail_id,) => {
     if (confirm("Apakah anda yakin mereset jawban salah dan waktu data ini?")) {
 
         try {
-            const response = await Api.post(`/ujiankhusus/proses/sekolah/${sekolah_id.value}/kelas/${kelas_id.value}/siswa/${siswa_id.value}/reset/${proses_detail_id}/salah`);
+            const response = await Api.post(`/ujiankhusus/proses/v3/sekolah/${sekolah_id.value}/kelas/${kelas_id.value}/siswa/${siswa_id.value}/reset/${proses_detail_id}/salah`);
             Toast.babeng("Berhasil", 'Reset Salah berhasil!');
             getData();
             return true;
@@ -163,11 +163,11 @@ const doResetSalah = async (proses_detail_id,) => {
 }
 const doResetWaktu = async (proses_detail_id,) => {
     console.log('id mapel', proses_detail_id);
-    console.log(`/ujiankhusus/proses/sekolah/${sekolah_id.value}/kelas/${kelas_id.value}/siswa/${siswa_id.value}/reset/${proses_detail_id}/waktu`);
+    console.log(`/ujiankhusus/proses/v3/sekolah/${sekolah_id.value}/kelas/${kelas_id.value}/siswa/${siswa_id.value}/reset/${proses_detail_id}/waktu`);
     if (confirm("Apakah anda yakin mereset jawban salah dan waktu data ini?")) {
 
         try {
-            const response = await Api.post(`/ujiankhusus/proses/sekolah/${sekolah_id.value}/kelas/${kelas_id.value}/siswa/${siswa_id.value}/reset/${proses_detail_id}/waktu`);
+            const response = await Api.post(`/ujiankhusus/proses/v3/sekolah/${sekolah_id.value}/kelas/${kelas_id.value}/siswa/${siswa_id.value}/reset/${proses_detail_id}/waktu`);
             Toast.babeng("Berhasil", 'Reset Waktu berhasil!');
             getData();
             return true;
@@ -180,7 +180,7 @@ const doForceFinish = async (proses_detail_id,) => {
     if (confirm("Apakah anda yakin mengakhiri proses pada paketsoal ini?")) {
 
         try {
-            const response = await Api.post(`/ujiankhusus/proses/sekolah/${sekolah_id.value}/kelas/${kelas_id.value}/siswa/${siswa_id.value}/reset/${proses_detail_id}/forceFinish`);
+            const response = await Api.post(`/ujiankhusus/proses/v3/sekolah/${sekolah_id.value}/kelas/${kelas_id.value}/siswa/${siswa_id.value}/reset/${proses_detail_id}/forceFinish`);
             Toast.babeng("Berhasil", 'Reset Waktu berhasil!');
             getData();
             return true;
@@ -193,7 +193,7 @@ const doResetAll = async (proses_detail_id,) => {
     if (confirm("Apakah anda yakin mereset jawban salah dan waktu data ini?")) {
 
         try {
-            const response = await Api.post(`/ujiankhusus/proses/sekolah/${sekolah_id.value}/kelas/${kelas_id.value}/siswa/${siswa_id.value}/reset/${proses_detail_id}/semua`);
+            const response = await Api.post(`/ujiankhusus/proses/v3/sekolah/${sekolah_id.value}/kelas/${kelas_id.value}/siswa/${siswa_id.value}/reset/${proses_detail_id}/semua`);
             Toast.babeng("Berhasil", 'Reset Waktu dan Semua jawaban berhasil dilakukan!');
             getData();
             return true;
@@ -584,7 +584,7 @@ const onSubmit = async (values) => {
                                             </div>
                                             <div v-else
                                                 class="text-sm font-medium text-center flex justify-center space-x-1">
-                                                <button class="btn btn-sm btn-warning tooltip" data-tip="Finish"
+                                                <button class="btn btn-sm btn-warning tooltip" data-tip="Finish V3"
                                                     @click="doForceFinish(props.row.khusus_banksoal_aspek_detail_id)">
                                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none"
                                                         viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
@@ -593,7 +593,7 @@ const onSubmit = async (values) => {
                                                             d="M9 12.75 11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 0 1-1.043 3.296 3.745 3.745 0 0 1-3.296 1.043A3.745 3.745 0 0 1 12 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 0 1-3.296-1.043 3.745 3.745 0 0 1-1.043-3.296A3.745 3.745 0 0 1 3 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 0 1 1.043-3.296 3.746 3.746 0 0 1 3.296-1.043A3.746 3.746 0 0 1 12 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 0 1 3.296 1.043 3.746 3.746 0 0 1 1.043 3.296A3.745 3.745 0 0 1 21 12Z" />
                                                     </svg>
                                                 </button>
-                                                <button class="btn btn-sm btn-primary tooltip" data-tip="Reset Waktu"
+                                                <button class="btn btn-sm btn-primary tooltip" data-tip="Reset Waktu V3"
                                                     @click="doResetWaktu(props.row.khusus_banksoal_aspek_detail_id)">
                                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none"
                                                         viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
@@ -603,7 +603,7 @@ const onSubmit = async (values) => {
                                                     </svg>
                                                 </button>
                                                 <button class="btn btn-sm btn-success tooltip"
-                                                    data-tip="Reset Jawaban Salah"
+                                                    data-tip="Reset Jawaban Salah V3"
                                                     @click="doResetSalah(props.row.khusus_banksoal_aspek_detail_id)">
                                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none"
                                                         viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
@@ -612,7 +612,7 @@ const onSubmit = async (values) => {
                                                             d="M19.5 12c0-1.232-.046-2.453-.138-3.662a4.006 4.006 0 00-3.7-3.7 48.678 48.678 0 00-7.324 0 4.006 4.006 0 00-3.7 3.7c-.017.22-.032.441-.046.662M19.5 12l3-3m-3 3l-3-3m-12 3c0 1.232.046 2.453.138 3.662a4.006 4.006 0 003.7 3.7 48.656 48.656 0 007.324 0 4.006 4.006 0 003.7-3.7c.017-.22.032-.441.046-.662M4.5 12l3 3m-3-3l-3 3" />
                                                     </svg>
                                                 </button>
-                                                <button class="btn btn-sm btn-error tooltip" data-tip="Reset All"
+                                                <button class="btn btn-sm btn-error tooltip" data-tip="Reset All V3"
                                                     @click="doResetAll(props.row.khusus_banksoal_aspek_detail_id)">
                                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none"
                                                         viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
