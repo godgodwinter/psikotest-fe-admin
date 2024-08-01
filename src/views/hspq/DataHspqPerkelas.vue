@@ -224,6 +224,11 @@ const doCetak_negatif = () => {
         `${VITE_API_FE_REACT}hspq/v1/cetak/${getSekolahAktif.value.kelas_id}/true/negatif`
     );
 }
+const doCetak_kewirausahaan = () => {
+    window.open(
+        `${VITE_API_FE_REACT}hspq/kewirausahaan/cetak/${getSekolahAktif.value.kelas_id}`
+    );
+}
 const doCetak_sq = () => {
     window.open(
         `${VITE_API_FE_REACT}hspq_sq/v1/cetak/${getSekolahAktif.value.kelas_id}/true`
@@ -254,6 +259,8 @@ const doCetak_sq = () => {
                     Cetak Hspq Negatif Saja</button>
                 <button class="btn btn-sm btn-success" @click="doCetak_sq()">
                     Cetak Hspq Eq Scq Sq</button>
+                <button class="btn btn-sm btn-success" @click="doCetak_kewirausahaan()">
+                    Cetak Kewirausahaan</button>
             </div>
 
             <div class="w-full bg-base-100 shadow-sm rounded-lg py-4 px-4">
