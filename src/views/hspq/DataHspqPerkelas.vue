@@ -216,12 +216,12 @@ getData();
 
 const doCetak = () => {
     window.open(
-        `${VITE_API_FE_REACT}hspq/v1/cetak/${getSekolahAktif.value.kelas_id}/true`
+        `${VITE_API_FE_REACT}hspq/v1/cetak/${getSekolahAktif.value.kelas_id}/false`
     );
 }
 const doCetak_negatif = () => {
     window.open(
-        `${VITE_API_FE_REACT}hspq/v1/cetak/${getSekolahAktif.value.kelas_id}/true/negatif`
+        `${VITE_API_FE_REACT}hspq/v1/cetak/${getSekolahAktif.value.kelas_id}/false/negatif`
     );
 }
 const doCetak_kewirausahaan = () => {
@@ -231,7 +231,7 @@ const doCetak_kewirausahaan = () => {
 }
 const doCetak_sq = () => {
     window.open(
-        `${VITE_API_FE_REACT}hspq_sq/v1/cetak/${getSekolahAktif.value.kelas_id}/true`
+        `${VITE_API_FE_REACT}hspq_sq/v1/cetak/${getSekolahAktif.value.kelas_id}/false`
     );
 }
 </script>
