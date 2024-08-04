@@ -265,10 +265,10 @@ const doCetakIstLengkap_v4_tanpa_aspek = () => {
                     Cetak 8KM+IST Gabungan</button>
 
                 <button class="btn btn-sm btn-secondary" @click="doCetakIstLengkap_v4()">
-                    Cetak Ist Lengkap Versi Lama Lengkap </button>
+                    Cetak V4 Ist+8KM Lengkap Versi Lama Lengkap (ASPEK)</button>
 
                 <button class="btn btn-sm btn-secondary" @click="doCetakIstLengkap_v4_tanpa_aspek()">
-                    Cetak Ist Lengkap Versi Lama (Tanpa Aspek / baru)</button>
+                    Cetak V4 Ist Lengkap Versi Lama ( Tanpa Aspek )</button>
             </div>
 
             <div class="w-full bg-base-100 shadow-sm rounded-lg py-4 px-4">
