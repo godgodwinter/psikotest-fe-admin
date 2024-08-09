@@ -774,7 +774,7 @@ const formatTanggal = "DD MMMM YYYY HH:mm:ss";
                     Generate UJIAN KHUSUS Per Kelas V3
                 </button>
                 <button class="btn btn-sm btn-danger p-2" @click="doCachingRedisPerKelas()">
-                    Caching UJIAN KHUSUS Per Kelas
+                    Caching UJIAN KHUSUS Per Kelas V3
                 </button>
             </div>
             <!-- <div class="space-x-2 space-y-2 shadow-sm">
