@@ -571,7 +571,7 @@ const doGenerateHasilPerkelas = async (ttd) => {
 
         try {
             isLoading.value = true;
-            const response = await ApiUjianKhusus.post(`/ujiankhusus/hasil/generate/sekolah/${sekolah_id.value}/kelas/${kelas_id.value}`);
+            const response = await ApiUjianKhusus.post(`/ujiankhusus/hasil/generate/v3/sekolah/${sekolah_id.value}/kelas/${kelas_id.value}`);
             Toast.babeng("Berhasil", 'Generate Hasil Ujian telah berhasil!');
             getData();
             return true;
@@ -590,7 +590,7 @@ const doGenerateHasilPerkelas_false = async (ttd) => {
             let dataFormSend = {
                 replace: false
             };
-            const response = await ApiUjianKhusus.post(`/ujiankhusus/hasil/generate/sekolah/${sekolah_id.value}/kelas/${kelas_id.value}`, dataFormSend);
+            const response = await ApiUjianKhusus.post(`/ujiankhusus/hasil/generate/v3/sekolah/${sekolah_id.value}/kelas/${kelas_id.value}`, dataFormSend);
             Toast.babeng("Berhasil", 'Generate Hasil Ujian telah berhasil!');
             getData();
             return true;
@@ -610,7 +610,7 @@ const do_Sinkron_dataRedis = async (ttd) => {
             // let dataFormSend = {
             //     replace: false
             // };
-            const response = await ApiUjianKhusus.post(`/ujiankhusus/hasil/sinkron_redis/sekolah/${sekolah_id.value}/kelas/${kelas_id.value}`);
+            const response = await ApiUjianKhusus.post(`/ujiankhusus/hasil/sinkron_redis/v3/sekolah/${sekolah_id.value}/kelas/${kelas_id.value}`);
             Toast.babeng("Berhasil", 'Sinkron Ujian telah berhasil!');
             getData();
             return true;
@@ -623,7 +623,7 @@ const do_Sinkron_dataRedis = async (ttd) => {
 }
 const do_GenerateDataMentah = async (ttd) => {
     window.open(
-        `${VITE_API_FE_REACT}ujiankhusus/v1/export_data_mentah/sekolah/${getSekolahAktif.value.sekolah_id}/kelas/${getSekolahAktif.value.kelas_id}`
+        `${VITE_API_FE_REACT}ujiankhusus/v3/export_data_mentah/sekolah/${getSekolahAktif.value.sekolah_id}/kelas/${getSekolahAktif.value.kelas_id}`
     );
     // if (confirm("Apakah anda yakin generate export data mentah  Kelas Ini?")) {
 
@@ -658,7 +658,7 @@ const doExportExcel_v2 = (ttd) => {
 const doExport1010 = (ttd) => {
     console.log(paketsoal_aktif.value.id);
     window.open(
-        `${VITE_API_FE_REACT}ujiankhusus/v1/export_rekap_jawaban_siswa/sekolah/${getSekolahAktif.value.sekolah_id}/kelas/${getSekolahAktif.value.kelas_id}/paketsoal_id/${paketsoal_aktif.value.id}`
+        `${VITE_API_FE_REACT}ujiankhusus/v3/export_rekap_jawaban_siswa/sekolah/${getSekolahAktif.value.sekolah_id}/kelas/${getSekolahAktif.value.kelas_id}/paketsoal_id/${paketsoal_aktif.value.id}`
     );
     // console.log("belum");
 }
@@ -790,7 +790,7 @@ const formatTanggal = "DD MMMM YYYY HH:mm:ss";
             </div> -->
             <div class="space-x-2 space-y-0 shadow-sm flex justify-start ">
                 <div class="space-x-2 space-y-2 shadow-sm py-1">
-                    <button class="btn btn-sm btn-warning tooltip" data-tip="Generate Hasil Ujian "
+                    <button class="btn btn-sm btn-warning tooltip" data-tip="Generate Hasil Ujian V3"
                         @click="doGenerateHasilPerkelas()">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor" class="w-6 h-6">
@@ -800,7 +800,7 @@ const formatTanggal = "DD MMMM YYYY HH:mm:ss";
 
 
                     </button>
-                    <button class="btn btn-sm btn-secondary tooltip" data-tip="Generate Hasil Ujian Tanpa Replace"
+                    <button class="btn btn-sm btn-secondary tooltip" data-tip="Generate Hasil Ujian Tanpa Replace V3"
                         @click="doGenerateHasilPerkelas_false()">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor" class="w-6 h-6">
@@ -812,7 +812,7 @@ const formatTanggal = "DD MMMM YYYY HH:mm:ss";
                     </button>
                 </div>
                 <div class="space-x-2 space-y-2 shadow-sm py-1">
-                    <button class="btn btn-sm btn-info tooltip" data-tip="Export Excel Format IST"
+                    <button class="btn btn-sm btn-info tooltip" data-tip="Export Excel Format IST V3"
                         @click="doExportExcel()">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor" class="w-6 h-6">
@@ -821,7 +821,7 @@ const formatTanggal = "DD MMMM YYYY HH:mm:ss";
                         </svg>
 
                     </button>
-                    <button class="btn btn-sm btn-success tooltip" data-tip="Export Excel Format IST (v2)"
+                    <button class="btn btn-sm btn-success tooltip" data-tip="Export Excel Format IST (v2) V3"
                         @click="doExportExcel_v2()">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor" class="w-6 h-6">
@@ -830,7 +830,7 @@ const formatTanggal = "DD MMMM YYYY HH:mm:ss";
                         </svg>
 
                     </button>
-                    <button class="btn btn-sm btn-info tooltip" data-tip="Export Excel 1010" @click="doExport1010()">
+                    <button class="btn btn-sm btn-info tooltip" data-tip="Export Excel 1010 v3" @click="doExport1010()">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor" class="w-6 h-6">
                             <path stroke-linecap="round" stroke-linejoin="round"
@@ -845,13 +845,13 @@ const formatTanggal = "DD MMMM YYYY HH:mm:ss";
 
             <div class="space-x-2 space-y-2 shadow-sm py-1">
 
-                <button class="btn btn-sm btn-info tooltip" data-tip=" Sinkron Data Redis"
+                <button class="btn btn-sm btn-info tooltip" data-tip=" Sinkron Data Redis v3"
                     @click="do_Sinkron_dataRedis()">
                     Sinkron Data Redis
                 </button>
                 <button class="btn btn-sm btn-info tooltip" data-tip=" Export Data Mentah Hasil Ujian"
                     @click="do_GenerateDataMentah()">
-                    Export Data Mentah Hasil Ujian
+                    Export Data Mentah Hasil Ujian V3
                 </button>
 
             </div>
