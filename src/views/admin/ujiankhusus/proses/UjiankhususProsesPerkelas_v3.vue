@@ -271,7 +271,7 @@ const doPilihKelas = async () => {
     await getData()
     // console.log(inputCariKelas.value.id);
     await router.push({
-        name: "admin-sekolah-submenu-ujiankhusus-v2",
+        name: "admin-sekolah-submenu-ujiankhusus-v3",
         params: {
             sekolah_id: sekolah_id.value,
             kelas_id: inputCariKelas.value.id ? inputCariKelas.value.id : kelas_id.value,
@@ -568,10 +568,11 @@ const doCetakReactV2 = (ttd = "true") => {
 
 const doGenerateHasilPerkelas = async (ttd) => {
     if (confirm("Apakah anda yakin generate Hasil Kelas Ini?")) {
-
+        console.log(`generate hasil kelas_id:${getSekolahAktif.value.kelas_id} sekolah_id ${getSekolahAktif.value.sekolah_id}`);
+        // kelas_id.value 
         try {
             isLoading.value = true;
-            const response = await ApiUjianKhusus.post(`/ujiankhusus/hasil/generate/v3/sekolah/${sekolah_id.value}/kelas/${kelas_id.value}`);
+            const response = await ApiUjianKhusus.post(`/ujiankhusus/hasil/generate/v3/sekolah/${getSekolahAktif.value.sekolah_id}/kelas/${getSekolahAktif.value.kelas_id}`);
             Toast.babeng("Berhasil", 'Generate Hasil Ujian telah berhasil!');
             getData();
             return true;
@@ -847,7 +848,7 @@ const formatTanggal = "DD MMMM YYYY HH:mm:ss";
 
                 <button class="btn btn-sm btn-info tooltip" data-tip=" Sinkron Data Redis v3"
                     @click="do_Sinkron_dataRedis()">
-                    Sinkron Data Redis
+                    Sinkron Data Redis V3
                 </button>
                 <button class="btn btn-sm btn-info tooltip" data-tip=" Export Data Mentah Hasil Ujian"
                     @click="do_GenerateDataMentah()">
