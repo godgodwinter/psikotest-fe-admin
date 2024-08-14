@@ -493,7 +493,7 @@ const onSubmit = async (values) => {
                                             <td class="whitespace-nowrap w-1/12"></td>
                                             <td class="whitespace-nowrap w-1/12">:</td>
                                             <td class="whitespace-nowrap w-10/12"> {{
-                        dataKelas[0]?.ist_fakultas_Sorted_with_prioritas[2]?.fakultas }}
+                                                dataKelas[0]?.ist_fakultas_Sorted_with_prioritas[2]?.fakultas }}
                                             </td>
                                         </tr>
 
@@ -501,14 +501,14 @@ const onSubmit = async (values) => {
                                             <td class="whitespace-nowrap w-1/12">Mapel</td>
                                             <td class="whitespace-nowrap w-1/12">:</td>
                                             <td class="whitespace-nowrap w-10/12"> {{
-                        dataKelas[0]?.mapel_terkuat_uniq[0]?.nama }}
+                                                dataKelas[0]?.mapel_terkuat_uniq[0]?.nama }}
                                             </td>
                                         </tr>
                                         <tr>
                                             <td class="whitespace-nowrap w-1/12"></td>
                                             <td class="whitespace-nowrap w-1/12">:</td>
                                             <td class="whitespace-nowrap w-10/12"> {{
-                        dataKelas[0]?.mapel_terkuat_uniq[1]?.nama }}
+                                                dataKelas[0]?.mapel_terkuat_uniq[1]?.nama }}
                                             </td>
                                         </tr>
                                         <tr>
@@ -528,7 +528,7 @@ const onSubmit = async (values) => {
                             <Form v-slot="{ errors }" @submit="onSubmit">
                                 <div class=" shadow rounded-lg p-1  ">
                                     <div class="grid grid-cols-2 gap-2">
-                                        <div class="grid-cols-1 md:col-span-2">
+                                        <!-- <div class="grid-cols-1 md:col-span-2">
                                             <label class="form-control">
                                                 <div class="label">
                                                     <span class="label-text">Tambahan Kesimpulan -> utk semua
@@ -537,7 +537,6 @@ const onSubmit = async (values) => {
                                                 <textarea v-model="dataForm.kesimpulan_saran_tambahan"
                                                     class="textarea textarea-bordered h-24" placeholder=""></textarea>
                                                 <div class="label">
-                                                    <!-- <span class="label-text-alt">Your bio</span> -->
                                                 </div>
                                             </label>
                                         </div>
@@ -549,7 +548,6 @@ const onSubmit = async (values) => {
                                                 <Field v-model="dataForm.studi_1" name="studi_1" type="string"
                                                     class="input input-bordered w-full max-w-xs" />
                                                 <div class="label">
-                                                    <!-- <span class="label-text-alt">Bottom Left label</span> -->
                                                 </div>
                                             </label>
                                         </div>
@@ -562,7 +560,6 @@ const onSubmit = async (values) => {
                                                 <Field v-model="dataForm.jurusan_1" name="jurusan_1" type="string"
                                                     class="input input-bordered w-full max-w-xs" />
                                                 <div class="label">
-                                                    <!-- <span class="label-text-alt">Bottom Left label</span> -->
                                                 </div>
                                             </label>
                                         </div>
@@ -576,7 +573,6 @@ const onSubmit = async (values) => {
                                                 <Field v-model="dataForm.studi_2" name="studi_2" type="string"
                                                     class="input input-bordered w-full max-w-xs" />
                                                 <div class="label">
-                                                    <!-- <span class="label-text-alt">Bottom Left label</span> -->
                                                 </div>
                                             </label>
                                         </div>
@@ -588,7 +584,6 @@ const onSubmit = async (values) => {
                                                 <Field v-model="dataForm.jurusan_2" name="jurusan_2" type="string"
                                                     class="input input-bordered w-full max-w-xs" />
                                                 <div class="label">
-                                                    <!-- <span class="label-text-alt">Bottom Left label</span> -->
                                                 </div>
                                             </label>
                                         </div>
@@ -602,7 +597,6 @@ const onSubmit = async (values) => {
                                                 <Field v-model="dataForm.fakultas_1" name="fakultas_1" type="string"
                                                     class="input input-bordered w-full max-w-xs" />
                                                 <div class="label">
-                                                    <!-- <span class="label-text-alt">Bottom Left label</span> -->
                                                 </div>
                                             </label>
                                         </div>
@@ -614,7 +608,6 @@ const onSubmit = async (values) => {
                                                 <Field v-model="dataForm.prodi_1" name="prodi_1" type="string"
                                                     class="input input-bordered w-full max-w-xs" />
                                                 <div class="label">
-                                                    <!-- <span class="label-text-alt">Bottom Left label</span> -->
                                                 </div>
                                             </label>
                                         </div>
@@ -628,7 +621,6 @@ const onSubmit = async (values) => {
                                                 <Field v-model="dataForm.fakultas_2" name="fakultas_2" type="string"
                                                     class="input input-bordered w-full max-w-xs" />
                                                 <div class="label">
-                                                    <!-- <span class="label-text-alt">Bottom Left label</span> -->
                                                 </div>
                                             </label>
                                         </div>
@@ -640,10 +632,9 @@ const onSubmit = async (values) => {
                                                 <Field v-model="dataForm.prodi_2" name="prodi_2" type="string"
                                                     class="input input-bordered w-full max-w-xs" />
                                                 <div class="label">
-                                                    <!-- <span class="label-text-alt">Bottom Left label</span> -->
                                                 </div>
                                             </label>
-                                        </div>
+                                        </div> -->
                                         <div class="grid-cols-1">
                                             <label class="form-control w-full max-w-xs">
                                                 <div class="label">
@@ -653,7 +644,6 @@ const onSubmit = async (values) => {
                                                 <Field v-model="dataForm.fakultas_1112" name="fakultas_1112"
                                                     type="string" class="input input-bordered w-full max-w-xs" />
                                                 <div class="label">
-                                                    <!-- <span class="label-text-alt">Bottom Left label</span> -->
                                                 </div>
                                             </label>
                                         </div>
@@ -666,7 +656,6 @@ const onSubmit = async (values) => {
                                                 <Field v-model="dataForm.fakultas_1112_mapel" name="fakultas_1112_mapel"
                                                     type="string" class="input input-bordered w-full max-w-xs" />
                                                 <div class="label">
-                                                    <!-- <span class="label-text-alt">Bottom Left label</span> -->
                                                 </div>
                                             </label>
                                         </div>
