@@ -44,6 +44,7 @@ const dataForm = ref({});
 const siswa = ref();
 const isLoading = ref(true);
 const isError = ref(false);
+const dataKelas = ref([]);
 
 const getData = async () => {
     try {
@@ -56,6 +57,7 @@ const getData = async () => {
         // console.log(dataForm.value);
         isLoading.value = false;
         getData_Iq()
+        let do_olah_data_fakultas = await getData_ist_fakultas();
         return response.data;
     } catch (error) {
         isLoading.value = false;
@@ -63,7 +65,184 @@ const getData = async () => {
         console.error(error);
     }
 };
+const filterUniqueMapel = (data) => {
+    const mapelSet = new Set();
+    const uniqueMapel = [];
 
+    // console.log("====================================");
+    // console.log(data.ist_fakultas_Sorted[0].mapel_terkuat);
+    // console.log("====================================");
+    // for (const item of data.ist_fakultas_Sorted.slice(0, 3)) {
+    for (const item of data.ist_fakultas_Sorted_with_prioritas.slice(0, 3)) {
+        for (const mapel of item.mapel_terkuat) {
+            if (!mapelSet.has(mapel.nama)) {
+                mapelSet.add(mapel.nama);
+                if (mapel.nama != "-") {
+                    uniqueMapel.push(mapel);
+                }
+            }
+        }
+    }
+
+    return uniqueMapel;
+};
+
+function arraysEqual(arr1, arr2) {
+    return (
+        arr1.length === arr2.length &&
+        arr1.every((value, index) => value === arr2[index])
+    );
+}
+function findSimilarInterests(interests, dataArray) {
+    const dataResult = [];
+
+    const sortedInterests = interests.slice().sort(); // Menyimpan minat dalam urutan yang disortir
+
+    // Prioritas 1: Ketiga minat sama
+    for (const obj of dataArray) {
+        const objInterests = obj.minat.map((minat) => minat.nama);
+        const sortedObjInterests = objInterests.slice().sort();
+
+        if (arraysEqual(sortedObjInterests, sortedInterests)) {
+            dataResult.push(obj);
+        }
+    }
+
+    // Prioritas 2: Dua minat sama
+    const prioritas2Result = [];
+    for (let i = 0; i < dataArray.length - 1; i++) {
+        for (let j = i + 1; j < dataArray.length; j++) {
+            const combinedInterests = [
+                ...dataArray[i].minat.map((minat) => minat.nama),
+                ...dataArray[j].minat.map((minat) => minat.nama),
+            ];
+            const uniqueCombinedInterests = [...new Set(combinedInterests)];
+            const sortedCombinedInterests = uniqueCombinedInterests.slice().sort();
+
+            if (
+                uniqueCombinedInterests.length - sortedCombinedInterests.length >=
+                2
+            ) {
+                prioritas2Result.push(dataArray[i], dataArray[j]);
+            }
+        }
+    }
+
+    // Prioritas 3: Satu minat sama
+    const prioritas3Result = [];
+    for (const obj of dataArray) {
+        const objInterests = obj.minat.map((minat) => minat.nama);
+        if (objInterests.some((value) => interests.includes(value))) {
+            prioritas3Result.push(obj);
+        }
+    }
+
+    return [...dataResult, ...prioritas2Result, ...prioritas3Result];
+}
+const fn_sort_dataFakultasTerbaik = (dataDetail) => {
+    // console.log("====================================");
+    // console.log(dataDetail);
+    // console.log("====================================");
+    const sortedData = dataDetail.sort((a, b) => b.detail_val - a.detail_val);
+    // const sortedData = dataDetail.sort((a, b) => a.detail_val - b.detail_val);
+    return sortedData.slice(0, 80);
+};
+const fn_masukkanData = async (datas) => {
+    // console.log("====================================");
+    // console.log(datas.minatbakat_detail_sorted);
+    // console.log("====================================");
+    // !siapkan data kewirausahaan
+    datas.forEach((item) => {
+        // console.log(
+        //   item.minatbakat_detail_sorted[0].nama,
+        //   item.minatbakat_detail_sorted[1].nama,
+        //   item.minatbakat_detail_sorted[2].nama
+        // );
+
+        if (item && item.ist_fakultas) {
+            const interestsToCheck = [
+                item.minatbakat_detail_sorted[0].nama,
+                item.minatbakat_detail_sorted[1].nama,
+                item.minatbakat_detail_sorted[2].nama,
+            ];
+            // console.log("====================================");
+            // console.log(interestsToCheck);
+            // console.log("====================================");
+            // console.log(item.ist_fakultas);
+            // jika belum ada maka tambahkan ke dataIstUniq
+            const dataIstFakultasSorted = fn_sort_dataFakultasTerbaik(
+                item.ist_fakultas
+            );
+
+            //! urutkan berdasarkan prioritas dahulu
+
+            const dataIstUniq = [];
+            let total_jml = 0;
+            const dataLimit = 80; // Batas jumlah data
+            const fn_periksaNamaFakultas = (data) => {
+                // Periksa apakah data nama fakultas sudah ada di dataIstUniq
+                const existingFakultas = dataIstUniq.find(
+                    (item) => item.fakultas === data.nama
+                );
+
+                if (!existingFakultas && total_jml < dataLimit) {
+                    // Jika belum ada dan jumlah data masih kurang dari batas, tambahkan ke dataIstUniq
+                    dataIstUniq.push(data);
+                    total_jml++;
+                }
+
+                return !existingFakultas && total_jml <= dataLimit; // true jika belum ada dan belum mencapai batas, false jika sudah ada atau sudah mencapai batas
+            };
+
+            for (const item of dataIstFakultasSorted) {
+                fn_periksaNamaFakultas(item);
+            }
+            // console.log("====================================");
+            // console.log(dataIstUniq);
+            // console.log("====================================");
+
+            item.ist_fakultas_Sorted = dataIstUniq;
+            // item.ist_fakultas_Sorted = dataIstFakultasSorted;
+            // console.log("====================================");
+            // console.log(dataIstUniq);
+            // console.log("====================================");
+            const dataIstPrioritas = findSimilarInterests(
+                interestsToCheck,
+                item.ist_fakultas
+                // dataIstUniq
+            );
+
+            item.ist_fakultas_Sorted_with_prioritas = dataIstPrioritas;
+
+            const uniqueMapelArray = filterUniqueMapel(item);
+            item.mapel_terkuat_uniq = uniqueMapelArray;
+            // console.log(dataIstPrioritas);
+            // fn_periksaNamaFakultas
+            // const periksaDataFakultasSudahAda = fn_periksaNamaFakultas(
+            //   item.ist_fakultas.nama
+            // );
+            // if (periksaDataFakultasSudahAda == false) {
+            dataKelas.value.push(item);
+            // console.log(`setelah di olah:`, dataKelas);
+            // }
+        }
+        console.log(`data kelas: `, dataKelas.value);
+    });
+};
+
+const getData_ist_fakultas = async () => {
+    try {
+        const response = await Api.get(`/ist/ist_jurusan/kelas/${kelas_id.value}/siswa/${siswa_id.value}`);
+        // console.log(response.data);
+        if (response.data) {
+            if (response.data.length > 0) {
+                fn_masukkanData(response.data)
+            }
+        }
+    } catch (error) {
+        console.error(error);
+    }
+};
 const getData_Iq = async () => {
     try {
         isLoading.value = true;
@@ -163,6 +342,8 @@ const onSubmit = async (values) => {
         prodi_1: dataForm.value.prodi_1,
         fakultas_2: dataForm.value.fakultas_2,
         prodi_2: dataForm.value.prodi_2,
+        fakultas_1112: dataForm.value.fakultas_1112,
+        fakultas_1112_mapel: dataForm.value.fakultas_1112_mapel,
     };
     // console.log(values, dataFormSend);
     try {
@@ -245,6 +426,100 @@ const onSubmit = async (values) => {
                                             <td>:</td>
                                             <td>{{ siswa.sekolah_nama }}</td>
                                         </tr>
+                                    </tbody>
+                                </table>
+                                <table class="table table-compact" v-if="dataIq">
+                                    <tbody>
+                                        <tr>
+                                            <td class="whitespace-nowrap w-1/12">IQ IST</td>
+                                            <td class="whitespace-nowrap w-1/12">:</td>
+                                            <td class="whitespace-nowrap w-10/12"> {{
+                        dataIq?.fn_get_data_ist?.ist.iq_val }}
+                                                <!-- {{
+                        dataIq?.fn_get_data_ist?.ist.iq_ket }} -->
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>IQ 8KM</td>
+                                            <td>:</td>
+                                            <td>{{ dataIq?.data_8km.iq }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>EQ</td>
+                                            <td>:</td>
+                                            <td>
+                                                <span v-if="dataIq.fn_get_hspq_sq">{{ Math.round(
+                        fn_avg_data(
+                            fn_deteksi_sq(
+                                dataIq.fn_get_hspq_sq?.deteksi_untuk_cetak_sqscqeq,
+                                "eq"
+                            )
+                        )
+                    ) }}</span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>ScQ</td>
+                                            <td>:</td>
+                                            <td><span v-if="dataIq.fn_get_hspq_sq">{{ Math.round(
+                        fn_avg_data(
+                            fn_deteksi_sq(
+                                dataIq.fn_get_hspq_sq?.deteksi_untuk_cetak_sqscqeq,
+                                "scq"
+                            )
+                        )
+                    ) }}</span></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <!-- {{ dataKelas }} -->
+                                <table class="table table-compact" v-if="dataKelas.length > 0">
+                                    <tbody>
+                                        <tr>
+                                            <td class="whitespace-nowrap w-1/12">Fakultas</td>
+                                            <td class="whitespace-nowrap w-1/12">:</td>
+                                            <td class="whitespace-nowrap w-10/12"> {{
+                        dataKelas[0]?.ist_fakultas_Sorted_with_prioritas[0]?.fakultas }}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="whitespace-nowrap w-1/12"></td>
+                                            <td class="whitespace-nowrap w-1/12">:</td>
+                                            <td class="whitespace-nowrap w-10/12"> {{
+                        dataKelas[0]?.ist_fakultas_Sorted_with_prioritas[1]?.fakultas }}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="whitespace-nowrap w-1/12"></td>
+                                            <td class="whitespace-nowrap w-1/12">:</td>
+                                            <td class="whitespace-nowrap w-10/12"> {{
+                        dataKelas[0]?.ist_fakultas_Sorted_with_prioritas[2]?.fakultas }}
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="whitespace-nowrap w-1/12">Mapel</td>
+                                            <td class="whitespace-nowrap w-1/12">:</td>
+                                            <td class="whitespace-nowrap w-10/12"> {{
+                        dataKelas[0]?.mapel_terkuat_uniq[0]?.nama }}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="whitespace-nowrap w-1/12"></td>
+                                            <td class="whitespace-nowrap w-1/12">:</td>
+                                            <td class="whitespace-nowrap w-10/12"> {{
+                        dataKelas[0]?.mapel_terkuat_uniq[1]?.nama }}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="whitespace-nowrap w-1/12"></td>
+                                            <td class="whitespace-nowrap w-1/12">:</td>
+                                            <td class="whitespace-nowrap w-10/12"> {{
+                                                dataKelas[0]?.mapel_terkuat_uniq[2]?.nama }}
+                                            </td>
+                                        </tr>
+
+
                                     </tbody>
                                 </table>
                             </div>
@@ -369,6 +644,32 @@ const onSubmit = async (values) => {
                                                 </div>
                                             </label>
                                         </div>
+                                        <div class="grid-cols-1">
+                                            <label class="form-control w-full max-w-xs">
+                                                <div class="label">
+                                                    <span class="label-text">fakultas untuk tipe kelas 11,12 (Cetak
+                                                        V5)</span>
+                                                </div>
+                                                <Field v-model="dataForm.fakultas_1112" name="fakultas_1112"
+                                                    type="string" class="input input-bordered w-full max-w-xs" />
+                                                <div class="label">
+                                                    <!-- <span class="label-text-alt">Bottom Left label</span> -->
+                                                </div>
+                                            </label>
+                                        </div>
+                                        <div class="grid-cols-1">
+                                            <label class="form-control w-full max-w-xs">
+                                                <div class="label">
+                                                    <span class="label-text"> mepel untuk tipe kelas 11,12 (Cetak
+                                                        V5)</span>
+                                                </div>
+                                                <Field v-model="dataForm.fakultas_1112_mapel" name="fakultas_1112_mapel"
+                                                    type="string" class="input input-bordered w-full max-w-xs" />
+                                                <div class="label">
+                                                    <!-- <span class="label-text-alt">Bottom Left label</span> -->
+                                                </div>
+                                            </label>
+                                        </div>
 
 
                                     </div>
@@ -381,59 +682,6 @@ const onSubmit = async (values) => {
                             </Form>
 
                         </div>
-                    </div>
-                </div>
-                <div class="md:py-2 px-1 lg:flex flex-wrap gap-4" v-if="dataIq">
-                    <div class="w-full  lg:grid-cols-3 space-x-4 space-y-2">
-                        <div class=" shadow rounded-lg p-1 ">
-                            <div class="overflow-x-auto">
-                                <table class="table table-compact">
-                                    <tbody>
-                                        <tr>
-                                            <td class="whitespace-nowrap w-1/12">IQ IST</td>
-                                            <td class="whitespace-nowrap w-1/12">:</td>
-                                            <td class="whitespace-nowrap w-10/12"> {{
-                        dataIq?.fn_get_data_ist?.ist.iq_val }}
-                                                <!-- {{
-                        dataIq?.fn_get_data_ist?.ist.iq_ket }} -->
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>IQ 8KM</td>
-                                            <td>:</td>
-                                            <td>{{ dataIq?.data_8km.iq }}</td>
-                                        </tr>
-                                        <tr>
-                                            <td>EQ</td>
-                                            <td>:</td>
-                                            <td>
-                                                <span v-if="dataIq.fn_get_hspq_sq">{{ Math.round(
-                        fn_avg_data(
-                            fn_deteksi_sq(
-                                dataIq.fn_get_hspq_sq?.deteksi_untuk_cetak_sqscqeq,
-                                "eq"
-                            )
-                        )
-                    ) }}</span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>ScQ</td>
-                                            <td>:</td>
-                                            <td><span v-if="dataIq.fn_get_hspq_sq">{{ Math.round(
-                        fn_avg_data(
-                            fn_deteksi_sq(
-                                                    dataIq.fn_get_hspq_sq?.deteksi_untuk_cetak_sqscqeq,
-                                                    "scq"
-                                                    )
-                                                    )
-                                                    )}}</span></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-
                     </div>
                 </div>
             </div>
