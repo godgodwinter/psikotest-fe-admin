@@ -493,7 +493,7 @@ const onSubmit = async (values) => {
                                             <td class="whitespace-nowrap w-1/12"></td>
                                             <td class="whitespace-nowrap w-1/12">:</td>
                                             <td class="whitespace-nowrap w-10/12"> {{
-                                                dataKelas[0]?.ist_fakultas_Sorted_with_prioritas[2]?.fakultas }}
+                        dataKelas[0]?.ist_fakultas_Sorted_with_prioritas[2]?.fakultas }}
                                             </td>
                                         </tr>
 
@@ -539,7 +539,7 @@ const onSubmit = async (values) => {
                                                 <div class="label">
                                                 </div>
                                             </label>
-                                        </div>
+                                        </div> -->
                                         <div class="grid-cols-1">
                                             <label class="form-control w-full max-w-xs">
                                                 <div class="label">
@@ -589,7 +589,7 @@ const onSubmit = async (values) => {
                                         </div>
 
 
-                                        <div class="grid-cols-1">
+                                        <!-- <div class="grid-cols-1">
                                             <label class="form-control w-full max-w-xs">
                                                 <div class="label">
                                                     <span class="label-text">fakultas_1 -> kelas 10,11,12, umum</span>
