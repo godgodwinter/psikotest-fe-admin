@@ -147,6 +147,24 @@ const fn_sort_dataFakultasTerbaik = (dataDetail) => {
     // const sortedData = dataDetail.sort((a, b) => a.detail_val - b.detail_val);
     return sortedData.slice(0, 80);
 };
+
+function getInterestsByRank(dataMinat, dataArray, ranks) {
+    const interests = [];
+
+    const addedIds = new Set(); // Untuk melacak ID yang sudah ditambahkan
+
+    for (const rank of ranks) {
+        dataArray.forEach((item) => {
+            const minat = item.minat.find((minat) => minat.id === rank);
+            if (minat && dataMinat.includes(minat.nama) && !addedIds.has(item.id)) {
+                interests.push(item);
+                addedIds.add(item.id);
+            }
+        });
+    }
+
+    return interests;
+}
 const fn_masukkanData = async (datas) => {
     // console.log("====================================");
     // console.log(datas.minatbakat_detail_sorted);
@@ -158,6 +176,10 @@ const fn_masukkanData = async (datas) => {
         //   item.minatbakat_detail_sorted[1].nama,
         //   item.minatbakat_detail_sorted[2].nama
         // );
+
+        console.log("====================================");
+        console.log(`#sebelum masukkan data`, item);
+        console.log("====================================");
 
         if (item && item.ist_fakultas) {
             const interestsToCheck = [
@@ -206,11 +228,17 @@ const fn_masukkanData = async (datas) => {
             // console.log("====================================");
             // console.log(dataIstUniq);
             // console.log("====================================");
-            const dataIstPrioritas = findSimilarInterests(
+            // console.log(interestsToCheck, dataIstUniq);
+            const ranks = [1, 2, 3];
+            const dataIstPrioritas = getInterestsByRank(
                 interestsToCheck,
-                item.ist_fakultas
-                // dataIstUniq
+                // item.ist_fakultas
+                dataIstUniq,
+                ranks
             );
+            // console.log("====================================");
+            // console.log(dataIstPrioritas);
+            // console.log("====================================");
 
             item.ist_fakultas_Sorted_with_prioritas = dataIstPrioritas;
 
@@ -223,10 +251,106 @@ const fn_masukkanData = async (datas) => {
             // );
             // if (periksaDataFakultasSudahAda == false) {
             dataKelas.value.push(item);
-            // console.log(`setelah di olah:`, dataKelas);
             // }
         }
-        console.log(`data kelas: `, dataKelas.value);
+        console.log(item);
+        let dataPerSiswa = {
+            id: item.id,
+            kelas: item.kelas?.nama,
+            nama: item.nama,
+            iq_val: item?.data_8km?.iq,
+            minatRank1: item?.minatbakat_detail_sorted[0].nama,
+            minatRank2: item?.minatbakat_detail_sorted[1].nama,
+            minatRank3: item?.minatbakat_detail_sorted[2].nama,
+            cita1: item?.data_8km?.citacita_1,
+            cita2: item?.data_8km?.citacita_2,
+            cita3: item?.data_8km?.citacita_2,
+            fk_1_std: item?.ist_fakultas_Sorted_with_prioritas[0]?.iq_min,
+            fk_1_iq: item?.ist_fakultas_Sorted_with_prioritas[0]?.iq,
+            fk_1: item?.ist_fakultas_Sorted_with_prioritas[0]?.nama,
+            fk_1_prodi: item?.ist_fakultas_Sorted_with_prioritas[0]?.prodi,
+
+            fk_2_std: item?.ist_fakultas_Sorted_with_prioritas[1]?.iq_min,
+            fk_2_iq: item?.ist_fakultas_Sorted_with_prioritas[1]?.detail_val,
+            fk_2: item?.ist_fakultas_Sorted_with_prioritas[1]?.nama,
+            fk_2_prodi: item?.ist_fakultas_Sorted_with_prioritas[1]?.prodi,
+
+            fk_3_std: item?.ist_fakultas_Sorted_with_prioritas[2]?.iq_min,
+            fk_3_iq: item?.ist_fakultas_Sorted_with_prioritas[2]?.detail_val,
+            fk_3: item?.ist_fakultas_Sorted_with_prioritas[2]?.nama,
+            fk_3_prodi: item?.ist_fakultas_Sorted_with_prioritas[2]?.prodi,
+
+            fk_4_std: item?.ist_fakultas_Sorted_with_prioritas[3]?.iq_min,
+            fk_4_iq: item?.ist_fakultas_Sorted_with_prioritas[3]?.detail_val,
+            fk_4: item?.ist_fakultas_Sorted_with_prioritas[3]?.nama,
+            fk_4_prodi: item?.ist_fakultas_Sorted_with_prioritas[3]?.prodi,
+
+            fk_5_std: item?.ist_fakultas_Sorted_with_prioritas[4]?.iq_min,
+            fk_5_iq: item?.ist_fakultas_Sorted_with_prioritas[4]?.detail_val,
+            fk_5: item?.ist_fakultas_Sorted_with_prioritas[4]?.nama,
+            fk_5_prodi: item?.ist_fakultas_Sorted_with_prioritas[4]?.prodi,
+
+            fk_6_std: item?.ist_fakultas_Sorted_with_prioritas[5]?.iq_min,
+            fk_6_iq: item?.ist_fakultas_Sorted_with_prioritas[5]?.detail_val,
+            fk_6: item?.ist_fakultas_Sorted_with_prioritas[5]?.nama,
+            fk_6_prodi: item?.ist_fakultas_Sorted_with_prioritas[5]?.prodi,
+
+            fk_7_std: item?.ist_fakultas_Sorted_with_prioritas[6]?.iq_min,
+            fk_7_iq: item?.ist_fakultas_Sorted_with_prioritas[6]?.detail_val,
+            fk_7: item?.ist_fakultas_Sorted_with_prioritas[6]?.nama,
+            fk_7_prodi: item?.ist_fakultas_Sorted_with_prioritas[6]?.prodi,
+
+            fk_prodi_1_mapel_1:
+                item?.ist_fakultas_Sorted_with_prioritas[0]?.mapel_terkuat[0]?.nama,
+            fk_prodi_1_mapel_2:
+                item?.ist_fakultas_Sorted_with_prioritas[0]?.mapel_terkuat[1]?.nama,
+            fk_prodi_1_mapel_3:
+                item?.ist_fakultas_Sorted_with_prioritas[0]?.mapel_terkuat[2]?.nama,
+
+            fk_prodi_2_mapel_1:
+                item?.ist_fakultas_Sorted_with_prioritas[1]?.mapel_terkuat[0]?.nama,
+            fk_prodi_2_mapel_2:
+                item?.ist_fakultas_Sorted_with_prioritas[1]?.mapel_terkuat[1]?.nama,
+            fk_prodi_2_mapel_3:
+                item?.ist_fakultas_Sorted_with_prioritas[1]?.mapel_terkuat[2]?.nama,
+
+            fk_prodi_3_mapel_1:
+                item?.ist_fakultas_Sorted_with_prioritas[2]?.mapel_terkuat[0]?.nama,
+            fk_prodi_3_mapel_2:
+                item?.ist_fakultas_Sorted_with_prioritas[2]?.mapel_terkuat[1]?.nama,
+            fk_prodi_3_mapel_3:
+                item?.ist_fakultas_Sorted_with_prioritas[2]?.mapel_terkuat[2]?.nama,
+
+            fk_prodi_4_mapel_1:
+                item?.ist_fakultas_Sorted_with_prioritas[3]?.mapel_terkuat[0]?.nama,
+            fk_prodi_4_mapel_2:
+                item?.ist_fakultas_Sorted_with_prioritas[3]?.mapel_terkuat[1]?.nama,
+            fk_prodi_4_mapel_3:
+                item?.ist_fakultas_Sorted_with_prioritas[3]?.mapel_terkuat[2]?.nama,
+
+            fk_prodi_5_mapel_1:
+                item?.ist_fakultas_Sorted_with_prioritas[4]?.mapel_terkuat[0]?.nama,
+            fk_prodi_5_mapel_2:
+                item?.ist_fakultas_Sorted_with_prioritas[4]?.mapel_terkuat[1]?.nama,
+            fk_prodi_5_mapel_3:
+                item?.ist_fakultas_Sorted_with_prioritas[4]?.mapel_terkuat[2]?.nama,
+
+            fk_prodi_6_mapel_1:
+                item?.ist_fakultas_Sorted_with_prioritas[5]?.mapel_terkuat[0]?.nama,
+            fk_prodi_6_mapel_2:
+                item?.ist_fakultas_Sorted_with_prioritas[5]?.mapel_terkuat[1]?.nama,
+            fk_prodi_6_mapel_3:
+                item?.ist_fakultas_Sorted_with_prioritas[5]?.mapel_terkuat[2]?.nama,
+
+            fk_prodi_7_mapel_1:
+                item?.ist_fakultas_Sorted_with_prioritas[6]?.mapel_terkuat[0]?.nama,
+            fk_prodi_7_mapel_2:
+                item?.ist_fakultas_Sorted_with_prioritas[6]?.mapel_terkuat[1]?.nama,
+            fk_prodi_7_mapel_3:
+                item?.ist_fakultas_Sorted_with_prioritas[6]?.mapel_terkuat[2]?.nama,
+        };
+        dataKelas.value.push(item);
+        // console.log(`data kelas: `, dataKelas.value);
     });
 };
 
@@ -501,7 +625,7 @@ const onSubmit = async (values) => {
                                             <td class="whitespace-nowrap w-1/12">Mapel</td>
                                             <td class="whitespace-nowrap w-1/12">:</td>
                                             <td class="whitespace-nowrap w-10/12"> {{
-                                                dataKelas[0]?.mapel_terkuat_uniq[0]?.nama }}
+                        dataKelas[0]?.mapel_terkuat_uniq[0]?.nama }}
                                             </td>
                                         </tr>
                                         <tr>
@@ -528,7 +652,7 @@ const onSubmit = async (values) => {
                             <Form v-slot="{ errors }" @submit="onSubmit">
                                 <div class=" shadow rounded-lg p-1  ">
                                     <div class="grid grid-cols-2 gap-2">
-                                        <!-- <div class="grid-cols-1 md:col-span-2">
+                                        <div class="grid-cols-1 md:col-span-2">
                                             <label class="form-control">
                                                 <div class="label">
                                                     <span class="label-text">Tambahan Kesimpulan -> utk semua
@@ -539,7 +663,7 @@ const onSubmit = async (values) => {
                                                 <div class="label">
                                                 </div>
                                             </label>
-                                        </div> -->
+                                        </div>
                                         <div class="grid-cols-1">
                                             <label class="form-control w-full max-w-xs">
                                                 <div class="label">
