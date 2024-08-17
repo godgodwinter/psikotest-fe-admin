@@ -848,7 +848,7 @@ const doCetakReactV2 = (ttd = "true") => {
                                             {{ props.row.progres?.status }}
                                         </span>
                                         <span v-else-if="props.column.field == 'progres_angka'">
-                                            {{ props.row.progres?.selesai }}/{{
+                                            {{ props.row.progres?.belum }}- {{ props.row.progres?.selesai }}/{{
         props.row.progres?.total }}
                                         </span>
                                         <span v-else-if="props.column.field == 'username'">
