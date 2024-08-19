@@ -372,6 +372,9 @@ const getData_Iq = async () => {
         isLoading.value = true;
         const response = await Api.get(`/ist/8km/kelas/${kelas_id.value}/v3/gabungan/siswa/${siswa_id.value}`);
         dataIq.value = response.data;
+        console.log('====================================');
+        console.log(`data CiTA CITA`, dataIq.value.dataCitacita);
+        console.log('====================================');
         isLoading.value = false;
         // return response.data;
     } catch (error) {
@@ -632,16 +635,50 @@ const onSubmit = async (values) => {
                                             <td class="whitespace-nowrap w-1/12"></td>
                                             <td class="whitespace-nowrap w-1/12">:</td>
                                             <td class="whitespace-nowrap w-10/12"> {{
-                                                dataKelas[0]?.mapel_terkuat_uniq[1]?.nama }}
+                        dataKelas[0]?.mapel_terkuat_uniq[1]?.nama }}
                                             </td>
                                         </tr>
                                         <tr>
                                             <td class="whitespace-nowrap w-1/12"></td>
                                             <td class="whitespace-nowrap w-1/12">:</td>
                                             <td class="whitespace-nowrap w-10/12"> {{
-                                                dataKelas[0]?.mapel_terkuat_uniq[2]?.nama }}
+                        dataKelas[0]?.mapel_terkuat_uniq[2]?.nama }}
                                             </td>
                                         </tr>
+
+
+                                    </tbody>
+                                </table>
+                                <table class="table table-compact" v-if="dataKelas.length > 0">
+                                    <tbody>
+                                        <tr>
+                                            <td class="whitespace-nowrap w-1/12">Minat 1</td>
+                                            <td class="whitespace-nowrap w-1/12">:</td>
+                                            <td class="whitespace-nowrap w-10/12"> {{
+                        dataIq?.get_minatbakat_sorted[0]?.nama }}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="whitespace-nowrap w-1/12">Minat 3</td>
+                                            <td class="whitespace-nowrap w-1/12">:</td>
+                                            <td class="whitespace-nowrap w-10/12"> {{
+                        dataIq?.get_minatbakat_sorted[1]?.nama }}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="whitespace-nowrap w-1/12">Minat 3</td>
+                                            <td class="whitespace-nowrap w-1/12">:</td>
+                                            <td class="whitespace-nowrap w-10/12"> {{
+                        dataIq?.get_minatbakat_sorted[2]?.nama }}
+                                            </td>
+                                        </tr>
+                                        <!-- <tr>
+                                            <td class="whitespace-nowrap w-1/12">Cita-cita</td>
+                                            <td class="whitespace-nowrap w-1/12">:</td>
+                                            <td class="whitespace-nowrap w-10/12"> {{
+                                                dataIq?.dataCitacita[2]?.dataGolongan?.citacita_2 }}
+                                            </td>
+                                        </tr> -->
 
 
                                     </tbody>
@@ -794,6 +831,111 @@ const onSubmit = async (values) => {
                                 </div>
                             </Form>
 
+                        </div>
+                        <div class="grid-cols-1   md:col-span-2">
+                            <div class="w-full text-center">
+                                <h2 class="font-bold text-md  uppercase">Isian Siswa</h2>
+                            </div>
+                            <table class="table table-compact" v-if="dataKelas.length > 0">
+                                <tbody>
+                                    <tr>
+                                        <td class="whitespace-nowrap w-1/12">Cita cita 1</td>
+                                        <td class="whitespace-nowrap w-1/12">:</td>
+                                        <td class="whitespace-nowrap w-10/12"> {{
+                        dataIq?.dataCitacita?.dataGolongan?.citacita_1 }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="whitespace-nowrap w-1/12">Cita cita 2</td>
+                                        <td class="whitespace-nowrap w-1/12">:</td>
+                                        <td class="whitespace-nowrap w-10/12"> {{
+                        dataIq?.dataCitacita?.dataGolongan?.citacita_2 }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="whitespace-nowrap w-1/12">Cita cita 3</td>
+                                        <td class="whitespace-nowrap w-1/12">:</td>
+                                        <td class="whitespace-nowrap w-10/12"> {{
+                        dataIq?.dataCitacita?.dataGolongan?.citacita_3 }}
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td class="whitespace-nowrap w-1/12">pertimbangan studi</td>
+                                        <td class="whitespace-nowrap w-1/12">:</td>
+                                        <td class="whitespace-nowrap w-10/12"> {{
+                        dataIq?.dataCitacita?.dataGolongan?.pertimbangan_studi }}
+                                        </td>
+                                    </tr>
+
+
+                                    <tr>
+                                        <td class="whitespace-nowrap w-1/12">pertimbangan jurusan</td>
+                                        <td class="whitespace-nowrap w-1/12">:</td>
+                                        <td class="whitespace-nowrap w-10/12"> {{
+                        dataIq?.dataCitacita?.dataGolongan?.pertimbangan_jurusan }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="whitespace-nowrap w-1/12">pertimbangan jurusan diinginkan 1</td>
+                                        <td class="whitespace-nowrap w-1/12">:</td>
+                                        <td class="whitespace-nowrap w-10/12"> {{
+                        dataIq?.dataCitacita?.dataGolongan?.pertimbangan_jurusan_diinginkan_1 }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="whitespace-nowrap w-1/12">pertimbangan jurusan diinginkan 2</td>
+                                        <td class="whitespace-nowrap w-1/12">:</td>
+                                        <td class="whitespace-nowrap w-10/12"> {{
+                                            dataIq?.dataCitacita?.dataGolongan?.pertimbangan_jurusan_diinginkan_2 }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="whitespace-nowrap w-1/12">pertimbangan jurusan diinginkan 3</td>
+                                        <td class="whitespace-nowrap w-1/12">:</td>
+                                        <td class="whitespace-nowrap w-10/12"> {{
+                                            dataIq?.dataCitacita?.dataGolongan?.pertimbangan_jurusan_diinginkan_3 }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="whitespace-nowrap w-1/12">fakultas 1</td>
+                                        <td class="whitespace-nowrap w-1/12">:</td>
+                                        <td class="whitespace-nowrap w-10/12"> {{
+                                            dataIq?.dataCitacita?.dataGolongan?.fakultas_1 }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="whitespace-nowrap w-1/12">prodi 1</td>
+                                        <td class="whitespace-nowrap w-1/12">:</td>
+                                        <td class="whitespace-nowrap w-10/12"> {{
+                                            dataIq?.dataCitacita?.dataGolongan?.prodi_1 }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="whitespace-nowrap w-1/12">fakultas 2</td>
+                                        <td class="whitespace-nowrap w-1/12">:</td>
+                                        <td class="whitespace-nowrap w-10/12"> {{
+                                            dataIq?.dataCitacita?.dataGolongan?.fakultas_2 }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="whitespace-nowrap w-1/12">prodi 2</td>
+                                        <td class="whitespace-nowrap w-1/12">:</td>
+                                        <td class="whitespace-nowrap w-10/12"> {{
+                                            dataIq?.dataCitacita?.dataGolongan?.prodi_2 }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="whitespace-nowrap w-1/12">kedinasan</td>
+                                        <td class="whitespace-nowrap w-1/12">:</td>
+                                        <td class="whitespace-nowrap w-10/12"> {{
+                                            dataIq?.dataCitacita?.dataGolongan?.kedinasan }}
+                                        </td>
+                                    </tr>
+
+
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
