@@ -373,7 +373,7 @@ const getData_Iq = async () => {
         const response = await Api.get(`/ist/8km/kelas/${kelas_id.value}/v3/gabungan/siswa/${siswa_id.value}`);
         dataIq.value = response.data;
         console.log('====================================');
-        console.log(`data CiTA CITA`, dataIq.value.dataCitacita);
+        console.log(`data CiTA CITA`, dataIq.value.dataCitacita, dataIq.value?.data_8km?.citacita_1);
         console.log('====================================');
         isLoading.value = false;
         // return response.data;
@@ -842,21 +842,24 @@ const onSubmit = async (values) => {
                                         <td class="whitespace-nowrap w-1/12">Cita cita 1</td>
                                         <td class="whitespace-nowrap w-1/12">:</td>
                                         <td class="whitespace-nowrap w-10/12"> {{
-                        dataIq?.dataCitacita?.dataGolongan?.citacita_1 }}
+                        dataIq?.dataCitacita?.dataGolongan?.citacita_1
+                        || dataIq?.data_8km?.citacita_1 }}
                                         </td>
                                     </tr>
                                     <tr>
                                         <td class="whitespace-nowrap w-1/12">Cita cita 2</td>
                                         <td class="whitespace-nowrap w-1/12">:</td>
                                         <td class="whitespace-nowrap w-10/12"> {{
-                        dataIq?.dataCitacita?.dataGolongan?.citacita_2 }}
+                        dataIq?.dataCitacita?.dataGolongan?.citacita_2
+                        || dataIq?.data_8km?.citacita_2 }}
                                         </td>
                                     </tr>
                                     <tr>
                                         <td class="whitespace-nowrap w-1/12">Cita cita 3</td>
                                         <td class="whitespace-nowrap w-1/12">:</td>
                                         <td class="whitespace-nowrap w-10/12"> {{
-                        dataIq?.dataCitacita?.dataGolongan?.citacita_3 }}
+                        dataIq?.dataCitacita?.dataGolongan?.citacita_3
+                        || dataIq?.data_8km?.citacita_3 }}
                                         </td>
                                     </tr>
 
