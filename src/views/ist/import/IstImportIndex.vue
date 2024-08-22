@@ -137,6 +137,16 @@ function populateGrid(workbook) {
         AY: 'iq_ist',
         AZ: 'iq_8km',
         BA: 'tgllahir',
+        BB: 'pertimbangan_studi',
+        BC: 'pertimbangan_jurusan',
+        BD: 'pertimbangan_jurusan_diinginkan_1',
+        BE: 'pertimbangan_jurusan_diinginkan_2',
+        BF: 'pertimbangan_jurusan_diinginkan_3',
+        BG: 'fakultas_1',
+        BH: 'prodi_1',
+        BI: 'fakultas_2',
+        BJ: 'prodi_2',
+        BK: 'kedinasan',
     };
 
     var rowData = [];
@@ -479,6 +489,11 @@ const columns = [
     {
         label: "citacita_3",
         field: "citacita_3",
+        type: "String",
+    },
+    {
+        label: "pertimbangan_studi",
+        field: "pertimbangan_studi",
         type: "String",
     },
 ];
