@@ -8,6 +8,9 @@ import ApiIst from "@/axios/axiosIst";
 
 import moment from "moment/min/moment-with-locales";
 import localization from "moment/locale/id";
+import { useSuperadminStore } from '@/stores/admin/superadminPagesStore';
+const superadminStore = useSuperadminStore();
+const isSuperadminActive = ref(superadminStore.isSuperadminActive)
 
 moment.updateLocale("id", localization);
 
@@ -249,7 +252,8 @@ const doCetakIstLengkap_v4_tanpa_aspek = () => {
             <article class="prose lg:prose-sm">
                 <h1>DATA IST KELAS {{ kelas_nama }}</h1>
             </article>
-            <div class="space-x-2 space-y-2">
+            <!-- !hidden superadmin -->
+            <div class="space-x-2 space-y-2" v-if="isSuperadminActive">
                 <RouterLink
                     :to="{ name: 'admin-sekolah-submenu-ist-import-migration', params: { sekolah_id: 0, kelas_id: 0 } }">
                     <button class="btn btn-sm ">
@@ -263,6 +267,9 @@ const doCetakIstLengkap_v4_tanpa_aspek = () => {
                     Cetak FAKULTAS tanpa TTD</button> -->
                 <button class="btn btn-sm btn-success" @click="doCetak_ist_8km_gabungan()">
                     Cetak 8KM+IST Gabungan</button>
+
+            </div>
+            <div class="space-x-2 space-y-2">
 
                 <button class="btn btn-sm btn-secondary" @click="doCetakIstLengkap_v4()">
                     Cetak V4 Ist+8KM Lengkap Versi Lama Lengkap (ASPEK)</button>

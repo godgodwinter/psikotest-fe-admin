@@ -8,6 +8,9 @@ import ApiIst from "@/axios/axiosIst";
 
 import moment from "moment/min/moment-with-locales";
 import localization from "moment/locale/id";
+import { useSuperadminStore } from '@/stores/admin/superadminPagesStore';
+const superadminStore = useSuperadminStore();
+const isSuperadminActive = ref(superadminStore.isSuperadminActive)
 moment.updateLocale("id", localization);
 
 
@@ -237,7 +240,8 @@ const doCetak_ist_8km_gabungan_v6 = () => {
             <article class="prose lg:prose-sm max-w-screen-lg">
                 <h1>DATA 8KM KELAS {{ kelas_nama }}</h1>
             </article>
-            <div class="space-x-2 space-y-2">
+            <!-- !hidden superadmin -->
+            <div class="space-x-2 space-y-2" v-if="isSuperadminActive">
                 <RouterLink
                     :to="{ name: 'admin-sekolah-submenu-ist-import-migration', params: { sekolah_id: 0, kelas_id: 0 } }">
                     <button class="btn btn-sm ">
@@ -249,6 +253,8 @@ const doCetak_ist_8km_gabungan_v6 = () => {
                     Cetak 8KM V Lengkap </button>
                 <button class="btn btn-sm btn-success" @click="doCetak_ist_8km_gabungan()">
                     Cetak 8KM+IST Gabungan (V3)</button>
+            </div>
+            <div class="space-x-2 space-y-2">
                 <button class="btn btn-sm btn-success" @click="doCetak_ist_8km_gabungan_v5()">
                     Cetak 8KM+IST Gabungan Baru Selain Mahasiswa/Dewasa (V5)</button>
                 <button class="btn btn-sm btn-success" @click="doCetak_ist_8km_gabungan_v6()">

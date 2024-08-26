@@ -2,6 +2,9 @@
 import { ref } from "vue"
 import { useRoute } from "vue-router";
 import { useAdminPagesStore } from '@/stores/admin/adminPagesStore'
+import { useSuperadminStore } from '@/stores/admin/superadminPagesStore';
+const superadminStore = useSuperadminStore();
+const isSuperadminActive = ref(superadminStore.isSuperadminActive)
 const adminPagesStore = useAdminPagesStore();
 const route = useRoute();
 const sekolah_id = ref(route.params.sekolah_id)
@@ -111,7 +114,7 @@ adminPagesStore.$subscribe((mutation, state) => {
                                 <path
                                     d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
                             </svg>
-                            <span class="ml-1">Ujian Khusus V3 (WIP)</span>
+                            <span class="ml-1">Ujian Khusus V3 </span>
                         </router-link>
                     </li>
                     <!-- <li class="bg-white lg:w-full py-0">
@@ -200,7 +203,7 @@ adminPagesStore.$subscribe((mutation, state) => {
                                     d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
                             </svg>
                         </span>
-                        <span>SEDANG DIPERBAIKI</span>
+                        <span>MENU DEV</span>
                     </div>
                     <li class="bg-white lg:w-full py-0">
                         <router-link
@@ -217,7 +220,8 @@ adminPagesStore.$subscribe((mutation, state) => {
                     <li class="bg-white lg:w-full py-0">
                         <router-link
                             :to="{ name: 'admin-sekolah-submenu-ujiankhusus', params: { sekolah_id, kelas_id } }"
-                            class="text-base-content font-normal rounded-lg flex items-center p-2 group hover:link">
+                            class="text-base-content font-normal rounded-lg flex items-center p-2 group hover:link"
+                            v-if="isSuperadminActive">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20"
                                 fill="currentColor">
                                 <path

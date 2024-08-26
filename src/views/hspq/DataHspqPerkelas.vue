@@ -8,6 +8,9 @@ import ApiIst from "@/axios/axiosIst";
 
 import moment from "moment/min/moment-with-locales";
 import localization from "moment/locale/id";
+import { useSuperadminStore } from '@/stores/admin/superadminPagesStore';
+const superadminStore = useSuperadminStore();
+const isSuperadminActive = ref(superadminStore.isSuperadminActive)
 moment.updateLocale("id", localization);
 
 
@@ -249,7 +252,8 @@ const doCetak_sq = () => {
             </article>
             <div class="space-x-2">
                 <RouterLink
-                    :to="{ name: 'admin-sekolah-submenu-ist-import-migration', params: { sekolah_id: 0, kelas_id: 0 } }">
+                    :to="{ name: 'admin-sekolah-submenu-ist-import-migration', params: { sekolah_id: 0, kelas_id: 0 } }"
+                    v-if="isSuperadminActive">
                     <button class="btn btn-sm ">
                         IMPORT DATA IST/MINATBAKAT/Hspq</button>
                 </RouterLink>

@@ -14,6 +14,9 @@ import { useAdminPagesStore } from '@/stores/admin/adminPagesStore'
 import useClipboard from 'vue-clipboard3'
 import moment from "moment/min/moment-with-locales";
 import localization from "moment/locale/id";
+import { useSuperadminStore } from '@/stores/admin/superadminPagesStore';
+const superadminStore = useSuperadminStore();
+const isSuperadminActive = ref(superadminStore.isSuperadminActive)
 moment.updateLocale("id", localization);
 
 const VITE_API_FE_REACT = import.meta.env.VITE_API_FE_REACT
@@ -768,7 +771,9 @@ const formatTanggal = "DD MMMM YYYY HH:mm:ss";
                 <p>Catatan : aktifkan paket pada menu Paketsoal</p>
             </div>
             <div class="space-x-2 shadow-sm">
-                <button class="btn btn-sm btn-error p-2" @click="doDeleteProsesSiswaPerkelas()">
+                <!-- !hidden superadmin -->
+                <button class="btn btn-sm btn-error p-2" @click="doDeleteProsesSiswaPerkelas()"
+                    v-if="isSuperadminActive">
                     Delete Per Kelas V3
                 </button>
                 <button class="btn btn-sm btn-info p-2" @click="doGenerateSiswaPerkelas()">

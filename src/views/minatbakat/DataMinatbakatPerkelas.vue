@@ -8,6 +8,9 @@ import ApiIst from "@/axios/axiosIst";
 
 import moment from "moment/min/moment-with-locales";
 import localization from "moment/locale/id";
+import { useSuperadminStore } from '@/stores/admin/superadminPagesStore';
+const superadminStore = useSuperadminStore();
+const isSuperadminActive = ref(superadminStore.isSuperadminActive)
 moment.updateLocale("id", localization);
 
 
@@ -234,7 +237,7 @@ const doCetakIstV2 = () => {
             <div class="space-x-2">
                 <RouterLink
                     :to="{ name: 'admin-sekolah-submenu-ist-import-migration', params: { sekolah_id: 0, kelas_id: 0 } }">
-                    <button class="btn btn-sm ">
+                    <button class="btn btn-sm " v-if="isSuperadminActive">
                         IMPORT DATA IST/MINATBAKAT</button>
                 </RouterLink>
                 <button class="btn btn-sm btn-success" @click="doCetakIst()">
@@ -269,17 +272,17 @@ const doCetakIstV2 = () => {
                         <div class="bg-white shadow rounded-lg px-4 py-4">
                             <div v-if="data">
                                 <vue-good-table :line-numbers="true" :columns="columns" :rows="data" :search-options="{
-                                    enabled: true,
-                                }" :pagination-options="{
-    enabled: true,
-    perPageDropdown: [50, 100, 150, 200],
-}" styleClass="vgt-table striped bordered condensed" class="py-0">
+        enabled: true,
+    }" :pagination-options="{
+        enabled: true,
+        perPageDropdown: [50, 100, 150, 200],
+    }" styleClass="vgt-table striped bordered condensed" class="py-0">
                                     <template #table-actions>
                                         <div class="space-x-1 space-y-1 gap-1">
                                             <button class="btn btn-sm btn-secondary tooltip" data-tip="Refresh Data"
                                                 @click="getData()">
-                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20"
-                                                    fill="currentColor">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5"
+                                                    viewBox="0 0 20 20" fill="currentColor">
                                                     <path fill-rule="evenodd"
                                                         d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z"
                                                         clip-rule="evenodd" />
