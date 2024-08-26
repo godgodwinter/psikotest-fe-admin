@@ -704,7 +704,7 @@ const onSubmit = async (values) => {
                                         <div class="grid-cols-1">
                                             <label class="form-control w-full max-w-xs">
                                                 <div class="label">
-                                                    <span class="label-text">studi_1 -> kelas 9</span>
+                                                    <span class="label-text">studi_1 -> kelas 9 & 10</span>
                                                 </div>
                                                 <Field v-model="dataForm.studi_1" name="studi_1" type="string"
                                                     class="input input-bordered w-full max-w-xs" />
@@ -715,7 +715,7 @@ const onSubmit = async (values) => {
                                         <div class="grid-cols-1">
                                             <label class="form-control w-full max-w-xs">
                                                 <div class="label">
-                                                    <span class="label-text">jurusan_1 -> kelas 9</span>
+                                                    <span class="label-text">jurusan_1 -> kelas 9 & 10</span>
                                                 </div>
 
                                                 <Field v-model="dataForm.jurusan_1" name="jurusan_1" type="string"
@@ -728,7 +728,7 @@ const onSubmit = async (values) => {
                                         <div class="grid-cols-1">
                                             <label class="form-control w-full max-w-xs">
                                                 <div class="label">
-                                                    <span class="label-text">studi_2 -> kelas 9</span>
+                                                    <span class="label-text">studi_2 -> kelas 9 & 10</span>
                                                 </div>
 
                                                 <Field v-model="dataForm.studi_2" name="studi_2" type="string"
@@ -740,7 +740,7 @@ const onSubmit = async (values) => {
                                         <div class="grid-cols-1">
                                             <label class="form-control w-full max-w-xs">
                                                 <div class="label">
-                                                    <span class="label-text">jurusan_2 -> kelas 9</span>
+                                                    <span class="label-text">jurusan_2 -> kelas 9 & 10</span>
                                                 </div>
                                                 <Field v-model="dataForm.jurusan_2" name="jurusan_2" type="string"
                                                     class="input input-bordered w-full max-w-xs" />
@@ -811,7 +811,7 @@ const onSubmit = async (values) => {
                                         <div class="grid-cols-1">
                                             <label class="form-control w-full max-w-xs">
                                                 <div class="label">
-                                                    <span class="label-text"> mepel untuk tipe kelas 11,12 (Cetak
+                                                    <span class="label-text"> mapel untuk tipe kelas 11,12 (Cetak
                                                         V5)</span>
                                                 </div>
                                                 <Field v-model="dataForm.fakultas_1112_mapel" name="fakultas_1112_mapel"
