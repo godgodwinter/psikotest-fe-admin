@@ -147,6 +147,7 @@ function populateGrid(workbook) {
         BI: 'fakultas_2',
         BJ: 'prodi_2',
         BK: 'kedinasan',
+        BL: 'kesimpulan_saran_tambahan',
     };
 
     var rowData = [];
