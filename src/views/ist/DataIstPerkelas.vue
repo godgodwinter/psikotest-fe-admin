@@ -261,8 +261,6 @@ const doCetakIstLengkap_v4_tanpa_aspek = () => {
                 </RouterLink>
                 <button class="btn btn-sm btn-success" @click="doCetakIst()">
                     Cetak</button>
-                <button class="btn btn-sm btn-secondary" @click="doCetakIstJurusan('true')">
-                    Cetak FAKULTAS v3</button>
                 <!-- <button class="btn btn-sm btn-secondary" @click="doCetakIstJurusan('false')">
                     Cetak FAKULTAS tanpa TTD</button> -->
                 <button class="btn btn-sm btn-success" @click="doCetak_ist_8km_gabungan()">
@@ -271,6 +269,8 @@ const doCetakIstLengkap_v4_tanpa_aspek = () => {
             </div>
             <div class="space-x-2 space-y-2">
 
+                <button class="btn btn-sm btn-secondary" @click="doCetakIstJurusan('true')">
+                    Cetak FAKULTAS v3</button>
                 <button class="btn btn-sm btn-secondary" @click="doCetakIstLengkap_v4()">
                     Cetak V4 Ist+8KM Lengkap Versi Lama Lengkap (ASPEK)</button>
 
