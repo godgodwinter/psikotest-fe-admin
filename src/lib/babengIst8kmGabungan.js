@@ -7,6 +7,8 @@ export function fn_singkatkan_ket(keterangan) {
       return "BS";
     case "baik":
       return "B";
+    case "cukup baik":
+      return "CB";
     case "cukup":
       return "C";
     case "hampir cukup":
