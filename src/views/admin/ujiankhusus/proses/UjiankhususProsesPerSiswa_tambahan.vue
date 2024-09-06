@@ -867,9 +867,9 @@ const onSubmit = async (values) => {
                         item.kode
                     }})</td>
                                     <td class="whitespace-nowrap w-1/12">:</td>
-                                    <td class="whitespace-nowrap w-10/12"> {{ item.val }} - {{ item.persen }} % {{
+                                    <td class="whitespace-nowrap w-10/12"> {{ item.persen }} % {{
                         item.ket
-                    }}
+                    }} - iq = {{ item.val }}
                                     </td>
                                 </tr>
 
@@ -900,7 +900,8 @@ const onSubmit = async (values) => {
                             item.persen
                         )?.singkatan
 
-                    }}
+                    }} - iq = {{ item.iq }}
+                                        <!-- - nilai = {{ item.nilai }} -->
                                     </td>
                                 </tr>
 
