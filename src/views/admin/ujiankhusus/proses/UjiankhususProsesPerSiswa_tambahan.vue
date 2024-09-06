@@ -1,6 +1,6 @@
 <script setup>
 import Api from "@/axios/axiosIst";
-import { ref, defineAsyncComponent } from "vue";
+import { ref, defineAsyncComponent, computed } from "vue";
 import BreadCrumb from "@/components/atoms/BreadCrumb.vue";
 import BreadCrumbSpace from "@/components/atoms/BreadCrumbSpace.vue";
 import ButtonEdit from "@/components/atoms/ButtonEdit.vue";
@@ -381,7 +381,8 @@ const getData_Iq = async () => {
         console.log(`#getData_iq #dataIq`, dataIq.value);
         console.log('====================================');
         console.log(`#getData_Iq #8km:`, dataIq.value?.data_8km?.data_8km_hasil);
-        dataAspek_8km.value = dataIq.value?.data_8km?.data_8km_hasil
+        dataAspek_8km.value = dataIq.value?.data_8km?.data_8km_hasil ? dataIq.value?.data_8km?.data_8km_hasil.sort((a, b) => b.persen - a.persen) : [];
+        // dataAspek_8km.value = dataIq.value?.data_8km?.data_8km_hasil
         console.log(`#getData_Iq #ist:`, dataIq.value?.fn_get_data_ist?.ist_detail_sorted);
         dataAspek_ist.value = dataIq.value?.fn_get_data_ist?.ist_detail_sorted
         // console.log('====================================');
@@ -496,6 +497,10 @@ const onSubmit = async (values) => {
         console.error(error);
     }
 };
+
+// const sortedDataAspek_8km = computed(() => {
+//     return dataAspek_8km.value.sort((a, b) => b.persen - a.persen)
+// })
 </script>
 
 <template>
@@ -887,7 +892,7 @@ const onSubmit = async (values) => {
                         item.nama
                     }})</td>
                                     <td class="whitespace-nowrap w-1/12">:</td>
-                                    <td class="whitespace-nowrap w-10/12"> {{ item.iq }} - {{ item.persen }} % {{
+                                    <td class="whitespace-nowrap w-10/12"> {{ item.persen }} % {{
 
                         fn_settings_range_8km(
                             dataLengkap?.data_8km?.umur,
