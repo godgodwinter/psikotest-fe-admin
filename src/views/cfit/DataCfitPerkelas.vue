@@ -167,7 +167,7 @@ const doPilihKelas = async () => {
     await getData()
     // console.log(inputCariKelas.value.id);
     await router.push({
-        name: "admin-sekolah-submenu-8km",
+        name: "admin-sekolah-submenu-cfit",
         params: {
             sekolah_id: sekolah_id.value,
             kelas_id: inputCariKelas.value.id ? inputCariKelas.value.id : kelas_id.value,
