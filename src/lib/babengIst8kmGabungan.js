@@ -1,3 +1,27 @@
+export function fn_singkatkan_ket(keterangan) {
+  keterangan = keterangan.toLowerCase();
+  switch (keterangan) {
+    case "sangat baik sekali":
+      return "SBS";
+    case "baik sekali":
+      return "BS";
+    case "baik":
+      return "B";
+    case "cukup":
+      return "C";
+    case "hampir cukup":
+      return "HC";
+    case "kurang":
+      return "K";
+    case "kurang sekali":
+      return "KS";
+    case "sangat kurang sekali":
+      return "SKS";
+    default:
+      return keterangan;
+  }
+}
+
 export const fn_settings_range_8km = (umur, jenis, nilai) => {
   let hasil = {
     singkatan: "-",

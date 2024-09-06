@@ -16,7 +16,7 @@ import ApiUjianKhusus from "@/axios/axiosIst";
 import moment from "moment/min/moment-with-locales";
 import localization from "moment/locale/id";
 import { fn_avg_data, fn_deteksi_sq } from "@/lib/IqHelper.js"
-import { fn_settings_range_8km } from "@/lib/babengIst8kmGabungan.js"
+import { fn_settings_range_8km, fn_singkatkan_ket } from "@/lib/babengIst8kmGabungan.js"
 moment.updateLocale("id", localization);
 
 const BASE_URL_CETAK = import.meta.env.VITE_API_URL_CETAK
@@ -867,8 +867,8 @@ const onSubmit = async (values) => {
                         item.kode
                     }})</td>
                                     <td class="whitespace-nowrap w-1/12">:</td>
-                                    <td class="whitespace-nowrap w-10/12"> {{ item.persen }} % {{
-                        item.ket
+                                    <td class="whitespace-nowrap w-10/12"> {{ item.persen }} % - {{
+                        fn_singkatkan_ket(item.ket)
                     }} - iq = {{ item.val }}
                                     </td>
                                 </tr>
@@ -892,7 +892,7 @@ const onSubmit = async (values) => {
                         item.nama
                     }})</td>
                                     <td class="whitespace-nowrap w-1/12">:</td>
-                                    <td class="whitespace-nowrap w-10/12"> {{ item.persen }} % {{
+                                    <td class="whitespace-nowrap w-10/12"> {{ item.persen }} % - {{
 
                         fn_settings_range_8km(
                             dataLengkap?.data_8km?.umur,
