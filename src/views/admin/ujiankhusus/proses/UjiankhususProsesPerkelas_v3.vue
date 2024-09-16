@@ -818,7 +818,7 @@ const formatTanggal = "DD MMMM YYYY HH:mm:ss";
                     </button>
                 </div>
                 <div class="space-x-2 space-y-2 shadow-sm py-1">
-                    <button class="btn btn-sm btn-info tooltip" data-tip="Export Excel Format IST V3"
+                    <!-- <button class="btn btn-sm btn-info tooltip" data-tip="Export Excel Format IST V3"
                         @click="doExportExcel()">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor" class="w-6 h-6">
@@ -826,7 +826,7 @@ const formatTanggal = "DD MMMM YYYY HH:mm:ss";
                                 d="M12 9.75v6.75m0 0-3-3m3 3 3-3m-8.25 6a4.5 4.5 0 0 1-1.41-8.775 5.25 5.25 0 0 1 10.233-2.33 3 3 0 0 1 3.758 3.848A3.752 3.752 0 0 1 18 19.5H6.75Z" />
                         </svg>
 
-                    </button>
+                    </button> -->
                     <button class="btn btn-sm btn-success tooltip" data-tip="Export Excel Format IST (v2) V3"
                         @click="doExportExcel_v2()">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
