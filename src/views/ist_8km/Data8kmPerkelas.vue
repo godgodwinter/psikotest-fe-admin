@@ -251,10 +251,11 @@ const doCetak_ist_8km_gabungan_v6 = () => {
                     Cetak 8KM v1</button>
                 <button class="btn btn-sm btn-success" @click="doCetak_v2()">
                     Cetak 8KM V Lengkap </button>
-                <button class="btn btn-sm btn-success" @click="doCetak_ist_8km_gabungan()">
-                    Cetak 8KM+IST Gabungan (V3)</button>
+
             </div>
             <div class="space-x-2 space-y-2">
+                <button class="btn btn-sm btn-success" @click="doCetak_ist_8km_gabungan()">
+                    Cetak 8KM+IST Gabungan (V3)</button>
                 <button class="btn btn-sm btn-success" @click="doCetak_ist_8km_gabungan_v5()">
                     Cetak 8KM+IST Gabungan Baru Selain Mahasiswa/Dewasa (V5)</button>
                 <button class="btn btn-sm btn-success" @click="doCetak_ist_8km_gabungan_v6()">
