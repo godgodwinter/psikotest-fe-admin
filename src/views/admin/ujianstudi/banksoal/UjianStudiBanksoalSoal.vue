@@ -3,6 +3,10 @@ import { ref, defineAsyncComponent } from "vue"
 import Api from "@/axios/axiosNode";
 import Toast from "@/components/lib/Toast";
 import { useRoute, useRouter } from "vue-router";
+import { useSuperadminStore } from '@/stores/admin/superadminPagesStore';
+const superadminStore = useSuperadminStore();
+const isSuperadminActive = ref(superadminStore.isSuperadminActive)
+
 
 const BreadCrumb = defineAsyncComponent(() =>
     import('@/components/atoms/BreadCrumb.vue')
@@ -24,7 +28,6 @@ const aspek_detail = ref();
 const data = ref();
 const isLoading = ref(true);
 const isError = ref(false);
-
 
 const columns = [
     {
@@ -148,16 +151,16 @@ const doEditData = async (id, index) => {
                     <div class="bg-white shadow rounded-lg px-4 py-4">
                         <div v-if="data">
                             <vue-good-table :line-numbers="true" :columns="columns" :rows="data" :search-options="{
-                                enabled: true,
-                            }" :pagination-options="{
-    enabled: true,
-    perPageDropdown: [50, 100, 150, 200],
-}" styleClass="vgt-table striped bordered condensed" class="py-0">
+                        enabled: true,
+                    }" :pagination-options="{
+                        enabled: true,
+                        perPageDropdown: [50, 100, 150, 200],
+                    }" styleClass="vgt-table striped bordered condensed" class="py-0">
                                 <template #table-actions>
                                     <div class="space-x-1 space-y-1 gap-1">
                                         <router-link :to="{
-                                            name: 'admin-ujianstudi-banksoal-aspek_detail-soal-tambah',
-                                        }">
+                        name: 'admin-ujianstudi-banksoal-aspek_detail-soal-tambah',
+                    }">
                                             <button class="btn btn-sm btn-primary tooltip" data-tip="Tambah SOAL">
                                                 TAMBAH SOAL
                                             </button>
@@ -169,23 +172,26 @@ const doEditData = async (id, index) => {
                                         <div class="text-sm font-medium text-center flex justify-center space-x-1">
                                             <button class="btn btn-sm btn-warning tooltip" data-tip="Edit"
                                                 @click="doEditData(props.row.id, props.index)">
-                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20"
-                                                    fill="currentColor">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5"
+                                                    viewBox="0 0 20 20" fill="currentColor">
                                                     <path
                                                         d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z" />
                                                     <path fill-rule="evenodd"
                                                         d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"
                                                         clip-rule="evenodd" />
                                                 </svg></button>
-                                            <button class="btn btn-sm btn-danger"
-                                                @click="doDeleteData(props.row.id, props.index)">
-                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20"
-                                                    fill="currentColor">
-                                                    <path fill-rule="evenodd"
-                                                        d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
-                                                        clip-rule="evenodd" />
-                                                </svg>
-                                            </button>
+                                            <div v-if="isSuperadminActive">
+                                                <button class="btn btn-sm btn-danger"
+                                                    @click="doDeleteData(props.row.id, props.index)">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5"
+                                                        viewBox="0 0 20 20" fill="currentColor">
+                                                        <path fill-rule="evenodd"
+                                                            d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
+                                                            clip-rule="evenodd" />
+                                                    </svg>
+                                                </button>
+                                            </div>
+
                                         </div>
                                     </span>
 
