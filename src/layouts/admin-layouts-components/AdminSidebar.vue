@@ -165,6 +165,18 @@ const doLogout = async () => {
                                 <span class="ml-3">Import CFIT</span>
                             </router-link>
                         </li>
+                        <li class="lg:w-full py-0" :class="[pagesActive == 'ujiankhusus' ? pagesActiveClass : '']">
+                            <router-link
+                                :to="{ name: 'admin-sekolah-submenu-mmpi-import', params: { sekolah_id: 0, kelas_id: 0 } }"
+                                class="text-base-content font-normal rounded-lg flex items-center p-2 group hover:link">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20"
+                                    fill="currentColor">
+                                    <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
+                                        clip-rule="evenodd" />
+                                </svg>
+                                <span class="ml-3">Import MMPI</span>
+                            </router-link>
+                        </li>
                         <li class="lg:w-full py-0">
                             <h3
                                 class="text-base-content font-bold rounded-lg flex items-center pt-4  group hover:link underline">
