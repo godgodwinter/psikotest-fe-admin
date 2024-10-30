@@ -206,6 +206,7 @@ const getData = async () => {
         for (const item of response.data) {
             if (item) {
                 data.value.push(item);
+                console.log(`data persiswa: `, item);
             }
         }
         isLoading.value = false;
@@ -326,46 +327,46 @@ const doCetak_sq = () => {
                                             </div> -->
                                         </span>
                                         <span v-else-if="props.column.field == 'hspq'">
-                                            {{ props.row.hspq ? "Ada" : "-" }}
+                                            {{ props.row.fn_get_hspq ? "Ada" : "-" }}
                                         </span>
                                         <span v-else-if="props.column.field == 'hspq_a'">
-                                            {{ props.row.hspq ? props.row.hspq.hspq_a : "-" }}
+                                            {{ props.row.fn_get_hspq ? props.row.fn_get_hspq_sq.hspq.hspq_a : "-" }}
                                         </span>
                                         <span v-else-if="props.column.field == 'hspq_c'">
-                                            {{ props.row.hspq ? props.row.hspq.hspq_c : "-" }}
+                                            {{ props.row.fn_get_hspq ? props.row.fn_get_hspq_sq.hspq.hspq_c : "-" }}
                                         </span>
                                         <span v-else-if="props.column.field == 'hspq_d'">
-                                            {{ props.row.hspq ? props.row.hspq.hspq_d : "-" }}
+                                            {{ props.row.fn_get_hspq ? props.row.fn_get_hspq_sq.hspq.hspq_d : "-" }}
                                         </span>
                                         <span v-else-if="props.column.field == 'hspq_e'">
-                                            {{ props.row.hspq ? props.row.hspq.hspq_e : "-" }}
+                                            {{ props.row.fn_get_hspq ? props.row.fn_get_hspq_sq.hspq.hspq_e : "-" }}
                                         </span>
                                         <span v-else-if="props.column.field == 'hspq_f'">
-                                            {{ props.row.hspq ? props.row.hspq.hspq_f : "-" }}
+                                            {{ props.row.fn_get_hspq ? props.row.fn_get_hspq_sq.hspq.hspq_f : "-" }}
                                         </span>
                                         <span v-else-if="props.column.field == 'hspq_g'">
-                                            {{ props.row.hspq ? props.row.hspq.hspq_g : "-" }}
+                                            {{ props.row.fn_get_hspq ? props.row.fn_get_hspq_sq.hspq.hspq_g : "-" }}
                                         </span>
                                         <span v-else-if="props.column.field == 'hspq_h'">
-                                            {{ props.row.hspq ? props.row.hspq.hspq_h : "-" }}
+                                            {{ props.row.fn_get_hspq ? props.row.fn_get_hspq_sq.hspq.hspq_h : "-" }}
                                         </span>
                                         <span v-else-if="props.column.field == 'hspq_i'">
-                                            {{ props.row.hspq ? props.row.hspq.hspq_i : "-" }}
+                                            {{ props.row.fn_get_hspq ? props.row.fn_get_hspq_sq.hspq.hspq_i : "-" }}
                                         </span>
                                         <span v-else-if="props.column.field == 'hspq_j'">
-                                            {{ props.row.hspq ? props.row.hspq.hspq_j : "-" }}
+                                            {{ props.row.fn_get_hspq ? props.row.fn_get_hspq_sq.hspq.hspq_j : "-" }}
                                         </span>
                                         <span v-else-if="props.column.field == 'hspq_o'">
-                                            {{ props.row.hspq ? props.row.hspq.hspq_o : "-" }}
+                                            {{ props.row.fn_get_hspq ? props.row.fn_get_hspq_sq.hspq.hspq_o : "-" }}
                                         </span>
                                         <span v-else-if="props.column.field == 'hspq_q2'">
-                                            {{ props.row.hspq ? props.row.hspq.hspq_q2 : "-" }}
+                                            {{ props.row.fn_get_hspq ? props.row.fn_get_hspq_sq.hspq.hspq_q2 : "-" }}
                                         </span>
                                         <span v-else-if="props.column.field == 'hspq_q3'">
-                                            {{ props.row.hspq ? props.row.hspq.hspq_q3 : "-" }}
+                                            {{ props.row.fn_get_hspq ? props.row.fn_get_hspq_sq.hspq.hspq_q3 : "-" }}
                                         </span>
                                         <span v-else-if="props.column.field == 'hspq_q4'">
-                                            {{ props.row.hspq ? props.row.hspq.hspq_q4 : "-" }}
+                                            {{ props.row.fn_get_hspq ? props.row.fn_get_hspq_sq.hspq.hspq_q4 : "-" }}
                                         </span>
 
                                         <span v-else>
