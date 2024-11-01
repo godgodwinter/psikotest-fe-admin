@@ -24,6 +24,9 @@ const BASE_URL_CETAK = import.meta.env.VITE_API_URL_CETAK
 const VITE_API_FE_REACT = import.meta.env.VITE_API_FE_REACT
     ? import.meta.env.VITE_API_FE_REACT
     : "http://localhost:3500/";
+const VITE_API_FE_DASHBOARD = import.meta.env.VITE_API_FE_DASHBOARD
+    ? import.meta.env.VITE_API_FE_DASHBOARD
+    : "http://localhost:3500/";
 
 const sekolah_id = ref(route.params.sekolah_id)
 const kelas_id = ref(route.params.kelas_id)
@@ -238,6 +241,18 @@ const doCetak_sq = () => {
         `${VITE_API_FE_REACT}hspq_sq/v1/cetak/${getSekolahAktif.value.kelas_id}/false`
     );
 }
+// !DASHBOARD
+
+const dashboard_doCetak = () => {
+    window.open(
+        `${VITE_API_FE_DASHBOARD}admin/sekolah/${getSekolahAktif.value.sekolah_id}/kelas/${getSekolahAktif.value.kelas_id}/hasil_psikologi/deteksi/cetak`
+    );
+}
+const dashboard_doCetak_negatif = () => {
+    window.open(
+        `${VITE_API_FE_DASHBOARD}admin/sekolah/${getSekolahAktif.value.sekolah_id}/kelas/${getSekolahAktif.value.kelas_id}/hasil_psikologi/deteksi/cetak/negatif`
+    );
+}
 </script>
 <template>
     <span v-if="isLoading">
@@ -251,23 +266,35 @@ const doCetak_sq = () => {
             <article class="prose lg:prose-sm max-w-screen-lg">
                 <h1>DATA HSPQ KELAS {{ kelas_nama }}</h1>
             </article>
-            <div class="space-x-2">
-                <RouterLink
-                    :to="{ name: 'admin-sekolah-submenu-ist-import-migration', params: { sekolah_id: 0, kelas_id: 0 } }"
-                    v-if="isSuperadminActive">
-                    <button class="btn btn-sm ">
-                        IMPORT DATA IST/MINATBAKAT/Hspq</button>
-                </RouterLink>
-                <button class="btn btn-sm btn-success" @click="doCetak()">
-                    Cetak Hspq Positif Negatif</button>
-                <button class="btn btn-sm btn-success" @click="doCetak_negatif()">
-                    Cetak Hspq Negatif Saja</button>
-                <button class="btn btn-sm btn-success" @click="doCetak_sq()">
-                    Cetak Hspq Eq Scq Sq</button>
-                <button class="btn btn-sm btn-success" @click="doCetak_kewirausahaan()">
-                    Cetak Kewirausahaan</button>
-            </div>
+            <div class="space-y-1">
+                <div class="space-x-2">
+                    <RouterLink
+                        :to="{ name: 'admin-sekolah-submenu-ist-import-migration', params: { sekolah_id: 0, kelas_id: 0 } }"
+                        v-if="isSuperadminActive">
+                        <button class="btn btn-sm ">
+                            IMPORT DATA IST/MINATBAKAT/Hspq</button>
+                    </RouterLink>
+                    <button class="btn btn-sm btn-success" @click="doCetak()">
+                        Cetak Hspq Positif Negatif</button>
+                    <button class="btn btn-sm btn-success" @click="doCetak_negatif()">
+                        Cetak Hspq Negatif Saja</button>
+                    <button class="btn btn-sm btn-success" @click="doCetak_sq()">
+                        Cetak Hspq Eq Scq Sq</button>
+                    <button class="btn btn-sm btn-success" @click="doCetak_kewirausahaan()">
+                        Cetak Kewirausahaan</button>
+                </div>
+                <div class="space-x-2">
 
+                    <button class="btn btn-sm btn-success" @click="dashboard_doCetak()">
+                        DASHBOARD - Cetak Hspq Positif Negatif</button>
+                    <button class="btn btn-sm btn-success" @click="dashboard_doCetak_negatif()">
+                        DASHBOARD - Cetak Hspq Negatif Saja</button>
+                    <!-- <button class="btn btn-sm btn-success" @click="doCetak_sq()">
+                        Cetak Hspq Eq Scq Sq</button>
+                    <button class="btn btn-sm btn-success" @click="doCetak_kewirausahaan()">
+                        Cetak Kewirausahaan</button> -->
+                </div>
+            </div>
             <div class="w-full bg-base-100 shadow-sm rounded-lg py-4 px-4">
                 <div class="flex justify-center">
                     <v-select class="py-2 px-3 w-72 mx-auto md:mx-0" :options="pilihKelas" v-model="inputCariKelas"
