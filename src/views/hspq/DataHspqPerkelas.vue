@@ -253,6 +253,11 @@ const dashboard_doCetak_negatif = () => {
         `${VITE_API_FE_DASHBOARD}admin/sekolah/${getSekolahAktif.value.sekolah_id}/kelas/${getSekolahAktif.value.kelas_id}/hasil_psikologi/deteksi/cetak/negatif`
     );
 }
+const dashboard_doCetak_kewirausahaan = () => {
+    window.open(
+        `${VITE_API_FE_DASHBOARD}admin/sekolah/${getSekolahAktif.value.sekolah_id}/kelas/${getSekolahAktif.value.kelas_id}/hasil_psikologi/deteksi/cetak/kewirausahaan`
+    );
+}
 </script>
 <template>
     <span v-if="isLoading">
@@ -289,6 +294,8 @@ const dashboard_doCetak_negatif = () => {
                         DASHBOARD - Cetak Hspq Positif Negatif</button>
                     <button class="btn btn-sm btn-success" @click="dashboard_doCetak_negatif()">
                         DASHBOARD - Cetak Hspq Negatif Saja</button>
+                    <button class="btn btn-sm btn-success" @click="dashboard_doCetak_kewirausahaan()">
+                        DASHBOARD - Cetak Kewirausahaan</button>
                     <!-- <button class="btn btn-sm btn-success" @click="doCetak_sq()">
                         Cetak Hspq Eq Scq Sq</button>
                     <button class="btn btn-sm btn-success" @click="doCetak_kewirausahaan()">

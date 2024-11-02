@@ -221,54 +221,24 @@ const columns = [
         thClass: "text-center",
     },
     {
-        label: "Nama",
-        field: "nama",
+        label: "Pertanyaan",
+        field: "pertanyaan",
         type: "String",
     },
     {
-        label: "tgllahir",
-        field: "tgllahir",
+        label: "kunci_jawaban",
+        field: "kunci_jawaban",
         type: "String",
     },
     {
-        label: "umur",
-        field: "umur",
+        label: "skor_jawaban_benar",
+        field: "skor_jawaban_benar",
         type: "String",
     },
     {
-        label: "l",
-        field: "l",
-        type: "Number",
-    },
-    {
-        label: "f",
-        field: "f",
-        type: "Number",
-    },
-    {
-        label: "f1",
-        field: "f1",
-        type: "Number",
-    },
-    {
-        label: "f2",
-        field: "f2",
-        type: "Number",
-    },
-    {
-        label: "k",
-        field: "k",
-        type: "Number",
-    },
-    {
-        label: "hs",
-        field: "hs",
-        type: "Number",
-    },
-    {
-        label: "d",
-        field: "d",
-        type: "Number",
+        label: "kode_soal_offline",
+        field: "kode_soal_offline",
+        type: "String",
     },
 ];
 
@@ -397,49 +367,7 @@ const doStore = async () => {
         </div> -->
 
         <div>
-            <div class="pt-0 px-0">
-                <div class="w-full mx-0 lg:w-10/12">
-                    <div class="bg-white rounded-lg p-0 sm:p-6 xl:p-0">
-                        <div class="grid md:grid-cols-2 gap-2">
-                            <div>
-                                <label for="name" class="text-sm font-medium text-gray-900 block mb-2">Pilih Sekolah
-                                </label>
-                                <select class="select select-info w-full max-w-xs" v-model="dataDetail.sekolah_id"
-                                    @change="changedValue" @selected="changedLabel">
-                                    <option selected :value="null">
-                                        NULL
-                                    </option>
-                                    <option v-for="(item, index) in pilihSekolah" :value="item.id">
-                                        {{ item.label }}
-                                    </option>
-                                </select>
 
-                            </div>
-
-                            <div>
-                                <label for="name" class="text-sm font-medium text-gray-900 block mb-2">Pilih Kelas
-                                </label>
-                                <select class="select select-info w-full max-w-xs" v-model="dataDetail.kelas_id">
-                                    <option selected :value="null">
-                                        NULL
-                                    </option>
-                                    <option v-for="(item, index) in pilihKelas" :value="item.id">
-                                        {{ item.label }}
-                                    </option>
-                                </select>
-
-                            </div>
-                        </div>
-
-                        <div class="w-full flex justify-end mt-4 px-20">
-                            <button class="btn btn-active btn-lg btn-primary"
-                                @click="doApply(dataDetail.sekolah_id, dataDetail.kelas_id)">
-                                Apply
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
         <div class="space-x-2 py-1 space-y-2">
             <input name="fileUpload" @change="onChangefileUpload($event)" type="file"
@@ -493,17 +421,17 @@ const doStore = async () => {
                 <div class="bg-white shadow rounded-lg px-4 py-4 ">
                     <div v-if="dataExcel">
                         <vue-good-table :line-numbers="true" :columns="columns" :rows="dataExcel" :search-options="{
-                                    enabled: true,
-                                }" :pagination-options="{
-                                    enabled: true,
-                                    perPageDropdown: [100, 200, 500],
-                                }" styleClass="vgt-table striped bordered condensed" class="py-0">
+                enabled: true,
+            }" :pagination-options="{
+                enabled: true,
+                perPageDropdown: [100, 200, 500],
+            }" styleClass="vgt-table striped bordered condensed" class="py-0">
                             <template #table-row="props">
                                 <span v-if="props.column.field == 'actions'">
                                     <div class="text-sm font-medium text-center flex justify-center space-x-1">
                                         <button class="btn btn-sm btn-warning" @click="
-                                    doDelete(props.index, props.row.nama)
-                                    ">
+                doDelete(props.index, props.row.nama)
+                ">
                                             Delete
                                         </button>
                                     </div>
@@ -512,16 +440,16 @@ const doStore = async () => {
                                 <span v-else-if="props.column.field == 'tgl_import'">
                                     <div class="text-center">
                                         {{
-                                    props.row.tgl_import ? moment(props.row.tgl_import).format("DD MMMM YYYY") :
-                                        null
-                                }}
+                props.row.tgl_import ? moment(props.row.tgl_import).format("DD MMMM YYYY") :
+                    null
+            }}
                                     </div>
                                 </span>
                                 <span v-else-if="props.column.field == 'data_sertifikat'">
                                     <div class="text-center">
                                         {{
-                                    props.row.data_sertifikat ? 'Ada' : "-"
-                                }}
+                props.row.data_sertifikat ? 'Ada' : "-"
+            }}
                                         <button class="btn btn-sm btn-info"
                                             @click="fnPeriksaDataSertifikat(props.index)"
                                             v-if="props.row.data_sertifikat">Periksa</button>
@@ -530,8 +458,8 @@ const doStore = async () => {
                                 <span v-else-if="props.column.field == 'data_deteksi'">
                                     <div class="text-center">
                                         {{
-                                    props.row.data_deteksi ? "Ada" : "-"
-                                }}
+                props.row.data_deteksi ? "Ada" : "-"
+                                        }}
                                         <button class="btn btn-sm btn-info" @click="fnPeriksaDataDeteksi(props.index)"
                                             v-if="props.row.data_deteksi">Periksa</button>
                                     </div>
