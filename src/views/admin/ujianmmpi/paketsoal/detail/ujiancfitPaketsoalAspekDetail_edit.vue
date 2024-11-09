@@ -337,11 +337,6 @@ const pagesActive = ref("tulis");
                             </QuillEditor>
 
                         </div>
-
-                        <div class="shadow-sm py-4 px-4 space-y-4" v-else>
-                            <label for="" class="underline">Preview : </label>
-                            <div class="w-full border-2 min-h-16 p-10" v-html="dataForm.lembar_prasoal"></div>
-                        </div>
                     </div>
                 </div>
                 <div class="flex flex-col" v-if="dataForm.lembar_prasoalStatus">

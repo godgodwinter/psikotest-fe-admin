@@ -85,48 +85,11 @@ function populateGrid(workbook) {
     // we expect the following columns to be present
     var columns = {
         A: 'no',
-        B: 'kelas',
-        C: 'no_induk',
-        D: 'nama',
-        E: 'jk',
-        F: 'umur',
-        G: 'tgllahir',
-        H: 'l',
-        I: 'f',
-        J: 'f1',
-        K: 'f2',
-        L: 'k',
-        M: 'hs',
-        N: 'd',
-        O: 'hy',
-        P: 'pd',
-        Q: 'm',
-        R: 'pa',
-        S: 'pt',
-        T: 'sc',
-        U: 'ma',
-        V: 'si',
-        W: 'a_anx',
-        X: 'a_obs',
-        Y: 'a_dep',
-        Z: 'a_hea',
-        AA: 'a_aln',
-        AB: 'a_biz',
-        AC: 'a_ang',
-        AD: 'a_cyn',
-        AE: 'a_con',
-        AF: 'a_lse',
-        AG: 'a_las',
-        AH: 'a_sod',
-        AI: 'a_fam',
-        AJ: 'a_sch',
-        AK: 'a_trt',
-        AL: 'mac_r',
-        AM: 'ack',
-        AN: 'pro',
-        AO: 'imm',
-        AP: 'a',
-        AQ: 'r',
+        B: 'pertanyaan',
+        C: 'kunci_jawaban_1',
+        D: 'kode_aspek_1',
+        E: 'kunci_jawaban_2',
+        F: 'kode_aspek_2',
     };
 
     var rowData = [];
@@ -142,7 +105,7 @@ function populateGrid(workbook) {
             row[columns[column]] = worksheet[column + rowIndex]?.w;
             if (column == 'A' && worksheet[column + rowIndex]?.w) {
                 periksaRow = 1;
-                console.log(worksheet[column + rowIndex]?.w, column + rowIndex);
+                // console.log(worksheet[column + rowIndex]?.w, column + rowIndex);
             }
         });
 
@@ -221,23 +184,38 @@ const columns = [
         thClass: "text-center",
     },
     {
+        label: "No",
+        field: "no",
+        type: "String",
+    },
+    {
         label: "Pertanyaan",
         field: "pertanyaan",
         type: "String",
     },
     {
-        label: "kunci_jawaban",
-        field: "kunci_jawaban",
+        label: "status_simpan",
+        field: "status_simpan",
         type: "String",
     },
     {
-        label: "skor_jawaban_benar",
-        field: "skor_jawaban_benar",
+        label: "kunci_jawaban_1",
+        field: "kunci_jawaban_1",
         type: "String",
     },
     {
-        label: "kode_soal_offline",
-        field: "kode_soal_offline",
+        label: "kode_aspek_1",
+        field: "kode_aspek_1",
+        type: "String",
+    },
+    {
+        label: "kunci_jawaban_2",
+        field: "kunci_jawaban_2",
+        type: "String",
+    },
+    {
+        label: "kode_aspek_2",
+        field: "kode_aspek_2",
         type: "String",
     },
 ];
@@ -267,90 +245,29 @@ const dataSekolah = ref([]);
 const pilihKelas = ref([]);
 const pilihSekolah = ref([]);
 
-// get Sekolah
-const getDataSekolah = async () => {
-    try {
-        const response = await Api.get(`owner/sekolah`);
-        // console.log(response);
-        dataSekolah.value = response.data;
-        dataSekolah.value.forEach((item) => {
-            pilihSekolah.value.push({
-                label: item.nama,
-                id: item.id,
-            });
-        });
-        return response;
-    } catch (error) {
-        Toast.danger("Warning", "Data Gagal dimuat");
-        console.error(error);
-    }
-};
-getDataSekolah();
-// get Kelas
-const getDataKelas = async (sekolah_id) => {
-    try {
-        pilihKelas.value = [];
-        const response = await Api.get(`owner/datasekolah/${sekolah_id}/kelas`);
-        // console.log(response);
-        dataKelas.value = response.data;
-        dataKelas.value.forEach((item) => {
-            pilihKelas.value.push({
-                label: item.nama,
-                id: item.id,
-            });
-        });
-        return response;
-    } catch (error) {
-        Toast.danger("Warning", "Data Gagal dimuat");
-        console.error(error);
-    }
-};
-// getDataKelas(idTemp.value);
-
-const changedValue = (value) => {
-    dataDetail.value.kelas_id = null;
-    if (dataDetail.value.sekolah_id) {
-        getDataKelas(dataDetail.value.sekolah_id);
-    } else {
-        pilihKelas.value = [];
-    }
-};
-
-const doApply = (sekolah, kelas) => {
-    console.log(sekolah, kelas);
-    Toast.babeng("Info", `sekolah ${sekolah} , kelas ${kelas}`)
-    sekolah_id.value = sekolah;
-    kelas_id.value = kelas
-}
-
 
 const doStore = async () => {
-    if (sekolah_id.value) {
 
-        const dataForm = {
-            sekolah_id: sekolah_id.value,
-            kelas_id: kelas_id.value,
-            data: dataExcel.value
-        }
-        console.log(`#data:`, dataForm);
-        try {
-            const response = await ApiIst.post(
-                `mmpi/hasil/import_offline`,
-                dataForm
-            );
-            // dataExcel.value = []
-            console.log(response.data);
-            if (response.data) {
-                dataExcel.value = response.data;
-            }
-
-        } catch (error) {
-            // Toast.danger("Warning", "Data gagal ditambahkan!");
-            console.error(error);
-        }
-    } else {
-        Toast.danger("Pilih sekolah terlebih dahulu!")
+    const dataForm = {
+        data: dataExcel.value
     }
+    console.log(`#data:`, dataForm);
+    try {
+        const response = await ApiIst.post(
+            `mmpi/banksoal/mmpi_import_banksoal`,
+            dataForm
+        );
+        // dataExcel.value = []
+        console.log(response.data);
+        if (response.data) {
+            dataExcel.value = response.data;
+        }
+
+    } catch (error) {
+        // Toast.danger("Warning", "Data gagal ditambahkan!");
+        console.error(error);
+    }
+
 }
 </script>
 <template>
@@ -384,15 +301,10 @@ const doStore = async () => {
         </div>
         <div>
             <span>
-                <p class="text-xs font-semibold text-red-600">- Kosongkan field cfit agar type cfit ditentukan dari umur
-                    (tahun dan bulan / otomatis)
+                <p class="text-xs font-semibold text-red-600">- Jika Nomer sudah ada data maka akan di Update (Replace)
                 </p>
-                <p class="text-xs font-semibold text-red-600">- Kosongkan field tgl lahir jika menggunakan field umur
+                <p class="text-xs font-semibold text-red-600">- Kosongkan Kunci dan Kode aspek jika tidak dibutuhkan
                 </p>
-                <p class="text-xs font-semibold text-red-600">- Jika Nama , Nomer Induk dan Kelas Sama maka data JK dan
-                    tgl lahir akan di update</p>
-                <p class="text-xs font-semibold text-red-600">- Jika tgllahir diisi maka field Umur tidak digunakan
-                    (otomatis Menghitung dari tgl lahir)</p>
             </span>
         </div>
         <!-- <div class="w-full flex flex-wrap justify-center">

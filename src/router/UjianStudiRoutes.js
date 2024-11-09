@@ -3,6 +3,7 @@ import UjianStudiPaketsoalRoutes from "./ujianstudi/ujianstudi-paketsoal-routes"
 import UjianKhususBanksoalRoutes from "./ujiankhusus/ujiankhusus-banksoal-routes";
 import UjianKhususPaketRoutes from "./ujiankhusus/ujiankhusus-paketsoal-routes";
 import ujiancfitPaketsoalRoutes from "./ujiancfit/ujiancfit-paketsoal-routes";
+import ujianmmpiPaketsoalRoutes from "./ujianmmpi/ujianmmpi-paketsoal-routes";
 
 const UjianStudiRoutes = [];
 
@@ -14,7 +15,8 @@ UjianStudiRoutes.push(
   ...UjianKhususBanksoalRoutes,
   ...UjianKhususPaketRoutes,
   // !cfit
-  ...ujiancfitPaketsoalRoutes
+  ...ujiancfitPaketsoalRoutes,
+  ...ujianmmpiPaketsoalRoutes
 );
 
 export default UjianStudiRoutes;

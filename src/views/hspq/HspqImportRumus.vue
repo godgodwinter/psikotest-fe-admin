@@ -363,7 +363,8 @@ const doStore = async () => {
 
                                 </div>
                                 <div>
-                                    <label for="name" class="text-sm font-medium text-gray-900 block mb-2">Kode Asli : misal
+                                    <label for="name" class="text-sm font-medium text-gray-900 block mb-2">Kode Asli :
+                                        misal
                                         a,
                                         c, d
                                         dll
@@ -375,7 +376,8 @@ const doStore = async () => {
                                     </div>
                                 </div>
                                 <div>
-                                    <label for="name" class="text-sm font-medium text-gray-900 block mb-2">jk : misal L/P
+                                    <label for="name" class="text-sm font-medium text-gray-900 block mb-2">jk : misal
+                                        L/P
                                     </label>
                                     <Field v-model="dataDetail.jk" type="text" name="jk" ref="jk"
                                         class="input input-bordered md:w-full max-w-xs" required />
@@ -416,17 +418,17 @@ const doStore = async () => {
                 <div class="bg-white shadow rounded-lg px-4 py-4 ">
                     <div v-if="dataExcel">
                         <vue-good-table :line-numbers="true" :columns="columns" :rows="dataExcel" :search-options="{
-                            enabled: true,
-                        }" :pagination-options="{
-    enabled: true,
-    perPageDropdown: [100, 200, 500],
-}" styleClass="vgt-table striped bordered condensed" class="py-0">
+                        enabled: true,
+                    }" :pagination-options="{
+                        enabled: true,
+                        perPageDropdown: [100, 200, 500],
+                    }" styleClass="vgt-table striped bordered condensed" class="py-0">
                             <template #table-row="props">
                                 <span v-if="props.column.field == 'actions'">
                                     <div class="text-sm font-medium text-center flex justify-center space-x-1">
                                         <button class="btn btn-sm btn-warning" @click="
-                                            doDelete(props.index, props.row.nama)
-                                            ">
+                        doDelete(props.index, props.row.nama)
+                        ">
                                             Delete
                                         </button>
                                     </div>
@@ -435,8 +437,9 @@ const doStore = async () => {
                                 <span v-else-if="props.column.field == 'tgl_import'">
                                     <div class="text-center">
                                         {{
-                                            props.row.tgl_import ? moment(props.row.tgl_import).format("DD MMMM YYYY") : null
-                                        }}
+                        props.row.tgl_import ? moment(props.row.tgl_import).format("DD MMMM YYYY") :
+                            null
+                    }}
                                     </div>
                                 </span>
 

@@ -14,9 +14,7 @@ moment.updateLocale("id", localization);
 const router = useRouter();
 const route = useRoute();
 const paketsoal_id = ref(route.params.paketsoal_id)
-// const aspek_detail_id = ref(null)
-const aspek_detail_id = ref(null); //!dari banksoal untuk relasi
-const aspekDetail_id = ref(route.params.aspek_detail_id); //!dari route 
+const aspek_detail_id = ref(null)
 const studi_v2_banksoal_aspek_detail_id = ref(null);
 const dataForm = ref({
     khusus_banksoal_aspek_detail_id: aspek_detail_id.value,
@@ -35,34 +33,6 @@ const dataForm = ref({
     random_soal: false,
     random_pilihanjawaban: false,
 });
-
-const getDataDetail = async () => {
-    try {
-        const response = await ApiUjianKhusus.get(`cfit/paketsoal/${paketsoal_id.value}/umum/${aspekDetail_id.value}`);
-        dataForm.value = response.data;
-        aspek_detail_id.value = response.data.khusus_banksoal_aspek_detail_id;
-        dataForm.value.nama = response.data.nama;
-        dataForm.value.desc = response.data.desc;
-        dataForm.value.urutan = response.data.urutan;
-        dataForm.value.waktu = response.data.waktu;
-        dataForm.value.status = response.data.status;
-        dataForm.value.instruksiStatus = response.data.instruksi_status == true ? true : false;
-        dataForm.value.lembar_prasoalStatus = response.data.lembar_prasoal_status == true ? true : false;
-        dataForm.value.instruksi_pengerjaanStatus = response.data.instruksi_pengerjaan_status == true ? true : false;
-        dataForm.value.instruksi = response.data.instruksi;
-        dataForm.value.lembar_prasoal = response.data.lembar_prasoal;
-        dataForm.value.lembar_prasoal_timer = response.data.lembar_prasoal_timer;
-        dataForm.value.instruksi_pengerjaan = response.data.instruksi_pengerjaan;
-        dataForm.value.randomSoal = response.data.random_soal == true ? true : false;
-        dataForm.value.randomPilihanJawaban = response.data.random_pilihanjawaban == true ? true : false;
-        // console.log(response.data);
-        dataForm.value.status = response.data.status == "Aktif" ? true : false;
-        return response.data;
-    } catch (error) {
-        console.error(error);
-    }
-};
-getDataDetail();
 const onSubmit = async (values) => {
     values.nama = dataForm.value.nama;
     values.random_soal = dataForm.value.randomSoal
@@ -111,14 +81,14 @@ const onSubmit = async (values) => {
     // console.log(dataForm.value);
     // console.log('====================================');
     try {
-        const response = await ApiUjianKhusus.put(`cfit/paketsoal/${paketsoal_id.value}/umum/${aspekDetail_id.value}`, dataForm.value);
+        const response = await ApiUjianKhusus.post(`cfit/paketsoal/${paketsoal_id.value}/umum`, dataForm.value);
         // console.log(response);
         Toast.success("Info", "Data berhasil ditambahkan!");
         router.push({ name: "admin-ujiancfit-paketsoal-aspek_detail", params: { paketsoal_id: paketsoal_id.value } });
         return true;
     } catch (error) {
         // console.error(error.response.data.data);
-        Toast.success(`ERROR`, `${error?.response?.data?.data}`);
+        Toast.success(`Gagal!`, `${error?.response?.data?.data}`);
     }
 };
 const dataDetail = ref([])
@@ -199,7 +169,7 @@ const pagesActive = ref("tulis");
 <template>
     <div>
         <article class="prose lg:prose-sm">
-            <h1>ASPEK DETAIL EDIT
+            <h1>ASPEK DETAIL TAMBAH
                 <!-- : {{ aspek_detail_id }} -->
             </h1>
             <h5>UJIAN CFIT</h5>
@@ -207,17 +177,18 @@ const pagesActive = ref("tulis");
 
         <Form v-slot="{ errors }" @submit="onSubmit">
             <div class="py-2 lg:py-4 px-4">
-                <!-- <div class="flex flex-col">
+                <div class="flex flex-col">
                     <label> Pilih Aspek : </label>
                     <div class="flex space-x-2 w-full">
-                        <Field :rules="fnValidasi.validateData" v-model="dataForm?.banksoal_aspek_id?.label" name="nama" type="text"
-                                class="input input-bordered w-11/12" readonly />
+                        <v-select class="py-2 px-3 w-full lg:w-1/2 mx-auto md:mx-0" :options="pilihAspek"
+                            v-model="dataForm.banksoal_aspek_id" v-bind:class="{ disabled: false }"></v-select>
 
                         <div class="text-xs text-red-600 mt-1">
                             {{ errors.select }}
                         </div>
+                        <span class="btn" @click="doPilihAspek(dataForm.banksoal_aspek_id.id)">Pilih</span>
                     </div>
-                </div> -->
+                </div>
                 <div class="space-y-4">
                     <div class="flex flex-col">
                         <label>Nama :</label>
@@ -336,11 +307,6 @@ const pagesActive = ref("tulis");
 
                             </QuillEditor>
 
-                        </div>
-
-                        <div class="shadow-sm py-4 px-4 space-y-4" v-else>
-                            <label for="" class="underline">Preview : </label>
-                            <div class="w-full border-2 min-h-16 p-10" v-html="dataForm.lembar_prasoal"></div>
                         </div>
                     </div>
                 </div>
