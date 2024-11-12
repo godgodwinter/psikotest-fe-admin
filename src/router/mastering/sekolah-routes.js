@@ -145,6 +145,16 @@ const AdminSekolahRoutes = [
               },
 
               // ! UJIANSTUDI-PROSES-END
+              // ! UJIAN-MMPI-PROSES
+              {
+                path: "/pages/admin/mastering/sekolah/:sekolah_id/submenu/kelas/:kelas_id?/ujianmmpi/v1",
+                name: "admin-sekolah-submenu-ujian-mmpi-v1",
+                component: () =>
+                  import(
+                    "@/views/admin/ujianmmpi/proses/UjianMmpiPerkelas_v1.vue"
+                  ),
+              },
+              // ! UJIAN-MMPI-PROSES-END
 
               // ! DATA-IST-PROSES
               {

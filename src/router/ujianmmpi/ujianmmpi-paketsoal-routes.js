@@ -56,6 +56,15 @@ const ujianmmpiPaketsoalRoutes = [
                 "@/views/admin/ujianmmpi/paketsoal/ujianmmpiPaketsoalIndex_soal_add.vue"
               ),
           },
+          // !ujian mmpi
+          // {
+          //   path: "/pages/admin/ujianmmpi/paketsoal",
+          //   name: "admin-sekolah-submenu-ujian-mmpi",
+          //   component: () =>
+          //     import(
+          //       "@/views/admin/ujianmmpi/paketsoal/ujianmmpiPaketsoalIndex.vue"
+          //     ),
+          // },
         ],
       },
     ],
