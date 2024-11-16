@@ -659,6 +659,12 @@ const doExportExcel_v2 = (ttd) => {
     );
     // console.log("belum");
 }
+const doExportExcel_v2_fakultas = (ttd) => {
+    window.open(
+        `${VITE_API_FE_REACT}ujiankhusus/v1/export/sekolah/${getSekolahAktif.value.sekolah_id}/kelas/${getSekolahAktif.value.kelas_id}/v2/fakultas`
+    );
+    // console.log("belum");
+}
 const doExport1010 = (ttd) => {
     console.log(paketsoal_aktif.value.id);
     window.open(
@@ -827,26 +833,25 @@ const formatTanggal = "DD MMMM YYYY HH:mm:ss";
                         </svg>
 
                     </button> -->
-                    <button class="btn btn-sm btn-success tooltip" data-tip="Export Excel Format IST (v2) V3"
-                        @click="doExportExcel_v2()">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                            stroke="currentColor" class="w-6 h-6">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M12 9.75v6.75m0 0-3-3m3 3 3-3m-8.25 6a4.5 4.5 0 0 1-1.41-8.775 5.25 5.25 0 0 1 10.233-2.33 3 3 0 0 1 3.758 3.848A3.752 3.752 0 0 1 18 19.5H6.75Z" />
-                        </svg>
 
-                    </button>
-                    <button class="btn btn-sm btn-info tooltip" data-tip="Export Excel 1010 v3" @click="doExport1010()">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                            stroke="currentColor" class="w-6 h-6">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M4.745 3A23.933 23.933 0 0 0 3 12c0 3.183.62 6.22 1.745 9M19.5 3c.967 2.78 1.5 5.817 1.5 9s-.533 6.22-1.5 9M8.25 8.885l1.444-.89a.75.75 0 0 1 1.105.402l2.402 7.206a.75.75 0 0 0 1.104.401l1.445-.889m-8.25.75.213.09a1.687 1.687 0 0 0 2.062-.617l4.45-6.676a1.688 1.688 0 0 1 2.062-.618l.213.09" />
-                        </svg>
-
-
-                    </button>
 
                 </div>
+            </div>
+
+            <div class="space-x-2 space-y-0 shadow-sm flex justify-start ">
+                <button class="btn btn-sm btn-success tooltip" data-tip="Export Excel Format IST (v2) V3"
+                    @click="doExportExcel_v2()">
+                    EXPORT REKAP V2 (.xlsx)
+                </button>
+
+                <button class="btn btn-sm btn-success tooltip" data-tip="Export Excel Format IST (v2_fakultas) V3"
+                    @click="doExportExcel_v2_fakultas()">
+
+                    EXPORT REKAP V2 + FAKULTAS (.xlsx)
+                </button>
+                <button class="btn btn-sm btn-info tooltip" data-tip="Export Excel 1010 v3" @click="doExport1010()">
+                    Export Excel 1010 (.xlsx)
+                </button>
             </div>
 
             <div class="space-x-2 space-y-2 shadow-sm py-1">

@@ -982,6 +982,7 @@ const formatTanggal = "DD MMMM YYYY HH:mm:ss";
                                                     V3
 
                                                 </button>
+                                                <div v-else>-</div>
                                                 <!-- </RouterLink> -->
                                             </div>
                                         </span>
@@ -1015,11 +1016,13 @@ const formatTanggal = "DD MMMM YYYY HH:mm:ss";
                                                                                         HH: mm: ss"):" - " }} -->
                                         </span>
                                         <span v-else-if="props.column.field == 'progres_status'">
-                                            {{ props.row?.mmpi?.status }}
+                                            <div v-if="props.row.mmpi"> {{ props.row?.mmpi?.status }}</div>
+                                            <div v-else>-</div>
                                         </span>
                                         <span v-else-if="props.column.field == 'progres_angka'">
-                                            {{ props.row.progres_angka?.progres }}/{{
-        props.row.progres_angka?.total }}
+                                            <div v-if="props.row.mmpi">{{ props.row.progres_angka?.progres }}/{{
+        props.row.progres_angka?.total }}</div>
+                                            <div v-else>-</div>
                                         </span>
                                         <span v-else-if="props.column.field == 'username'">
                                             <div class="flex justify-center gap-2">
