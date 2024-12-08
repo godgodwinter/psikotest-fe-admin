@@ -212,6 +212,11 @@ const doCetak_pohon = () => {
         `${VITE_API_FE_REACT}cfit/v1/cetak/${getSekolahAktif.value.kelas_id}/true/pohon`
     );
 }
+const doCetak_pohon_minat = () => {
+    window.open(
+        `${VITE_API_FE_REACT}cfit/v1/cetak/${getSekolahAktif.value.kelas_id}/true/pohon/minat`
+    );
+}
 </script>
 <template>
     <span v-if="isLoading">
@@ -234,6 +239,8 @@ const doCetak_pohon = () => {
                     Cetak CFIT Hspq</button>
                 <button class="btn btn-sm btn-success" @click="doCetak_pohon()">
                     Cetak CFIT Pohon</button>
+                <button class="btn btn-sm btn-success" @click="doCetak_pohon_minat()">
+                    Cetak CFIT Pohon + Minat</button>
             </div>
 
             <div class="w-full bg-base-100 shadow-sm rounded-lg py-4 px-4">
