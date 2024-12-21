@@ -188,6 +188,13 @@ const AdminSekolahRoutes = [
                 name: "admin-sekolah-submenu-cfit",
                 component: () => import("@/views/cfit/DataCfitPerkelas.vue"),
               },
+
+              // !mmpi
+              {
+                path: "/pages/admin/mastering/sekolah/:sekolah_id/submenu/kelas/:kelas_id?/mmpi",
+                name: "admin-sekolah-submenu-mmpi",
+                component: () => import("@/views/mmpi/DataMmpiPerkelas.vue"),
+              },
               // ! DATA-MINATBAKAT-PROSES-END
             ],
           },

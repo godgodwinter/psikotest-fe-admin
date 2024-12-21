@@ -15,11 +15,6 @@ import useClipboard from 'vue-clipboard3'
 import moment from "moment/min/moment-with-locales";
 import localization from "moment/locale/id";
 import { useSuperadminStore } from '@/stores/admin/superadminPagesStore';
-
-const VITE_API_FE_DASHBOARD = import.meta.env.VITE_API_FE_DASHBOARD
-    ? import.meta.env.VITE_API_FE_DASHBOARD
-    : "http://localhost:3500/";
-
 const superadminStore = useSuperadminStore();
 const isSuperadminActive = ref(superadminStore.isSuperadminActive)
 moment.updateLocale("id", localization);
@@ -107,11 +102,6 @@ const columns = [
     {
         label: "Nama",
         field: "nama",
-        type: "String",
-    },
-    {
-        label: "Reset",
-        field: "reset",
         type: "String",
     },
     {
@@ -579,50 +569,32 @@ const doCetakReactV2 = (ttd = "true") => {
     );
 }
 
-// const doGenerateHasilPerkelas = async (ttd) => {
-//     if (confirm("Apakah anda yakin generate Hasil Kelas Ini?")) {
-//         console.log(`generate hasil kelas_id:${getSekolahAktif.value.kelas_id} sekolah_id ${getSekolahAktif.value.sekolah_id}`);
-//         // kelas_id.value 
-//         try {
-//             isLoading.value = true;
-//             const response = await ApiUjianKhusus.post(`/ujiankhusus/hasil/generate/v3/sekolah/${getSekolahAktif.value.sekolah_id}/kelas/${getSekolahAktif.value.kelas_id}`);
-//             Toast.babeng("Berhasil", 'Generate Hasil Ujian telah berhasil!');
-//             getData();
-//             return true;
-//         } catch (error) {
-//             isLoading.value = false;
-//             isError.value = true;
-//             console.error(error);
-//         }
-//     }
-// }
-// const doGenerateHasilPerkelas_false = async (ttd) => {
-//     if (confirm("Apakah anda yakin generate Hasil Kelas Ini?")) {
-
-//         try {
-//             isLoading.value = true;
-//             let dataFormSend = {
-//                 replace: false
-//             };
-//             const response = await ApiUjianKhusus.post(`/ujiankhusus/hasil/generate/v3/sekolah/${sekolah_id.value}/kelas/${kelas_id.value}`, dataFormSend);
-//             Toast.babeng("Berhasil", 'Generate Hasil Ujian telah berhasil!');
-//             getData();
-//             return true;
-//         } catch (error) {
-//             isLoading.value = false;
-//             isError.value = true;
-//             console.error(error);
-//         }
-//     }
-// }
-
-
-const doGenerateHasilPerkelas = async () => {
+const doGenerateHasilPerkelas = async (ttd) => {
+    if (confirm("Apakah anda yakin generate Hasil Kelas Ini?")) {
+        console.log(`generate hasil kelas_id:${getSekolahAktif.value.kelas_id} sekolah_id ${getSekolahAktif.value.sekolah_id}`);
+        // kelas_id.value 
+        try {
+            isLoading.value = true;
+            const response = await ApiUjianKhusus.post(`/ujiankhusus/hasil/generate/v3/sekolah/${getSekolahAktif.value.sekolah_id}/kelas/${getSekolahAktif.value.kelas_id}`);
+            Toast.babeng("Berhasil", 'Generate Hasil Ujian telah berhasil!');
+            getData();
+            return true;
+        } catch (error) {
+            isLoading.value = false;
+            isError.value = true;
+            console.error(error);
+        }
+    }
+}
+const doGenerateHasilPerkelas_false = async (ttd) => {
     if (confirm("Apakah anda yakin generate Hasil Kelas Ini?")) {
 
         try {
             isLoading.value = true;
-            const response = await ApiUjianKhusus.post(`/mmpi/hasil/sekolah/${sekolah_id.value}/kelas/${kelas_id.value}/generate/hasil`);
+            let dataFormSend = {
+                replace: false
+            };
+            const response = await ApiUjianKhusus.post(`/ujiankhusus/hasil/generate/v3/sekolah/${sekolah_id.value}/kelas/${kelas_id.value}`, dataFormSend);
             Toast.babeng("Berhasil", 'Generate Hasil Ujian telah berhasil!');
             getData();
             return true;
@@ -634,16 +606,16 @@ const doGenerateHasilPerkelas = async () => {
     }
 }
 
-const do_sinkron_redis_ke_mongo_Perkelas = async () => {
-    if (confirm("Apakah anda yakin generate Hasil Kelas Ini?")) {
+const do_Sinkron_dataRedis = async (ttd) => {
+    if (confirm("Apakah anda yakin sinkron data Redis  Kelas Ini?")) {
 
         try {
             isLoading.value = true;
-            const response = await ApiUjianKhusus.post(`/mmpi/hasil/sekolah/${sekolah_id.value}/kelas/${kelas_id.value}/sinkron/redis_ke_mongo`);
-            console.log('====================================');
-            console.log(`#do_sinkron_redis_ke_mongo_Perkelas:`, response);
-            console.log('====================================');
-            Toast.babeng("Berhasil", 'Generate Hasil Ujian telah berhasil!');
+            // let dataFormSend = {
+            //     replace: false
+            // };
+            const response = await ApiUjianKhusus.post(`/ujiankhusus/hasil/sinkron_redis/v3/sekolah/${sekolah_id.value}/kelas/${kelas_id.value}`);
+            Toast.babeng("Berhasil", 'Sinkron Ujian telah berhasil!');
             getData();
             return true;
         } catch (error) {
@@ -653,74 +625,6 @@ const do_sinkron_redis_ke_mongo_Perkelas = async () => {
         }
     }
 }
-const doGenerateHasilPersiswa = async (siswa_id) => {
-    if (confirm("Apakah anda yakin generate Hasil Kelas Ini?")) {
-
-        try {
-            isLoading.value = true;
-            const response = await ApiUjianKhusus.post(`/mmpi/hasil/sekolah/${sekolah_id.value}/kelas/${kelas_id.value}/siswa/${siswa_id}/generate/hasil`);
-            Toast.babeng("Berhasil", 'Generate Hasil Ujian telah berhasil!');
-            getData();
-            return true;
-        } catch (error) {
-            isLoading.value = false;
-            isError.value = true;
-            console.error(error);
-        }
-    }
-}
-const mmpi_do_reset_waktu = async (siswa_id) => {
-    if (confirm("Apakah anda yakin generate Hasil Kelas Ini?")) {
-
-        try {
-            isLoading.value = true;
-            const response = await ApiUjianKhusus.post(`/mmpi/hasil/sekolah/${sekolah_id.value}/kelas/${kelas_id.value}/siswa/${siswa_id}/reset/waktu`);
-            Toast.babeng("Berhasil", 'Generate Hasil Ujian telah berhasil!');
-            getData();
-            return true;
-        } catch (error) {
-            isLoading.value = false;
-            isError.value = true;
-            console.error(error);
-        }
-    }
-}
-const mmpi_do_reset_all = async (siswa_id) => {
-    if (confirm("Apakah anda yakin generate Hasil Kelas Ini?")) {
-
-        try {
-            isLoading.value = true;
-            const response = await ApiUjianKhusus.post(`/mmpi/hasil/sekolah/${sekolah_id.value}/kelas/${kelas_id.value}/siswa/${siswa_id}/reset/all`);
-            Toast.babeng("Berhasil", 'Generate Hasil Ujian telah berhasil!');
-            getData();
-            return true;
-        } catch (error) {
-            isLoading.value = false;
-            isError.value = true;
-            console.error(error);
-        }
-    }
-}
-
-// const do_Sinkron_dataRedis = async (ttd) => {
-//     if (confirm("Apakah anda yakin sinkron data Redis  Kelas Ini?")) {
-
-//         try {
-//             isLoading.value = true;
-//             // let dataFormSend = {
-//             //     replace: false
-//             // };
-//             const response = await ApiUjianKhusus.post(`/ujiankhusus/hasil/sinkron_redis/v3/sekolah/${sekolah_id.value}/kelas/${kelas_id.value}`);
-//             Toast.babeng("Berhasil", 'Sinkron Ujian telah berhasil!');
-//             getData();
-//             return true;
-//         } catch (error) {
-//             isLoading.value = false;
-//             isError.value = true;
-//             console.error(error);
-//         }
-//     }
-// }
 const do_GenerateDataMentah = async (ttd) => {
     window.open(
         `${VITE_API_FE_REACT}ujiankhusus/v3/export_data_mentah/sekolah/${getSekolahAktif.value.sekolah_id}/kelas/${getSekolahAktif.value.kelas_id}`
@@ -789,13 +693,6 @@ const inputSelectTipeCitacita = ref(dataTemp?.tipeCitacita || {
 },)
 
 const formatTanggal = "DD MMMM YYYY HH:mm:ss";
-
-
-const dashboard_doCetak_mmpi = () => {
-    window.open(
-        `${VITE_API_FE_DASHBOARD}admin/sekolah/${getSekolahAktif.value.sekolah_id}/kelas/${getSekolahAktif.value.kelas_id}/mmpi`
-    );
-}
 </script>
 <template>
     <span v-if="isLoading">
@@ -895,7 +792,7 @@ const dashboard_doCetak_mmpi = () => {
             </div> -->
             <div class="space-x-2 space-y-0 shadow-sm flex justify-start ">
                 <div class="space-x-2 space-y-2 shadow-sm py-1">
-                    <button class="btn btn-sm btn-warning tooltip" data-tip="Generate Hasil MMPI Perkelas (replace) ✅"
+                    <button class="btn btn-sm btn-warning tooltip" data-tip="Generate Hasil Ujian V3"
                         @click="doGenerateHasilPerkelas()">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor" class="w-6 h-6">
@@ -905,7 +802,7 @@ const dashboard_doCetak_mmpi = () => {
 
 
                     </button>
-                    <!-- <button class="btn btn-sm btn-secondary tooltip" data-tip="Generate Hasil Ujian Tanpa Replace V3"
+                    <button class="btn btn-sm btn-secondary tooltip" data-tip="Generate Hasil Ujian Tanpa Replace V3"
                         @click="doGenerateHasilPerkelas_false()">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor" class="w-6 h-6">
@@ -914,7 +811,7 @@ const dashboard_doCetak_mmpi = () => {
                         </svg>
 
 
-                    </button> -->
+                    </button>
                 </div>
                 <div class="space-x-2 space-y-2 shadow-sm py-1">
                     <!-- <button class="btn btn-sm btn-info tooltip" data-tip="Export Excel Format IST V3"
@@ -950,9 +847,9 @@ const dashboard_doCetak_mmpi = () => {
 
             <div class="space-x-2 space-y-2 shadow-sm py-1">
 
-                <button class="btn btn-sm btn-info tooltip" data-tip=" Sinkronkan Data Redis ke mongo"
-                    @click="do_sinkron_redis_ke_mongo_Perkelas()">
-                    Sinkronkan Data Redis ke mongo ✅
+                <button class="btn btn-sm btn-info tooltip" data-tip=" Sinkron Data Redis v3"
+                    @click="do_Sinkron_dataRedis()">
+                    Sinkron Data Redis V3
                 </button>
                 <button class="btn btn-sm btn-info tooltip" data-tip=" Export Data Mentah Hasil Ujian"
                     @click="do_GenerateDataMentah()">
@@ -960,19 +857,9 @@ const dashboard_doCetak_mmpi = () => {
                 </button>
 
             </div>
-            <div class="space-x-2 space-y-2">
+            <div class="space-x-2 space-y-0 shadow-sm flex justify-start ">
 
-                <button class="btn btn-sm btn-success" @click="dashboard_doCetak_mmpi()">
-                    Dashboard - Cetak MMPI</button>
-                <router-link :to="{ name: 'admin-sekolah-submenu-mmpi', params: { sekolah_id, kelas_id } }">
-                    <button class="btn btn-sm btn-success">
-                        Data Hasil Ujian MMPI</button>
-                </router-link>
-
-            </div>
-            <div class=" space-x-2 space-y-0 shadow-sm flex justify-start ">
-
-                <!-- <div class=" space-x-2 space-y-2 shadow-sm py-1">
+                <!-- <div class="space-x-2 space-y-2 shadow-sm py-1">
                     <button class="btn btn-sm btn-success tooltip" data-tip="CETAK Hasil React"
                         @click="doCetakReact('true')">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
@@ -981,17 +868,17 @@ const dashboard_doCetak_mmpi = () => {
                                 d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
                         </svg>
                     </button>
-            </div>
-            <div class="space-x-2 space-y-2 shadow-sm py-1">
-                <button class="btn btn-sm btn-success tooltip" data-tip="CETAK Hasil React tanpa ttd"
-                    @click="doCetakReact('false')">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                        stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
-                    </svg>
-                </button>
-            </div> -->
+                </div>
+                <div class="space-x-2 space-y-2 shadow-sm py-1">
+                    <button class="btn btn-sm btn-success tooltip" data-tip="CETAK Hasil React tanpa ttd"
+                        @click="doCetakReact('false')">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
+                        </svg>
+                    </button>
+                </div> -->
 
                 <!-- <div class="space-x-2 space-y-2 shadow-sm py-1">
                     <button class="btn btn-sm btn-success tooltip" data-tip="CETAK HASIL REACT V2"
@@ -1086,45 +973,13 @@ const dashboard_doCetak_mmpi = () => {
                                             </div>
                                         </span>
 
-                                        <span v-else-if="props.column.field == 'reset'">
-                                            <button class="btn btn-sm btn-secondary tooltip  " data-tip="RESET WAKTU ✅"
-                                                v-if="props.row.mmpi" @click="mmpi_do_reset_waktu(props.row.id)">
-                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                                    stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                                        d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                                                </svg>
-
-
-                                            </button>
-                                            <button class="btn btn-sm btn-error tooltip" data-tip="RESET ALL ✅"
-                                                v-if="props.row.mmpi && isSuperadminActive"
-                                                @click="mmpi_do_reset_all(props.row.id)">
-                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                                    stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                                        d="M5.636 5.636a9 9 0 1 0 12.728 0M12 3v9" />
-                                                </svg>
-
-
-                                            </button>
-                                        </span>
                                         <span v-else-if="props.column.field == 'hasil'">
                                             <div class="text-sm font-medium text-center flex justify-center space-x-1">
                                                 <!-- <RouterLink
                                                     :to="{ name: 'admin-sekolah-submenu-ujiankhusus-persiswa-reset-v3', params: { sekolah_id, kelas_id, siswa_id: props.row.id } }"> -->
-                                                <button class="btn btn-sm btn-primary tooltip"
-                                                    data-tip="Generate Hasil ✅" v-if="props.row.mmpi"
-                                                    @click="doGenerateHasilPersiswa(props.row.id)">
-
-                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none"
-                                                        viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-                                                        class="w-6 h-6">
-                                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                                            d="M19.5 12c0-1.232-.046-2.453-.138-3.662a4.006 4.006 0 0 0-3.7-3.7 48.678 48.678 0 0 0-7.324 0 4.006 4.006 0 0 0-3.7 3.7c-.017.22-.032.441-.046.662M19.5 12l3-3m-3 3-3-3m-12 3c0 1.232.046 2.453.138 3.662a4.006 4.006 0 0 0 3.7 3.7 48.656 48.656 0 0 0 7.324 0 4.006 4.006 0 0 0 3.7-3.7c.017-.22.032-.441.046-.662M4.5 12l3 3m-3-3-3 3" />
-                                                    </svg>
-
-
+                                                <button class="btn btn-sm btn-warning tooltip" data-tip="MENU RESET"
+                                                    v-if="props.row.mmpi">
+                                                    V3
 
                                                 </button>
                                                 <div v-else>-</div>
