@@ -64,8 +64,8 @@ const doDeleteData = async (id, index) => {
         try {
             const response = await Api.delete(`ujianstudi/paketsoal/${paketsoal_id.value}/aspek/penilaian/get/${id}`);
             // if (response.status) {
-                Toast.warning("Berhasil", response.message);
-                // Toast.success("Info", "Data berhasil dihapus!");
+            Toast.warning("Berhasil", response.message);
+            // Toast.success("Info", "Data berhasil dihapus!");
             // } else {
             //     Toast.warning("Gagal", response.message);
             // }
@@ -102,16 +102,16 @@ const doEditData = async (id, index) => {
                     <div class="bg-white shadow rounded-lg px-4 py-4">
                         <div v-if="data">
                             <vue-good-table :line-numbers="true" :columns="columns" :rows="data" :search-options="{
-                                enabled: true,
-                            }" :pagination-options="{
-    enabled: true,
-    perPageDropdown: [50, 100, 150, 200],
-}" styleClass="vgt-table striped bordered condensed" class="py-0">
+                enabled: true,
+            }" :pagination-options="{
+                enabled: true,
+                perPageDropdown: [50, 100, 150, 200],
+            }" styleClass="vgt-table striped bordered condensed" class="py-0">
                                 <template #table-actions>
                                     <div class="space-x-1 space-y-1 gap-1">
                                         <router-link :to="{
-                                            name: 'admin-ujianstudi-paketsoal-aspek-penilaian-tambah', params: { paketsoal_id, aspek_id }
-                                        }">
+                name: 'admin-ujianstudi-paketsoal-aspek-penilaian-tambah', params: { paketsoal_id, aspek_id }
+            }">
                                             <button class="btn btn-sm btn-primary tooltip" data-tip="Tambah">
                                                 TAMBAH
                                             </button>
@@ -121,7 +121,7 @@ const doEditData = async (id, index) => {
                                 <template #table-row="props">
                                     <span v-if="props.column.field == 'actions'">
                                         <div class="text-sm font-medium text-center flex justify-center space-x-1">
-                                            <RouterLink
+                                            <!-- <RouterLink
                                                 :to="{ name: 'admin-ujianstudi-paketsoal-aspek', params: { paketsoal_id: props.row.id } }">
                                                 <button class="btn btn-sm btn-primary tooltip" data-tip="Detail Soal">
                                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
@@ -129,21 +129,21 @@ const doEditData = async (id, index) => {
                                                         <path stroke-linecap="round" stroke-linejoin="round"
                                                             d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
                                                     </svg></button>
-                                            </RouterLink>
-                                            <button class="btn btn-sm btn-warning tooltip" data-tip="Edit"
+                                            </RouterLink> -->
+                                            <!-- <button class="btn btn-sm btn-warning tooltip" data-tip="Edit"
                                                 @click="doEditData(props.row.id, props.index)">
-                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20"
-                                                    fill="currentColor">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5"
+                                                    viewBox="0 0 20 20" fill="currentColor">
                                                     <path
                                                         d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z" />
                                                     <path fill-rule="evenodd"
                                                         d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"
                                                         clip-rule="evenodd" />
-                                                </svg></button>
+                                                </svg></button> -->
                                             <button class="btn btn-sm btn-danger"
                                                 @click="doDeleteData(props.row.id, props.index)">
-                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20"
-                                                    fill="currentColor">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5"
+                                                    viewBox="0 0 20 20" fill="currentColor">
                                                     <path fill-rule="evenodd"
                                                         d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
                                                         clip-rule="evenodd" />
