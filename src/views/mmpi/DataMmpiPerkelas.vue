@@ -198,7 +198,7 @@ const dashboard_doCetak_mmpi = () => {
     <span v-else>
         <div>
             <article class="prose lg:prose-sm max-w-screen-lg">
-                <h1>DATA CFIT KELAS {{ kelas_nama }}</h1>
+                <h1>DATA MMPI KELAS {{ kelas_nama }}</h1>
             </article>
             <div class="space-x-2 space-y-2">
 

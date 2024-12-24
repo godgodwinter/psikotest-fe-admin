@@ -2,7 +2,7 @@
 import { ref } from "vue"
 import Api from "@/axios/axiosNode";
 import ApiUjianKhusus from "@/axios/axiosIst";
-import {fn_copy_id_for_mongo} from "@/lib/FungsiBasic.js"
+import { fn_copy_id_for_mongo } from "@/lib/FungsiBasic.js"
 import Toast from "@/components/lib/Toast";
 import { Form, Field } from "vee-validate";
 import { useRouter } from "vue-router";
@@ -22,8 +22,10 @@ const inputSelectKr = ref({ id: null, label: null })
 const onSubmit = async (values) => {
     let dataFormSend = {
         nama: dataForm.value.nama,
-        status: dataForm.value.status ?"Aktif":"Nonaktif",
+        // status: dataForm.value.status ? "Aktif" : "Nonaktif",
+        status: true
     };
+    console.log(dataFormSend);
     try {
         const response = await ApiUjianKhusus.post(`ujiankhusus/paketsoal`, dataFormSend);
         // console.log(response);
@@ -55,8 +57,8 @@ const onSubmit = async (values) => {
                             </div>
                         </div>
                     </div>
-                    
-                    <div class="flex flex-col">
+
+                    <!-- <div class="flex flex-col">
                         <div class="max-w-xs py-2">
                             <div class="form-control">
                                 <label class="label cursor-pointer">
@@ -65,7 +67,7 @@ const onSubmit = async (values) => {
                                 </label>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
 
                 </div>
             </div>
