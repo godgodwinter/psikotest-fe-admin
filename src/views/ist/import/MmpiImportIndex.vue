@@ -231,6 +231,11 @@ const columns = [
         type: "String",
     },
     {
+        label: "Status Import",
+        field: "siswa_id",
+        type: "String",
+    },
+    {
         label: "umur",
         field: "umur",
         type: "String",
