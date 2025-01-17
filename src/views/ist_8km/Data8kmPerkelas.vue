@@ -1,5 +1,6 @@
 <script setup>
 import Api from "@/axios/axiosNode";
+import axiosIst from "@/axios/axiosIst";
 import { ref, defineAsyncComponent } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import Toast from "@/components/lib/Toast";
@@ -82,6 +83,57 @@ const getDataKelas = async () => {
     }
 };
 getDataKelas();
+
+
+const dataSetting = ref({
+    tipe_cetak: "v4_aspek",
+    tipe_kesimpulan: 1,
+    tipe_iq: "8km", //Ist or 8km
+    kewirausahaan: false,
+    deteksi_sqscq: true, //true=tampilkan , false=disable
+    tipe_deteksi: "positifnegatif" //negatif or positifnegatif
+})
+
+const getDataSetting = async () => {
+    try {
+        const response = await axiosIst.get(`sertifikat_setting/sertifikat/kelas/${kelas_id.value}`);
+        if (response) {
+            dataSetting.value = response?.data?.data_setting
+            console.log(`#getDataSetting`, dataSetting.value);
+        }
+    } catch (error) {
+        Toast.danger("Warning", "Data Gagal dimuat");
+        console.error(error);
+    }
+};
+getDataSetting();
+
+
+const do_Apply_Setting = async () => {
+    if (confirm("Apakah anda yakin mengupdate data ini?")) {
+        isLoading.value = true;
+        let dataSend = dataSetting.value
+        console.log(`dataSend`, dataSend);
+        try {
+            const response = await axiosIst.post(`sertifikat_setting/sertifikat/kelas/${kelas_id.value}`, dataSend);
+            // console.log(response);
+            if (response && response.status === 200) {
+                Toast.success("Info", "Data Setting berhasil diupdate!");
+                await getDataSetting(); // Muat ulang data setelah update
+                return true;
+            }
+            isLoading.value = false;
+        } catch (error) {
+            isLoading.value = false;
+            isError.value = true;
+            console.error(error);
+        }
+        await getDataSetting()
+        // console.log(inputCariKelas.value.id);
+    }
+};
+
+
 
 
 const columns = [
@@ -274,6 +326,76 @@ const doCetak_ist_8km_gabungan_v6 = () => {
                 </div>
             </div>
             <!-- !PENGATURAN -->
+            <div class="container mx-auto p-4">
+                <form class="grid grid-cols-1 gap-4 md:grid-cols-2">
+                    <!-- Tipe Cetak -->
+                    <label class="form-control w-full">
+                        <div class="label">
+                            <span class="label-text">Tipe Cetak:</span>
+                        </div>
+                        <select v-model="dataSetting.tipe_cetak" class="select select-bordered">
+                            <option value="v4_tanpa_aspek">v4 Tanpa Aspek</option>
+                            <option value="v4_aspek">v4 + Aspek</option>
+                            <option value="v5">v5</option>
+                        </select>
+                    </label>
+
+                    <!-- Tipe Kesimpulan -->
+                    <label class="form-control w-full">
+                        <div class="label">
+                            <span class="label-text">Tipe Kesimpulan:</span>
+                        </div>
+                        <select v-model="dataSetting.tipe_kesimpulan" class="select select-bordered">
+                            <option value="1">Kelas 1-8</option>
+                            <option value="2">Kelas 9</option>
+                            <option value="10">Kelas 10</option>
+                            <option value="3">Kelas 11-12</option>
+                        </select>
+                    </label>
+
+                    <!-- Tipe IQ -->
+                    <label class="form-control w-full">
+                        <div class="label">
+                            <span class="label-text">Tipe IQ:</span>
+                        </div>
+                        <select v-model="dataSetting.tipe_iq" class="select select-bordered">
+                            <option value="Ist">IST</option>
+                            <option value="8km">8KM</option>
+                        </select>
+                    </label>
+
+                    <!-- Kewirausahaan -->
+                    <label class="form-control w-full">
+                        <div class="label">
+                            <span class="label-text">Kewirausahaan:</span>
+                        </div>
+                        <input v-model="dataSetting.kewirausahaan" type="checkbox" class="toggle toggle-primary">
+                    </label>
+
+                    <!-- Deteksi SQSCQ -->
+                    <label class="form-control w-full">
+                        <div class="label">
+                            <span class="label-text">Deteksi SQSCQ:</span>
+                        </div>
+                        <input v-model="dataSetting.deteksi_sqscq" type="checkbox" class="toggle toggle-primary">
+                    </label>
+                    <!-- Tipe Deteksi -->
+                    <label class="form-control w-full">
+                        <div class="label">
+                            <span class="label-text">Tipe Deteksi:</span>
+                        </div>
+                        <select v-model="dataSetting.tipe_deteksi" class="select select-bordered">
+                            <option value="negatif">Negatif</option>
+                            <option value="positifnegatif">Positif & Negatif</option>
+                        </select>
+                    </label>
+
+                    <!-- Submit Button -->
+                    <div class="md:col-span-2 flex justify-start">
+                        <button type="button" @click="do_Apply_Setting" class="btn btn-primary">Apply</button>
+                    </div>
+                </form>
+            </div>
 
             <!-- !PENGATURAN-END -->
             <span v-if="isLoading">
@@ -374,3 +496,9 @@ const doCetak_ist_8km_gabungan_v6 = () => {
         </div>
     </span>
 </template>
+
+<style scoped>
+.container {
+    max-width: 1024px;
+}
+</style>
