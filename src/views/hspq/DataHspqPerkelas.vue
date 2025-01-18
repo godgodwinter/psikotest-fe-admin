@@ -241,6 +241,7 @@ const doCetak_sq = () => {
         `${VITE_API_FE_REACT}hspq_sq/v1/cetak/${getSekolahAktif.value.kelas_id}/false`
     );
 }
+
 // !DASHBOARD
 
 const dashboard_doCetak = () => {

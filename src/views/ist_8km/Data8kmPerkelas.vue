@@ -25,6 +25,9 @@ const BASE_URL_CETAK = import.meta.env.VITE_API_URL_CETAK
 const VITE_API_FE_REACT = import.meta.env.VITE_API_FE_REACT
     ? import.meta.env.VITE_API_FE_REACT
     : "http://localhost:3500/";
+const VITE_API_FE_DASHBOARD = import.meta.env.VITE_API_FE_DASHBOARD
+    ? import.meta.env.VITE_API_FE_DASHBOARD
+    : "http://localhost:3500/";
 
 const sekolah_id = ref(route.params.sekolah_id)
 const kelas_id = ref(route.params.kelas_id)
@@ -279,6 +282,45 @@ const doCetak_ist_8km_gabungan_v6 = () => {
         `${VITE_API_FE_REACT}ist_8km/v_ist_lengkap_v6/cetak/${getSekolahAktif.value.kelas_id}/true`
     );
 }
+
+
+const doCetak_sq = () => {
+    window.open(
+        `${VITE_API_FE_REACT}hspq_sq/v1/cetak/${getSekolahAktif.value.kelas_id}/false`
+    );
+}
+const doCetakIstLengkap_v4 = () => {
+    window.open(
+        `${VITE_API_FE_REACT}ist_8km/v_ist_lengkap_v4/cetak/${getSekolahAktif.value.kelas_id}/true`
+    );
+}
+const doCetakIstLengkap_v4_tanpa_aspek = () => {
+    window.open(
+        `${VITE_API_FE_REACT}ist_8km/v_ist_lengkap_v4/cetak/${getSekolahAktif.value.kelas_id}/true/tanpa_aspek`
+    );
+}
+//! dashboard
+const dashboard_doCetak_v5 = () => {
+    window.open(
+        `${VITE_API_FE_DASHBOARD}admin/sekolah/${getSekolahAktif.value.sekolah_id}/kelas/${getSekolahAktif.value.kelas_id}/hasil_psikologi/sertifikat_ist_8km_v5_perkelas_cetak/cetak`
+    );
+}
+
+const dashboard_doCetak = () => {
+    window.open(
+        `${VITE_API_FE_DASHBOARD}admin/sekolah/${getSekolahAktif.value.sekolah_id}/kelas/${getSekolahAktif.value.kelas_id}/hasil_psikologi/deteksi/cetak`
+    );
+}
+const dashboard_doCetak_negatif = () => {
+    window.open(
+        `${VITE_API_FE_DASHBOARD}admin/sekolah/${getSekolahAktif.value.sekolah_id}/kelas/${getSekolahAktif.value.kelas_id}/hasil_psikologi/deteksi/cetak/negatif`
+    );
+}
+const dashboard_doCetak_kewirausahaan = () => {
+    window.open(
+        `${VITE_API_FE_DASHBOARD}admin/sekolah/${getSekolahAktif.value.sekolah_id}/kelas/${getSekolahAktif.value.kelas_id}/hasil_psikologi/deteksi/cetak/kewirausahaan`
+    );
+}
 </script>
 <template>
     <span v-if="isLoading">
@@ -312,6 +354,38 @@ const doCetak_ist_8km_gabungan_v6 = () => {
                     Cetak 8KM+IST Gabungan Baru Selain Mahasiswa/Dewasa (V5)</button>
                 <button class="btn btn-sm btn-success" @click="doCetak_ist_8km_gabungan_v6()">
                     Cetak 8KM+IST Gabungan Khusus Mahasiswa/Dewasa (V6)</button>
+            </div>
+            <div class="divider px-10 font-semibold uppercase">
+                Cetak + Settings
+            </div>
+            <div class="space-x-2 py-2 space-y-2">
+
+
+                <button class="btn btn-sm btn-success" @click="doCetakIstLengkap_v4()"
+                    v-if="dataSetting.tipe_cetak == 'v4_aspek'">
+                    Sertifikat v4 + Aspek</button>
+                <button class="btn btn-sm btn-success" @click="doCetakIstLengkap_v4_tanpa_aspek()"
+                    v-if="dataSetting.tipe_cetak == 'v4_tanpa_aspek'">
+                    Sertifikat v4 tanpa Aspek</button>
+                <button class="btn btn-sm btn-success" @click="doCetak_ist_8km_gabungan_v5()"
+                    v-if="dataSetting.tipe_cetak == 'v5'">
+                    Sertifikat v5</button>
+                <button class="btn btn-sm btn-success" @click="dashboard_doCetak_v5()"
+                    v-if="dataSetting.tipe_cetak == 'v5'">
+                    DASHBOARD - Sertifikat v5</button>
+
+                <button class="btn btn-sm btn-success" @click="dashboard_doCetak_kewirausahaan()"
+                    v-if="dataSetting.kewirausahaan">
+                    DASHBOARD - Cetak Kewirausahaan</button>
+                <button class="btn btn-sm btn-success" @click="doCetak_sq()" v-if="dataSetting.deteksi_sqscq">
+                    Cetak Hspq Eq Scq Sq</button>
+                <button class="btn btn-sm btn-success" @click="dashboard_doCetak()"
+                    v-if="dataSetting.tipe_deteksi != 'negatif'">
+                    DASHBOARD - Cetak Hspq Positif Negatif</button>
+                <button class="btn btn-sm btn-success" @click="dashboard_doCetak_negatif()"
+                    v-if="dataSetting.tipe_deteksi == 'negatif'">
+                    DASHBOARD - Cetak Hspq Negatif Saja</button>
+
             </div>
 
             <div class="w-full bg-base-100 shadow-sm rounded-lg py-4 px-4">
