@@ -424,6 +424,7 @@ const dashboard_doCetak_kewirausahaan = () => {
                             <option value="2">Kelas 9</option>
                             <option value="10">Kelas 10</option>
                             <option value="3">Kelas 11-12</option>
+                            <option value="4">Kelas Dewasa</option>
                         </select>
                     </label>
 
