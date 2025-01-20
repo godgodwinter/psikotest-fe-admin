@@ -97,19 +97,22 @@ const dataSetting = ref({
     tipe_deteksi: "positifnegatif" //negatif or positifnegatif
 })
 
-const getDataSetting = async () => {
+const getDataSetting = async (kelasId) => {
+    if (kelasId == null) {
+        kelasId = getSekolahAktif.value.kelas_id
+    }
     try {
-        const response = await axiosIst.get(`sertifikat_setting/sertifikat/kelas/${kelas_id.value}`);
+        const response = await axiosIst.get(`sertifikat_setting/sertifikat/kelas/${kelasId}`);
         if (response) {
             dataSetting.value = response?.data?.data_setting
-            console.log(`#getDataSetting`, dataSetting.value);
+            console.log(`#getDataSetting:${kelasId}`, dataSetting.value);
         }
     } catch (error) {
         Toast.danger("Warning", "Data Gagal dimuat");
         console.error(error);
     }
 };
-getDataSetting();
+getDataSetting(getSekolahAktif.value.kelas_id);
 
 
 const do_Apply_Setting = async () => {
@@ -118,7 +121,7 @@ const do_Apply_Setting = async () => {
         let dataSend = dataSetting.value
         console.log(`dataSend`, dataSend);
         try {
-            const response = await axiosIst.post(`sertifikat_setting/sertifikat/kelas/${kelas_id.value}`, dataSend);
+            const response = await axiosIst.post(`sertifikat_setting/sertifikat/kelas/${getSekolahAktif.value.kelas_id}`, dataSend);
             // console.log(response);
             if (response && response.status === 200) {
                 Toast.success("Info", "Data Setting berhasil diupdate!");
@@ -211,6 +214,7 @@ const columns = [
 ];
 
 const doPilihKelas = async () => {
+    console.log(`doPilihKelas inputCariKelasId:${inputCariKelas.value.id}, kelasId:${kelas_id} , getSekolahAktif.value.kelas_id:${getSekolahAktif.value.kelas_id}`);
     let newDataSekolahAktif = {
         sekolah_id: sekolah_id.value,
         kelas_id: inputCariKelas.value.id ? inputCariKelas.value.id : kelas_id.value,
@@ -220,7 +224,9 @@ const doPilihKelas = async () => {
     // console.log('====================================');
     // console.log(getSekolahAktif.value, inputCariKelas.value.id);
     // console.log('====================================');
+
     await getData()
+    await getDataSetting(getSekolahAktif.value.kelas_id)
     // console.log(inputCariKelas.value.id);
     await router.push({
         name: "admin-sekolah-submenu-8km",
