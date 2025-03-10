@@ -7,6 +7,9 @@ import ApiUjianKhusus from "@/axios/axiosIst";
 import { fn_copy_id_for_mongo } from "@/lib/FungsiBasic.js"
 import moment from "moment/min/moment-with-locales";
 import localization from "moment/locale/id";
+import { useSuperadminStore } from '@/stores/admin/superadminPagesStore';
+const superadminStore = useSuperadminStore();
+const isSuperadminActive = ref(superadminStore.isSuperadminActive)
 moment.updateLocale("id", localization);
 
 const LoadingNavbar = defineAsyncComponent(() =>
@@ -131,16 +134,16 @@ const doAktifkanPaket = async (id, nama) => {
                     <div class="bg-white shadow rounded-lg px-4 py-4">
                         <div v-if="data">
                             <vue-good-table :line-numbers="true" :columns="columns" :rows="data" :search-options="{
-                enabled: true,
-            }" :pagination-options="{
-                enabled: true,
-                perPageDropdown: [50, 100, 150, 200],
-            }" styleClass="vgt-table striped bordered condensed" class="py-0">
+                                enabled: true,
+                            }" :pagination-options="{
+                                enabled: true,
+                                perPageDropdown: [50, 100, 150, 200],
+                            }" styleClass="vgt-table striped bordered condensed" class="py-0">
                                 <template #table-actions>
                                     <div class="space-x-1 space-y-1 gap-1">
                                         <router-link :to="{
-                name: 'admin-ujiancfit-paketsoal-tambah',
-            }">
+                                            name: 'admin-ujiancfit-paketsoal-tambah',
+                                        }">
                                             <button class="btn btn-sm btn-primary tooltip" data-tip="Tambah">
                                                 TAMBAH
                                             </button>
@@ -186,7 +189,8 @@ const doAktifkanPaket = async (id, nama) => {
                                                         clip-rule="evenodd" />
                                                 </svg></button>
                                             <button class="btn btn-sm btn-danger"
-                                                @click="doDeleteData(props.row.id, props.index)">
+                                                @click="doDeleteData(props.row.id, props.index)"
+                                                v-if="isSuperadminActive">
                                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5"
                                                     viewBox="0 0 20 20" fill="currentColor">
                                                     <path fill-rule="evenodd"
