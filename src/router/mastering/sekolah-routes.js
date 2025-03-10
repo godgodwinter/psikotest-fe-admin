@@ -110,6 +110,14 @@ const AdminSekolahRoutes = [
                   ),
               },
               {
+                path: "/pages/admin/mastering/sekolah/:sekolah_id/submenu/kelas/:kelas_id?/ujiankhusus/v4",
+                name: "admin-sekolah-submenu-ujiankhusus-v4",
+                component: () =>
+                  import(
+                    "@/views/admin/ujiankhusus/proses/UjiankhususProsesPerkelas_v4.vue"
+                  ),
+              },
+              {
                 path: "/pages/admin/mastering/sekolah/:sekolah_id/submenu/kelas/:kelas_id?/ujiankhusus/v2/siswa/:siswa_id/reset",
                 name: "admin-sekolah-submenu-ujiankhusus-persiswa-reset-v2",
                 component: () =>
