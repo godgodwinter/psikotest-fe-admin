@@ -540,6 +540,21 @@ const doCachingRedisPerSiswa = async (id, index) => {
         }
     }
 };
+const doCachingRedisPerSiswa_v4 = async (id, index) => {
+    if (confirm("Apakah anda yakin caching data ini?")) {
+        let dataFormSend = {}
+        try {
+            isLoading.value = true;
+            const response = await ApiUjianKhusus.post(`ujiankhusus/v4/sekolah/${sekolah_id.value}/kelas/${getSekolahAktif.value.kelas_id}/siswa/${id}/caching`, { optional_skip_jika_sudah_ada: false });
+            Toast.babeng("Berhasil", 'Cacing proses Ujian berhasil digenerate!');
+            getData();
+        } catch (error) {
+            isLoading.value = false;
+            isError.value = true;
+            console.error(error);
+        }
+    }
+};
 
 const doCachingRedisPerKelas = async () => {
     if (confirm("Apakah anda yakin caching data ini?")) {
@@ -547,6 +562,23 @@ const doCachingRedisPerKelas = async () => {
         try {
             isLoading.value = true;
             const response = await ApiUjianKhusus.post(`ujiankhusus/proses/v3/sekolah/${sekolah_id.value}/kelas/${getSekolahAktif.value.kelas_id}/caching`);
+            // const response = await Api.get(`redis/studiv2/proses_kelas/${getSekolahAktif.value.kelas_id}/store`, dataFormSend);
+            Toast.babeng("Berhasil", 'Cacing proses Ujian berhasil digenerate!');
+            getData();
+        } catch (error) {
+            isLoading.value = false;
+            isError.value = true;
+            console.error(error);
+        }
+    }
+};
+const doCachingRedisPerKelas_v4 = async () => {
+    if (confirm("Apakah anda yakin caching data ini?")) {
+        let dataFormSend = {}
+        try {
+            isLoading.value = true;
+            const response = await ApiUjianKhusus.post(`ujiankhusus/v4/sekolah/${sekolah_id.value}/kelas/${getSekolahAktif.value.kelas_id}/caching`,
+                { optional_skip_jika_sudah_ada: false });
             // const response = await Api.get(`redis/studiv2/proses_kelas/${getSekolahAktif.value.kelas_id}/store`, dataFormSend);
             Toast.babeng("Berhasil", 'Cacing proses Ujian berhasil digenerate!');
             getData();
@@ -576,6 +608,40 @@ const doGenerateHasilPerkelas = async (ttd) => {
         try {
             isLoading.value = true;
             const response = await ApiUjianKhusus.post(`/ujiankhusus/hasil/generate/v3/sekolah/${getSekolahAktif.value.sekolah_id}/kelas/${getSekolahAktif.value.kelas_id}`);
+            Toast.babeng("Berhasil", 'Generate Hasil Ujian telah berhasil!');
+            getData();
+            return true;
+        } catch (error) {
+            isLoading.value = false;
+            isError.value = true;
+            console.error(error);
+        }
+    }
+}
+const doGenerateHasilPerkelas_v4 = async (replace = true) => {
+    if (confirm("Apakah anda yakin generate Hasil Kelas Ini?")) {
+        console.log(`generate hasil kelas_id:${getSekolahAktif.value.kelas_id} sekolah_id ${getSekolahAktif.value.sekolah_id},replace:${replace}`);
+        // kelas_id.value 
+        try {
+            isLoading.value = true;
+            const response = await ApiUjianKhusus.post(`/ujiankhusus/v4/sekolah/${getSekolahAktif.value.sekolah_id}/kelas/${getSekolahAktif.value.kelas_id}/do_generate_hasil_perkelas`, { replace: replace });
+            Toast.babeng("Berhasil", 'Generate Hasil Ujian telah berhasil!');
+            getData();
+            return true;
+        } catch (error) {
+            isLoading.value = false;
+            isError.value = true;
+            console.error(error);
+        }
+    }
+}
+const doGenerateHasilPersiswa_v4 = async (siswa_id) => {
+    if (confirm("Apakah anda yakin generate Hasil Kelas Ini?")) {
+        console.log(`generate hasil kelas_id:${getSekolahAktif.value.kelas_id} sekolah_id ${getSekolahAktif.value.sekolah_id}`);
+        // kelas_id.value 
+        try {
+            isLoading.value = true;
+            const response = await ApiUjianKhusus.post(`/ujiankhusus/v4/sekolah/${getSekolahAktif.value.sekolah_id}/kelas/${getSekolahAktif.value.kelas_id}/siswa/${siswa_id}/do_generate_hasil_persiswa`);
             Toast.babeng("Berhasil", 'Generate Hasil Ujian telah berhasil!');
             getData();
             return true;
@@ -788,6 +854,9 @@ const formatTanggal = "DD MMMM YYYY HH:mm:ss";
                 <button class="btn btn-sm btn-danger p-2" @click="doCachingRedisPerKelas()">
                     Caching UJIAN KHUSUS Per Kelas V3
                 </button>
+                <button class="btn btn-sm btn-danger p-2" @click="doCachingRedisPerKelas_v4()">
+                    Caching UJIAN KHUSUS Per Kelas V4 (Persoal / Replace=true)
+                </button>
             </div>
             <!-- <div class="space-x-2 space-y-2 shadow-sm">
                 <button class="btn btn-sm btn-error p-2" @click="doDeleteHasilSiswaPerkelas()">
@@ -802,8 +871,8 @@ const formatTanggal = "DD MMMM YYYY HH:mm:ss";
             </div> -->
             <div class="space-x-2 space-y-0 shadow-sm flex justify-start ">
                 <div class="space-x-2 space-y-2 shadow-sm py-1">
-                    <button class="btn btn-sm btn-warning tooltip" data-tip="Generate Hasil Ujian V3"
-                        @click="doGenerateHasilPerkelas()">
+                    <button class="btn btn-sm btn-warning tooltip" data-tip="Generate Hasil Ujian V4"
+                        @click="doGenerateHasilPerkelas_v4(true)">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor" class="w-6 h-6">
                             <path stroke-linecap="round" stroke-linejoin="round"
@@ -812,8 +881,18 @@ const formatTanggal = "DD MMMM YYYY HH:mm:ss";
 
 
                     </button>
-                    <button class="btn btn-sm btn-secondary tooltip" data-tip="Generate Hasil Ujian Tanpa Replace V3"
-                        @click="doGenerateHasilPerkelas_false()">
+                    <!-- <button class="btn btn-sm btn-warning tooltip" data-tip="Generate Hasil Ujian V3"
+                        @click="doGenerateHasilPerkelas()">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                            stroke="currentColor" class="w-6 h-6">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M15.75 15.75V18m-7.5-6.75h.008v.008H8.25v-.008Zm0 2.25h.008v.008H8.25V13.5Zm0 2.25h.008v.008H8.25v-.008Zm0 2.25h.008v.008H8.25V18Zm2.498-6.75h.007v.008h-.007v-.008Zm0 2.25h.007v.008h-.007V13.5Zm0 2.25h.007v.008h-.007v-.008Zm0 2.25h.007v.008h-.007V18Zm2.504-6.75h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V13.5Zm0 2.25h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V18Zm2.498-6.75h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V13.5ZM8.25 6h7.5v2.25h-7.5V6ZM12 2.25c-1.892 0-3.758.11-5.593.322C5.307 2.7 4.5 3.65 4.5 4.757V19.5a2.25 2.25 0 0 0 2.25 2.25h10.5a2.25 2.25 0 0 0 2.25-2.25V4.757c0-1.108-.806-2.057-1.907-2.185A48.507 48.507 0 0 0 12 2.25Z" />
+                        </svg>
+
+
+                    </button> -->
+                    <button class="btn btn-sm btn-secondary tooltip" data-tip="Generate Hasil Ujian Tanpa Replace V4"
+                        @click="doGenerateHasilPerkelas_v4(false)">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor" class="w-6 h-6">
                             <path stroke-linecap="round" stroke-linejoin="round"
@@ -856,10 +935,10 @@ const formatTanggal = "DD MMMM YYYY HH:mm:ss";
 
             <div class="space-x-2 space-y-2 shadow-sm py-1">
 
-                <button class="btn btn-sm btn-info tooltip" data-tip=" Sinkron Data Redis v3"
+                <!-- <button class="btn btn-sm btn-info tooltip" data-tip=" Sinkron Data Redis v3"
                     @click="do_Sinkron_dataRedis()">
                     Sinkron Data Redis V3
-                </button>
+                </button> -->
                 <button class="btn btn-sm btn-info tooltip" data-tip=" Export Data Mentah Hasil Ujian"
                     @click="do_GenerateDataMentah()">
                     Export Data Mentah Hasil Ujian V3
@@ -916,9 +995,9 @@ const formatTanggal = "DD MMMM YYYY HH:mm:ss";
                                 <vue-good-table :line-numbers="true" :columns="columns" :rows="data" :search-options="{
                                     enabled: true,
                                 }" :pagination-options="{
-        enabled: true,
-        perPageDropdown: [50, 100, 150, 200],
-    }" styleClass="vgt-table striped bordered condensed" class="py-0">
+                                    enabled: true,
+                                    perPageDropdown: [50, 100, 150, 200],
+                                }" styleClass="vgt-table striped bordered condensed" class="py-0">
                                     <template #table-actions>
                                         <div class="space-x-1 space-y-1 gap-1">
                                             <button class="btn btn-sm btn-secondary tooltip" data-tip="Refresh Data"
@@ -938,6 +1017,27 @@ const formatTanggal = "DD MMMM YYYY HH:mm:ss";
                                                 <button class="btn btn-sm btn-danger tooltip"
                                                     data-tip="Caching UJIAN KHUSUS v3"
                                                     @click="doCachingRedisPerSiswa(props.row.id)">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                        viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                                                        class="w-6 h-6">
+                                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                                            d="M9 8.25H7.5a2.25 2.25 0 00-2.25 2.25v9a2.25 2.25 0 002.25 2.25h9a2.25 2.25 0 002.25-2.25v-9a2.25 2.25 0 00-2.25-2.25H15M9 12l3 3m0 0l3-3m-3 3V2.25" />
+                                                    </svg>
+                                                </button>
+
+                                                <button class="btn btn-sm btn-danger tooltip"
+                                                    data-tip="Caching UJIAN KHUSUS v4"
+                                                    @click="doCachingRedisPerSiswa_v4(props.row.id)">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                        viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                                                        class="w-6 h-6">
+                                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                                            d="M9 8.25H7.5a2.25 2.25 0 00-2.25 2.25v9a2.25 2.25 0 002.25 2.25h9a2.25 2.25 0 002.25-2.25v-9a2.25 2.25 0 00-2.25-2.25H15M9 12l3 3m0 0l3-3m-3 3V2.25" />
+                                                    </svg>
+
+                                                </button>
+                                                <button class="btn btn-sm btn-info tooltip" data-tip="Generate hasil v4"
+                                                    @click="doGenerateHasilPersiswa_v4(props.row.id)">
                                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none"
                                                         viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
                                                         class="w-6 h-6">
@@ -997,10 +1097,10 @@ const formatTanggal = "DD MMMM YYYY HH:mm:ss";
                                         <span v-else-if="props.column.field == 'hasil'">
                                             <div class="text-sm font-medium text-center flex justify-center space-x-1">
                                                 <RouterLink
-                                                    :to="{ name: 'admin-sekolah-submenu-ujiankhusus-persiswa-reset-v3', params: { sekolah_id, kelas_id, siswa_id: props.row.id } }">
+                                                    :to="{ name: 'admin-sekolah-submenu-ujiankhusus-persiswa-reset-v4', params: { sekolah_id, kelas_id, siswa_id: props.row.id } }">
                                                     <button class="btn btn-sm btn-warning tooltip"
-                                                        data-tip="MENU RESET v3">
-                                                        V3
+                                                        data-tip="MENU RESET v4">
+                                                        V4
 
                                                     </button>
                                                 </RouterLink>
@@ -1010,7 +1110,7 @@ const formatTanggal = "DD MMMM YYYY HH:mm:ss";
                                         <span v-else-if="props.column.field == 'paketsoal_nama'">
                                             <!-- {{ props.row.progres?.created_at }} -->
                                             {{ props.row.ujiankhusus ? props.row.ujiankhusus?.khusus_paketsoal_nama :
-                                            "-" }}
+                                                "-" }}
                                         </span>
                                         <span v-else-if="props.column.field == 'kelas_nama'">
                                             <!-- {{ props.row.progres?.created_at }} -->
@@ -1020,14 +1120,14 @@ const formatTanggal = "DD MMMM YYYY HH:mm:ss";
                                             <!-- {{ props.row.progres?.created_at }} -->
                                             {{ props.row.ujiankhusus?.tgl_batas_mulai ?
                                                 moment(props.row.ujiankhusus?.tgl_batas_mulai).format(formatTanggal)
-                                            : "-" }}
+                                                : "-" }}
                                         </span>
                                         <span v-else-if="props.column.field == 'tgl_batas_terakhir'">
                                             {{ props && props.row && props.row.ujiankhusus &&
                                                 props.row.ujiankhusus.tgl_batas_terakhir
                                                 ?
-                                            moment(props.row.ujiankhusus?.tgl_batas_terakhir).format(formatTanggal)
-                                            : " - " }}
+                                                moment(props.row.ujiankhusus?.tgl_batas_terakhir).format(formatTanggal)
+                                                : " - " }}
 
                                             <!-- {{ props.row.ujiankhusus?.tgl_batas_terakhir }} -->
 
@@ -1040,7 +1140,7 @@ const formatTanggal = "DD MMMM YYYY HH:mm:ss";
                                         </span>
                                         <span v-else-if="props.column.field == 'progres_angka'">
                                             {{ props.row.progres_angka?.progres }}/{{
-                                            props.row.progres_angka?.total }}
+                                                props.row.progres_angka?.total }}
                                         </span>
                                         <span v-else-if="props.column.field == 'username'">
                                             <div class="flex justify-center gap-2">
