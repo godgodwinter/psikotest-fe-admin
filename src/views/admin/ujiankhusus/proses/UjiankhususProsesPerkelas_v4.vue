@@ -713,6 +713,29 @@ const do_GenerateDataMentah = async (ttd) => {
     //     }
     // }
 }
+
+const do_GenerateDataMentah_v4 = async (ttd) => {
+    window.open(
+        `${VITE_API_FE_REACT}ujiankhusus/v4/export_data_mentah/sekolah/${getSekolahAktif.value.sekolah_id}/kelas/${getSekolahAktif.value.kelas_id}`
+    );
+    // if (confirm("Apakah anda yakin generate export data mentah  Kelas Ini?")) {
+
+    //     try {
+    //         isLoading.value = true;
+    //         // let dataFormSend = {
+    //         //     replace: false
+    //         // };
+    //         const response = await ApiUjianKhusus.post(`/ujiankhusus/hasil/sekolah/${sekolah_id.value}/kelas/${kelas_id.value}/generate_export_data_mentah`);
+    //         // Toast.babeng("Berhasil", 'E Data Mentah berhasil!');
+    //         getData();
+    //         return true;
+    //     } catch (error) {
+    //         isLoading.value = false;
+    //         isError.value = true;
+    //         console.error(error);
+    //     }
+    // }
+}
 const doExportExcel = (ttd) => {
     window.open(
         `${VITE_API_FE_REACT}ujiankhusus/v1/export/sekolah/${getSekolahAktif.value.sekolah_id}/kelas/${getSekolahAktif.value.kelas_id}`
@@ -731,10 +754,33 @@ const doExportExcel_v2_fakultas = (ttd) => {
     );
     // console.log("belum");
 }
+const doExportExcel_v4 = (ttd) => {
+    window.open(
+        `${VITE_API_FE_REACT}ujiankhusus/v4/export_rekap/sekolah/${getSekolahAktif.value.sekolah_id}/kelas/${getSekolahAktif.value.kelas_id}`
+    );
+    // console.log("belum");
+}
+const doExportExcel_v4_fakultas = (ttd) => {
+    window.open(
+        `${VITE_API_FE_REACT}ujiankhusus/v4/export_rekap/sekolah/${getSekolahAktif.value.sekolah_id}/kelas/${getSekolahAktif.value.kelas_id}/fakultas`
+    );
+    // console.log("belum");
+}
 const doExport1010 = (ttd) => {
     console.log(paketsoal_aktif.value.id);
     window.open(
         `${VITE_API_FE_REACT}ujiankhusus/v3/export_rekap_jawaban_siswa/sekolah/${getSekolahAktif.value.sekolah_id}/kelas/${getSekolahAktif.value.kelas_id}/paketsoal_id/${paketsoal_aktif.value.id}`
+    );
+    // console.log("belum");
+}
+const doExport1010_v4 = (ttd) => {
+    console.log(paketsoal_aktif.value.id);
+    // window.open(
+    //     `${VITE_API_FE_REACT}ujiankhusus/v3/export_rekap_jawaban_siswa/sekolah/${getSekolahAktif.value.sekolah_id}/kelas/${getSekolahAktif.value.kelas_id}/paketsoal_id/${paketsoal_aktif.value.id}`
+    // );
+
+    window.open(
+        `${VITE_API_FE_REACT}ujiankhusus/v4/export_rekap_jawaban_siswa/sekolah/${getSekolahAktif.value.sekolah_id}/kelas/${getSekolahAktif.value.kelas_id}/paketsoal_id/${paketsoal_aktif.value.id}`
     );
     // console.log("belum");
 }
@@ -918,18 +964,27 @@ const formatTanggal = "DD MMMM YYYY HH:mm:ss";
             </div>
 
             <div class="space-x-2 space-y-0 shadow-sm flex justify-start ">
-                <button class="btn btn-sm btn-success tooltip" data-tip="Export Excel Format IST (v2) V3"
+                <button class="btn btn-sm btn-success tooltip" data-tip="Export Excel Format IST"
                     @click="doExportExcel_v2()">
-                    EXPORT REKAP V2 (.xlsx)
+                    EXPORT REKAP V3 (.xlsx) / OLD
                 </button>
-
-                <button class="btn btn-sm btn-success tooltip" data-tip="Export Excel Format IST (v2_fakultas) V3"
+                <button class="btn btn-sm btn-success tooltip" data-tip="Export Excel Format IST + fakultas"
                     @click="doExportExcel_v2_fakultas()">
-
-                    EXPORT REKAP V2 + FAKULTAS (.xlsx)
+                    EXPORT REKAP V3 (.xlsx) + fakultas / OLD
                 </button>
-                <button class="btn btn-sm btn-info tooltip" data-tip="Export Excel 1010 v3" @click="doExport1010()">
-                    Export Excel 1010 (.xlsx)
+                <!-- <button class="btn btn-sm btn-success tooltip" data-tip="Export Excel Format IST"
+                    @click="doExportExcel_v4()">
+                    EXPORT REKAP V4 (.xlsx)
+                </button>
+
+                <button class="btn btn-sm btn-success tooltip" data-tip="Export Excel Format IST (fakultas)"
+                    @click="doExportExcel_v4_fakultas()">
+
+                    EXPORT REKAP V4 + FAKULTAS (.xlsx)
+                </button> -->
+                <button class="btn btn-sm btn-info tooltip"
+                    data-tip="Export Excel 1010  v4 (export_rekap_jawaban_siswa)" @click="doExport1010_v4()">
+                    Export Excel 1010 v4 (.xlsx)
                 </button>
             </div>
 
@@ -940,9 +995,13 @@ const formatTanggal = "DD MMMM YYYY HH:mm:ss";
                     Sinkron Data Redis V3
                 </button> -->
                 <button class="btn btn-sm btn-info tooltip" data-tip=" Export Data Mentah Hasil Ujian"
+                    @click="do_GenerateDataMentah_v4()">
+                    Export Data Mentah Hasil Ujian V4
+                </button>
+                <!-- <button class="btn btn-sm btn-info tooltip" data-tip=" Export Data Mentah Hasil Ujian"
                     @click="do_GenerateDataMentah()">
                     Export Data Mentah Hasil Ujian V3
-                </button>
+                </button> -->
 
             </div>
             <div class="space-x-2 space-y-0 shadow-sm flex justify-start ">
