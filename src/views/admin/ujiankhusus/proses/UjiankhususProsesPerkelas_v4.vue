@@ -274,7 +274,7 @@ const doPilihKelas = async () => {
     await getData()
     // console.log(inputCariKelas.value.id);
     await router.push({
-        name: "admin-sekolah-submenu-ujiankhusus-v3",
+        name: "admin-sekolah-submenu-ujiankhusus-v4",
         params: {
             sekolah_id: sekolah_id.value,
             kelas_id: inputCariKelas.value.id ? inputCariKelas.value.id : kelas_id.value,
@@ -894,14 +894,27 @@ const formatTanggal = "DD MMMM YYYY HH:mm:ss";
                     v-if="isSuperadminActive">
                     Delete Per Kelas V3
                 </button>
-                <button class="btn btn-sm btn-info p-2" @click="doGenerateSiswaPerkelas()">
+                <button class="btn btn-sm  bg-emerald-500 text-white 
+         hover:bg-emerald-600  p-2" @click="doGenerateSiswaPerkelas()">
                     Generate UJIAN KHUSUS Per Kelas V3
                 </button>
-                <button class="btn btn-sm btn-danger p-2" @click="doCachingRedisPerKelas()">
-                    Caching UJIAN KHUSUS Per Kelas V3
+                <button class="btn btn-sm p-2 
+         bg-amber-500 text-white 
+         hover:bg-amber-600 
+         focus:outline-none focus:ring-2 focus:ring-amber-400 
+         active:bg-amber-700 
+         rounded" @click="doCachingRedisPerKelas()">
+                    Caching #1 Perkelas
+                    <!-- UJIAN KHUSUS Per Kelas V3 -->
                 </button>
-                <button class="btn btn-sm btn-danger p-2" @click="doCachingRedisPerKelas_v4()">
-                    Caching UJIAN KHUSUS Per Kelas V4 (Persoal / Replace=true)
+                <button class="btn btn-sm p-2 
+         bg-red-500 text-white 
+         hover:bg-red-600 
+         focus:outline-none focus:ring-2 focus:ring-red-400 
+         active:bg-red-700 
+         rounded" @click="doCachingRedisPerKelas_v4()">
+                    Caching #2 Perkelas
+                    <!-- UJIAN KHUSUS Per Kelas V4 (Persoal / Replace=true) -->
                 </button>
             </div>
             <!-- <div class="space-x-2 space-y-2 shadow-sm">
@@ -917,8 +930,8 @@ const formatTanggal = "DD MMMM YYYY HH:mm:ss";
             </div> -->
             <div class="space-x-2 space-y-0 shadow-sm flex justify-start ">
                 <div class="space-x-2 space-y-2 shadow-sm py-1">
-                    <button class="btn btn-sm btn-warning tooltip" data-tip="Generate Hasil Ujian V4"
-                        @click="doGenerateHasilPerkelas_v4(true)">
+                    <button class="btn btn-sm   bg-cyan-500 text-white 
+         hover:bg-cyan-600  tooltip" data-tip="Generate Hasil Ujian V4" @click="doGenerateHasilPerkelas_v4(true)">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor" class="w-6 h-6">
                             <path stroke-linecap="round" stroke-linejoin="round"
@@ -1073,41 +1086,42 @@ const formatTanggal = "DD MMMM YYYY HH:mm:ss";
                                     <template #table-row="props">
                                         <span v-if="props.column.field == 'actions'">
                                             <div class="text-sm font-medium text-center flex justify-center space-x-1">
-                                                <button class="btn btn-sm btn-danger tooltip"
-                                                    data-tip="Caching UJIAN KHUSUS v3"
-                                                    @click="doCachingRedisPerSiswa(props.row.id)">
+                                                <div>
+                                                    <button class="btn btn-sm  tooltip   bg-amber-500 text-white 
+         hover:bg-amber-600 " data-tip="Caching #1 Persiswa " @click="doCachingRedisPerSiswa(props.row.id)">Caching
+                                                        #1
+                                                        <!-- <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                        viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                                                        class="w-6 h-6">
+                                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                                            d="M9 8.25H7.5a2.25 2.25 0 00-2.25 2.25v9a2.25 2.25 0 002.25 2.25h9a2.25 2.25 0 002.25-2.25v-9a2.25 2.25 0 00-2.25-2.25H15M9 12l3 3m0 0l3-3m-3 3V2.25" />
+                                                    </svg> -->
+                                                    </button>
+
+                                                    <button class="btn btn-sm tooltip  bg-red-500 text-white 
+         hover:bg-red-600 " data-tip="Caching #2 Persiswa" @click="doCachingRedisPerSiswa_v4(props.row.id)">
+                                                        Caching #2
+                                                        <!-- <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                        viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                                                        class="w-6 h-6">
+                                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                                            d="M9 8.25H7.5a2.25 2.25 0 00-2.25 2.25v9a2.25 2.25 0 002.25 2.25h9a2.25 2.25 0 002.25-2.25v-9a2.25 2.25 0 00-2.25-2.25H15M9 12l3 3m0 0l3-3m-3 3V2.25" />
+                                                    </svg> -->
+
+                                                    </button>
+                                                </div>
+                                                <button class="btn btn-sm  bg-cyan-500 text-white 
+         hover:bg-blue-600  tooltip" data-tip="Generate hasil v4" @click="doGenerateHasilPersiswa_v4(props.row.id)">
                                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none"
                                                         viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
                                                         class="w-6 h-6">
                                                         <path stroke-linecap="round" stroke-linejoin="round"
                                                             d="M9 8.25H7.5a2.25 2.25 0 00-2.25 2.25v9a2.25 2.25 0 002.25 2.25h9a2.25 2.25 0 002.25-2.25v-9a2.25 2.25 0 00-2.25-2.25H15M9 12l3 3m0 0l3-3m-3 3V2.25" />
                                                     </svg>
-                                                </button>
-
-                                                <button class="btn btn-sm btn-danger tooltip"
-                                                    data-tip="Caching UJIAN KHUSUS v4"
-                                                    @click="doCachingRedisPerSiswa_v4(props.row.id)">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none"
-                                                        viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-                                                        class="w-6 h-6">
-                                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                                            d="M9 8.25H7.5a2.25 2.25 0 00-2.25 2.25v9a2.25 2.25 0 002.25 2.25h9a2.25 2.25 0 002.25-2.25v-9a2.25 2.25 0 00-2.25-2.25H15M9 12l3 3m0 0l3-3m-3 3V2.25" />
-                                                    </svg>
 
                                                 </button>
-                                                <button class="btn btn-sm btn-info tooltip" data-tip="Generate hasil v4"
-                                                    @click="doGenerateHasilPersiswa_v4(props.row.id)">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none"
-                                                        viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-                                                        class="w-6 h-6">
-                                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                                            d="M9 8.25H7.5a2.25 2.25 0 00-2.25 2.25v9a2.25 2.25 0 002.25 2.25h9a2.25 2.25 0 002.25-2.25v-9a2.25 2.25 0 00-2.25-2.25H15M9 12l3 3m0 0l3-3m-3 3V2.25" />
-                                                    </svg>
-
-                                                </button>
-                                                <button class="btn btn-sm btn-warning tooltip"
-                                                    data-tip="Generate UJIAN KHUSUS v3"
-                                                    @click="doGenerateSiswa(props.row.id)">
+                                                <button class="btn btn-sm  bg-emerald-500 text-white 
+         hover:bg-emerald-600  tooltip" data-tip="Generate UJIAN KHUSUS v3" @click="doGenerateSiswa(props.row.id)">
                                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none"
                                                         viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
                                                         class="w-6 h-6">
