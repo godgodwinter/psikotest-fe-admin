@@ -317,6 +317,13 @@ const dashboard_doCetak = () => {
         `${VITE_API_FE_DASHBOARD}admin/sekolah/${getSekolahAktif.value.sekolah_id}/kelas/${getSekolahAktif.value.kelas_id}/hasil_psikologi/deteksi/cetak`
     );
 }
+
+const dashboard_doCetak_afirmasi = () => {
+    window.open(
+        `${VITE_API_FE_DASHBOARD}admin/sekolah/${getSekolahAktif.value.sekolah_id}/kelas/${getSekolahAktif.value.kelas_id}/hasil_psikologi/deteksi_afirmasi/cetak`
+    );
+}
+
 const dashboard_doCetak_negatif = () => {
     window.open(
         `${VITE_API_FE_DASHBOARD}admin/sekolah/${getSekolahAktif.value.sekolah_id}/kelas/${getSekolahAktif.value.kelas_id}/hasil_psikologi/deteksi/cetak/negatif`
@@ -388,6 +395,8 @@ const dashboard_doCetak_kewirausahaan = () => {
                 <button class="btn btn-sm btn-success" @click="dashboard_doCetak()"
                     v-if="dataSetting.tipe_deteksi != 'negatif'">
                     DASHBOARD - Cetak Hspq Positif Negatif</button>
+                <button class="btn btn-sm btn-success" @click="dashboard_doCetak_afirmasi()">
+                    DASHBOARD - Cetak Hspq Afirmasi Positif </button>
                 <button class="btn btn-sm btn-success" @click="dashboard_doCetak_negatif()"
                     v-if="dataSetting.tipe_deteksi == 'negatif'">
                     DASHBOARD - Cetak Hspq Negatif Saja</button>
@@ -491,11 +500,11 @@ const dashboard_doCetak_kewirausahaan = () => {
                         <div class="bg-white shadow rounded-lg px-4 py-4">
                             <div v-if="data">
                                 <vue-good-table :line-numbers="true" :columns="columns" :rows="data" :search-options="{
-        enabled: true,
-    }" :pagination-options="{
-        enabled: true,
-        perPageDropdown: [50, 100, 150, 200],
-    }" styleClass="vgt-table striped bordered condensed" class="py-0">
+                                    enabled: true,
+                                }" :pagination-options="{
+                                    enabled: true,
+                                    perPageDropdown: [50, 100, 150, 200],
+                                }" styleClass="vgt-table striped bordered condensed" class="py-0">
                                     <template #table-actions>
                                         <div class="space-x-1 space-y-1 gap-1">
                                             <button class="btn btn-sm btn-secondary tooltip" data-tip="Refresh Data"
