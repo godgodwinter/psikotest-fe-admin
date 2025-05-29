@@ -545,7 +545,7 @@ const doCachingRedisPerSiswa_v4 = async (id, index) => {
         let dataFormSend = {}
         try {
             isLoading.value = true;
-            const response = await ApiUjianKhusus.post(`ujiankhusus/v4/sekolah/${sekolah_id.value}/kelas/${getSekolahAktif.value.kelas_id}/siswa/${id}/caching`, { optional_skip_jika_sudah_ada: false });
+            const response = await ApiUjianKhusus.post(`ujiankhusus/v4/sekolah/${sekolah_id.value}/kelas/${getSekolahAktif.value.kelas_id}/siswa/${id}/caching`, { optional_skip_jika_sudah_ada: true });
             Toast.babeng("Berhasil", 'Cacing proses Ujian berhasil digenerate!');
             getData();
         } catch (error) {
@@ -1107,7 +1107,7 @@ const formatTanggal = "DD MMMM YYYY HH:mm:ss";
                                                         <path stroke-linecap="round" stroke-linejoin="round"
                                                             d="M9 8.25H7.5a2.25 2.25 0 00-2.25 2.25v9a2.25 2.25 0 002.25 2.25h9a2.25 2.25 0 002.25-2.25v-9a2.25 2.25 0 00-2.25-2.25H15M9 12l3 3m0 0l3-3m-3 3V2.25" />
                                                     </svg> -->
-                                                        aa
+                                                        <!-- aa -->
                                                     </button>
                                                 </div>
                                                 <button class="btn btn-sm  bg-cyan-500 text-white 
