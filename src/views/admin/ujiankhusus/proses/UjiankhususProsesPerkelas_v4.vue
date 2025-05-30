@@ -1003,10 +1003,10 @@ const formatTanggal = "DD MMMM YYYY HH:mm:ss";
 
             <div class="space-x-2 space-y-2 shadow-sm py-1">
 
-                <!-- <button class="btn btn-sm btn-info tooltip" data-tip=" Sinkron Data Redis v3"
+                <button class="btn btn-sm btn-info tooltip" data-tip=" Sinkron Data Redis v3"
                     @click="do_Sinkron_dataRedis()">
                     Sinkron Data Redis V3
-                </button> -->
+                </button>
                 <button class="btn btn-sm btn-info tooltip" data-tip=" Export Data Mentah Hasil Ujian"
                     @click="do_GenerateDataMentah_v4()">
                     Export Data Mentah Hasil Ujian V4
