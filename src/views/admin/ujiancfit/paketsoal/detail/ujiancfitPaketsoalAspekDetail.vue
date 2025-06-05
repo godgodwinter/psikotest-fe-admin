@@ -67,6 +67,11 @@ const columns = [
         field: "soal_jml",
         type: "String",
     },
+    {
+        label: "#khusus_banksoal_aspek_detail_id",
+        field: "khusus_banksoal_aspek_detail_id",
+        type: "Number",
+    },
 ];
 
 const getData = async () => {
@@ -208,16 +213,16 @@ const doEditData = async (id, index) => {
                     <div class="bg-white shadow rounded-lg px-4 py-4">
                         <div v-if="data">
                             <vue-good-table :line-numbers="true" :columns="columns" :rows="data" :search-options="{
-            enabled: true,
-        }" :pagination-options="{
-            enabled: true,
-            perPageDropdown: [50, 100, 150, 200],
-        }" styleClass="vgt-table striped bordered condensed" class="py-0">
+                                enabled: true,
+                            }" :pagination-options="{
+                                enabled: true,
+                                perPageDropdown: [50, 100, 150, 200],
+                            }" styleClass="vgt-table striped bordered condensed" class="py-0">
                                 <template #table-actions>
                                     <div class="space-x-1 space-y-1 gap-1">
                                         <router-link :to="{
-            name: 'admin-ujiancfit-paketsoal-aspek_detail-tambah', params: { paketsoal_id },
-        }">
+                                            name: 'admin-ujiancfit-paketsoal-aspek_detail-tambah', params: { paketsoal_id },
+                                        }">
                                             <button class="btn btn-sm btn-primary tooltip" data-tip="Tambah">
                                                 TAMBAH
                                             </button>
@@ -227,8 +232,10 @@ const doEditData = async (id, index) => {
                                 <template #table-row="props">
                                     <span v-if="props.column.field == 'actions'">
                                         <div class="text-sm font-medium text-center flex justify-center space-x-1">
+                                            <!-- aaa {{ props.row.khusus_banksoal_aspek_detail_id, props.index }} -->
                                             <RouterLink
-                                                :to="{ name: 'admin-ujiancfit-paketsoal-aspek_detail-soal', params: { paketsoal_id, aspek_detail_id: props.row.khusus_banksoal_aspek_detail_id, banksoal_aspek_detail_id: props.row.khusus_banksoal_aspek_detail_id } }">
+                                                :to="{ name: 'admin-ujiancfit-paketsoal-aspek_detail-soal', params: { paketsoal_id, aspek_detail_id: props.row.khusus_banksoal_aspek_detail_id, banksoal_aspek_detail_id: props.row.khusus_banksoal_aspek_detail_id } }"
+                                                v-if="props.row.khusus_banksoal_aspek_detail_id">
                                                 <button class="btn btn-sm btn-primary tooltip" data-tip="Detail Soal">
                                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
                                                         viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -237,7 +244,8 @@ const doEditData = async (id, index) => {
                                                     </svg></button>
                                             </RouterLink>
                                             <RouterLink
-                                                :to="{ name: 'admin-ujiancfit-paketsoal-aspek_detail-edit', params: { paketsoal_id, aspek_detail_id: props.row.khusus_banksoal_aspek_detail_id } }">
+                                                :to="{ name: 'admin-ujiancfit-paketsoal-aspek_detail-edit', params: { paketsoal_id, aspek_detail_id: props.row.khusus_banksoal_aspek_detail_id } }"
+                                                v-if="props.row.khusus_banksoal_aspek_detail_id">
                                                 <button class="btn btn-sm btn-warning tooltip" data-tip="Detail Soal">
                                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5"
                                                         viewBox="0 0 20 20" fill="currentColor">
