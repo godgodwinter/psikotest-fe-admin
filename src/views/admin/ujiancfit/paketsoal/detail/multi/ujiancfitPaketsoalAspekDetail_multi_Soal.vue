@@ -143,7 +143,7 @@ const doEditData = async (id, index) => {
         </article>
 
         <div>
-            <RouterLink :to="{ name: 'admin-ujiancfit-paketsoal-aspek_detail', params: { paketsoal_id } }">
+            <RouterLink :to="{ name: 'admin-ujiancfit-paketsoal-aspek_detail-multi', params: { paketsoal_id } }">
                 <button class="btn btn-info btn-sm">Kembali ke ASPEK DETAIL</button>
             </RouterLink>
         </div>
