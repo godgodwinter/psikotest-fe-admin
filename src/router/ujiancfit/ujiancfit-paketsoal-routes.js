@@ -58,6 +58,49 @@ const ujiancfitPaketsoalRoutes = [
                   ),
               },
 
+              // !multi
+              {
+                path: "/pages/admin/ujiancfit/paketsoal/detail/:paketsoal_id/aspek_detail/multi",
+                name: "admin-ujiancfit-paketsoal-aspek_detail-multi",
+                component: () =>
+                  import(
+                    "@/views/admin/ujiancfit/paketsoal/detail/multi/ujiancfitPaketsoalAspekDetail_multi.vue"
+                  ),
+              },
+              {
+                path: "/pages/admin/ujiancfit/paketsoal/detail/:paketsoal_id/aspek_detail/multi/tambah",
+                name: "admin-ujiancfit-paketsoal-aspek_detail-multi-tambah",
+                component: () =>
+                  import(
+                    "@/views/admin/ujiancfit/paketsoal/detail/multi/ujiancfitPaketsoalAspekDetail_multi_tambah.vue"
+                  ),
+              },
+              {
+                path: "/pages/admin/ujiancfit/paketsoal/detail/:paketsoal_id/aspek_detail/multi/edit/:aspek_detail_id",
+                name: "admin-ujiancfit-paketsoal-aspek_detail-multi-edit",
+                component: () =>
+                  import(
+                    "@/views/admin/ujiancfit/paketsoal/detail/multi/ujiancfitPaketsoalAspekDetail_multi_edit.vue"
+                  ),
+              },
+
+              {
+                path: "/pages/admin/ujiancfit/paketsoal/detail/:paketsoal_id/aspek_detail/multi/:aspek_detail_id/bank/:banksoal_aspek_detail_id/soal",
+                name: "admin-ujiancfit-paketsoal-aspek_detail-multi-soal",
+                component: () =>
+                  import(
+                    "@/views/admin/ujiancfit/paketsoal/detail/multi/ujiancfitPaketsoalAspekDetail_multi_Soal.vue"
+                  ),
+              },
+              {
+                path: "/pages/admin/ujiancfit/paketsoal/detail/:paketsoal_id/aspek_detail/multi/:aspek_detail_id/bank/:banksoal_aspek_detail_id/soal/tambah/",
+                name: "admin-ujiancfit-paketsoal-aspek_detail-multi-soal-tambah",
+                component: () =>
+                  import(
+                    "@/views/admin/ujiancfit/paketsoal/detail/multi/ujiancfitPaketsoalAspekDetail_multi_Soal_tambah.vue"
+                  ),
+              },
+              // !multi-end
               {
                 path: "/pages/admin/ujiancfit/paketsoal/detail/:paketsoal_id/aspek_detail",
                 name: "admin-ujiancfit-paketsoal-aspek_detail",

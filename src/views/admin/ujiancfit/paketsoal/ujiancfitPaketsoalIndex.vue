@@ -169,7 +169,7 @@ const doAktifkanPaket = async (id, nama) => {
                                                     </svg></button>
                                             </RouterLink>
                                             <RouterLink
-                                                :to="{ name: 'admin-ujiancfit-paketsoal-aspek_detail', params: { paketsoal_id: props.row.id } }">
+                                                :to="{ name: 'admin-ujiancfit-paketsoal-aspek_detail-multi', params: { paketsoal_id: props.row.id } }">
                                                 <button class="btn btn-sm btn-success tooltip"
                                                     data-tip="Detail Tipe Multi">
                                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
