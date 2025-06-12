@@ -50,6 +50,11 @@ const columns = [
         field: "aspek_multijawaban",
         type: "String",
     },
+    {
+        label: "ID",
+        field: "_id",
+        type: "String",
+    },
 ];
 
 const getData = async () => {
