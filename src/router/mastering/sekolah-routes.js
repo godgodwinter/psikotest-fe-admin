@@ -170,6 +170,14 @@ const AdminSekolahRoutes = [
                     "@/views/admin/ujiancfit/proses/UjianCfitProsesPerkelas_v4.vue"
                   ),
               },
+              {
+                path: "/pages/admin/mastering/sekolah/:sekolah_id/submenu/kelas/:kelas_id?/ujiancfit/v4/siswa/:siswa_id",
+                name: "admin-sekolah-submenu-ujiancfit-v4-reset",
+                component: () =>
+                  import(
+                    "@/views/admin/ujiancfit/proses/UjianCfitProsesPerSiswa_reset_v4.vue"
+                  ),
+              },
               // ! UJIANSTUDI-CFIT-END
               // ! UJIAN-MMPI-PROSES
               {

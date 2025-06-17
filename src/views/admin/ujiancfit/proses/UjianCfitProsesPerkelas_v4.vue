@@ -378,17 +378,19 @@ const doDeleteProsesSiswa = async (id, proses_id) => {
 const doGenerateSiswaPerkelas = async (id, index) => {
     if (confirm("Apakah anda yakin generate data ini?")) {
         let dataFormSend = {
-            paketsoal_id: paketsoal_aktif.value.id,
+            paketsoal_id: null,
+            // nama: paketsoal_aktif.value.nama,
             tgl_batas_mulai: dataForm.value.tgl_batas_mulai,
             tgl_batas_terakhir: dataForm.value.tgl_batas_terakhir,
-            tipeCitacita: inputSelectTipeCitacita.value
+            tipeCitacita: inputSelectTipeCitacita.value,
+            tipeCfit: inputSelectTipeCfit.value,
         }
         console.log('====================================');
         console.log(dataFormSend);
         console.log('====================================');
         try {
             isLoading.value = true;
-            const response = await ApiUjianKhusus.post(`ujiankhusus/proses/v3/sekolah/${sekolah_id.value}/kelas/${getSekolahAktif.value.kelas_id}`, dataFormSend);
+            const response = await ApiUjianKhusus.post(`cfit/proses/sekolah/${sekolah_id.value}/kelas/${getSekolahAktif.value.kelas_id}`, dataFormSend);
             Toast.babeng("Berhasil", 'Data berhasil digenerate!');
             getData();
         } catch (error) {
@@ -402,7 +404,7 @@ const doDeleteProsesSiswaPerkelas = async (id) => {
     if (confirm("Apakah anda yakin menghapus data ujian ini?")) {
         try {
             isLoading.value = true;
-            const response = await ApiUjianKhusus.delete(`ujiankhusus/proses/v3/sekolah/${sekolah_id.value}/kelas/${getSekolahAktif.value.kelas_id}`);
+            const response = await ApiUjianKhusus.delete(`cfit/proses/sekolah/${sekolah_id.value}/kelas/${getSekolahAktif.value.kelas_id}`);
             Toast.babeng("Berhasil", 'Data berhasil di hapus!');
             getData();
         } catch (error) {
@@ -533,7 +535,7 @@ const doCachingRedisPerSiswa = async (id, index) => {
         let dataFormSend = {}
         try {
             isLoading.value = true;
-            const response = await ApiUjianKhusus.post(`ujiankhusus/proses/v3/sekolah/${sekolah_id.value}/kelas/${getSekolahAktif.value.kelas_id}/siswa/${id}/caching`);
+            const response = await ApiUjianKhusus.post(`cfit/v4/sekolah/${sekolah_id.value}/kelas/${getSekolahAktif.value.kelas_id}/siswa/${id}/caching`);
             Toast.babeng("Berhasil", 'Cacing proses Ujian berhasil digenerate!');
             getData();
         } catch (error) {
@@ -548,7 +550,7 @@ const doCachingRedisPerSiswa_v4 = async (id, index) => {
         let dataFormSend = {}
         try {
             isLoading.value = true;
-            const response = await ApiUjianKhusus.post(`ujiankhusus/v4/sekolah/${sekolah_id.value}/kelas/${getSekolahAktif.value.kelas_id}/siswa/${id}/caching`, { optional_skip_jika_sudah_ada: true });
+            const response = await ApiUjianKhusus.post(`cfit/v4/sekolah/${sekolah_id.value}/kelas/${getSekolahAktif.value.kelas_id}/siswa/${id}/caching`, { optional_skip_jika_sudah_ada: true });
             Toast.babeng("Berhasil", 'Cacing proses Ujian berhasil digenerate!');
             getData();
         } catch (error) {
@@ -564,7 +566,7 @@ const doCachingRedisPerKelas = async () => {
         let dataFormSend = {}
         try {
             isLoading.value = true;
-            const response = await ApiUjianKhusus.post(`ujiankhusus/proses/v3/sekolah/${sekolah_id.value}/kelas/${getSekolahAktif.value.kelas_id}/caching`);
+            const response = await ApiUjianKhusus.post(`cfit/v4/sekolah/${sekolah_id.value}/kelas/${getSekolahAktif.value.kelas_id}/caching`);
             // const response = await Api.get(`redis/studiv2/proses_kelas/${getSekolahAktif.value.kelas_id}/store`, dataFormSend);
             Toast.babeng("Berhasil", 'Cacing proses Ujian berhasil digenerate!');
             getData();
@@ -943,18 +945,17 @@ const formatTanggal = "DD MMMM YYYY HH:mm:ss";
          focus:outline-none focus:ring-2 focus:ring-amber-400 
          active:bg-amber-700 
          rounded" @click="doCachingRedisPerKelas()">
-                    Caching #1 Perkelas
+                    Caching Perkelas
                     <!-- UJIAN KHUSUS Per Kelas V3 -->
                 </button>
-                <button class="btn btn-sm p-2 
+                <!-- <button class="btn btn-sm p-2 
          bg-red-500 text-white 
          hover:bg-red-600 
          focus:outline-none focus:ring-2 focus:ring-red-400 
          active:bg-red-700 
          rounded" @click="doCachingRedisPerKelas_v4()">
                     Caching #2 Perkelas
-                    <!-- UJIAN KHUSUS Per Kelas V4 (Persoal / Replace=true) -->
-                </button>
+                </button> -->
             </div>
             <!-- <div class="space-x-2 space-y-2 shadow-sm">
                 <button class="btn btn-sm btn-error p-2" @click="doDeleteHasilSiswaPerkelas()">
@@ -1128,7 +1129,7 @@ const formatTanggal = "DD MMMM YYYY HH:mm:ss";
                                                 <div>
                                                     <button class="btn btn-sm  tooltip   bg-amber-500 text-white 
          hover:bg-amber-600 " data-tip="Caching #1 Persiswa " @click="doCachingRedisPerSiswa(props.row.id)">Caching
-                                                        #1
+
                                                         <!-- <svg xmlns="http://www.w3.org/2000/svg" fill="none"
                                                         viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
                                                         class="w-6 h-6">
@@ -1137,17 +1138,10 @@ const formatTanggal = "DD MMMM YYYY HH:mm:ss";
                                                     </svg> -->
                                                     </button>
 
-                                                    <button class="btn btn-sm tooltip  bg-red-500 text-white 
+                                                    <!-- <button class="btn btn-sm tooltip  bg-red-500 text-white 
          hover:bg-red-600 " data-tip="Caching #2 Persiswa" @click="doCachingRedisPerSiswa_v4(props.row.id)">
                                                         Caching #2
-                                                        <!-- <svg xmlns="http://www.w3.org/2000/svg" fill="none"
-                                                        viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-                                                        class="w-6 h-6">
-                                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                                            d="M9 8.25H7.5a2.25 2.25 0 00-2.25 2.25v9a2.25 2.25 0 002.25 2.25h9a2.25 2.25 0 002.25-2.25v-9a2.25 2.25 0 00-2.25-2.25H15M9 12l3 3m0 0l3-3m-3 3V2.25" />
-                                                    </svg> -->
-                                                        <!-- aa -->
-                                                    </button>
+                                                    </button> -->
                                                 </div>
                                                 <button class="btn btn-sm  bg-cyan-500 text-white 
          hover:bg-blue-600  tooltip" data-tip="Generate hasil v4" @click="doGenerateHasilPersiswa_v4(props.row.id)"
@@ -1169,7 +1163,7 @@ const formatTanggal = "DD MMMM YYYY HH:mm:ss";
                                                             d="M3 7.5L7.5 3m0 0L12 7.5M7.5 3v13.5m13.5 0L16.5 21m0 0L12 16.5m4.5 4.5V7.5" />
                                                     </svg>
                                                 </button>
-                                                <button class="btn btn-sm btn-error tooltip"
+                                                <!-- <button class="btn btn-sm btn-error tooltip"
                                                     data-tip="Delete UJIAN KHUSUS v3"
                                                     @click="doDeleteProsesSiswa(props.row.id)"
                                                     v-if="isSuperadminActive">
@@ -1180,7 +1174,7 @@ const formatTanggal = "DD MMMM YYYY HH:mm:ss";
                                                             d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
                                                     </svg>
 
-                                                </button>
+                                                </button> -->
 
 
                                                 <!-- <RouterLink
@@ -1210,10 +1204,10 @@ const formatTanggal = "DD MMMM YYYY HH:mm:ss";
                                         <span v-else-if="props.column.field == 'hasil'">
                                             <div class="text-sm font-medium text-center flex justify-center space-x-1">
                                                 <RouterLink
-                                                    :to="{ name: 'admin-sekolah-submenu-ujiankhusus-persiswa-reset-v4', params: { sekolah_id, kelas_id, siswa_id: props.row.id } }">
+                                                    :to="{ name: 'admin-sekolah-submenu-ujiancfit-v4-reset', params: { sekolah_id, kelas_id, siswa_id: props.row.id } }">
                                                     <button class="btn btn-sm btn-warning tooltip"
                                                         data-tip="MENU RESET v4">
-                                                        V4
+                                                        RESET
 
                                                     </button>
                                                 </RouterLink>
