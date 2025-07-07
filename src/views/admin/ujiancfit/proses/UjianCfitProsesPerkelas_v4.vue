@@ -629,7 +629,7 @@ const doGenerateHasilPerkelas_v4 = async (replace = true) => {
         // kelas_id.value 
         try {
             isLoading.value = true;
-            const response = await ApiUjianKhusus.post(`/ujiankhusus/v4/sekolah/${getSekolahAktif.value.sekolah_id}/kelas/${getSekolahAktif.value.kelas_id}/do_generate_hasil_perkelas`, { replace: replace });
+            const response = await ApiUjianKhusus.post(`/cfit/hasil/sekolah/${getSekolahAktif.value.sekolah_id}/kelas/${getSekolahAktif.value.kelas_id}/do_generate_hasil`, { replace: replace });
             Toast.babeng("Berhasil", 'Generate Hasil Ujian telah berhasil!');
             getData();
             return true;
@@ -641,12 +641,12 @@ const doGenerateHasilPerkelas_v4 = async (replace = true) => {
     }
 }
 const doGenerateHasilPersiswa_v4 = async (siswa_id) => {
-    if (confirm("Apakah anda yakin generate Hasil Kelas Ini?")) {
+    if (confirm("Apakah anda yakin generate Hasil Siswa Ini?")) {
         console.log(`generate hasil kelas_id:${getSekolahAktif.value.kelas_id} sekolah_id ${getSekolahAktif.value.sekolah_id}`);
         // kelas_id.value 
         try {
             isLoading.value = true;
-            const response = await ApiUjianKhusus.post(`/ujiankhusus/v4/sekolah/${getSekolahAktif.value.sekolah_id}/kelas/${getSekolahAktif.value.kelas_id}/siswa/${siswa_id}/do_generate_hasil_persiswa`);
+            const response = await ApiUjianKhusus.post(`/cfit/hasil/sekolah/${getSekolahAktif.value.sekolah_id}/kelas/${getSekolahAktif.value.kelas_id}/siswa/${siswa_id}/do_generate_hasil`, { replace: true });
             Toast.babeng("Berhasil", 'Generate Hasil Ujian telah berhasil!');
             getData();
             return true;
@@ -937,7 +937,7 @@ const formatTanggal = "DD MMMM YYYY HH:mm:ss";
                 </button>
                 <button class="btn btn-sm  bg-emerald-500 text-white 
          hover:bg-emerald-600  p-2" @click="doGenerateSiswaPerkelas()">
-                    Generate UJIAN CFIT Per Kelas (V3)
+                    Generate UJIAN CFIT Per Kelas (V4)
                 </button>
                 <button class="btn btn-sm p-2 
          bg-amber-500 text-white 
