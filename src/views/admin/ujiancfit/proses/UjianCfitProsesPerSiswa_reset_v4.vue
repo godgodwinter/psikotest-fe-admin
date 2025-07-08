@@ -399,8 +399,11 @@ const onSubmit = async (values) => {
         desc: dataForm.value.desc,
         revisi_nilai: dataForm.value.revisi_nilai,
     };
+    console.log('====================================');
+    console.log(`#onsubmit#dataFormSend:`, dataFormSend);
+    console.log('====================================');
     try {
-        const response = await ApiUjianKhusus.post(`ujiankhusus/revisi/v3/sekolah/${sekolah_id.value}/kelas/${kelas_id.value}/siswa/${siswa_id.value}`, dataFormSend);
+        const response = await ApiUjianKhusus.post(`/cfit/hasil/sekolah/${sekolah_id.value}/kelas/${kelas_id.value}/siswa/${siswa_id.value}/do_revisi`, dataFormSend);
         // console.log(response);
         Toast.success("Info", "Data berhasil diupdate!");
         // router.push({ name: "admin-ujiankhusus-banksoal-aspek" });
