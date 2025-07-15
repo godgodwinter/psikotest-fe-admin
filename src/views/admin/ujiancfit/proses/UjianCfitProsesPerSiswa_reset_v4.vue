@@ -758,8 +758,11 @@ const onSubmit = async (values) => {
 
                                             </button> -->
                                                 <label for="my_modal_6" class="btn"
+                                                    @click="onRevisi(props.row.desc, props.row.skor_jml, props.row.revisi_nilai)">Revisi</label>
+                                                <!-- <label for="my_modal_6" class="btn"
                                                     @click="onRevisi(props.row.desc, props.row.skor_jml, props.row.revisi_nilai)"
-                                                    v-if="props.row.revisi">Revisi</label>
+                                                    v-if="props.row.revisi">Revisi</label> -->
+                                                <!-- {{ props.row.revisi }} -->
                                             </div>
                                         </div>
                                     </span>
