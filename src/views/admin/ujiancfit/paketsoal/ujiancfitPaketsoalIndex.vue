@@ -51,6 +51,11 @@ const columns = [
         type: "String",
     },
     {
+        label: "Pohon",
+        field: "pohonList",
+        type: "String",
+    },
+    {
         label: "ID",
         field: "_id",
         type: "String",
@@ -213,6 +218,8 @@ const doAktifkanPaket = async (id, nama) => {
                                     </span>
                                     <span v-else-if="props.column.field == 'minatList'">
                                         {{ props.row.minatList ? props.row.minatList.nama : "-" }}</span>
+                                    <span v-else-if="props.column.field == 'pohonList'">
+                                        {{ props.row.pohonList ? props.row.pohonList.nama : "-" }}</span>
                                     <span v-else-if="props.column.field == 'aspek_multijawaban'">
                                         {{ props.row.aspek_multijawaban?.length > 0 ? "Ada" : "-"
                                         }}</span>

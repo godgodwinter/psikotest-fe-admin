@@ -13,6 +13,9 @@
         <RouterLink :to="{ name: 'admin-ujiankhusus-banksoal-multijawaban' }">
             <button class="btn btn-warning btn-sm">MULTI JAWABAN (CFIT)</button>
         </RouterLink>
+        <RouterLink :to="{ name: 'admin-ujiankhusus-banksoal-multijawaban' }">
+            <button class="btn btn-warning btn-sm">POHON (CFIT)</button>
+        </RouterLink>
         <!-- <RouterLink :to="{ name: 'admin-ujiankhusus-banksoal-aspek' }">
             <button class="btn btn-info btn-sm">Aspek (U/ 8KM)</button>
         </RouterLink> -->

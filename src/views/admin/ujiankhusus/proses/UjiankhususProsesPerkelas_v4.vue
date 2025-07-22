@@ -691,6 +691,25 @@ const do_Sinkron_dataRedis = async (ttd) => {
         }
     }
 }
+const do_Sinkron_dataRedis_v4 = async (ttd) => {
+    if (confirm("Apakah anda yakin sinkron data Redis  Kelas Ini?")) {
+
+        try {
+            isLoading.value = true;
+            // let dataFormSend = {
+            //     replace: false
+            // };
+            const response = await ApiUjianKhusus.post(`/ujiankhusus/hasil/sinkron_redis/v4/sekolah/${sekolah_id.value}/kelas/${kelas_id.value}`);
+            Toast.babeng("Berhasil", 'Sinkron Ujian telah berhasil!');
+            getData();
+            return true;
+        } catch (error) {
+            isLoading.value = false;
+            isError.value = true;
+            console.error(error);
+        }
+    }
+}
 const do_GenerateDataMentah = async (ttd) => {
     window.open(
         `${VITE_API_FE_REACT}ujiankhusus/v3/export_data_mentah/sekolah/${getSekolahAktif.value.sekolah_id}/kelas/${getSekolahAktif.value.kelas_id}`
@@ -1007,6 +1026,10 @@ const formatTanggal = "DD MMMM YYYY HH:mm:ss";
                     @click="do_Sinkron_dataRedis()">
                     Sinkron Data Redis V3
                 </button>
+                <!-- <button class="btn btn-sm btn-info tooltip" data-tip=" Sinkron Data Redis v3"
+                    @click="do_Sinkron_dataRedis_v4()">
+                    Sinkron Data Redis V4
+                </button> -->
                 <button class="btn btn-sm btn-info tooltip" data-tip=" Export Data Mentah Hasil Ujian"
                     @click="do_GenerateDataMentah_v4()">
                     Export Data Mentah Hasil Ujian V4

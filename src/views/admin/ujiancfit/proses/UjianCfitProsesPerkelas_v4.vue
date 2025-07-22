@@ -363,7 +363,7 @@ const doDeleteProsesSiswa = async (id, proses_id) => {
     if (confirm("Apakah anda yakin menghapus data ujian ini?")) {
         try {
             isLoading.value = true;
-            const response = await ApiUjianKhusus.delete(`ujiankhusus/proses/v3/sekolah/${sekolah_id.value}/kelas/${getSekolahAktif.value.kelas_id}/siswa/${id}`);
+            const response = await ApiUjianKhusus.delete(`cfit/proses/sekolah/${sekolah_id.value}/kelas/${getSekolahAktif.value.kelas_id}/siswa/${id}`);
             Toast.babeng("Berhasil", 'Data berhasil di hapus!');
             getData();
         } catch (error) {
@@ -1187,9 +1187,10 @@ const formatTanggal = "DD MMMM YYYY HH:mm:ss";
                                                         </svg></button>
                                                 </RouterLink> -->
                                                 <button class="btn btn-sm btn-error tooltip"
-                                                    data-tip="Delete UJIAN KHUSUS v3"
+                                                    data-tip="Delete UJIAN CFIT v3"
                                                     @click="doDeleteProsesSiswa(props.row.id, props.row.proses_id)"
-                                                    v-if="props.row.paketsoal_nama">
+                                                    v-if="isSuperadminActive">
+                                                    <!-- v-if="props.row.paketsoal_nama"> -->
                                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none"
                                                         viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
                                                         class="w-6 h-6">
