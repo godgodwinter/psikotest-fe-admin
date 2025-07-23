@@ -256,6 +256,12 @@ const AdminSekolahRoutes = [
           import("@/views/ist/import/MmpiImportIndex_banksoal.vue"),
       },
       {
+        path: "/pages/admin/mastering/sekolah/:sekolah_id?/submenu/kelas/:kelas_id?/mmpi2/import/banksoal",
+        name: "admin-sekolah-submenu-mmpi2-import-banksoal",
+        component: () =>
+          import("@/views/ist/import/Mmpi2ImportIndex_banksoal.vue"),
+      },
+      {
         path: "/pages/admin/mastering/sekolah/:sekolah_id?/submenu/kelas/:kelas_id?/cfit/import_iq_generator",
         name: "admin-sekolah-submenu-cfit-import-iq-generator",
         component: () =>

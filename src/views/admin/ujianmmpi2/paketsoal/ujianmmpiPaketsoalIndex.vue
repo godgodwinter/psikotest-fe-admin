@@ -49,7 +49,7 @@ const columns = [
 
 const getData = async () => {
     try {
-        const response = await ApiUjianKhusus.get(`mmpi/paketsoal`);
+        const response = await ApiUjianKhusus.get(`mmpi2/paketsoal`);
         const tempData = response.data;
         data.value = tempData.map(fn_copy_id_for_mongo);
         isLoading.value = false;
@@ -71,7 +71,7 @@ getDataPaketsoalAktif();
 const doDeleteData = async (id, index) => {
     if (confirm("Apakah anda yakin menghapus data ini?")) {
         try {
-            const response = await ApiUjianKhusus.delete(`mmpi/paketsoal/${id}`);
+            const response = await ApiUjianKhusus.delete(`mmpi2/paketsoal/${id}`);
             if (response.status) {
                 Toast.warning("Berhasil", response.message);
                 // Toast.success("Info", "Data berhasil dihapus!");
@@ -88,7 +88,7 @@ const doDeleteData = async (id, index) => {
 
 const doEditData = async (id, index) => {
     router.push({
-        name: "admin-ujianmmpi-paketsoal-edit",
+        name: "admin-ujianmmpi2-paketsoal-edit",
         params: { paketsoal_id: id },
     });
 };
@@ -111,11 +111,11 @@ const doAktifkanPaket = async (id, nama) => {
 <template>
     <div>
         <article class="prose lg:prose-sm">
-            <h1>PAKETSOAL MMPI 1 / A</h1>
-            <h5>UJIAN MMPI</h5>
-            <div v-if="paketsoal_aktif">
+            <h1>PAKETSOAL MMPI 2</h1>
+            <h5>UJIAN MMPI 2</h5>
+            <!-- <div v-if="paketsoal_aktif">
                 <h4>PAKETSOAL AKTIF : {{ paketsoal_aktif?.nama }}</h4>
-            </div>
+            </div> -->
         </article>
         <span v-if="isLoading">
             <LoadingNavbar />
@@ -137,7 +137,7 @@ const doAktifkanPaket = async (id, nama) => {
                                 <template #table-actions>
                                     <div class="space-x-1 space-y-1 gap-1">
                                         <router-link :to="{
-                                            name: 'admin-ujianmmpi-paketsoal-tambah',
+                                            name: 'admin-ujianmmpi2-paketsoal-tambah',
                                         }">
                                             <button class="btn btn-sm btn-primary tooltip" data-tip="Tambah">
                                                 TAMBAH
@@ -155,7 +155,7 @@ const doAktifkanPaket = async (id, nama) => {
                                         <div class="text-sm font-medium text-center flex justify-center space-x-1">
 
                                             <RouterLink
-                                                :to="{ name: 'admin-ujianmmpi-paketsoal-soal', params: { paketsoal_id: props.row.id } }">
+                                                :to="{ name: 'admin-ujianmmpi2-paketsoal-soal', params: { paketsoal_id: props.row.id } }">
                                                 <button class="btn btn-sm btn-success tooltip" data-tip="Bank Soal">
                                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
                                                         viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
