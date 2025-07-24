@@ -45,6 +45,11 @@ const columns = [
         field: "soal_jml",
         type: "String",
     },
+    {
+        label: "ID",
+        field: "id",
+        type: "String",
+    },
 ];
 
 const getData = async () => {
@@ -113,6 +118,9 @@ const doAktifkanPaket = async (id, nama) => {
         <article class="prose lg:prose-sm">
             <h1>PAKETSOAL MMPI 1 / A</h1>
             <h5>UJIAN MMPI</h5>
+            <h5>- Soal Diisi dari Import MMPI 1 / A </h5>
+            <h5>- Max Hanya 1 Paket Soal </h5>
+            <h5>- Aktifkan Dulu Paket Soal Sebelum Generate ujian </h5>
             <div v-if="paketsoal_aktif">
                 <h4>PAKETSOAL AKTIF : {{ paketsoal_aktif?.nama }}</h4>
             </div>

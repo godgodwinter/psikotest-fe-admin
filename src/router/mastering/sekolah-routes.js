@@ -179,6 +179,25 @@ const AdminSekolahRoutes = [
                   ),
               },
               // ! UJIANSTUDI-CFIT-END
+
+              // ! UJIAN-MMPI2
+              {
+                path: "/pages/admin/mastering/sekolah/:sekolah_id/submenu/kelas/:kelas_id?/mmpi2/v4",
+                name: "admin-sekolah-submenu-ujianmmpi2-v4",
+                component: () =>
+                  import(
+                    "@/views/admin/ujianmmpi2/proses/UjianMmpi2ProsesPerkelas_v4.vue"
+                  ),
+              },
+              // {
+              //   path: "/pages/admin/mastering/sekolah/:sekolah_id/submenu/kelas/:kelas_id?/ujiancfit/v4/siswa/:siswa_id",
+              //   name: "admin-sekolah-submenu-ujiancfit-v4-reset",
+              //   component: () =>
+              //     import(
+              //       "@/views/admin/ujiancfit/proses/UjianCfitProsesPerSiswa_reset_v4.vue"
+              //     ),
+              // },
+              // ! UJIAN-MMPI2-END
               // ! UJIAN-MMPI-PROSES
               {
                 path: "/pages/admin/mastering/sekolah/:sekolah_id/submenu/kelas/:kelas_id?/ujianmmpi/v1",
