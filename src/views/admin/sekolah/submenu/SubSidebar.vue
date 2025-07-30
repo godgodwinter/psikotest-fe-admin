@@ -79,8 +79,8 @@ adminPagesStore.$subscribe((mutation, state) => {
                 </ul>
             </div>
         </div>
-        <div class="bg-white p-3 hover:shadow shadow-sm">
-            <div class="flex items-center space-x-3 font-semibold text-base-content text-xl leading-8">
+        <div class="bg-white px-2 hover:shadow shadow-sm">
+            <!-- <div class="flex items-center space-x-3 font-semibold text-base-content text-xl leading-8">
                 <span class="text-green-500">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
                         stroke="currentColor" stroke-width="2">
@@ -89,8 +89,19 @@ adminPagesStore.$subscribe((mutation, state) => {
                     </svg>
                 </span>
                 <span>MENU UJIAN</span>
-            </div>
-            <div class="px-2">
+            </div> -->
+            <div class="">
+
+                <div class="flex items-center space-x-3 font-semibold text-base-content text-xl leading-8">
+                    <span class="text-green-500">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
+                        </svg>
+                    </span>
+                    <span>MENU UJIAN</span>
+                </div>
                 <ul class="space-y-0 pb-2 lg:flex flex-wrap px-0 gap-0 justify-between">
                     <li class="bg-white lg:w-full py-0 pt-2 ">
                         <router-link
@@ -151,6 +162,17 @@ adminPagesStore.$subscribe((mutation, state) => {
                             <span class="ml-1">Ujian KFace</span>
                         </router-link>
                     </li> -->
+
+                    <div class="flex items-center space-x-3 font-semibold text-base-content text-xl leading-8">
+                        <span class="text-green-500">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                                stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
+                            </svg>
+                        </span>
+                        <span>DATA UJIAN</span>
+                    </div>
                     <li class="bg-white lg:w-full py-0">
                         <router-link :to="{ name: 'admin-sekolah-submenu-ist', params: { sekolah_id, kelas_id } }"
                             class="text-base-content font-normal rounded-lg flex items-center p-2 group hover:link">

@@ -116,7 +116,7 @@ const columns = [
     },
 
     {
-        label: "IQ CFIT",
+        label: "IQ ",
         field: "proses_iq_ist",
         type: "String",
     },
@@ -125,11 +125,11 @@ const columns = [
     //     field: "proses_iq_8km",
     //     type: "String",
     // },
-    {
-        label: "progres",
-        field: "progres_angka",
-        type: "number",
-    },
+    // {
+    //     label: "progres",
+    //     field: "progres_angka",
+    //     type: "number",
+    // },
     {
         label: "Progres Status",
         field: "progres_status",
@@ -177,6 +177,11 @@ const columns = [
         field: "id",
         type: "String",
     },
+    {
+        label: "mapel_id First",
+        field: "mapel_id",
+        type: "String",
+    },
 ];
 
 const getData = async () => {
@@ -185,12 +190,12 @@ const getData = async () => {
         console.log('#getData V3');
         console.log('====================================');
         isLoading.value = true;
-        const response = await ApiUjianKhusus.get(`/cfit/proses/sekolah/${sekolah_id.value}/kelas/${getSekolahAktif.value.kelas_id}`);
+        const response = await ApiUjianKhusus.get(`/mmpi2/proses/sekolah/${sekolah_id.value}/kelas/${getSekolahAktif.value.kelas_id}`);
         data.value = response.data;
 
         // const tempData=response.data;
         // data.value = tempData.map(fn_copy_id_for_mongo);
-        // console.log(data.value);
+        console.log(`#getdata:`, data.value);
         isLoading.value = false;
     } catch (error) {
         isLoading.value = false;
@@ -308,7 +313,7 @@ const dataPaket = ref([])
 const paketsoal_aktif = ref(null);
 const getPaketAktif = async (id) => {
     // !ambil data dari localstorage
-    let getDataPaket = localStorage.getItem("ujiancfit_paketsoal_aktif");
+    let getDataPaket = localStorage.getItem("ujianmmpi2_paketsoal_aktif");
     paketsoal_aktif.value = getDataPaket ? JSON.parse(getDataPaket) : null;
     dataForm.value.tgl_batas_mulai = paketsoal_aktif.value.tgl_batas_mulai || moment();
     dataForm.value.tgl_batas_terakhir = paketsoal_aktif.value.tgl_batas_terakhir || moment().add(7, 'days');
@@ -324,9 +329,9 @@ const doPilihPaket = () => {
         tgl_batas_mulai: dataForm.value.tgl_batas_mulai,
         tgl_batas_terakhir: dataForm.value.tgl_batas_terakhir,
         tipeCitacita: inputSelectTipeCitacita.value,
-        tipeCfit: inputSelectTipeCfit.value,
+        tipeMmpi2: inputSelectTipeMmpi2.value,
     }
-    localStorage.setItem("ujiancfit_paketsoal_aktif", JSON.stringify(tempDataSave))
+    localStorage.setItem("ujianmmpi2_paketsoal_aktif", JSON.stringify(tempDataSave))
     // console.log('====================================');
     console.log(tempDataSave);
     // console.log('====================================');
@@ -344,18 +349,69 @@ const doGenerateSiswa = async (id, index) => {
             // nama: paketsoal_aktif.value.nama,
             tgl_batas_mulai: dataForm.value.tgl_batas_mulai,
             tgl_batas_terakhir: dataForm.value.tgl_batas_terakhir,
-            tipeCitacita: inputSelectTipeCitacita.value,
-            tipeCfit: inputSelectTipeCfit.value,
+            // tipeCitacita: inputSelectTipeCitacita.value,
+            // tipeMmpi2: inputSelectTipeMmpi2.value,
         }
         console.log('====================================');
-        console.log(dataFormSend);
+        console.log(`#dataFormSend:`, dataFormSend);
         console.log('====================================');
         try {
             isLoading.value = true;
-            const response = await ApiUjianKhusus.post(`cfit/proses/sekolah/${sekolah_id.value}/kelas/${getSekolahAktif.value.kelas_id}/siswa/${id}`, dataFormSend);
+            const response = await ApiUjianKhusus.post(`mmpi2/proses/sekolah/${sekolah_id.value}/kelas/${getSekolahAktif.value.kelas_id}/siswa/${id}`, dataFormSend);
             console.log(response?.data);
 
             Toast.babeng("Berhasil", 'Data berhasil digenerate!');
+            getData();
+        } catch (error) {
+            isLoading.value = false;
+            isError.value = true;
+            console.error(error);
+        }
+    }
+};
+const mmpi2_do_reset_waktu = async (id) => {
+    console.log('====================================');
+    console.log(`#siswa_id`, id);
+    console.log('====================================');
+    if (confirm("Apakah anda yakin menghapus data ujian ini?")) {
+        try {
+            isLoading.value = true;
+            const response = await ApiUjianKhusus.post(`mmpi2/v4/sekolah/${sekolah_id.value}/kelas/${getSekolahAktif.value.kelas_id}/siswa/${id}/reset/umum/waktu`);
+            Toast.babeng("Berhasil", 'Reset Berhasil!');
+            getData();
+        } catch (error) {
+            isLoading.value = false;
+            isError.value = true;
+            console.error(error);
+        }
+    }
+};
+const mmpi2_do_force_finish = async (id) => {
+    console.log('====================================');
+    console.log(`#siswa_id`, id);
+    console.log('====================================');
+    if (confirm("Apakah anda yakin menghapus data ujian ini?")) {
+        try {
+            isLoading.value = true;
+            const response = await ApiUjianKhusus.post(`mmpi2/v4/sekolah/${sekolah_id.value}/kelas/${getSekolahAktif.value.kelas_id}/siswa/${id}/reset/umum/finish`);
+            Toast.babeng("Berhasil", 'Reset Berhasil!');
+            getData();
+        } catch (error) {
+            isLoading.value = false;
+            isError.value = true;
+            console.error(error);
+        }
+    }
+};
+const mmpi2_do_reset_all = async (id, mapel_id) => {
+    console.log('====================================');
+    console.log(`#siswa_id#mapel_id`, id, mapel_id);
+    console.log('====================================');
+    if (confirm("Apakah anda yakin menghapus data ujian ini?")) {
+        try {
+            isLoading.value = true;
+            const response = await ApiUjianKhusus.post(`mmpi2/v4/sekolah/${sekolah_id.value}/kelas/${getSekolahAktif.value.kelas_id}/siswa/${id}/reset/umum/all`, { mapel_id: mapel_id });
+            Toast.babeng("Berhasil", 'Reset Berhasil!');
             getData();
         } catch (error) {
             isLoading.value = false;
@@ -368,7 +424,7 @@ const doDeleteProsesSiswa = async (id, proses_id) => {
     if (confirm("Apakah anda yakin menghapus data ujian ini?")) {
         try {
             isLoading.value = true;
-            const response = await ApiUjianKhusus.delete(`cfit/proses/sekolah/${sekolah_id.value}/kelas/${getSekolahAktif.value.kelas_id}/siswa/${id}`);
+            const response = await ApiUjianKhusus.delete(`mmpi2/proses/sekolah/${sekolah_id.value}/kelas/${getSekolahAktif.value.kelas_id}/siswa/${id}`);
             Toast.babeng("Berhasil", 'Data berhasil di hapus!');
             getData();
         } catch (error) {
@@ -388,14 +444,14 @@ const doGenerateSiswaPerkelas = async (id, index) => {
             tgl_batas_mulai: dataForm.value.tgl_batas_mulai,
             tgl_batas_terakhir: dataForm.value.tgl_batas_terakhir,
             tipeCitacita: inputSelectTipeCitacita.value,
-            tipeCfit: inputSelectTipeCfit.value,
+            tipeMmpi2: inputSelectTipeMmpi2.value,
         }
         console.log('====================================');
         console.log(dataFormSend);
         console.log('====================================');
         try {
             isLoading.value = true;
-            const response = await ApiUjianKhusus.post(`cfit/proses/sekolah/${sekolah_id.value}/kelas/${getSekolahAktif.value.kelas_id}`, dataFormSend);
+            const response = await ApiUjianKhusus.post(`mmpi2/proses/sekolah/${sekolah_id.value}/kelas/${getSekolahAktif.value.kelas_id}`, dataFormSend);
             Toast.babeng("Berhasil", 'Data berhasil digenerate!');
             getData();
         } catch (error) {
@@ -409,7 +465,7 @@ const doDeleteProsesSiswaPerkelas = async (id) => {
     if (confirm("Apakah anda yakin menghapus data ujian ini?")) {
         try {
             isLoading.value = true;
-            const response = await ApiUjianKhusus.delete(`cfit/proses/sekolah/${sekolah_id.value}/kelas/${getSekolahAktif.value.kelas_id}`);
+            const response = await ApiUjianKhusus.delete(`mmpi2/proses/sekolah/${sekolah_id.value}/kelas/${getSekolahAktif.value.kelas_id}`);
             Toast.babeng("Berhasil", 'Data berhasil di hapus!');
             getData();
         } catch (error) {
@@ -540,7 +596,7 @@ const doCachingRedisPerSiswa = async (id, index) => {
         let dataFormSend = {}
         try {
             isLoading.value = true;
-            const response = await ApiUjianKhusus.post(`cfit/v4/sekolah/${sekolah_id.value}/kelas/${getSekolahAktif.value.kelas_id}/siswa/${id}/caching`);
+            const response = await ApiUjianKhusus.post(`mmpi2/v4/sekolah/${sekolah_id.value}/kelas/${getSekolahAktif.value.kelas_id}/siswa/${id}/caching`);
             Toast.babeng("Berhasil", 'Cacing proses Ujian berhasil digenerate!');
             getData();
         } catch (error) {
@@ -555,7 +611,7 @@ const doCachingRedisPerSiswa_v4 = async (id, index) => {
         let dataFormSend = {}
         try {
             isLoading.value = true;
-            const response = await ApiUjianKhusus.post(`cfit/v4/sekolah/${sekolah_id.value}/kelas/${getSekolahAktif.value.kelas_id}/siswa/${id}/caching`, { optional_skip_jika_sudah_ada: true });
+            const response = await ApiUjianKhusus.post(`mmpi2/v4/sekolah/${sekolah_id.value}/kelas/${getSekolahAktif.value.kelas_id}/siswa/${id}/caching`, { optional_skip_jika_sudah_ada: true });
             Toast.babeng("Berhasil", 'Cacing proses Ujian berhasil digenerate!');
             getData();
         } catch (error) {
@@ -571,7 +627,7 @@ const doCachingRedisPerKelas = async () => {
         let dataFormSend = {}
         try {
             isLoading.value = true;
-            const response = await ApiUjianKhusus.post(`cfit/v4/sekolah/${sekolah_id.value}/kelas/${getSekolahAktif.value.kelas_id}/caching`);
+            const response = await ApiUjianKhusus.post(`mmpi2/v4/sekolah/${sekolah_id.value}/kelas/${getSekolahAktif.value.kelas_id}/caching`);
             // const response = await Api.get(`redis/studiv2/proses_kelas/${getSekolahAktif.value.kelas_id}/store`, dataFormSend);
             Toast.babeng("Berhasil", 'Cacing proses Ujian berhasil digenerate!');
             getData();
@@ -634,7 +690,7 @@ const doGenerateHasilPerkelas_v4 = async (replace = true) => {
         // kelas_id.value 
         try {
             isLoading.value = true;
-            const response = await ApiUjianKhusus.post(`/cfit/hasil/sekolah/${getSekolahAktif.value.sekolah_id}/kelas/${getSekolahAktif.value.kelas_id}/do_generate_hasil`, { replace: replace });
+            const response = await ApiUjianKhusus.post(`/mmpi2/hasil/sekolah/${getSekolahAktif.value.sekolah_id}/kelas/${getSekolahAktif.value.kelas_id}/do_generate_hasil`, { replace: replace });
             Toast.babeng("Berhasil", 'Generate Hasil Ujian telah berhasil!');
             getData();
             return true;
@@ -651,7 +707,7 @@ const doGenerateHasilPersiswa_v4 = async (siswa_id) => {
         // kelas_id.value 
         try {
             isLoading.value = true;
-            const response = await ApiUjianKhusus.post(`/cfit/hasil/sekolah/${getSekolahAktif.value.sekolah_id}/kelas/${getSekolahAktif.value.kelas_id}/siswa/${siswa_id}/do_generate_hasil`, { replace: true });
+            const response = await ApiUjianKhusus.post(`/mmpi2/hasil/sekolah/${getSekolahAktif.value.sekolah_id}/kelas/${getSekolahAktif.value.kelas_id}/siswa/${siswa_id}/do_generate_hasil`, { replace: true });
             Toast.babeng("Berhasil", 'Generate Hasil Ujian telah berhasil!');
             getData();
             return true;
@@ -814,13 +870,13 @@ const tipeCitacitaList = ref([
         label: "Dewasa ( Diploma,Sarjana, Umum)",
     },
 ]);
-const dataTemp = JSON.parse(localStorage.getItem("ujiancfit_paketsoal_aktif"));
+const dataTemp = JSON.parse(localStorage.getItem("ujianmmpi2_paketsoal_aktif"));
 const inputSelectTipeCitacita = ref(dataTemp?.tipeCitacita || {
     id: 2,
     label: "Kelas 9-10",
 },)
 
-const tipeCfitList = ref([
+const tipeMmpi2List = ref([
     {
         id: 1,
         label: "HSPQ",
@@ -830,7 +886,7 @@ const tipeCfitList = ref([
         label: "Pohon",
     },
 ]);
-const inputSelectTipeCfit = ref(dataTemp?.tipeCfit || {
+const inputSelectTipeMmpi2 = ref(dataTemp?.tipeMmpi2 || {
     id: 1,
     label: "HSPQ",
 },)
@@ -863,44 +919,9 @@ const formatTanggal = "DD MMMM YYYY HH:mm:ss";
                 </div>
             </div>
             <!-- !PENGATURAN -->
-            <!-- <div class=" flex  space-x-2 justify-start">
-                <label className="form-control w-full max-w-xs">
-                    <div className="label">
-                        <span className="label-text">Tipe Cita cita:</span>
-                    </div>
-                </label>
 
-                <div class="w-full bg-white shadow-sm rounded-lg py-4 px-4">
-                    <div class="flex justify-start">
-                        <v-select class="py-2 px-3 w-72 mx-auto md:mx-0" :options="tipeCitacitaList"
-                            v-model="inputSelectTipeCitacita" v-bind:class="{ disabled: false }"></v-select>
-
-                    </div>
-                </div>
-            </div> -->
-            <!-- <div class=" flex  space-x-2 justify-start">
-                <label className="form-control w-full max-w-xs">
-                    <div className="label">
-                        <span className="label-text">Tipe CFIT:</span>
-                    </div>
-                </label>
-
-                <div class="w-full bg-white shadow-sm rounded-lg py-4 px-4">
-                    <div class="flex justify-start">
-                        <v-select class="py-2 px-3 w-72 mx-auto md:mx-0" :options="tipeCfitList"
-                            v-model="inputSelectTipeCfit" v-bind:class="{ disabled: false }"></v-select>
-
-                    </div>
-                </div>
-            </div> -->
             <div class="flex justify-start w-full space-x-2 content-center py-2">
-                <!-- <div class="w-96">
-                    <div class="flex justify-center">
-                        <v-select class=" px-0 w-full mx-auto md:mx-0" :options="pilihPaket" v-model="inputCariPaket"
-                            v-bind:class="{ disabled: false }"></v-select>
 
-                    </div>
-                </div> -->
 
                 <div class="w-1/2 md:flex  space-x-2 space-y-2 md:space-y-0">
                     <div>
@@ -930,11 +951,11 @@ const formatTanggal = "DD MMMM YYYY HH:mm:ss";
                 <!-- !hidden superadmin -->
                 <button class="btn btn-sm btn-error p-2" @click="doDeleteProsesSiswaPerkelas()"
                     v-if="isSuperadminActive">
-                    Delete Per Kelas ❌
+                    Delete Per Kelas
                 </button>
                 <button class="btn btn-sm  bg-emerald-500 text-white 
          hover:bg-emerald-600  p-2" @click="doGenerateSiswaPerkelas()">
-                    Generate UJIAN MMPI 2 Per Kelas (V4) ❌
+                    Generate UJIAN MMPI 2 Per Kelas (V4)
                 </button>
                 <button class="btn btn-sm p-2 
          bg-amber-500 text-white 
@@ -942,29 +963,10 @@ const formatTanggal = "DD MMMM YYYY HH:mm:ss";
          focus:outline-none focus:ring-2 focus:ring-amber-400 
          active:bg-amber-700 
          rounded" @click="doCachingRedisPerKelas()">
-                    Caching Perkelas ❌
+                    Caching Perkelas
                     <!-- UJIAN KHUSUS Per Kelas V3 -->
                 </button>
-                <!-- <button class="btn btn-sm p-2 
-         bg-red-500 text-white 
-         hover:bg-red-600 
-         focus:outline-none focus:ring-2 focus:ring-red-400 
-         active:bg-red-700 
-         rounded" @click="doCachingRedisPerKelas_v4()">
-                    Caching #2 Perkelas
-                </button> -->
             </div>
-            <!-- <div class="space-x-2 space-y-2 shadow-sm">
-                <button class="btn btn-sm btn-error p-2" @click="doDeleteHasilSiswaPerkelas()">
-                    Delete Hasil Per Kelas
-                </button>
-                <button class="btn btn-sm btn-info p-2" @click="doGenerateHasilSiswaPerkelas()">
-                    Generate Hasil UJIAN KHUSUS Per Kelas
-                </button>
-                <button class="btn btn-sm btn-primary p-2" @click="doGenerateHasilSiswaPerkelasComplete()">
-                    Generate Hasil (Complete Only)
-                </button>
-            </div> -->
             <div class="space-x-2 space-y-0 shadow-sm flex justify-start ">
                 <div class="space-x-2 space-y-2 shadow-sm py-1">
                     <button class="btn btn-sm   bg-cyan-500 text-white 
@@ -1125,7 +1127,7 @@ const formatTanggal = "DD MMMM YYYY HH:mm:ss";
                                             <div class="text-sm font-medium text-center flex justify-center space-x-1">
                                                 <div>
                                                     <button class="btn btn-sm  tooltip   bg-amber-500 text-white 
-         hover:bg-amber-600 " data-tip="Caching #1 Persiswa ❌" @click="doCachingRedisPerSiswa(props.row.id)">Caching
+         hover:bg-amber-600 " data-tip="Caching #1 Persiswa " @click="doCachingRedisPerSiswa(props.row.id)">Caching
 
                                                         <!-- <svg xmlns="http://www.w3.org/2000/svg" fill="none"
                                                         viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
@@ -1152,7 +1154,7 @@ const formatTanggal = "DD MMMM YYYY HH:mm:ss";
 
                                                 </button>
                                                 <button class="btn btn-sm  bg-emerald-500 text-white 
-         hover:bg-emerald-600  tooltip" data-tip="Generate UJIAN MMPI 2 v4 ❌" @click="doGenerateSiswa(props.row.id)">
+         hover:bg-emerald-600  tooltip" data-tip="Generate UJIAN MMPI 2 v4 " @click="doGenerateSiswa(props.row.id)">
                                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none"
                                                         viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
                                                         class="w-6 h-6">
@@ -1160,31 +1162,8 @@ const formatTanggal = "DD MMMM YYYY HH:mm:ss";
                                                             d="M3 7.5L7.5 3m0 0L12 7.5M7.5 3v13.5m13.5 0L16.5 21m0 0L12 16.5m4.5 4.5V7.5" />
                                                     </svg>
                                                 </button>
-                                                <!-- <button class="btn btn-sm btn-error tooltip"
-                                                    data-tip="Delete UJIAN KHUSUS v3"
-                                                    @click="doDeleteProsesSiswa(props.row.id)"
-                                                    v-if="isSuperadminActive">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none"
-                                                        viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-                                                        class="h-6 w-6">
-                                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                                            d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
-                                                    </svg>
-
-                                                </button> -->
-
-
-                                                <!-- <RouterLink
-                                                    :to="{ name: 'admin-sekolah-submenu-ujianstudi-persiswa', params: { sekolah_id, kelas_id, siswa_id: props.row.id } }">
-                                                    <button class="btn btn-sm btn-primary tooltip" data-tip="Detail">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
-                                                            viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                                            <path stroke-linecap="round" stroke-linejoin="round"
-                                                                d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                                        </svg></button>
-                                                </RouterLink> -->
                                                 <button class="btn btn-sm btn-error tooltip"
-                                                    data-tip="Delete UJIAN MMPI 2 v4 ❌"
+                                                    data-tip="Delete UJIAN MMPI 2 v4 "
                                                     @click="doDeleteProsesSiswa(props.row.id, props.row.proses_id)"
                                                     v-if="isSuperadminActive">
                                                     <!-- v-if="props.row.paketsoal_nama"> -->
@@ -1199,49 +1178,50 @@ const formatTanggal = "DD MMMM YYYY HH:mm:ss";
                                             </div>
                                         </span>
 
-                                        <!-- <span v-else-if="props.column.field == 'hasil'">
-                                            <div class="text-sm font-medium text-center flex justify-center space-x-1">
-                                                <RouterLink
-                                                    :to="{ name: 'admin-sekolah-submenu-ujiancfit-v4-reset', params: { sekolah_id, kelas_id, siswa_id: props.row.id } }">
-                                                    <button class="btn btn-sm btn-warning tooltip"
-                                                        data-tip="MENU RESET v4">
-                                                        RESET
-
-                                                    </button>
-                                                </RouterLink>
-                                            </div>
-                                        </span> -->
 
                                         <span v-else-if="props.column.field == 'reset'">
-                                            <button class="btn btn-sm btn-secondary tooltip  " data-tip="RESET WAKTU ✅"
-                                                v-if="props.row.mmpi" @click="mmpi_do_reset_waktu(props.row.id)">
+                                            <!-- Tombol Reset Waktu -->
+                                            <button class="btn btn-sm btn-warning tooltip" data-tip="Reset Waktu"
+                                                v-if="props.row.mmpi2" @click="mmpi2_do_reset_waktu(props.row.id)">
+                                                <!-- Icon: Clock Arrow -->
                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                                    stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                                    stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
                                                     <path stroke-linecap="round" stroke-linejoin="round"
-                                                        d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                                                        d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0Z" />
                                                 </svg>
-
-
                                             </button>
-                                            <button class="btn btn-sm btn-error tooltip" data-tip="RESET ALL ✅"
-                                                v-if="props.row.mmpi && isSuperadminActive"
-                                                @click="mmpi_do_reset_all(props.row.id)">
+
+                                            <!-- Tombol Force Finish -->
+                                            <button class="btn btn-sm btn-primary tooltip" data-tip="Force Finish"
+                                                v-if="props.row.mmpi2" @click="mmpi2_do_force_finish(props.row.id)">
+                                                <!-- Icon: Flag Checkered -->
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                                    stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        d="M4.5 4.5l15 15M4.5 19.5l15-15" />
+                                                </svg>
+                                            </button>
+
+                                            <!-- Tombol Reset All -->
+                                            <button class="btn btn-sm btn-error tooltip" data-tip="Reset All"
+                                                v-if="props.row.mmpi2 && isSuperadminActive"
+                                                @click="mmpi2_do_reset_all(props.row.id, props.row.mmpi2?.mmpi2List?._id)">
+                                                <!-- Icon: Trash -->
                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                                     stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                                                     <path stroke-linecap="round" stroke-linejoin="round"
                                                         d="M5.636 5.636a9 9 0 1 0 12.728 0M12 3v9" />
                                                 </svg>
-
-
                                             </button>
                                         </span>
+
                                         <span v-else-if="props.column.field == 'hasil'">
                                             <div class="text-sm font-medium text-center flex justify-center space-x-1">
                                                 <!-- <RouterLink
                                                     :to="{ name: 'admin-sekolah-submenu-ujiankhusus-persiswa-reset-v3', params: { sekolah_id, kelas_id, siswa_id: props.row.id } }"> -->
                                                 <button class="btn btn-sm btn-primary tooltip"
-                                                    data-tip="Generate Hasil ✅" v-if="props.row.mmpi"
-                                                    @click="doGenerateHasilPersiswa(props.row.id)">
+                                                    data-tip="Generate Hasil " v-if="props.row.mmpi2"
+                                                    @click="mmpi2_doGenerateHasilPersiswa(props.row.id)">
 
                                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none"
                                                         viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
@@ -1258,40 +1238,47 @@ const formatTanggal = "DD MMMM YYYY HH:mm:ss";
                                             </div>
                                         </span>
 
-                                        <!-- <span v-else-if="props.column.field == 'paketsoal_nama'">
-                                            {{ props.row.ujiankhusus ? props.row.ujiankhusus?.khusus_paketsoal_nama :
+                                        <span v-else-if="props.column.field == 'paketsoal_nama'">
+                                            {{ props.row.mmpi2 ? props.row.mmpi2?.paket_nama :
                                                 "-" }}
-                                        </span> -->
+                                        </span>
                                         <span v-else-if="props.column.field == 'kelas_nama'">
                                             {{ props.row.kelas ? props.row.kelas?.nama : "-" }}
                                         </span>
                                         <span v-else-if="props.column.field == 'tgl_batas_mulai'">
-                                            {{ props.row.cfit?.tgl_batas_mulai ?
-                                                moment(props.row.cfit?.tgl_batas_mulai).format(formatTanggal)
+                                            {{ props.row.mmpi2?.tgl_batas_mulai ?
+                                                moment(props.row.mmpi2?.tgl_batas_mulai).format(formatTanggal)
                                                 : "-" }}
                                         </span>
                                         <span v-else-if="props.column.field == 'tgl_batas_terakhir'">
-                                            {{ props && props.row && props.row.cfit &&
-                                                props.row.cfit.tgl_batas_terakhir
+
+                                            {{ props && props.row && props.row.mmpi2 &&
+                                                props.row.mmpi2.tgl_batas_terakhir
                                                 ?
-                                                moment(props.row.cfit?.tgl_batas_terakhir).format(formatTanggal)
+                                                moment(props.row.mmpi2?.tgl_batas_terakhir).format(formatTanggal)
                                                 : " - " }}
 
                                         </span>
-                                        <!-- <span v-else-if="props.column.field == 'progres_status'">
-                                            {{ props.row.progres_status }}
-                                        </span>
-                                        <span v-else-if="props.column.field == 'progres_angka'">
-                                            {{ props.row.progres_angka?.progres }}/{{
-                                                props.row.progres_angka?.total }}
-                                        </span> -->
 
                                         <span v-else-if="props.column.field == 'progres_status'">
-                                            <div v-if="props.row.mmpi"> {{ props.row?.mmpi?.status }}</div>
-                                            <div v-else>-</div>
+                                            <div v-if="props.row.progres_status">{{ props.row.progres_status }}</div>
+                                            <div v-else>
+                                                <div
+                                                    v-if="props.row?.mmpi2?.mmpi2List?.status == 'true' || props.row?.mmpi2?.mmpi2List?.status == 'Aktif'">
+                                                    Aktif</div>
+                                                <div v-else-if="props.row?.mmpi2?.mmpi2List?.status == 'Proses'">Proses
+                                                </div>
+                                                <div v-else-if="props.row?.mmpi2?.mmpi2List?.status == 'Selesai'">
+                                                    Selesai
+                                                </div>
+                                                <div v-else>-</div>
+                                            </div>
+                                        </span>
+                                        <span v-else-if="props.column.field == 'mapel_id'">
+                                            <div v-if="props.row.mmpi2">{{ props.row.mmpi2?.mmpi2List?._id }}</div>
                                         </span>
                                         <span v-else-if="props.column.field == 'progres_angka'">
-                                            <div v-if="props.row.mmpi">{{ props.row.progres_angka?.progres }}/{{
+                                            <div v-if="props.row.mmpi2">{{ props.row.progres_angka?.progres }}/{{
                                                 props.row.progres_angka?.total }}</div>
                                             <div v-else>-</div>
                                         </span>
