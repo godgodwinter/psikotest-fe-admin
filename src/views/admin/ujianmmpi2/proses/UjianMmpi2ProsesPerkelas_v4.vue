@@ -420,6 +420,23 @@ const mmpi2_do_reset_all = async (id, mapel_id) => {
         }
     }
 };
+const mmpi2_doGenerateHasilPersiswa = async (id, mapel_id) => {
+    console.log('====================================');
+    console.log(`#siswa_id#mapel_id`, id, mapel_id);
+    console.log('====================================');
+    if (confirm("Apakah anda yakin generate data ujian ini?")) {
+        try {
+            isLoading.value = true;
+            const response = await ApiUjianKhusus.post(`mmpi2/v4/sekolah/${sekolah_id.value}/kelas/${getSekolahAktif.value.kelas_id}/siswa/${id}/hasil/do_generate`);
+            Toast.babeng("Berhasil", 'Reset Berhasil!');
+            getData();
+        } catch (error) {
+            isLoading.value = false;
+            isError.value = true;
+            console.error(error);
+        }
+    }
+};
 const doDeleteProsesSiswa = async (id, proses_id) => {
     if (confirm("Apakah anda yakin menghapus data ujian ini?")) {
         try {
