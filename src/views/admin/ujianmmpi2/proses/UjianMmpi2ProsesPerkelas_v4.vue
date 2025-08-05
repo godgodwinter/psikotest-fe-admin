@@ -115,11 +115,11 @@ const columns = [
         type: "String",
     },
 
-    {
-        label: "IQ ",
-        field: "proses_iq_ist",
-        type: "String",
-    },
+    // {
+    //     label: "IQ ",
+    //     field: "proses_iq_ist",
+    //     type: "String",
+    // },
     // {
     //     label: "IQ 8KM",
     //     field: "proses_iq_8km",
