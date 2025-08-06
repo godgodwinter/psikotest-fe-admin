@@ -284,7 +284,7 @@ const doPilihKelas = async () => {
     await getData()
     // console.log(inputCariKelas.value.id);
     await router.push({
-        name: "admin-sekolah-submenu-ujiankhusus-v4",
+        name: "admin-sekolah-submenu-ujianmmpi2-v4",
         params: {
             sekolah_id: sekolah_id.value,
             kelas_id: inputCariKelas.value.id ? inputCariKelas.value.id : kelas_id.value,
@@ -1160,7 +1160,7 @@ const formatTanggal = "DD MMMM YYYY HH:mm:ss";
                                                     </button> -->
                                                 </div>
                                                 <button class="btn btn-sm  bg-cyan-500 text-white 
-         hover:bg-blue-600  tooltip" data-tip="Generate hasil v4 ❌" @click="doGenerateHasilPersiswa_v4(props.row.id)"
+         hover:bg-blue-600  tooltip" data-tip="Generate hasil v4 " @click="mmpi2_doGenerateHasilPersiswa(props.row.id)"
                                                     v-if="isSuperadminActive">
                                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none"
                                                         viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
@@ -1210,7 +1210,8 @@ const formatTanggal = "DD MMMM YYYY HH:mm:ss";
 
                                             <!-- Tombol Force Finish -->
                                             <button class="btn btn-sm btn-primary tooltip" data-tip="Force Finish"
-                                                v-if="props.row.mmpi2" @click="mmpi2_do_force_finish(props.row.id)">
+                                                v-if="props.row.mmpi2 && isSuperadminActive"
+                                                @click="mmpi2_do_force_finish(props.row.id)">
                                                 <!-- Icon: Flag Checkered -->
                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                                     stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
@@ -1221,7 +1222,6 @@ const formatTanggal = "DD MMMM YYYY HH:mm:ss";
 
                                             <!-- Tombol Reset All -->
                                             <button class="btn btn-sm btn-error tooltip" data-tip="Reset All"
-                                                v-if="props.row.mmpi2 && isSuperadminActive"
                                                 @click="mmpi2_do_reset_all(props.row.id, props.row.mmpi2?.mmpi2List?._id)">
                                                 <!-- Icon: Trash -->
                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
