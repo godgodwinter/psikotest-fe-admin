@@ -24,6 +24,10 @@ const BASE_URL_CETAK = import.meta.env.VITE_API_URL_CETAK
 const VITE_API_FE_REACT = import.meta.env.VITE_API_FE_REACT
     ? import.meta.env.VITE_API_FE_REACT
     : "http://localhost:3500/";
+const VITE_API_FE_DASHBOARD = import.meta.env.VITE_API_FE_DASHBOARD
+    ? import.meta.env.VITE_API_FE_DASHBOARD
+    : "http://localhost:3600/";
+
 
 const sekolah_id = ref(route.params.sekolah_id)
 const kelas_id = ref(route.params.kelas_id)
@@ -221,6 +225,17 @@ const doCetakIstV2 = () => {
         `${VITE_API_FE_REACT}minatbakat/data/cetak/${getSekolahAktif.value.kelas_id}/v2`
     );
 }
+// const doCetakIstV3 = () => {
+//     window.open(
+//         `${VITE_API_FE_REACT}minatbakat/data/cetak/${getSekolahAktif.value.kelas_id}/v3`
+//     );
+// }
+
+const doCetakIstV3 = () => {
+    window.open(
+        `${VITE_API_FE_DASHBOARD}admin/sekolah/${getSekolahAktif.value.sekolah_id}/kelas/${getSekolahAktif.value.kelas_id}/hasil_psikologi/minatbakat/v3`
+    );
+}
 </script>
 <template>
     <span v-if="isLoading">
@@ -244,6 +259,8 @@ const doCetakIstV2 = () => {
                     Cetak</button>
                 <button class="btn btn-sm btn-success" @click="doCetakIstV2()">
                     Cetak V2</button>
+                <button class="btn btn-sm btn-success" @click="doCetakIstV3()">
+                    DASHBOARD - Cetak V3</button>
             </div>
 
             <div class="w-full bg-base-100 shadow-sm rounded-lg py-4 px-4">
@@ -272,11 +289,11 @@ const doCetakIstV2 = () => {
                         <div class="bg-white shadow rounded-lg px-4 py-4">
                             <div v-if="data">
                                 <vue-good-table :line-numbers="true" :columns="columns" :rows="data" :search-options="{
-        enabled: true,
-    }" :pagination-options="{
-        enabled: true,
-        perPageDropdown: [50, 100, 150, 200],
-    }" styleClass="vgt-table striped bordered condensed" class="py-0">
+                                    enabled: true,
+                                }" :pagination-options="{
+                                    enabled: true,
+                                    perPageDropdown: [50, 100, 150, 200],
+                                }" styleClass="vgt-table striped bordered condensed" class="py-0">
                                     <template #table-actions>
                                         <div class="space-x-1 space-y-1 gap-1">
                                             <button class="btn btn-sm btn-secondary tooltip" data-tip="Refresh Data"
