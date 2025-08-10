@@ -905,7 +905,10 @@ const formatTanggal = "DD MMMM YYYY HH:mm:ss";
                 </div>
             </div>
             <div>
-                <p>Catatan : aktifkan paket pada menu Paketsoal</p>
+                <p>Catatan : </p>
+                <p>- aktifkan paket pada menu Paketsoal</p>
+                <p>- Jika ada susulan, jangan menggunakan generate perkelas </p>
+                <p>- Jika ada susulan, gunakan generate persiswa </p>
             </div>
             <div class="space-x-2 shadow-sm">
                 <!-- !hidden superadmin -->
