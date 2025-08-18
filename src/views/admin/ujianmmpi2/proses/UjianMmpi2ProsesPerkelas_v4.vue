@@ -712,7 +712,7 @@ const doGenerateHasilPerkelas_v4 = async (replace = true) => {
         // kelas_id.value 
         try {
             isLoading.value = true;
-            const response = await ApiUjianKhusus.post(`/mmpi2/hasil/sekolah/${getSekolahAktif.value.sekolah_id}/kelas/${getSekolahAktif.value.kelas_id}/do_generate_hasil`, { replace: replace });
+            const response = await ApiUjianKhusus.post(`/mmpi2/v4/sekolah/${getSekolahAktif.value.sekolah_id}/kelas/${getSekolahAktif.value.kelas_id}/hasil/do_generate_hasil_perkelas`, { replace: replace });
             Toast.babeng("Berhasil", 'Generate Hasil Ujian telah berhasil!');
             getData();
             return true;
