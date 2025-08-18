@@ -950,6 +950,12 @@ const dashboard_doCetak_mmpi = () => {
 
             <div class="space-x-2 space-y-2 shadow-sm py-1">
 
+                <button class="btn btn-sm btn-success" @click="dashboard_doCetak_mmpi()">
+                    Dashboard - Cetak MMPI</button>
+            </div>
+
+            <div class="space-x-2 space-y-2 shadow-sm py-1">
+
                 <button class="btn btn-sm btn-info tooltip" data-tip=" Sinkronkan Data Redis ke mongo"
                     @click="do_sinkron_redis_ke_mongo_Perkelas()">
                     Sinkronkan Data Redis ke mongo ✅
@@ -1018,11 +1024,11 @@ const dashboard_doCetak_mmpi = () => {
                         <div class="bg-white shadow rounded-lg px-4 py-4">
                             <div v-if="data">
                                 <vue-good-table :line-numbers="true" :columns="columns" :rows="data" :search-options="{
-        enabled: true,
-    }" :pagination-options="{
-        enabled: true,
-        perPageDropdown: [50, 100, 150, 200],
-    }" styleClass="vgt-table striped bordered condensed" class="py-0">
+                                    enabled: true,
+                                }" :pagination-options="{
+                                    enabled: true,
+                                    perPageDropdown: [50, 100, 150, 200],
+                                }" styleClass="vgt-table striped bordered condensed" class="py-0">
                                     <template #table-actions>
                                         <div class="space-x-1 space-y-1 gap-1">
                                             <button class="btn btn-sm btn-secondary tooltip" data-tip="Refresh Data"
@@ -1147,7 +1153,7 @@ const dashboard_doCetak_mmpi = () => {
                                         <span v-else-if="props.column.field == 'paketsoal_nama'">
                                             <!-- {{ props.row.progres?.created_at }} -->
                                             {{ props.row.mmpi ? props.row.mmpi?.paketsoal_nama :
-        "-" }}
+                                                "-" }}
                                         </span>
                                         <span v-else-if="props.column.field == 'kelas_nama'">
                                             <!-- {{ props.row.progres?.created_at }} -->
@@ -1156,15 +1162,15 @@ const dashboard_doCetak_mmpi = () => {
                                         <span v-else-if="props.column.field == 'tgl_batas_mulai'">
                                             <!-- {{ props.row.progres?.created_at }} -->
                                             {{ props.row.mmpi?.tgl_batas_mulai ?
-        moment(props.row.mmpi?.tgl_batas_mulai).format(formatTanggal)
-        : "-" }}
+                                                moment(props.row.mmpi?.tgl_batas_mulai).format(formatTanggal)
+                                                : "-" }}
                                         </span>
                                         <span v-else-if="props.column.field == 'tgl_batas_terakhir'">
                                             {{ props && props.row && props.row.mmpi &&
-        props.row.mmpi.tgl_batas_terakhir
-        ?
-        moment(props.row.mmpi?.tgl_batas_terakhir).format(formatTanggal)
-        : " - " }}
+                                                props.row.mmpi.tgl_batas_terakhir
+                                                ?
+                                                moment(props.row.mmpi?.tgl_batas_terakhir).format(formatTanggal)
+                                                : " - " }}
 
                                             <!-- {{ props.row.mmpi?.tgl_batas_terakhir }} -->
 
@@ -1178,7 +1184,7 @@ const dashboard_doCetak_mmpi = () => {
                                         </span>
                                         <span v-else-if="props.column.field == 'progres_angka'">
                                             <div v-if="props.row.mmpi">{{ props.row.progres_angka?.progres }}/{{
-        props.row.progres_angka?.total }}</div>
+                                                props.row.progres_angka?.total }}</div>
                                             <div v-else>-</div>
                                         </span>
                                         <span v-else-if="props.column.field == 'username'">
