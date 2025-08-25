@@ -1261,7 +1261,7 @@ const dashboard_doCetak_mmpi = () => {
 
                                         </span>
 
-                                        <span v-else-if="props.column.field == 'progres_status'">
+                                        <!-- <span v-else-if="props.column.field == 'progres_status'">
                                             <div v-if="props.row.progres_status">{{ props.row.progres_status }}</div>
                                             <div v-else>
                                                 <div
@@ -1274,6 +1274,10 @@ const dashboard_doCetak_mmpi = () => {
                                                 </div>
                                                 <div v-else>-</div>
                                             </div>
+                                        </span> -->
+
+                                        <span v-else-if="props.column.field == 'progres_status'">
+                                            {{ props.row.progres_status }}
                                         </span>
                                         <span v-else-if="props.column.field == 'mapel_id'">
                                             <div v-if="props.row.mmpi2">{{ props.row.mmpi2?.mmpi2List?._id }}</div>
