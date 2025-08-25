@@ -378,7 +378,7 @@ const mmpi2_do_reset_waktu = async (id) => {
     console.log('====================================');
     console.log(`#siswa_id`, id);
     console.log('====================================');
-    if (confirm("Apakah anda yakin menghapus data ujian ini?")) {
+    if (confirm("Apakah anda yakin reset waktu data ujian ini?")) {
         try {
             isLoading.value = true;
             const response = await ApiUjianKhusus.post(`mmpi2/v4/sekolah/${sekolah_id.value}/kelas/${getSekolahAktif.value.kelas_id}/siswa/${id}/reset/umum/waktu`);
@@ -395,11 +395,11 @@ const mmpi2_do_force_finish = async (id) => {
     console.log('====================================');
     console.log(`#siswa_id`, id);
     console.log('====================================');
-    if (confirm("Apakah anda yakin menghapus data ujian ini?")) {
+    if (confirm("Apakah anda yakin finish data ujian ini?")) {
         try {
             isLoading.value = true;
             const response = await ApiUjianKhusus.post(`mmpi2/v4/sekolah/${sekolah_id.value}/kelas/${getSekolahAktif.value.kelas_id}/siswa/${id}/reset/umum/finish`);
-            Toast.babeng("Berhasil", 'Reset Berhasil!');
+            Toast.babeng("Berhasil", 'force finish Berhasil!');
             getData();
         } catch (error) {
             isLoading.value = false;
@@ -412,7 +412,7 @@ const mmpi2_do_reset_all = async (id, mapel_id) => {
     console.log('====================================');
     console.log(`#siswa_id#mapel_id`, id, mapel_id);
     console.log('====================================');
-    if (confirm("Apakah anda yakin menghapus data ujian ini?")) {
+    if (confirm("Apakah anda yakin reset all data ujian ini?")) {
         try {
             isLoading.value = true;
             const response = await ApiUjianKhusus.post(`mmpi2/v4/sekolah/${sekolah_id.value}/kelas/${getSekolahAktif.value.kelas_id}/siswa/${id}/reset/umum/all`, { mapel_id: mapel_id });
@@ -1205,7 +1205,8 @@ const dashboard_doCetak_mmpi = () => {
 
                                             <!-- Tombol Reset All -->
                                             <button class="btn btn-sm btn-error tooltip" data-tip="Reset All"
-                                                @click="mmpi2_do_reset_all(props.row.id, props.row.mmpi2?.mmpi2List?._id)">
+                                                @click="mmpi2_do_reset_all(props.row.id, props.row.mmpi2?.mmpi2List?._id)"
+                                                v-if="isSuperadminActive">
                                                 <!-- Icon: Trash -->
                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                                     stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
