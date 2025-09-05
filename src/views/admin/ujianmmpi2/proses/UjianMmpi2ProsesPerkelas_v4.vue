@@ -1258,7 +1258,6 @@ const dashboard_doCetak_mmpi = () => {
                                                 ?
                                                 moment(props.row.mmpi2?.tgl_batas_terakhir).format(formatTanggal)
                                                 : " - " }}
-
                                         </span>
 
                                         <!-- <span v-else-if="props.column.field == 'progres_status'">
@@ -1287,6 +1286,7 @@ const dashboard_doCetak_mmpi = () => {
                                                 props.row.progres_angka?.total }}</div>
                                             <div v-else>-</div>
                                         </span>
+
                                         <span v-else-if="props.column.field == 'username'">
                                             <div class="flex justify-center gap-2">
                                                 <div class="text-center">{{ props.row.username }}</div>
@@ -1301,6 +1301,7 @@ const dashboard_doCetak_mmpi = () => {
                                                 </span>
                                             </div>
                                         </span>
+
                                         <span v-else-if="props.column.field == 'passworddefault'">
                                             <div class="flex justify-center gap-2">
                                                 <div class="text-center">{{ props.row.passworddefault }}</div>
@@ -1315,6 +1316,7 @@ const dashboard_doCetak_mmpi = () => {
                                                 </span>
                                             </div>
                                         </span>
+
                                         <!-- <span v-else-if="props.column.field == 'tgl_ujian'">
                                             <div class="flex justify-center gap-2" v-if="props.row.tgl_ujian">
                                                 {{ moment(props.row.tgl_ujian).format("DD MMMM YYYY H:m:ss") }}
