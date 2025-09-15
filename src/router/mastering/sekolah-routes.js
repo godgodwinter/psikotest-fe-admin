@@ -189,6 +189,22 @@ const AdminSekolahRoutes = [
                     "@/views/admin/ujianmmpi2/proses/UjianMmpi2ProsesPerkelas_v4.vue"
                   ),
               },
+              {
+                path: "/pages/admin/mastering/sekolah/:sekolah_id/submenu/kelas/:kelas_id?/mmpi2/v4/export",
+                name: "admin-sekolah-submenu-ujianmmpi2-v4-export",
+                component: () =>
+                  import(
+                    "@/views/admin/ujianmmpi2/proses/UjianMmpi2_Export_Import_proses_ujian.vue"
+                  ),
+              },
+              {
+                path: "/pages/admin/mastering/sekolah/:sekolah_id/submenu/kelas/:kelas_id?/mmpi2/v4/import",
+                name: "admin-sekolah-submenu-ujianmmpi2-v4-import",
+                component: () =>
+                  import(
+                    "@/views/admin/ujianmmpi2/proses/UjianMmpi2_Import_proses_ujian.vue"
+                  ),
+              },
               // {
               //   path: "/pages/admin/mastering/sekolah/:sekolah_id/submenu/kelas/:kelas_id?/ujiancfit/v4/siswa/:siswa_id",
               //   name: "admin-sekolah-submenu-ujiancfit-v4-reset",

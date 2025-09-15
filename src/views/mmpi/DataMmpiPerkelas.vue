@@ -5,6 +5,7 @@ import { useRouter, useRoute } from "vue-router";
 import Toast from "@/components/lib/Toast";
 import { useAdminPagesStore } from '@/stores/admin/adminPagesStore'
 import ApiIst from "@/axios/axiosIst";
+import C_Mmpi2_menu from '@/views/admin/ujianmmpi2/proses/C_Mmpi2_menu.vue'
 
 import moment from "moment/min/moment-with-locales";
 import localization from "moment/locale/id";
@@ -197,6 +198,9 @@ const dashboard_doCetak_mmpi = () => {
     </span>
     <span v-else>
         <div>
+            <C_Mmpi2_menu :sekolah_id="getSekolahAktif?.sekolah_id" :kelas_id="getSekolahAktif?.kelas_id" />
+        </div>
+        <div>
             <article class="prose lg:prose-sm max-w-screen-lg">
                 <h1>DATA MMPI KELAS {{ kelas_nama }}</h1>
             </article>
@@ -232,11 +236,11 @@ const dashboard_doCetak_mmpi = () => {
                         <div class="bg-white shadow rounded-lg px-4 py-4">
                             <div v-if="data">
                                 <vue-good-table :line-numbers="true" :columns="columns" :rows="data" :search-options="{
-        enabled: true,
-    }" :pagination-options="{
-        enabled: true,
-        perPageDropdown: [50, 100, 150, 200],
-    }" styleClass="vgt-table striped bordered condensed" class="py-0">
+                                    enabled: true,
+                                }" :pagination-options="{
+                                    enabled: true,
+                                    perPageDropdown: [50, 100, 150, 200],
+                                }" styleClass="vgt-table striped bordered condensed" class="py-0">
                                     <template #table-actions>
                                         <div class="space-x-1 space-y-1 gap-1">
                                             <button class="btn btn-sm btn-secondary tooltip" data-tip="Refresh Data"

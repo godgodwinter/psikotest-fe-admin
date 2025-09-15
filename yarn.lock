@@ -12,6 +12,11 @@
   resolved "https://registry.npmjs.org/@esbuild/win32-x64/-/win32-x64-0.18.20.tgz"
   integrity sha512-kTdfRcSiDfQca/y9QIkng02avJ+NCaQvrMejlsB3RRv5sE9rRoeBPISaZpKxHELzRxZyLvNts1P27W3wV+8geQ==
 
+"@heroicons/vue@^2.2.0":
+  version "2.2.0"
+  resolved "https://registry.npmjs.org/@heroicons/vue/-/vue-2.2.0.tgz"
+  integrity sha512-G3dbSxoeEKqbi/DFalhRxJU4mTXJn7GwZ7ae8NuEQzd1bqdd0jAbdaBZlHPcvPD2xI1iGzNVB4k20Un2AguYPw==
+
 "@nodelib/fs.scandir@2.1.5":
   version "2.1.5"
   resolved "https://registry.npmjs.org/@nodelib/fs.scandir/-/fs.scandir-2.1.5.tgz"
@@ -515,6 +520,11 @@ fastq@^1.6.0:
   integrity sha512-wBrocU2LCXXa+lWBt8RoIRD89Fi8OdABODa/kEnyeyjS5aZO5/GNvI5sEINADqP/h8M29UHTHUb53sUu5Ihqdw==
   dependencies:
     reusify "^1.0.4"
+
+fflate@^0.8.2:
+  version "0.8.2"
+  resolved "https://registry.npmjs.org/fflate/-/fflate-0.8.2.tgz"
+  integrity sha512-cPJU47OaAoCbg0pBvzsgpTPhmhqI5eJjh/JIu8tPj5q+T7iLvW/JAYUqmE7KOB4R1ZyEhzBaIQpQpardBF5z8A==
 
 fill-range@^7.0.1:
   version "7.0.1"
@@ -1130,7 +1140,7 @@ vue-select@^4.0.0-beta.6:
   resolved "https://registry.npmjs.org/vue-select/-/vue-select-4.0.0-beta.6.tgz"
   integrity sha512-K+zrNBSpwMPhAxYLTCl56gaMrWZGgayoWCLqe5rWwkB8aUbAUh7u6sXjIR7v4ckp2WKC7zEEUY27g6h1MRsIHw==
 
-"vue@^2.0.0 || >=3.0.0", "vue@^2.5.0 || ^3.0.0", "vue@^2.6.14 || ^3.2.0", vue@^3.0.0, "vue@^3.0.0-0 || ^2.6.0", vue@^3.0.1, vue@^3.0.5, vue@^3.2.0, vue@^3.2.25, vue@^3.2.41, vue@^3.2.45, vue@>=3.2.0, vue@3.2.47, vue@3.x:
+"vue@^2.0.0 || >=3.0.0", "vue@^2.5.0 || ^3.0.0", "vue@^2.6.14 || ^3.2.0", vue@^3.0.0, "vue@^3.0.0-0 || ^2.6.0", vue@^3.0.1, vue@^3.0.5, vue@^3.2.0, vue@^3.2.25, vue@^3.2.41, vue@^3.2.45, "vue@>= 3", vue@>=3.2.0, vue@3.2.47, vue@3.x:
   version "3.2.47"
   resolved "https://registry.npmjs.org/vue/-/vue-3.2.47.tgz"
   integrity sha512-60188y/9Dc9WVrAZeUVSDxRQOZ+z+y5nO2ts9jWXSTkMvayiWxCWOWtBQoYjLeccfXkiiPZWAHcV+WTPhkqJHQ==
@@ -1162,3 +1172,8 @@ yaml@^1.10.2:
   version "1.10.2"
   resolved "https://registry.npmjs.org/yaml/-/yaml-1.10.2.tgz"
   integrity sha512-r3vXyErRCYJ7wg28yvBY5VSoAF8ZvlcW9/BwUzEtUsjvX/DKs24dIkuwjtuprwJJHsbyUbLApepYTR1BN4uHrg==
+
+zstd-codec@^0.1.5:
+  version "0.1.5"
+  resolved "https://registry.npmjs.org/zstd-codec/-/zstd-codec-0.1.5.tgz"
+  integrity sha512-v3fyjpK8S/dpY/X5WxqTK3IoCnp/ZOLxn144GZVlNUjtwAchzrVo03h+oMATFhCIiJ5KTr4V3vDQQYz4RU684g==
