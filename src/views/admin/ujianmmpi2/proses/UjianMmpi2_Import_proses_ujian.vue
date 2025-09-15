@@ -202,7 +202,9 @@ async function fn_submit() {
         <C_Mmpi2_menu :sekolah_id="getSekolahAktif?.sekolah_id" :kelas_id="getSekolahAktif?.kelas_id" />
     </div>
     <div class="p-2 space-x-2">
+        <h1 class="text-2xl font-bold mb-4">Menu Import / Restore Data</h1>
         <h1 class="text-2xl font-bold mb-4">Upload File .zst & Tampilkan Data Siswa</h1>
+        <h1 class="text-sm font-bold mb-4">Catatan: Data Akan direplace jika sudah ada.</h1>
 
         <!-- File Input -->
         <input type="file" @change="handleFileChange" accept=".zst" />
