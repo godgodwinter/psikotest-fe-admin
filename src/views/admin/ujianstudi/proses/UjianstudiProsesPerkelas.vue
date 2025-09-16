@@ -153,6 +153,11 @@ const columns = [
         field: "passworddefault",
         type: "String",
     },
+    {
+        label: "id",
+        field: "id",
+        type: "String",
+    },
 ];
 
 const getData = async () => {
@@ -730,8 +735,8 @@ const doCetakReactV2 = (ttd = "true") => {
                         <div class="bg-white shadow rounded-lg px-4 py-4">
                             <div v-if="data">
                                 <vue-good-table :line-numbers="true" :columns="columns" :rows="data" :search-options="{
-        enabled: true,
-    }" :pagination-options="{
+                                    enabled: true,
+                                }" :pagination-options="{
         enabled: true,
         perPageDropdown: [50, 100, 150, 200],
     }" styleClass="vgt-table striped bordered condensed" class="py-0">
@@ -858,7 +863,7 @@ const doCetakReactV2 = (ttd = "true") => {
                                         <span v-else-if="props.column.field == 'progres_angka'">
                                             <!-- {{ props.row.progres?.belum }}- -->
                                             {{ props.row.progres?.selesai }}/{{
-        props.row.progres?.total }}
+                                            props.row.progres?.total }}
                                         </span>
                                         <span v-else-if="props.column.field == 'username'">
                                             <div class="flex justify-center gap-2">

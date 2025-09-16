@@ -323,6 +323,11 @@ const dashboard_doCetak_afirmasi = () => {
         `${VITE_API_FE_DASHBOARD}admin/sekolah/${getSekolahAktif.value.sekolah_id}/kelas/${getSekolahAktif.value.kelas_id}/hasil_psikologi/deteksi_afirmasi/cetak`
     );
 }
+const dashboard_doCetak_ist_v7 = () => {
+    window.open(
+        `${VITE_API_FE_DASHBOARD}admin/sekolah/${getSekolahAktif.value.sekolah_id}/kelas/${getSekolahAktif.value.kelas_id}/hasil_psikologi/sertifikat_ist_v7_perkelas_cetak/cetak`
+    );
+}
 
 const dashboard_doCetak_negatif = () => {
     window.open(
@@ -400,6 +405,10 @@ const dashboard_doCetak_kewirausahaan = () => {
                 <button class="btn btn-sm btn-success" @click="dashboard_doCetak_negatif()"
                     v-if="dataSetting.tipe_deteksi == 'negatif'">
                     DASHBOARD - Cetak Hspq Negatif Saja</button>
+
+
+                <button class="btn btn-sm btn-success" @click="dashboard_doCetak_ist_v7()">
+                    DASHBOARD - Cetak IST V7 </button>
 
             </div>
 
