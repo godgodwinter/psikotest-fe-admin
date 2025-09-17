@@ -126,6 +126,26 @@ const columns = [
         type: "Number",
     },
     {
+        label: "auditif",
+        field: "auditif",
+        type: "Number",
+    },
+    {
+        label: "auditif_persen",
+        field: "auditif_persen",
+        type: "Number",
+    },
+    {
+        label: "visual",
+        field: "visual",
+        type: "Number",
+    },
+    {
+        label: "kinestetik",
+        field: "kinestetik",
+        type: "Number",
+    },
+    {
         label: "citacita_1",
         field: "citacita_1",
         type: "String",
@@ -269,11 +289,11 @@ const doCetak_pohon_minat = () => {
                         <div class="bg-white shadow rounded-lg px-4 py-4">
                             <div v-if="data">
                                 <vue-good-table :line-numbers="true" :columns="columns" :rows="data" :search-options="{
-        enabled: true,
-    }" :pagination-options="{
-        enabled: true,
-        perPageDropdown: [50, 100, 150, 200],
-    }" styleClass="vgt-table striped bordered condensed" class="py-0">
+                                    enabled: true,
+                                }" :pagination-options="{
+                                    enabled: true,
+                                    perPageDropdown: [50, 100, 150, 200],
+                                }" styleClass="vgt-table striped bordered condensed" class="py-0">
                                     <template #table-actions>
                                         <div class="space-x-1 space-y-1 gap-1">
                                             <button class="btn btn-sm btn-secondary tooltip" data-tip="Refresh Data"
@@ -324,7 +344,7 @@ const doCetak_pohon_minat = () => {
 
                                         <span v-else-if="props.column.field == 'iq'">
                                             {{ props.row.data_cfit_hitung ? props.row.data_cfit_hitung?.data?.iq?.value
-        : "-"
+                                                : "-"
                                             }}
                                         </span>
                                         <span v-else-if="props.column.field == 'sub_1'">
@@ -341,6 +361,19 @@ const doCetak_pohon_minat = () => {
 
                                         <span v-else-if="props.column.field == 'sub_4'">
                                             {{ props.row.data_cfit ? props.row.data_cfit?.sub_4 : "-" }}
+                                        </span>
+                                        <span v-else-if="props.column.field == 'auditif'">
+                                            {{ props.row.data_cfit ? props.row.data_cfit?.auditif : "-" }}
+                                        </span>
+                                        <span v-else-if="props.column.field == 'auditif_persen'">
+                                            {{ props.row.data_cfit ?
+                                                props.row.data_cfit_hitung?.data_gaybelajar?.auditif?.persen : "-" }}
+                                        </span>
+                                        <span v-else-if="props.column.field == 'visual'">
+                                            {{ props.row.data_cfit ? props.row.data_cfit?.visual : "-" }}
+                                        </span>
+                                        <span v-else-if="props.column.field == 'kinestetik'">
+                                            {{ props.row.data_cfit ? props.row.data_cfit?.kinestetik : "-" }}
                                         </span>
 
                                         <span v-else-if="props.column.field == 'citacita_1'">
