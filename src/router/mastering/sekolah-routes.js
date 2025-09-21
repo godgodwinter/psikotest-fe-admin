@@ -118,6 +118,18 @@ const AdminSekolahRoutes = [
                   ),
               },
               {
+                path: "/pages/admin/mastering/sekolah/:sekolah_id/submenu/kelas/:kelas_id?/ujiankhusus/v4/export",
+                name: "admin-sekolah-submenu-ujiankhusus-v4-export",
+                component: () =>
+                  import("@/views/ist/Ujiankhusus_Export_proses_ujian.vue"),
+              },
+              {
+                path: "/pages/admin/mastering/sekolah/:sekolah_id/submenu/kelas/:kelas_id?/ujiankhusus/v4/restore",
+                name: "admin-sekolah-submenu-ujiankhusus-v4-restore",
+                component: () =>
+                  import("@/views/ist/Ujiankhusus_Restore_proses_ujian.vue"),
+              },
+              {
                 path: "/pages/admin/mastering/sekolah/:sekolah_id/submenu/kelas/:kelas_id?/ujiankhusus/v2/siswa/:siswa_id/reset",
                 name: "admin-sekolah-submenu-ujiankhusus-persiswa-reset-v2",
                 component: () =>

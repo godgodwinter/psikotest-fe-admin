@@ -9,6 +9,7 @@ import ApiIst from "@/axios/axiosIst";
 import moment from "moment/min/moment-with-locales";
 import localization from "moment/locale/id";
 import { useSuperadminStore } from '@/stores/admin/superadminPagesStore';
+// import C_ujiankhusus_menu from '@/views/ist/C_ujiankhusus_menu.vue'
 const superadminStore = useSuperadminStore();
 const isSuperadminActive = ref(superadminStore.isSuperadminActive)
 
@@ -304,11 +305,11 @@ const doCetakIstLengkap_v4_tanpa_aspek = () => {
                         <div class="bg-white shadow rounded-lg px-4 py-4">
                             <div v-if="data">
                                 <vue-good-table :line-numbers="true" :columns="columns" :rows="data" :search-options="{
-        enabled: true,
-    }" :pagination-options="{
-        enabled: true,
-        perPageDropdown: [50, 100, 150, 200],
-    }" styleClass="vgt-table striped bordered condensed" class="py-0">
+                                    enabled: true,
+                                }" :pagination-options="{
+                                    enabled: true,
+                                    perPageDropdown: [50, 100, 150, 200],
+                                }" styleClass="vgt-table striped bordered condensed" class="py-0">
                                     <template #table-actions>
                                         <div class="space-x-1 space-y-1 gap-1">
                                             <button class="btn btn-sm btn-secondary tooltip" data-tip="Refresh Data"

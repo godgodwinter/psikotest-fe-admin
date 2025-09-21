@@ -10,6 +10,7 @@ import ButtonDelete from "@/components/atoms/ButtonDel.vue";
 import { useRouter, useRoute } from "vue-router";
 import Toast from "@/components/lib/Toast";
 import { useAdminPagesStore } from '@/stores/admin/adminPagesStore'
+import C_ujiankhusus_menu from '@/views/ist/C_ujiankhusus_menu.vue'
 
 import useClipboard from 'vue-clipboard3'
 import moment from "moment/min/moment-with-locales";
@@ -840,8 +841,12 @@ const formatTanggal = "DD MMMM YYYY HH:mm:ss";
     </span>
     <span v-else>
         <div>
+
+            <div>
+                <C_ujiankhusus_menu :sekolah_id="getSekolahAktif?.sekolah_id" :kelas_id="getSekolahAktif?.kelas_id" />
+            </div>
             <article class="prose lg:prose-sm">
-                <h1>UJIAN KHUSUS KELAS {{ kelas_nama }} </h1>
+                <h1>UJIAN IQ : KELAS {{ kelas_nama }} </h1>
                 <h5>UJIAN KHUSUS - V4</h5>
             </article>
 

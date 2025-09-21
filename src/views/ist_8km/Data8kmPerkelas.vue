@@ -6,6 +6,7 @@ import { useRouter, useRoute } from "vue-router";
 import Toast from "@/components/lib/Toast";
 import { useAdminPagesStore } from '@/stores/admin/adminPagesStore'
 import ApiIst from "@/axios/axiosIst";
+import C_ujiankhusus_menu from '@/views/ist/C_ujiankhusus_menu.vue'
 
 import moment from "moment/min/moment-with-locales";
 import localization from "moment/locale/id";
@@ -349,9 +350,20 @@ const dashboard_doCetak_kewirausahaan = () => {
     </span>
     <span v-else>
         <div>
-            <article class="prose lg:prose-sm max-w-screen-lg">
-                <h1>DATA 8KM KELAS {{ kelas_nama }}</h1>
-            </article>
+
+
+            <div>
+                <C_ujiankhusus_menu :sekolah_id="getSekolahAktif?.sekolah_id" :kelas_id="getSekolahAktif?.kelas_id" />
+            </div>
+            <!-- <article class="prose lg:prose-sm max-w-screen-lg">
+                <h1>DATA UJIAN IQ : KELAS {{ kelas_nama }}</h1>
+            </article> -->
+            <div>
+                <article class="prose lg:prose-sm">
+                    <h1>UJIAN IQ : KELAS {{ kelas_nama }} </h1>
+                    <h5>UJIAN KHUSUS - V4</h5>
+                </article>
+            </div>
             <!-- !hidden superadmin -->
             <div class="space-x-2 space-y-2" v-if="isSuperadminActive">
                 <RouterLink
@@ -392,6 +404,10 @@ const dashboard_doCetak_kewirausahaan = () => {
                     v-if="dataSetting.tipe_cetak == 'v5'">
                     DASHBOARD - Sertifikat v5</button>
 
+
+                <button class="btn btn-sm btn-success" @click="dashboard_doCetak_ist_v7()">
+                    DASHBOARD - Sertifikat IST V7 </button>
+
                 <button class="btn btn-sm btn-success" @click="dashboard_doCetak_kewirausahaan()"
                     v-if="dataSetting.kewirausahaan">
                     DASHBOARD - Cetak Kewirausahaan</button>
@@ -406,9 +422,6 @@ const dashboard_doCetak_kewirausahaan = () => {
                     v-if="dataSetting.tipe_deteksi == 'negatif'">
                     DASHBOARD - Cetak Hspq Negatif Saja</button>
 
-
-                <button class="btn btn-sm btn-success" @click="dashboard_doCetak_ist_v7()">
-                    DASHBOARD - Cetak IST V7 </button>
 
             </div>
 
