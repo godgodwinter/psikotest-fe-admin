@@ -209,9 +209,70 @@ async function fn_submit() {
         </article>
     </div>
     <div class="p-2 space-x-2">
-        <h1 class="text-2xl font-bold mb-4">Menu Import / Restore Data</h1>
-        <h1 class="text-2xl font-bold mb-4">Upload File .zst & Tampilkan Data Siswa</h1>
-        <h1 class="text-sm font-bold mb-4">Catatan: Data Akan direplace jika sudah ada.</h1>
+        <!-- <h1 class="text-2xl font-bold mb-4">Menu Import / Restore Data</h1>
+        <h1 class="text-2xl font-bold mb-4">Upload File .zst & Tampilkan Data Siswa</h1> -->
+        <!-- <h1 class="text-sm font-bold mb-4">Catatan: </h1>
+        <h3 class="text-sm font-bold mb-4">- Data Akan direplace jika sudah ada.</h3>
+        <h3 class="text-sm font-bold mb-4">- Jika file terlalu besar tidak perlu di tampilkan (dibrowser akan error) ,
+            bisa langsung di push.</h3> -->
+        <header class="flex items-center gap-3">
+            <div class="avatar placeholder">
+                <div class="bg-base-200 text-base-content rounded-xl w-10">
+                    <span class="text-sm">IR</span>
+                </div>
+            </div>
+            <div>
+                <h1 class="text-2xl font-bold leading-tight">Import / Restore Data</h1>
+                <p class="text-base-content/70">Upload berkas <kbd class="kbd kbd-sm">.zst</kbd> lalu tampilkan/restore
+                    data siswa</p>
+            </div>
+        </header>
+        <div class="divider my-2">Catatan</div>
+
+        <div class="grid gap-3">
+            <!-- Catatan utama -->
+            <div class="card bg-base-100 shadow-sm">
+                <div class="card-body p-4 md:p-5">
+                    <div role="alert" class="alert alert-warning">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 shrink-0" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"
+                                d="M12 9v3m0 3h.01M3.1 19h17.8L12 4.5 3.1 19z" />
+                        </svg>
+                        <div>
+                            <h3 class="font-bold">Data akan menimpa (replace) yang sudah ada</h3>
+                            <div class="text-sm opacity-80">
+                                Saat proses restore, data yang memiliki ID sama akan <span
+                                    class="badge badge-warning badge-sm">di-replace</span>.
+                                Pastikan cadangan (backup) aman sebelum melanjutkan.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div role="alert" class="alert alert-info mt-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 shrink-0" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"
+                                d="M13 16h-1v-4h-1m1-4h.01M12 3a9 9 0 100 18 9 9 0 000-18z" />
+                        </svg>
+                        <div>
+                            <h3 class="font-bold">Jika File besar (banyak data) tidak perlu ditampilkan di browser</h3>
+                            <div class="text-sm opacity-80">
+                                Jika ukuran berkas sangat besar, <span class="badge badge-info badge-sm">langsung
+                                    push</span> tanpa pratinjau
+                                untuk menghindari error memori di browser.
+                            </div>
+                        </div>
+                    </div>
+
+                    <ul class="mt-4 list-disc pl-5 text-sm leading-relaxed">
+                        <li>Dukungan berkas: <code class="px-1 rounded bg-base-200">*.json.zst</code></li>
+                        <li>Validasi akan memeriksa struktur JSON dan versi skema (bila ada).</li>
+                        <li>Gunakan koneksi stabil; proses unggah tidak dapat di-undo.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
 
         <!-- File Input -->
         <input type="file" @change="handleFileChange" accept=".zst" />
@@ -301,7 +362,8 @@ async function fn_submit() {
                             <td class="py-2 px-4 border text-center">
                                 <span
                                     :class="item.redis_total_jawaban_tersimpan ? 'text-green-600 font-medium' : 'text-red-600'">
-                                    {{ item.redis_total_jawaban_tersimpan ? item.redis_total_jawaban_tersimpan : '0' }}
+                                    {{ item.redis_total_jawaban_tersimpan ? item.redis_total_jawaban_tersimpan : '0'
+                                    }}
                                 </span>
                             </td>
                             <td class="py-2 px-4 border text-center">
