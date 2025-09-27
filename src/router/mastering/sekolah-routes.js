@@ -118,11 +118,27 @@ const AdminSekolahRoutes = [
                   ),
               },
               {
+                path: "/pages/admin/mastering/sekolah/:sekolah_id/submenu/kelas/:kelas_id?/ujiankhusus/v4b",
+                name: "admin-sekolah-submenu-ujiankhusus-v4b",
+                component: () =>
+                  import(
+                    "@/views/admin/ujiankhusus/proses/UjiankhususProsesPerkelas_v4b.vue"
+                  ),
+              },
+              {
                 path: "/pages/admin/mastering/sekolah/:sekolah_id/submenu/kelas/:kelas_id?/ujiankhusus/v4/progressive",
                 name: "admin-sekolah-submenu-ujiankhusus-v4-progressive",
                 component: () =>
                   import(
                     "@/views/admin/ujiankhusus/proses/UjiankhususProsesPerkelas_v4_progressive.vue"
+                  ),
+              },
+              {
+                path: "/pages/admin/mastering/sekolah/:sekolah_id/submenu/kelas/:kelas_id?/ujiankhusus/v4/progressive/v2",
+                name: "admin-sekolah-submenu-ujiankhusus-v4-progressive-v2",
+                component: () =>
+                  import(
+                    "@/views/admin/ujiankhusus/proses/UjiankhususProsesPerkelas_v4_progressive_v2.vue"
                   ),
               },
               {

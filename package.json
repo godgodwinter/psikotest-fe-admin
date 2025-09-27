@@ -9,7 +9,9 @@
     "preview": "vite preview --port=3100 --host"
   },
   "dependencies": {
+    "@headlessui/vue": "^1.7.23",
     "@heroicons/vue": "^2.2.0",
+    "@popperjs/core": "^2.11.8",
     "@tanstack/vue-query": "^4.24.6",
     "@vuepic/vue-datepicker": "^4.0.1",
     "@vueup/vue-quill": "^1.1.0",
@@ -22,6 +24,7 @@
     "oh-vue-icons": "^1.0.0-rc3",
     "pinia": "^2.0.30",
     "uuid": "^9.0.0",
+    "v-calendar": "^3.1.2",
     "vee-validate": "^4.7.4",
     "vue": "^3.2.45",
     "vue-clipboard3": "^2.0.0",
