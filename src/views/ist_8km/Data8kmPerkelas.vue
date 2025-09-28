@@ -406,7 +406,7 @@ const dashboard_doCetak_kewirausahaan = () => {
 
 
                 <button class="btn btn-sm btn-success" @click="dashboard_doCetak_ist_v7()">
-                    DASHBOARD - Sertifikat IST V7 </button>
+                    DASHBOARD - Cetak IST V7 </button>
 
                 <button class="btn btn-sm btn-success" @click="dashboard_doCetak_kewirausahaan()"
                     v-if="dataSetting.kewirausahaan">
