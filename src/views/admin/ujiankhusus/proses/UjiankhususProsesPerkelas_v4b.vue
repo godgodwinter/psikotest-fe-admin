@@ -1,8 +1,9 @@
 <script setup>
 import Api from "@/axios/axiosNode";
 import ApiUjianKhusus from "@/axios/axiosIst";
+
 import { fn_copy_id_for_mongo } from "@/lib/FungsiBasic.js"
-import { ref, defineAsyncComponent, computed } from "vue";
+import { ref, defineAsyncComponent, computed, onBeforeUnmount, reactive } from "vue";
 import BreadCrumb from "@/components/atoms/BreadCrumb.vue";
 import BreadCrumbSpace from "@/components/atoms/BreadCrumbSpace.vue";
 import ButtonEdit from "@/components/atoms/ButtonEdit.vue";
@@ -297,7 +298,7 @@ const doPilihKelas = async () => {
     await getData()
     // console.log(inputCariKelas.value.id);
     await router.push({
-        name: "admin-sekolah-submenu-ujiankhusus-v4",
+        name: "admin-sekolah-submenu-ujiankhusus-v4b",
         params: {
             sekolah_id: sekolah_id.value,
             kelas_id: inputCariKelas.value.id ? inputCariKelas.value.id : kelas_id.value,
@@ -853,6 +854,368 @@ const inputSelectTipeCitacita = ref(dataTemp?.tipeCitacita || {
 },)
 
 const formatTanggal = "DD MMMM YYYY HH:mm:ss";
+
+// const sse_doGenerate_perkelas = () => {
+//     const kelas_id = getSekolahAktif.value.kelas_id
+//     console.log('====================================');
+//     console.log(`#sse_doGenerate_perkelas:`, kelas_id);
+//     console.log('====================================');
+
+// }
+
+
+// 🔧 reset SEMUA jejak run sebelumnya
+function resetStreamStates() {
+    logs.value = [];
+    counts.value = { success: 0, failed: 0 };
+    rawEvents.value = [];
+    detailMap.clear();
+    lastStep.value = null;
+    lastMax.value = null;
+}
+
+// --- UI STATE
+const isStreaming = ref(false);
+const isBusy = ref(false);
+const showModal = ref(false);
+const status = ref("-");
+const progress = ref(0);
+const logs = ref([]);
+const jobId = ref(null);
+const eventSourceRef = ref(null);
+const modalRef = ref(null);
+
+// state baru (opsional)
+const counts = ref({ success: 0, failed: 0 });
+const jobKey = ref(null); // kalau backend pakai ?key=..., isi dari respons generate
+
+function clamp(n, a = 0, b = 100) { return Math.max(a, Math.min(b, n)); }
+function jparse(s) { try { return JSON.parse(s); } catch { return null; } }
+
+
+const kelasIdShown = computed(() => getSekolahAktif.value?.kelas_id ?? "-");
+
+function logPush(msg) {
+    const t = moment().format("HH:mm:ss");
+    logs.value.push(`[${t}] ${msg}`);
+}
+function resetUi() { status.value = "idle"; progress.value = 0; logs.value = []; jobId.value = null; }
+function openModal() { showModal.value = true; }
+
+// ❗ Close kini memutus SSE + menutup modal, walau masih streaming
+function closeModal() {
+    detachSSE();
+    showModal.value = false;
+}
+
+function detachSSE() {
+    if (eventSourceRef.value) {
+        eventSourceRef.value.close?.();
+        eventSourceRef.value = null;
+    }
+    isStreaming.value = false;
+}
+
+onBeforeUnmount(() => detachSSE());
+
+function withTrailingSlash(s) {
+    if (!s) return "/";
+    return s.endsWith("/") ? s : s + "/";
+}
+
+const RAW_BASE = import.meta.env.VITE_API_TS_IST_BASE_URL_; // contoh: http://127.0.0.1:11001/
+const BASE_PATH = withTrailingSlash(RAW_BASE);               // -> pastikan ada trailing slash
+
+// --- Core: attach SSE
+function attachSSE(kelas_id, theJobId) {
+    resetStreamStates();      // <-- penting
+    detachSSE();
+    isStreaming.value = true;
+
+    // endpoint SSE persis seperti Postman-mu: /api/v1/ujiankhusus/sse/example/kelas/:id/jobs/events?jobId=...
+    const qs = new URLSearchParams({ jobId: theJobId });
+    if (jobKey.value) qs.append("key", jobKey.value); // opsional, kalau backend butuh
+    const url = `${BASE_PATH}api/v1/ujiankhusus/sse/example/kelas/${encodeURIComponent(kelas_id)}/jobs/events?${qs.toString()}`;
+
+    logPush(`Attach SSE => ${url}`);
+
+    const es = new EventSource(url, { withCredentials: true });
+    eventSourceRef.value = es;
+
+    es.onopen = () => {
+        status.value = "streaming";
+        logPush("SSE connected");
+    };
+
+
+    // --- EVENT: snapshot
+    es.addEventListener("snapshot", (evt) => {
+        const p = jparse(evt.data) || {};
+        if (typeof p.percent === "number") progress.value = clamp(p.percent);
+        if (p.status) status.value = p.status;
+        if (p.counts) counts.value = p.counts;
+
+        pushRaw('snapshot', p);        // <— RAW JSON
+        upsertDetail(p);               // <— DETAIL
+
+        const s = [
+            `snapshot: step ${p.step ?? "-"} / ${p.max ?? "-"}`,
+            `${progress.value ?? 0}%`,
+            `success:${p.counts?.success ?? 0}`,
+            `failed:${p.counts?.failed ?? 0}`,
+        ].join(" • ");
+        logPush(s);
+    });
+
+    // --- EVENT: progress
+    es.addEventListener("progress", (evt) => {
+        const p = jparse(evt.data) || {};
+        if (p.counts) counts.value = p.counts;
+
+        const { stepNow, maxNow } = getStepAndMax(p);
+        const est = Math.floor((stepNow / maxNow) * 100);
+
+        progress.value = Math.max(progress.value, clamp(est));
+        lastStep.value = stepNow;
+        lastMax.value = maxNow;
+
+        pushRaw("progress", p);
+        upsertDetail(p);
+
+        const phase = p.meta?.phase ? `phase:${p.meta.phase}` : "";
+        const siswa = p.meta?.nama_siswa || p.meta?.siswa_id ? ` • ${p.meta?.nama_siswa ?? p.meta?.siswa_id}` : "";
+        logPush(`progress: [${stepNow} / ${maxNow}] ${p.stepStatus ?? ""} ${phase}${siswa}`);
+    });
+
+
+    // --- EVENT: done
+    es.addEventListener("done", (evt) => {
+        const p = jparse(evt.data) || {};
+        const { stepNow, maxNow } = getStepAndMax(p);
+
+        lastStep.value = maxNow; // pastikan tampil n/n
+        lastMax.value = maxNow;
+        progress.value = 100;
+        status.value = "completed";
+
+        if (p.result?.data) counts.value = p.result.data;
+        pushRaw("done", p);
+        upsertDetail({ ...p, stepStatus: "success", step: stepNow });
+
+        logPush(`done: success:${p.result?.data?.success ?? 0} failed:${p.result?.data?.failed ?? 0} (${p.result?.success ? "OK" : "NOT OK"})`);
+        detachSSE();
+    });
+
+
+    // optional: message/error juga dorong ke RAW
+    es.onmessage = (evt) => {
+        const p = jparse(evt.data);
+        pushRaw('message', p ?? evt.data);
+        if (p) upsertDetail(p);
+        // ...sisanya tetap seperti punyamu
+    };
+    es.onerror = () => {
+        pushRaw('error', { note: 'SSE error/disconnected' });
+        // ...sisanya tetap
+    };
+
+
+    // --- fallback: pesan tanpa event name (optional dari server)
+    es.onmessage = (evt) => {
+        // kalau server kadang kirim "message" biasa
+        const p = jparse(evt.data);
+        if (p) {
+            if (typeof p.percent === "number") progress.value = clamp(p.percent);
+            if (p.status) status.value = p.status;
+            logPush(`message: ${evt.data}`);
+            if (p.done === true || p.status === "completed") {
+                progress.value = 100;
+                detachSSE();
+            }
+        } else {
+            logPush(evt.data || "(event tanpa data)");
+        }
+    };
+
+    es.onerror = () => {
+        logPush("SSE error / disconnected");
+        if (status.value !== "completed") status.value = "disconnected";
+        detachSSE();
+    };
+}
+
+
+// --- Cek job current
+async function fetchCurrentJob(kelas_id) {
+    const url = `${BASE_PATH}api/v1/ujiankhusus/proses/v3/sekolah/${getSekolahAktif.value?.sekolah_id}/kelas/${encodeURIComponent(kelas_id)}/sse/v2/current`;
+    // Berdasarkan info Anda: method = POST
+    const { data } = await ApiUjianKhusus.post(url, {}); // payload bisa kosong/sesuaikan server
+    // Normalisasi output:
+    // ekspektasi: { data: { jobId, status, key? } } atau { jobId, status }
+    const out = data?.data || data;
+    return out?.jobId ? out : null;
+}
+
+// --- Do generate job baru
+async function doGenerateJob(kelas_id) {
+
+    let dataFormSend = {
+        paketsoal_id: paketsoal_aktif.value.id,
+        tgl_batas_mulai: dataForm.value.tgl_batas_mulai,
+        tgl_batas_terakhir: dataForm.value.tgl_batas_terakhir,
+        tipeCitacita: inputSelectTipeCitacita.value
+    }
+    console.log(`#doGenerateJob:`, dataFormSend, getSekolahAktif.value?.sekolah_id, getSekolahAktif.value?.kelas_id);
+    const url = `${BASE_PATH}api/v1/ujiankhusus/proses/v3/sekolah/${getSekolahAktif.value?.sekolah_id}/kelas/${encodeURIComponent(kelas_id)}/sse/v2`;
+    // const url = `${BASE_PATH}api/v1/ujiankhusus/sse/example/kelas/${encodeURIComponent(kelas_id)}/jobs`;
+    const body = {
+        ...dataFormSend,
+        // tanggal: moment().format("YYYY-MM-DD"),
+        // max: 20,
+    };
+    const { data } = await ApiUjianKhusus.post(url, body);
+    const out = data?.data || data;
+    if (!out?.jobId) throw new Error("jobId tidak ditemukan pada respons generate");
+
+    jobKey.value = out.key || out.serviceKey || null; // kalau server butuh ?key=
+    return out; // { jobId, status, max, ... }
+}
+
+// --- Public: dipanggil dari tombol
+const sse_doGenerate_perkelas = async () => {
+    const kelas_id = getSekolahAktif.value?.kelas_id;
+    if (!kelas_id) {
+        return alert("kelas_id tidak ditemukan");
+    }
+
+    resetUi();
+    resetStreamStates();      // <-- penting
+    openModal();
+    isBusy.value = true;
+    status.value = "checking";
+
+    try {
+        logPush(`Cek job current untuk kelas #${kelas_id}…`);
+        // 1) cek job current
+        const current = await fetchCurrentJob(kelas_id);
+
+        if (current) {
+            // ada job -> langsung attach SSE
+            jobId.value = current.jobId;
+            status.value = current.status || "queued";
+            logPush(`Ditemukan job aktif: ${jobId.value} (status: ${status.value})`);
+            attachSSE(kelas_id, jobId.value);
+        } else {
+            // tidak ada job -> create/generate
+            status.value = "creating";
+            logPush("Tidak ada job aktif. Membuat job baru…");
+            const created = await doGenerateJob(kelas_id);
+            jobId.value = created.jobId;
+            status.value = created.status || "queued";
+            logPush(`Job baru dibuat: ${jobId.value}`);
+            attachSSE(kelas_id, jobId.value);
+        }
+    } catch (e) {
+        console.error(e);
+        status.value = "failed";
+        logPush(`Error: ${e?.message || e}`);
+        detachSSE();
+    } finally {
+        isBusy.value = false;
+    }
+};
+
+// --- UX util
+
+// 🔗 Copy util
+async function copyLogs() {
+    try { await navigator.clipboard.writeText(logs.value.join("\n")); logPush("Log disalin ke clipboard."); }
+    catch { logPush("Gagal menyalin log."); }
+}
+async function copyJobId() {
+    if (!jobId.value) return;
+    try { await navigator.clipboard.writeText(jobId.value); logPush("Job ID disalin ke clipboard."); }
+    catch { logPush("Gagal menyalin Job ID."); }
+}
+
+
+// Tabs
+const activeTab = ref("detail");
+
+// simpan raw event: {type, ts, pretty}
+const rawEvents = ref([]);
+
+// simpan detail terstruktur (di-update per step/siswa)
+const detailMap = reactive(new Map()); // key unik, val = item terstruktur
+const detailItems = computed(() =>
+    Array.from(detailMap.values()).sort((a, b) => (a.step ?? 0) - (b.step ?? 0))
+);
+
+// last step/max (buat header)
+const lastStep = ref(null);
+const lastMax = ref(null);
+
+// badge class
+function statusBadgeClass(s) {
+    if (s === 'success') return 'badge-success';
+    if (s === 'failed') return 'badge-error';
+    if (s === 'processing') return 'badge-warning';
+    return 'badge-ghost';
+}
+
+// util push raw pretty
+function pushRaw(type, payload) {
+    rawEvents.value.push({
+        type,
+        ts: moment().format("HH:mm:ss"),
+        pretty: JSON.stringify(payload, null, 2),
+    });
+}
+
+// buat ID unik per baris detail
+function detailKey(p) {
+    // prioritas gabungan step + siswa_id + phase agar tidak tabrakan
+    return [
+        p.step ?? '-',
+        p.meta?.siswa_id ?? '-',
+        p.meta?.phase ?? '-'
+    ].join(':');
+}
+
+
+function getStepAndMax(p) {
+    const stepNow = p?.step ?? detailItems.value?.length ?? 0;
+    const maxNow = (data.value?.length ?? 0) + 3;
+    return { stepNow, maxNow };
+}
+
+
+function upsertDetail(p) {
+    const key = detailKey(p);
+    const prev = detailMap.get(key) || {};
+
+    const { stepNow, maxNow } = getStepAndMax(p);
+
+    const est = maxNow > 0
+        ? Math.max(0, Math.min(100, Math.floor((stepNow / maxNow) * 100)))
+        : 0;
+
+    detailMap.set(key, {
+        _id: key,
+        ts: moment().format("HH:mm:ss"),
+        step: stepNow,
+        max: maxNow,
+        phase: p.meta?.phase ?? prev.phase,
+        nama: p.meta?.nama_siswa ?? p.meta?.siswa_id ?? prev.nama,
+        status: p.stepStatus ?? p.status ?? prev.status ?? "processing",
+        estimated: est,
+    });
+
+    lastStep.value = stepNow;
+    lastMax.value = maxNow;
+}
+
+
 </script>
 <template>
     <span v-if="isLoading">
@@ -890,7 +1253,9 @@ const formatTanggal = "DD MMMM YYYY HH:mm:ss";
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div class="form-control">
                         <label class="label">
-                            <span class="label-text">Tipe Cita cita:</span>
+                            <span class="label-text">Tipe Cita cita
+                                <!-- {{ data?.length }} -->
+                                :</span>
                         </label>
 
                         <div class="relative">
@@ -964,7 +1329,185 @@ const formatTanggal = "DD MMMM YYYY HH:mm:ss";
 
             <!-- === ACTION SECTIONS (rapi & urut) === -->
             <div class="space-y-3">
+                <!-- PROSES BARU-->
+                <div class="flex items-start gap-3">
+                    <div class="w-28 shrink-0 text-xs uppercase font-semibold text-base-content/60 pt-2">
+                        Proses
+                    </div>
+                    <div class="flex flex-wrap items-center gap-2 grow">
+                        <div class="flex items-center gap-2">
+                            <button class="btn btn-sm btn-primary" @click="sse_doGenerate_perkelas" :disabled="isBusy">
+                                <span v-if="!isStreaming">btn-generate</span>
+                                <span v-else class="loading loading-spinner loading-xs mr-2" /> <span
+                                    v-if="isStreaming">Memproses…</span>
+                            </button>
 
+                            <!-- Modal Progres -->
+                            <dialog ref="modalRef" class="modal modal-open" v-if="showModal">
+                                <div class="modal-box max-w-4xl">
+                                    <div class="flex items-center justify-between mb-3">
+                                        <h3 class="font-bold text-lg">Proses Generate Per Kelas</h3>
+                                        <button class="btn btn-ghost btn-sm" @click="closeModal">✕</button>
+                                    </div>
+
+                                    <!-- Ringkasan -->
+                                    <div class="grid grid-cols-2 md:grid-cols-4 gap-2 mb-4">
+                                        <div class="p-3 rounded-xl bg-base-200">
+                                            <div class="text-xs opacity-70">Kelas</div>
+                                            <div class="font-semibold truncate">#{{ kelasIdShown }}</div>
+                                        </div>
+                                        <div class="p-3 rounded-xl bg-base-200">
+                                            <div class="text-xs opacity-70 flex items-center justify-between">
+                                                <span>Job ID</span>
+                                                <button class="btn btn-ghost btn-xs" @click="copyJobId"
+                                                    :disabled="!jobId">Copy</button>
+                                            </div>
+                                            <div class="font-mono text-xs break-all select-all">
+                                                {{ jobId || '-' }}
+                                            </div>
+                                        </div>
+                                        <div class="p-3 rounded-xl bg-base-200">
+                                            <div class="text-xs opacity-70">Status</div>
+                                            <div class="font-semibold capitalize">{{ status }}</div>
+                                        </div>
+                                        <div class="p-3 rounded-xl bg-base-200">
+                                            <div class="text-xs opacity-70">Progress</div>
+                                            <div class="font-semibold">{{ progress }}%</div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Progress bar -->
+                                    <progress class="progress progress-primary w-full mb-3" :value="progress"
+                                        max="100"></progress>
+
+                                    <!-- Tabs -->
+                                    <div role="tablist" class="tabs tabs-bordered mb-3">
+                                        <a role="tab" class="tab" :class="{ 'tab-active': activeTab === 'ringkas' }"
+                                            @click="activeTab = 'ringkas'">Ringkas</a>
+                                        <a role="tab" class="tab" :class="{ 'tab-active': activeTab === 'detail' }"
+                                            @click="activeTab = 'detail'">
+                                            Detail Step
+                                            <span v-if="detailItems.length" class="badge badge-ghost ml-2">{{
+                                                detailItems.length
+                                            }}</span>
+                                        </a>
+                                        <a role="tab" class="tab" :class="{ 'tab-active': activeTab === 'raw' }"
+                                            @click="activeTab = 'raw'">Raw JSON</a>
+                                    </div>
+
+                                    <!-- RINGKAS -->
+                                    <div v-if="activeTab === 'ringkas'"
+                                        class="h-48 overflow-auto rounded-xl border border-base-300 p-3 bg-base-100 text-sm font-mono whitespace-pre-wrap">
+                                        <div v-if="logs.length === 0" class="opacity-60">Menunggu event…</div>
+                                        <template v-else>
+                                            <div v-for="(line, idx) in logs" :key="idx" class="mb-1">{{ line }}</div>
+                                        </template>
+                                    </div>
+
+                                    <!-- DETAIL STEP (berwarna + ikon) -->
+                                    <div v-if="activeTab === 'detail'" class="space-y-3">
+                                        <!-- ringkasan count -->
+                                        <div class="grid grid-cols-2 md:grid-cols-4 gap-2">
+                                            <div class="stat border rounded-xl">
+                                                <div class="stat-title">Sukses</div>
+                                                <div class="stat-value text-success">{{ counts.success }}</div>
+                                            </div>
+                                            <div class="stat border rounded-xl">
+                                                <div class="stat-title">Gagal</div>
+                                                <div class="stat-value text-error">{{ counts.failed }}</div>
+                                            </div>
+                                            <div class="stat border rounded-xl">
+                                                <div class="stat-title">Step</div>
+                                                <div class="stat-value">{{ (lastStep || 0) }} / {{ (lastMax || '-') }}
+                                                </div>
+                                            </div>
+                                            <div class="stat border rounded-xl">
+                                                <div class="stat-title">Status</div>
+                                                <div class="stat-value capitalize">{{ status }}</div>
+                                            </div>
+                                        </div>
+
+                                        <!-- daftar step -->
+                                        <div
+                                            class="h-56 overflow-auto rounded-xl border border-base-300 p-2 bg-base-100">
+                                            <div v-if="detailItems.length === 0" class="p-4 opacity-60">Belum ada
+                                                detail.
+                                            </div>
+
+                                            <div v-for="it in detailItems" :key="it._id"
+                                                class="card card-compact border mb-2">
+                                                <div class="card-body py-3">
+                                                    <div class="flex items-center gap-2">
+                                                        <div class="font-mono text-xs opacity-70">#{{ it.step }}/{{
+                                                            it.max }}</div>
+
+                                                        <!-- badge status -->
+                                                        <div :class="['badge', statusBadgeClass(it.status)]">
+                                                            <span v-if="it.status === 'success'">✔️</span>
+                                                            <span v-else-if="it.status === 'failed'">✖️</span>
+                                                            <span v-else>⏳</span>
+                                                            <span class="ml-1 capitalize">{{ it.status }}</span>
+                                                        </div>
+
+                                                        <div class="divider divider-horizontal my-0"></div>
+
+                                                        <!-- info siswa / phase -->
+                                                        <div class="truncate">
+                                                            <span class="opacity-70">phase:</span>
+                                                            <span class="font-medium">{{ it.phase || '-' }}</span>
+                                                            <span v-if="it.nama" class="opacity-70"> • </span>
+                                                            <span v-if="it.nama" class="font-medium">{{ it.nama
+                                                            }}</span>
+                                                        </div>
+
+                                                        <div class="ml-auto text-xs opacity-60 font-mono">{{ it.ts }}
+                                                        </div>
+                                                    </div>
+
+                                                    <!-- progress kecil per item (opsional) -->
+                                                    <progress v-if="it.status === 'processing'"
+                                                        class="progress progress-info w-full mt-2" :value="it.estimated"
+                                                        max="100">
+                                                    </progress>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- RAW JSON -->
+                                    <div v-if="activeTab === 'raw'"
+                                        class="h-56 overflow-auto rounded-xl border border-base-300 p-3 bg-base-100 text-xs font-mono">
+                                        <div v-if="rawEvents.length === 0" class="opacity-60">Belum ada data.</div>
+                                        <details v-for="(r, idx) in rawEvents" :key="idx" class="mb-2">
+                                            <summary class="cursor-pointer">
+                                                <span class="badge badge-ghost mr-2">#{{ idx + 1 }}</span>
+                                                {{ r.ts }} — <span class="capitalize">{{ r.type }}</span>
+                                            </summary>
+                                            <pre class="mt-2">{{ r.pretty }}</pre>
+                                        </details>
+                                    </div>
+
+
+                                    <!-- Action -->
+                                    <div class="modal-action">
+                                        <button class="btn btn-outline btn-sm" @click="copyLogs"
+                                            :disabled="logs.length === 0">Copy
+                                            log</button>
+                                        <button class="btn btn-sm" @click="closeModal">Tutup</button>
+                                    </div>
+                                </div>
+                                <form method="dialog" class="modal-backdrop" @click="closeModal"><button>close</button>
+                                </form>
+                            </dialog>
+                        </div>
+                        <!-- Destructive: taruh paling kanan & hanya superadmin -->
+                        <div class="ms-auto" v-if="isSuperadminActive">
+                            <button class="btn btn-sm btn-outline btn-error" @click="doDeleteProsesSiswaPerkelas()">
+                                Delete Per Kelas V3
+                            </button>
+                        </div>
+                    </div>
+                </div>
                 <!-- PROSES -->
                 <div class="flex items-start gap-3">
                     <div class="w-28 shrink-0 text-xs uppercase font-semibold text-base-content/60 pt-2">
@@ -1254,3 +1797,16 @@ const formatTanggal = "DD MMMM YYYY HH:mm:ss";
         </div>
     </span>
 </template>
+
+
+<style scoped>
+/* Opsional: haluskan scrollbar area log */
+div[class*="overflow-auto"]::-webkit-scrollbar {
+    height: 8px;
+    width: 8px;
+}
+
+div[class*="overflow-auto"]::-webkit-scrollbar-thumb {
+    border-radius: 9999px;
+}
+</style>

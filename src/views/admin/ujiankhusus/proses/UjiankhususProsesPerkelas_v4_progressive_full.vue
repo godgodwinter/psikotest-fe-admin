@@ -19,16 +19,16 @@ const getSekolahAktif = ref({ kelas_id: 10 }); // SESUAIKAN sumbernya
 
 // === State UI SSE ===
 const isStreaming = ref(false);
-const status = ref < "idle" | "queued" | "running" | "done" | "failed" > ("idle");
+const status = ref<"idle" | "queued" | "running" | "done" | "failed">("idle");
 const step = ref(0);
 const max = ref(0);
 const percent = ref(0);
 const counts = ref({ success: 0, failed: 0 });
-const lastStepStatus = ref < "processing" | "success" | "failed" | null > (null);
-const logs = ref < Array < { index: number; status: string; error?: string | null } >> ([]);
+const lastStepStatus = ref<"processing" | "success" | "failed" | null>(null);
+const logs = ref<Array<{ index: number; status: string; error?: string | null }>>([]);
 
-const jobId = ref < string | null > (null);
-const jobKey = ref < string | null > (null);
+const jobId = ref<string | null>(null);
+const jobKey = ref<string | null>(null);
 let es: EventSource | null = null;
 
 const kelasId = computed(() => getSekolahAktif.value.kelas_id);
