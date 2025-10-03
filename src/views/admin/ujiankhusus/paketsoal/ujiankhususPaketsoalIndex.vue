@@ -51,6 +51,16 @@ const columns = [
         field: "krList",
         type: "String",
     },
+    {
+        label: "ID",
+        field: "_id",
+        type: "String",
+    },
+    {
+        label: "label",
+        field: "label",
+        type: "String",
+    },
     // {
     //     label: "Status",
     //     field: "status",
@@ -169,7 +179,7 @@ const doAktifkanPaket = async (id, nama) => {
 <template>
     <div>
         <article class="prose lg:prose-sm">
-            <h1>PAKETSOAL UJIANKHUSUS</h1>
+            <h1>PAKETSOAL UJIANKHUSUS IQ 8KM / IST / HSPQ</h1>
             <h5>UJIAN KHUSUS</h5>
             <div v-if="paketsoal_aktif">
                 <h4>PAKETSOAL AKTIF : {{ paketsoal_aktif?.nama }}</h4>
@@ -187,16 +197,16 @@ const doAktifkanPaket = async (id, nama) => {
                     <div class="bg-white shadow rounded-lg px-4 py-4">
                         <div v-if="data">
                             <vue-good-table :line-numbers="true" :columns="columns" :rows="data" :search-options="{
-                enabled: true,
-            }" :pagination-options="{
-                enabled: true,
-                perPageDropdown: [50, 100, 150, 200],
-            }" styleClass="vgt-table striped bordered condensed" class="py-0">
+                                enabled: true,
+                            }" :pagination-options="{
+                                enabled: true,
+                                perPageDropdown: [50, 100, 150, 200],
+                            }" styleClass="vgt-table striped bordered condensed" class="py-0">
                                 <template #table-actions>
                                     <div class="space-x-1 space-y-1 gap-1">
                                         <router-link :to="{
-                name: 'admin-ujiankhusus-paketsoal-tambah',
-            }">
+                                            name: 'admin-ujiankhusus-paketsoal-tambah',
+                                        }">
                                             <button class="btn btn-sm btn-primary tooltip" data-tip="Tambah">
                                                 TAMBAH
                                             </button>
@@ -210,7 +220,7 @@ const doAktifkanPaket = async (id, nama) => {
                                 </template>
                                 <template #table-row="props">
                                     <span v-if="props.column.field == 'actions'">
-                                        <div class="text-sm font-medium text-center flex justify-center space-x-1">
+                                        <div class="text-sm font-medium text-center flex justify-start space-x-1">
                                             <RouterLink
                                                 :to="{ name: 'admin-ujiankhusus-paketsoal-aspek_detail', params: { paketsoal_id: props.row.id } }">
                                                 <button class="btn btn-sm btn-primary tooltip" data-tip="Detail Soal">
@@ -232,7 +242,8 @@ const doAktifkanPaket = async (id, nama) => {
                                                 </svg></button>
                                             <div v-if="isSuperadminActive">
                                                 <button class="btn btn-sm btn-danger"
-                                                    @click="doDeleteData(props.row.id, props.index)">
+                                                    @click="doDeleteData(props.row.id, props.index)"
+                                                    v-if="props.row.label == null || props.row.label == '' || props.row.label == undefined">
                                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5"
                                                         viewBox="0 0 20 20" fill="currentColor">
                                                         <path fill-rule="evenodd"
@@ -242,10 +253,16 @@ const doAktifkanPaket = async (id, nama) => {
                                                 </button>
                                             </div>
 
-
-                                            <button class="btn btn-sm btn-info tooltip" data-tip="Aktifkan Paket"
+                                            <!-- {{ props.row.label }} -->
+                                            <!-- <button class="btn btn-sm btn-info tooltip" data-tip="Aktifkan Paket"
                                                 @click="doAktifkanPaket(props.row.id, props.row.nama)">
-                                                Aktifkan </button>
+                                                Aktifkan </button> -->
+                                            <button class="btn btn-sm btn-info tooltip" data-tip="Aktifkan Paket"
+                                                @click="doAktifkanPaket(props.row.id, props.row.nama)"
+                                                v-if="props.row.label == null || props.row.label == '' || props.row.label == undefined">
+                                                Aktifkan
+                                            </button>
+
 
                                         </div>
                                     </span>
