@@ -1,6 +1,6 @@
 <script setup>
 import Api from "@/axios/axiosIst";
-import { ref, defineAsyncComponent, computed, onMounted, watch, nextTick } from "vue";
+import { ref, defineAsyncComponent, computed } from "vue";
 import BreadCrumb from "@/components/atoms/BreadCrumb.vue";
 import BreadCrumbSpace from "@/components/atoms/BreadCrumbSpace.vue";
 import ButtonEdit from "@/components/atoms/ButtonEdit.vue";
@@ -57,7 +57,6 @@ const getData = async () => {
         siswa.value = response.data;
         if (response.data?.tambahan_saran) {
             dataForm.value = response.data?.tambahan_saran?.dataTambahan
-
         }
         // console.log(dataForm.value);
         isLoading.value = false;
@@ -479,12 +478,6 @@ const onSubmit = async (values) => {
         jurusan_1: dataForm.value.jurusan_1,
         studi_2: dataForm.value.studi_2,
         jurusan_2: dataForm.value.jurusan_2,
-        // !baru
-        studi_1_baru: dataForm.value.studi_1_baru,
-        jurusan_1_baru: dataForm.value.jurusan_1_baru,
-        studi_2_baru: dataForm.value.studi_2_baru,
-        jurusan_2_baru: dataForm.value.jurusan_2_baru,
-        // !baru-end
         fakultas_1: dataForm.value.fakultas_1,
         prodi_1: dataForm.value.prodi_1,
         fakultas_2: dataForm.value.fakultas_2,
@@ -508,38 +501,6 @@ const onSubmit = async (values) => {
 // const sortedDataAspek_8km = computed(() => {
 //     return dataAspek_8km.value.sort((a, b) => b.persen - a.persen)
 // })
-
-
-const textareaRef = ref(null)
-
-const autoResize = () => {
-    const el = textareaRef.value
-    if (!el) return
-    el.style.height = 'auto'
-    el.style.height = el.scrollHeight + 'px'
-}
-
-// pastikan tinggi juga menyesuaikan saat pertama kali mount / load data
-onMounted(() => nextTick(autoResize))
-
-// jika `dataForm.jurusan_2` berubah dari luar (misalnya edit data lama)
-watch(() => dataForm.value.jurusan_2, () => nextTick(autoResize))
-
-
-const do_generate_data_tambahan = async (values) => {
-    try {
-        if (confirm("Data sebelumnya akan terhapus. Apakah anda yakin generate data ini?")) {
-            const response = await ApiUjianKhusus.post(`update_data/ist_tambahan/fn_get_persiswa/siswa/${siswa_id.value}/generate`);
-            // console.log(response);
-            Toast.success("Info", "Data berhasil digenerate!");
-            // router.push({ name: "admin-ujiankhusus-banksoal-aspek" });
-            // return true;
-        }
-        getData()
-    } catch (error) {
-        console.error(error);
-    }
-};
 </script>
 
 <template>
@@ -560,9 +521,6 @@ const do_generate_data_tambahan = async (values) => {
                             d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
                     </svg>
                 </button> -->
-                <button class="btn btn-success hover:shadow-lg shadow   hover:text-gray-100 gap-2"
-                    @click="do_generate_data_tambahan()">GENERATE
-                    DATA TAMBAHAN</button>
                 <button class="btn hover:shadow-lg shadow   hover:text-gray-100 gap-2"
                     @click="router.go(-1)">Kembali</button>
 
@@ -744,118 +702,153 @@ const do_generate_data_tambahan = async (values) => {
                                 </table>
                             </div>
                         </div>
-                        <div class="md:col-span-2">
+                        <div class="grid-cols-1   md:col-span-2">
                             <Form v-slot="{ errors }" @submit="onSubmit">
-                                <div class="shadow rounded-lg p-6 bg-base-100 space-y-6">
-
-                                    <!-- Bagian Kesimpulan -->
-                                    <div class="space-y-2">
-                                        <h3 class="font-semibold text-lg border-b pb-1">Tambahan Kesimpulan</h3>
-                                        <label class="form-control">
-                                            <span class="label-text mb-1">Untuk semua jenjang</span>
-                                            <textarea v-model="dataForm.kesimpulan_saran_tambahan"
-                                                class="textarea textarea-bordered h-28 w-full"
-                                                placeholder="Tambahkan kesimpulan umum di sini..."></textarea>
-                                        </label>
-                                    </div>
-
-
-                                    <!-- Bagian Kelas 9 & 10 -->
-                                    <div class="space-y-4">
-                                        <h3 class="font-semibold text-lg border-b pb-1">Kelas 9 & 10</h3>
-                                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                            <label class="form-control w-full">
-                                                <span class="label-text mb-1">Studi 1</span>
-                                                <Field v-model="dataForm.studi_1" name="studi_1" type="text"
-                                                    class="input input-bordered w-full" placeholder="contoh: SMA" />
-                                            </label>
-
-                                            <label class="form-control w-full md:col-span-2">
-                                                <span class="label-text mb-1">Jurusan 1</span>
-                                                <textarea v-model="dataForm.jurusan_1"
-                                                    class="textarea textarea-bordered h-24 w-full"
-                                                    placeholder="contoh : IPA/IPS"></textarea>
-                                            </label>
-
-                                            <label class="form-control w-full">
-                                                <span class="label-text mb-1">Studi 2</span>
-                                                <Field v-model="dataForm.studi_2" name="studi_2" type="text"
-                                                    class="input input-bordered w-full" placeholder="contoh: SMK" />
-                                            </label>
-
-                                            <label class="form-control w-full md:col-span-2">
-                                                <span class="label-text mb-1">Jurusan 2</span>
-                                                <textarea v-model="dataForm.jurusan_2" ref="textareaRef"
-                                                    @input="autoResize" class="textarea textarea-bordered w-full"
-                                                    placeholder="contoh : Teknik Pemesinan, Teknik Otomotif, Teknologi Industri, "></textarea>
+                                <div class=" shadow rounded-lg p-1  ">
+                                    <div class="grid grid-cols-2 gap-2">
+                                        <div class="grid-cols-1 md:col-span-2">
+                                            <label class="form-control">
+                                                <div class="label">
+                                                    <span class="label-text">Tambahan Kesimpulan -> utk semua
+                                                        jenjang</span>
+                                                </div>
+                                                <textarea v-model="dataForm.kesimpulan_saran_tambahan"
+                                                    class="textarea textarea-bordered h-24" placeholder=""></textarea>
+                                                <div class="label">
+                                                </div>
                                             </label>
                                         </div>
-                                    </div>
-
-                                    <!-- Bagian Kelas 9 & 10 -->
-                                    <div class="space-y-4">
-                                        <h3 class="font-semibold text-lg border-b pb-1">Kelas 9 & 10 // BELUM DIGUNAKAN
-                                        </h3>
-                                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                            <label class="form-control w-full">
-                                                <span class="label-text mb-1">Studi 1 </span>
-                                                <Field v-model="dataForm.studi_1_baru" name="studi_1_baru" type="text"
-                                                    class="input input-bordered w-full" placeholder="contoh: SMA" />
-                                            </label>
-
-                                            <label class="form-control w-full md:col-span-2">
-                                                <span class="label-text mb-1">Jurusan 1</span>
-                                                <textarea v-model="dataForm.jurusan_1_baru"
-                                                    class="textarea textarea-bordered h-24 w-full"
-                                                    placeholder="contoh : IPA/IPS"></textarea>
-                                            </label>
-
-                                            <label class="form-control w-full">
-                                                <span class="label-text mb-1">Studi 2</span>
-                                                <Field v-model="dataForm.studi_2_baru" name="studi_2_baru" type="text"
-                                                    class="input input-bordered w-full" placeholder="contoh: SMK" />
-                                            </label>
-
-                                            <label class="form-control w-full md:col-span-2">
-                                                <span class="label-text mb-1">Jurusan 2</span>
-                                                <textarea v-model="dataForm.jurusan_2_baru"
-                                                    class="textarea textarea-bordered w-full"
-                                                    placeholder="contoh : Teknik Pemesinan, Teknik Otomotif, Teknologi Industri, "></textarea>
+                                        <div class="grid-cols-1">
+                                            <label class="form-control w-full max-w-xs">
+                                                <div class="label">
+                                                    <span class="label-text">studi_1 -> kelas 9 & 10</span>
+                                                </div>
+                                                <Field v-model="dataForm.studi_1" name="studi_1" type="string"
+                                                    class="input input-bordered w-full max-w-xs" />
+                                                <div class="label">
+                                                </div>
                                             </label>
                                         </div>
-                                    </div>
+                                        <div class="grid-cols-1">
+                                            <label class="form-control w-full max-w-xs">
+                                                <div class="label">
+                                                    <span class="label-text">jurusan_1 -> kelas 9 & 10</span>
+                                                </div>
 
-                                    <!-- Bagian Kelas 11 & 12 -->
-                                    <div class="space-y-4">
-                                        <h3 class="font-semibold text-lg border-b pb-1">Kelas 11 & 12 (Cetak V5)</h3>
-                                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                            <label class="form-control w-full">
-                                                <span class="label-text mb-1">Fakultas</span>
-                                                <Field v-model="dataForm.fakultas_1112" name="fakultas_1112" type="text"
-                                                    class="input input-bordered w-full"
-                                                    placeholder="contoh: fakultas 11,12" />
-                                            </label>
-
-                                            <label class="form-control w-full md:col-span-2">
-                                                <span class="label-text mb-1">Mata Pelajaran</span>
-                                                <textarea v-model="dataForm.fakultas_1112_mapel"
-                                                    class="textarea textarea-bordered h-24 w-full"
-                                                    placeholder="mapel untuk tipe kelas 11,12"></textarea>
+                                                <Field v-model="dataForm.jurusan_1" name="jurusan_1" type="string"
+                                                    class="input input-bordered w-full max-w-xs" />
+                                                <div class="label">
+                                                </div>
                                             </label>
                                         </div>
-                                    </div>
 
-                                    <!-- Tombol -->
-                                    <div class="flex justify-end gap-3 pt-6 border-t">
-                                        <button type="button" class="btn btn-secondary"
-                                            @click="router.go(-1)">Batal</button>
-                                        <button class="btn btn-primary" type="submit">Simpan</button>
-                                    </div>
+                                        <div class="grid-cols-1">
+                                            <label class="form-control w-full max-w-xs">
+                                                <div class="label">
+                                                    <span class="label-text">studi_2 -> kelas 9 & 10</span>
+                                                </div>
 
+                                                <Field v-model="dataForm.studi_2" name="studi_2" type="string"
+                                                    class="input input-bordered w-full max-w-xs" />
+                                                <div class="label">
+                                                </div>
+                                            </label>
+                                        </div>
+                                        <div class="grid-cols-1">
+                                            <label class="form-control w-full max-w-xs">
+                                                <div class="label">
+                                                    <span class="label-text">jurusan_2 -> kelas 9 & 10</span>
+                                                </div>
+                                                <Field v-model="dataForm.jurusan_2" name="jurusan_2" type="string"
+                                                    class="input input-bordered w-full max-w-xs" />
+                                                <div class="label">
+                                                </div>
+                                            </label>
+                                        </div>
+
+
+                                        <!-- <div class="grid-cols-1">
+                                            <label class="form-control w-full max-w-xs">
+                                                <div class="label">
+                                                    <span class="label-text">fakultas_1 -> kelas 10,11,12, umum</span>
+                                                </div>
+                                                <Field v-model="dataForm.fakultas_1" name="fakultas_1" type="string"
+                                                    class="input input-bordered w-full max-w-xs" />
+                                                <div class="label">
+                                                </div>
+                                            </label>
+                                        </div>
+                                        <div class="grid-cols-1">
+                                            <label class="form-control w-full max-w-xs">
+                                                <div class="label">
+                                                    <span class="label-text"> prodi_1 -> kelas 10,11,12, umum</span>
+                                                </div>
+                                                <Field v-model="dataForm.prodi_1" name="prodi_1" type="string"
+                                                    class="input input-bordered w-full max-w-xs" />
+                                                <div class="label">
+                                                </div>
+                                            </label>
+                                        </div>
+
+
+                                        <div class="grid-cols-1">
+                                            <label class="form-control w-full max-w-xs">
+                                                <div class="label">
+                                                    <span class="label-text">fakultas_2 -> kelas 10,11,12, umum</span>
+                                                </div>
+                                                <Field v-model="dataForm.fakultas_2" name="fakultas_2" type="string"
+                                                    class="input input-bordered w-full max-w-xs" />
+                                                <div class="label">
+                                                </div>
+                                            </label>
+                                        </div>
+                                        <div class="grid-cols-1">
+                                            <label class="form-control w-full max-w-xs">
+                                                <div class="label">
+                                                    <span class="label-text"> prodi_2 -> kelas 10,11,12, umum</span>
+                                                </div>
+                                                <Field v-model="dataForm.prodi_2" name="prodi_2" type="string"
+                                                    class="input input-bordered w-full max-w-xs" />
+                                                <div class="label">
+                                                </div>
+                                            </label>
+                                        </div> -->
+                                        <div class="grid-cols-1">
+                                            <label class="form-control w-full max-w-xs">
+                                                <div class="label">
+                                                    <span class="label-text">fakultas untuk tipe kelas 11,12 (Cetak
+                                                        V5)</span>
+                                                </div>
+                                                <Field v-model="dataForm.fakultas_1112" name="fakultas_1112"
+                                                    type="string" class="input input-bordered w-full max-w-xs" />
+                                                <div class="label">
+                                                </div>
+                                            </label>
+                                        </div>
+                                        <div class="grid-cols-1">
+                                            <label class="form-control w-full max-w-xs">
+                                                <div class="label">
+                                                    <span class="label-text"> mapel untuk tipe kelas 11,12 (Cetak
+                                                        V5)</span>
+                                                </div>
+                                                <Field v-model="dataForm.fakultas_1112_mapel" name="fakultas_1112_mapel"
+                                                    type="string" class="input input-bordered w-full max-w-xs" />
+                                                <div class="label">
+                                                </div>
+                                            </label>
+                                        </div>
+
+
+                                    </div>
+                                    <div class="w-full flex justify-end py-10 px-10 gap-4">
+                                        <span @click="router.go(-1)">
+                                            <span class="btn btn-secondary">Batal</span></span>
+                                        <button class="btn btn-primary">Simpan</button>
+                                    </div>
                                 </div>
                             </Form>
-                        </div>
 
+                        </div>
 
                     </div>
                 </div>
