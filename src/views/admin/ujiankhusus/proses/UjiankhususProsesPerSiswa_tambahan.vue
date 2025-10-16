@@ -794,23 +794,25 @@ const do_generate_data_tambahan = async (values) => {
 
                                     <!-- Bagian Kelas 9 & 10 -->
                                     <div class="space-y-4">
-                                        <h3 class="font-semibold text-lg border-b pb-1">Kelas 9 & 10 // BELUM DIGUNAKAN
+                                        <h3 class="font-semibold text-lg border-b pb-1">Kelas 9 & 10 // <span
+                                                class="text-red-500">UNTUK CETAK
+                                                MINAT BAKAT V3 SAJA</span>
                                         </h3>
                                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                            <label class="form-control w-full">
+                                            <!-- <label class="form-control w-full">
                                                 <span class="label-text mb-1">Studi 1 </span>
                                                 <Field v-model="dataForm.studi_1_baru" name="studi_1_baru" type="text"
                                                     class="input input-bordered w-full" placeholder="contoh: SMA" />
-                                            </label>
+                                            </label> -->
 
                                             <label class="form-control w-full md:col-span-2">
                                                 <span class="label-text mb-1">Jurusan 1</span>
                                                 <textarea v-model="dataForm.jurusan_1_baru"
                                                     class="textarea textarea-bordered h-24 w-full"
-                                                    placeholder="contoh : IPA/IPS"></textarea>
+                                                    placeholder="contoh : IPA dipertimbangkan jurusan IPS"></textarea>
                                             </label>
 
-                                            <label class="form-control w-full">
+                                            <!-- <label class="form-control w-full">
                                                 <span class="label-text mb-1">Studi 2</span>
                                                 <Field v-model="dataForm.studi_2_baru" name="studi_2_baru" type="text"
                                                     class="input input-bordered w-full" placeholder="contoh: SMK" />
@@ -821,7 +823,7 @@ const do_generate_data_tambahan = async (values) => {
                                                 <textarea v-model="dataForm.jurusan_2_baru"
                                                     class="textarea textarea-bordered w-full"
                                                     placeholder="contoh : Teknik Pemesinan, Teknik Otomotif, Teknologi Industri, "></textarea>
-                                            </label>
+                                            </label> -->
                                         </div>
                                     </div>
 
