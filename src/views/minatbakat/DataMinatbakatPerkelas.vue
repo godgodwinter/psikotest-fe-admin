@@ -102,6 +102,12 @@ const columns = [
         field: "nama",
         type: "String",
     },
+
+    {
+        label: "Tambahan",
+        field: "tambahan",
+        type: "String",
+    },
     {
         label: "minatbakat",
         field: "minatbakat",
@@ -320,6 +326,15 @@ const doCetakIstV3 = () => {
 
                                                 </button>
                                             </div> -->
+                                        </span>
+                                        <span v-else-if="props.column.field == 'tambahan'">
+                                            <RouterLink
+                                                :to="{ name: 'admin-sekolah-submenu-ujiankhusus-persiswa-tambahan', params: { sekolah_id, kelas_id, siswa_id: props.row.id } }">
+                                                <button class="btn btn-sm btn-warning tooltip" data-tip="MENU TAMBAHAN">
+                                                    <v-icon name="io-apps" />
+
+                                                </button>
+                                            </RouterLink>
                                         </span>
                                         <span v-else-if="props.column.field == 'minatbakat'">
                                             {{ props.row.minatbakat ? "Ada" : "-" }}

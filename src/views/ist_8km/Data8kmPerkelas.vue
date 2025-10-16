@@ -150,6 +150,11 @@ const columns = [
         type: "String",
     },
     {
+        label: "Tambahan",
+        field: "tambahan",
+        type: "String",
+    },
+    {
         label: "8km",
         field: "8km",
         type: "String",
@@ -541,6 +546,7 @@ const dashboard_doCetak_kewirausahaan = () => {
                                         </div>
                                     </template>
                                     <template #table-row="props">
+
                                         <span v-if="props.column.field == 'actions'">
                                             <!-- <div class="text-sm font-medium text-center flex justify-center space-x-1">
                                                 <button class="btn btn-sm btn-danger tooltip" data-tip="Caching UJIANSTUDI"
@@ -553,6 +559,17 @@ const dashboard_doCetak_kewirausahaan = () => {
 
                                                 </button>
                                             </div> -->
+                                        </span>
+
+                                        <span v-else-if="props.column.field == 'tambahan'">
+
+                                            <RouterLink
+                                                :to="{ name: 'admin-sekolah-submenu-ujiankhusus-persiswa-tambahan', params: { sekolah_id, kelas_id, siswa_id: props.row.id } }">
+                                                <button class="btn btn-sm btn-warning tooltip" data-tip="MENU TAMBAHAN">
+                                                    <v-icon name="io-apps" />
+
+                                                </button>
+                                            </RouterLink>
                                         </span>
                                         <span v-else-if="props.column.field == '8km'">
                                             {{ props.row.data_8km ? "Ada" : "-" }}

@@ -5,6 +5,7 @@ import { useRouter, useRoute } from "vue-router";
 import Toast from "@/components/lib/Toast";
 import { useAdminPagesStore } from '@/stores/admin/adminPagesStore'
 import ApiIst from "@/axios/axiosIst";
+import ApiUjianKhusus from "@/axios/axiosIst";
 
 import moment from "moment/min/moment-with-locales";
 import localization from "moment/locale/id";
@@ -240,6 +241,20 @@ const doCetakIstLengkap_v4_tanpa_aspek = () => {
         `${VITE_API_FE_REACT}ist_8km/v_ist_lengkap_v4/cetak/${getSekolahAktif.value.kelas_id}/true/tanpa_aspek`
     );
 }
+const do_generate_data_tambahan = async (values) => {
+    try {
+        if (confirm(" Apakah anda yakin generate data ini?")) {
+            const response = await ApiUjianKhusus.post(`update_data/ist_tambahan/fn_get_persiswa/kelas/${getSekolahAktif.value.kelas_id}/generate`);
+            console.log(response);
+            Toast.success("Info", "Data berhasil digenerate!");
+            // router.push({ name: "admin-ujiankhusus-banksoal-aspek" });
+            // return true;
+        }
+        getData()
+    } catch (error) {
+        console.error(error);
+    }
+};
 </script>
 <template>
     <span v-if="isLoading">
@@ -277,6 +292,11 @@ const doCetakIstLengkap_v4_tanpa_aspek = () => {
 
                 <button class="btn btn-sm btn-secondary" @click="doCetakIstLengkap_v4_tanpa_aspek()">
                     Cetak V4 Ist Lengkap Versi Lama ( Tanpa Aspek )</button>
+            </div>
+            <div class="space-x-2 space-y-2 py-2">
+
+                <button class="btn btn-sm btn-success" @click="do_generate_data_tambahan()">
+                    Generate DATA IST TAMBAHAN (TIDAK REPLACE/ SKIP JIKA SUDAH ADA)</button>
             </div>
 
             <div class="w-full bg-base-100 shadow-sm rounded-lg py-4 px-4">
