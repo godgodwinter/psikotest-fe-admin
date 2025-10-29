@@ -654,7 +654,7 @@ const do_generate_data_tambahan = async (values) => {
                                                         "scq"
                                                     )
                                                 )
-                                                    ) }}</span></td>
+                                            ) }}</span></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -762,7 +762,7 @@ const do_generate_data_tambahan = async (values) => {
 
                                     <!-- Bagian Kelas 9 & 10 -->
                                     <div class="space-y-4">
-                                        <h3 class="font-semibold text-lg border-b pb-1">Kelas 9 & 10</h3>
+                                        <h3 class="font-semibold text-lg border-b pb-1">Kelas 9 </h3>
                                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                             <label class="form-control w-full">
                                                 <span class="label-text mb-1">Studi 1</span>
@@ -794,7 +794,7 @@ const do_generate_data_tambahan = async (values) => {
 
                                     <!-- Bagian Kelas 9 & 10 -->
                                     <div class="space-y-4">
-                                        <h3 class="font-semibold text-lg border-b pb-1">Kelas 9 & 10 // <span
+                                        <h3 class="font-semibold text-lg border-b pb-1">Kelas 9 // <span
                                                 class="text-red-500">UNTUK CETAK
                                                 MINAT BAKAT V3 SAJA</span>
                                         </h3>
@@ -874,11 +874,11 @@ const do_generate_data_tambahan = async (values) => {
                                 <tr v-for="(item, index) in dataAspek_ist" :key="item.id">
                                     <td class="whitespace-nowrap w-1/12">{{ index + 1 }}. {{ item.detail }} ({{
                                         item.kode
-                                        }})</td>
+                                    }})</td>
                                     <td class="whitespace-nowrap w-1/12">:</td>
                                     <td class="whitespace-nowrap w-10/12"> {{ item.persen }} % - {{
                                         fn_singkatkan_ket(item.ket)
-                                        }} - iq = {{ item.val }}
+                                    }} - iq = {{ item.val }}
                                     </td>
                                 </tr>
 
@@ -899,7 +899,7 @@ const do_generate_data_tambahan = async (values) => {
                                 <tr v-for="(item, index) in dataAspek_8km" :key="item.id">
                                     <td class="whitespace-nowrap w-1/12">{{ index + 1 }}. {{ item.nama_lengkap }} ({{
                                         item.nama
-                                        }})</td>
+                                    }})</td>
                                     <td class="whitespace-nowrap w-1/12">:</td>
                                     <td class="whitespace-nowrap w-10/12"> {{ item.persen }} % - {{
 
