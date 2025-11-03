@@ -216,6 +216,37 @@ const AdminSekolahRoutes = [
               },
               // ! UJIANSTUDI-CFIT-END
 
+              // ! UJIANSTUDI-HSPQ
+              {
+                path: "/pages/admin/mastering/sekolah/:sekolah_id/submenu/kelas/:kelas_id?/hspq_only/v4",
+                name: "admin-sekolah-submenu-ujianhspq_only-v4",
+                component: () =>
+                  import(
+                    "@/views/admin/ujianhspq_only/proses/Ujianhspq_only_ProsesPerkelas_v4.vue"
+                  ),
+              },
+              // ! UJIANSTUDI-HSPQ-END
+              // ! UJIANSTUDI-HSPQ-IST-MINAT
+              {
+                path: "/pages/admin/mastering/sekolah/:sekolah_id/submenu/kelas/:kelas_id?/hspq_ist_minat/v4",
+                name: "admin-sekolah-submenu-ujianhspq_ist_minat-v4",
+                component: () =>
+                  import(
+                    "@/views/admin/ujianhspq_ist_minat/proses/Ujianhspq_ist_minat_ProsesPerkelas_v4.vue"
+                  ),
+              },
+              // ! UJIANSTUDI-HSPQ-END
+              // ! UJIANSTUDI-MINAT
+              {
+                path: "/pages/admin/mastering/sekolah/:sekolah_id/submenu/kelas/:kelas_id?/minat_only/v4",
+                name: "admin-sekolah-submenu-ujianminat_only-v4",
+                component: () =>
+                  import(
+                    "@/views/admin/ujianminat_only/proses/Ujianminat_only_ProsesPerkelas_v4.vue"
+                  ),
+              },
+              // ! UJIANSTUDI-MINAT-END
+
               // ! UJIAN-MMPI2
               {
                 path: "/pages/admin/mastering/sekolah/:sekolah_id/submenu/kelas/:kelas_id?/mmpi2/v4",
