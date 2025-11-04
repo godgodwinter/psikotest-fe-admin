@@ -766,7 +766,10 @@ const doGenerateHasilPersiswa_v4 = async (siswa_id) => {
         // kelas_id.value 
         try {
             isLoading.value = true;
-            const response = await ApiUjianKhusus.post(`/ujiankhusus/v4/sekolah/${getSekolahAktif.value.sekolah_id}/kelas/${getSekolahAktif.value.kelas_id}/siswa/${siswa_id}/do_generate_hasil_persiswa`);
+            let dataForm = {
+                replace: null
+            }
+            const response = await ApiUjianKhusus.post(`ujian/hspq/proses/generate/sekolah/${sekolah_id.value}/kelas/${getSekolahAktif.value.kelas_id}/siswa/${siswa_id}/generate/hasil`, dataForm);
             Toast.babeng("Berhasil", 'Generate Hasil Ujian telah berhasil!');
             getData();
             return true;
