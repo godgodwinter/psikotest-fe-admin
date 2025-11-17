@@ -176,7 +176,7 @@ const getData = async () => {
         console.log('#getData V3');
         console.log('====================================');
         isLoading.value = true;
-        const response = await ApiUjianKhusus.get(`/ujiankhusus/proses/v3/sekolah/${sekolah_id.value}/kelas/${getSekolahAktif.value.kelas_id}`);
+        const response = await ApiUjianKhusus.get(`/ujian/hspq/proses/sekolah/${sekolah_id.value}/kelas/${getSekolahAktif.value.kelas_id}`);
         data.value = response.data;
 
         // const tempData=response.data;
@@ -458,7 +458,7 @@ const doGenerateSiswaPerkelas = async (id, index) => {
         console.log('====================================');
         try {
             isLoading.value = true;
-            const response = await ApiUjianKhusus.post(`ujiankhusus/proses/v3/sekolah/${sekolah_id.value}/kelas/${getSekolahAktif.value.kelas_id}`, dataFormSend);
+            const response = await ApiUjianKhusus.post(`ujian/hspq/proses/generate/sekolah/${sekolah_id.value}/kelas/${getSekolahAktif.value.kelas_id}`, dataFormSend);
             Toast.babeng("Berhasil", 'Data berhasil digenerate!');
             getData();
         } catch (error) {
@@ -524,7 +524,7 @@ const doDeleteProsesSiswaPerkelas = async (id) => {
     if (confirm("Apakah anda yakin menghapus data ujian ini?")) {
         try {
             isLoading.value = true;
-            const response = await ApiUjianKhusus.delete(`ujiankhusus/proses/v3/sekolah/${sekolah_id.value}/kelas/${getSekolahAktif.value.kelas_id}`);
+            const response = await ApiUjianKhusus.delete(`ujian/hspq/proses/generate/sekolah/${sekolah_id.value}/kelas/${getSekolahAktif.value.kelas_id}`);
             Toast.babeng("Berhasil", 'Data berhasil di hapus!');
             getData();
         } catch (error) {
@@ -749,7 +749,7 @@ const doGenerateHasilPerkelas_v4 = async (replace = true) => {
         // kelas_id.value 
         try {
             isLoading.value = true;
-            const response = await ApiUjianKhusus.post(`/ujiankhusus/v4/sekolah/${getSekolahAktif.value.sekolah_id}/kelas/${getSekolahAktif.value.kelas_id}/do_generate_hasil_perkelas`, { replace: replace });
+            const response = await ApiUjianKhusus.post(`/ujian/hspq/proses/generate/sekolah/${getSekolahAktif.value.sekolah_id}/kelas/${getSekolahAktif.value.kelas_id}/generate/hasil`, { replace: replace });
             Toast.babeng("Berhasil", 'Generate Hasil Ujian telah berhasil!');
             getData();
             return true;
@@ -1567,21 +1567,40 @@ function upsertDetail(p) {
                                                         Caching #2
                                                     </button>
                                                 </div> -->
-                                                <button class="btn btn-sm  bg-cyan-500 text-white 
+                                                <span v-if="props.row.ujian_hspq" class="flex gap-2 justify-center">
+                                                    <button class="btn btn-sm  bg-cyan-500 text-white 
          hover:bg-blue-600  tooltip" data-tip="Generate hasil (BELUM FIX)"
-                                                    @click="doGenerateHasilPersiswa_v4(props.row.id)"
-                                                    v-if="isSuperadminActive">
-                                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                                        stroke="currentColor" stroke-width="1.75" stroke-linecap="round"
-                                                        stroke-linejoin="round" aria-label="Generate hasil ujian">
-                                                        <rect x="5" y="3" width="14" height="18" rx="2" />
-                                                        <path d="M8 13l2 2 5-5" />
-                                                        <!-- garis header tipis (opsional) -->
-                                                        <path d="M7.5 7.5h6" />
-                                                    </svg>
+                                                        @click="doGenerateHasilPersiswa_v4(props.row.id)"
+                                                        v-if="isSuperadminActive">
+                                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                                            stroke="currentColor" stroke-width="1.75"
+                                                            stroke-linecap="round" stroke-linejoin="round"
+                                                            aria-label="Generate hasil ujian">
+                                                            <rect x="5" y="3" width="14" height="18" rx="2" />
+                                                            <path d="M8 13l2 2 5-5" />
+                                                            <!-- garis header tipis (opsional) -->
+                                                            <path d="M7.5 7.5h6" />
+                                                        </svg>
 
 
-                                                </button>
+                                                    </button>
+                                                    <button class="btn btn-sm  bg-warning text-white 
+         hover:bg-emerald-600  tooltip" data-tip="Generate Update Tanggal "
+                                                        @click="doUpdateTanggalPersiswa(props.row.id)">
+                                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                                            stroke="currentColor" stroke-width="1.75"
+                                                            stroke-linecap="round" stroke-linejoin="round"
+                                                            aria-label="Generate update tanggal">
+                                                            <!-- kalender -->
+                                                            <rect x="3" y="5" width="18" height="16" rx="2" />
+                                                            <path d="M8 3v4M16 3v4M3 10h18" />
+                                                            <!-- refresh kecil di pojok kanan-bawah -->
+                                                            <path d="M15.5 17a3 3 0 1 0 2.5 1.5" />
+                                                            <path d="M18.5 16.5v2h-2" />
+                                                        </svg>
+
+                                                    </button>
+                                                </span>
                                                 <button class="btn btn-sm  bg-emerald-500 text-white 
          hover:bg-emerald-600  tooltip" data-tip="Generate UJIAN + CACHING 1 + 2 "
                                                     @click="doGenerateSiswa(props.row.id)">
@@ -1602,21 +1621,7 @@ function upsertDetail(p) {
                                                 </button>
 
 
-                                                <button class="btn btn-sm  bg-emerald-500 text-white 
-         hover:bg-emerald-600  tooltip" data-tip="Generate Update Tanggal "
-                                                    @click="doUpdateTanggalPersiswa(props.row.id)">
-                                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                                        stroke="currentColor" stroke-width="1.75" stroke-linecap="round"
-                                                        stroke-linejoin="round" aria-label="Generate update tanggal">
-                                                        <!-- kalender -->
-                                                        <rect x="3" y="5" width="18" height="16" rx="2" />
-                                                        <path d="M8 3v4M16 3v4M3 10h18" />
-                                                        <!-- refresh kecil di pojok kanan-bawah -->
-                                                        <path d="M15.5 17a3 3 0 1 0 2.5 1.5" />
-                                                        <path d="M18.5 16.5v2h-2" />
-                                                    </svg>
 
-                                                </button>
                                                 <button class="btn btn-sm btn-error tooltip" data-tip="Delete UJIAN"
                                                     @click="doDeleteProsesSiswa(props.row.id)"
                                                     v-if="isSuperadminActive">
@@ -1650,48 +1655,53 @@ function upsertDetail(p) {
                                                 </button> -->
                                             </div>
                                         </span>
-                                        <span v-else-if="props.column.field === 'reset'"
-                                            class="flex gap-2 justify-center">
+                                        <span v-else-if="props.column.field === 'reset'">
                                             <!-- RESET WAKTU -->
-                                            <button
-                                                class="btn btn-sm btn-square bg-cyan-500 text-white hover:bg-cyan-600 tooltip"
-                                                data-tip="RESET WAKTU" @click="do_reset_waktu_persiswa(props.row.id)">
-                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
-                                                    stroke="currentColor" stroke-width="1.75" stroke-linecap="round"
-                                                    stroke-linejoin="round" class="w-5 h-5" aria-label="Reset waktu">
-                                                    <path d="M9 3H5v4" />
-                                                    <path d="M5 7a9 9 0 1 0 4-4" />
-                                                    <circle cx="12" cy="12" r="7.5" />
-                                                    <path d="M12 8v4l3 2" />
-                                                </svg>
-                                            </button>
+                                            <span v-if="props.row.ujian_hspq" class="flex gap-2 justify-center">
+                                                <button
+                                                    class="btn btn-sm btn-square bg-cyan-500 text-white hover:bg-cyan-600 tooltip"
+                                                    data-tip="RESET WAKTU"
+                                                    @click="do_reset_waktu_persiswa(props.row.id)">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                                                        fill="none" stroke="currentColor" stroke-width="1.75"
+                                                        stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5"
+                                                        aria-label="Reset waktu">
+                                                        <path d="M9 3H5v4" />
+                                                        <path d="M5 7a9 9 0 1 0 4-4" />
+                                                        <circle cx="12" cy="12" r="7.5" />
+                                                        <path d="M12 8v4l3 2" />
+                                                    </svg>
+                                                </button>
 
-                                            <!-- RESET SALAH -->
-                                            <button
-                                                class="btn btn-sm btn-square bg-amber-200 text-black hover:bg-amber-300 tooltip"
-                                                data-tip="RESET SALAH" @click="do_reset_salah_persiswa(props.row.id)">
-                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
-                                                    stroke="currentColor" stroke-width="1.75" stroke-linecap="round"
-                                                    stroke-linejoin="round" class="w-5 h-5" aria-label="Reset salah">
-                                                    <path d="M11 7l-4 4 4 4" />
-                                                    <path d="M7 11h7a5 5 0 0 1 5 5" />
-                                                    <path d="M17.5 5.5l3 3m0-3l-3 3" />
-                                                </svg>
-                                            </button>
+                                                <!-- RESET SALAH -->
+                                                <button
+                                                    class="btn btn-sm btn-square bg-amber-200 text-black hover:bg-amber-300 tooltip"
+                                                    data-tip="RESET SALAH"
+                                                    @click="do_reset_salah_persiswa(props.row.id)">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                                                        fill="none" stroke="currentColor" stroke-width="1.75"
+                                                        stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5"
+                                                        aria-label="Reset salah">
+                                                        <path d="M11 7l-4 4 4 4" />
+                                                        <path d="M7 11h7a5 5 0 0 1 5 5" />
+                                                        <path d="M17.5 5.5l3 3m0-3l-3 3" />
+                                                    </svg>
+                                                </button>
 
-                                            <!-- RESET SEMUA -->
-                                            <button
-                                                class="btn btn-sm btn-square bg-rose-400 text-black hover:bg-rose-500 tooltip"
-                                                data-tip="RESET SEMUA" @click="do_reset_all_persiswa(props.row.id)">
-                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
-                                                    stroke="currentColor" stroke-width="1.75" stroke-linecap="round"
-                                                    stroke-linejoin="round" class="w-5 h-5" aria-label="Reset semua">
-                                                    <path d="M3 8a9 9 0 0 1 15-3l2 2" />
-                                                    <path d="M3 4v4h4" />
-                                                    <path d="M21 16a9 9 0 0 1-15 3l-2-2" />
-                                                    <path d="M21 20v-4h-4" />
-                                                </svg>
-                                            </button>
+                                                <!-- RESET SEMUA -->
+                                                <button
+                                                    class="btn btn-sm btn-square bg-rose-400 text-black hover:bg-rose-500 tooltip"
+                                                    data-tip="RESET SEMUA" @click="do_reset_all_persiswa(props.row.id)">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                                                        fill="none" stroke="currentColor" stroke-width="1.75"
+                                                        stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5"
+                                                        aria-label="Reset semua">
+                                                        <path d="M3 8a9 9 0 0 1 15-3l2 2" />
+                                                        <path d="M3 4v4h4" />
+                                                        <path d="M21 16a9 9 0 0 1-15 3l-2-2" />
+                                                        <path d="M21 20v-4h-4" />
+                                                    </svg>
+                                                </button></span>
                                         </span>
 
                                         <span v-else-if="props.column.field == 'hasil'">
@@ -1709,7 +1719,7 @@ function upsertDetail(p) {
 
                                         <span v-else-if="props.column.field == 'paketsoal_nama'">
                                             <!-- {{ props.row.progres?.created_at }} -->
-                                            {{ props.row.ujiankhusus ? props.row.ujiankhusus?.khusus_paketsoal_nama
+                                            {{ props.row.ujian_hspq ? props.row.ujian_hspq?.khusus_paketsoal_nama
                                                 :
                                                 "-" }}
                                         </span>
@@ -1719,25 +1729,25 @@ function upsertDetail(p) {
                                         </span>
                                         <span v-else-if="props.column.field == 'tgl_batas_mulai'">
                                             <!-- {{ props.row.progres?.created_at }} -->
-                                            {{ props.row.ujiankhusus?.tgl_batas_mulai ?
-                                                moment(props.row.ujiankhusus?.tgl_batas_mulai).format(formatTanggal)
+                                            {{ props.row.ujian_hspq?.tgl_batas_mulai ?
+                                                moment(props.row.ujian_hspq?.tgl_batas_mulai).format(formatTanggal)
                                                 : "-" }}
                                         </span>
                                         <span v-else-if="props.column.field == 'tgl_batas_terakhir'">
-                                            {{ props && props.row && props.row.ujiankhusus &&
-                                                props.row.ujiankhusus.tgl_batas_terakhir
+                                            {{ props && props.row && props.row.ujian_hspq &&
+                                                props.row.ujian_hspq.tgl_batas_terakhir
                                                 ?
-                                                moment(props.row.ujiankhusus?.tgl_batas_terakhir).format(formatTanggal)
+                                                moment(props.row.ujian_hspq?.tgl_batas_terakhir).format(formatTanggal)
                                                 : " - " }}
 
-                                            <!-- {{ props.row.ujiankhusus?.tgl_batas_terakhir }} -->
+                                            <!-- {{ props.row.ujian_hspq?.tgl_batas_terakhir }} -->
 
-                                            <!-- {{ props.row.ujiankhusus?.tgl_batas_terakhir
-                                                ? moment(props.row.ujiankhusus?.tgl_batas_terakhir).format("DD MMMM YYYY
+                                            <!-- {{ props.row.ujian_hspq?.tgl_batas_terakhir
+                                                ? moment(props.row.ujian_hspq?.tgl_batas_terakhir).format("DD MMMM YYYY
                                                                                         HH: mm: ss"):" - " }} -->
                                         </span>
                                         <span v-else-if="props.column.field == 'progres_status'">
-                                            {{ props.row.progres_status }}
+                                            {{ props.row.ujian_hspq?.aspek_detail[0]?.status || "-" }}
                                         </span>
                                         <span v-else-if="props.column.field == 'progres_angka'">
                                             {{ props.row.progres_angka?.progres }}/{{
