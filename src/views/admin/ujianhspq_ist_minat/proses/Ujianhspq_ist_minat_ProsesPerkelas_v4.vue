@@ -126,11 +126,16 @@ const columns = [
     },
 
 
-    // {
-    //     label: "progres",
-    //     field: "progres_angka",
-    //     type: "number",
-    // },
+    {
+        label: "IQ",
+        field: "iq",
+        type: "number",
+    },
+    {
+        label: "progres",
+        field: "progres_angka",
+        type: "number",
+    },
     {
         label: "Progres Status",
         field: "progres_status",
@@ -1567,7 +1572,8 @@ function upsertDetail(p) {
                                                         Caching #2
                                                     </button>
                                                 </div> -->
-                                                <span v-if="props.row.ujian_hspq" class="flex gap-2 justify-center">
+                                                <span v-if="props.row.ujian_hspq_ist_minat"
+                                                    class="flex gap-2 justify-center">
                                                     <button class="btn btn-sm  bg-cyan-500 text-white 
          hover:bg-blue-600  tooltip" data-tip="Generate hasil (BELUM FIX)"
                                                         @click="doGenerateHasilPersiswa_v4(props.row.id)"
@@ -1656,67 +1662,43 @@ function upsertDetail(p) {
                                             </div>
                                         </span>
                                         <span v-else-if="props.column.field === 'reset'">
+
                                             <!-- RESET WAKTU -->
                                             <span v-if="props.row.ujian_hspq_ist_minat"
                                                 class="flex gap-2 justify-center">
-                                                <button
-                                                    class="btn btn-sm btn-square bg-cyan-500 text-white hover:bg-cyan-600 tooltip"
-                                                    data-tip="RESET WAKTU"
-                                                    @click="do_reset_waktu_persiswa(props.row.id)">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                                                        fill="none" stroke="currentColor" stroke-width="1.75"
-                                                        stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5"
-                                                        aria-label="Reset waktu">
-                                                        <path d="M9 3H5v4" />
-                                                        <path d="M5 7a9 9 0 1 0 4-4" />
-                                                        <circle cx="12" cy="12" r="7.5" />
-                                                        <path d="M12 8v4l3 2" />
-                                                    </svg>
-                                                </button>
-
-                                                <!-- RESET SALAH -->
-                                                <button
-                                                    class="btn btn-sm btn-square bg-amber-200 text-black hover:bg-amber-300 tooltip"
-                                                    data-tip="RESET SALAH"
-                                                    @click="do_reset_salah_persiswa(props.row.id)">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                                                        fill="none" stroke="currentColor" stroke-width="1.75"
-                                                        stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5"
-                                                        aria-label="Reset salah">
-                                                        <path d="M11 7l-4 4 4 4" />
-                                                        <path d="M7 11h7a5 5 0 0 1 5 5" />
-                                                        <path d="M17.5 5.5l3 3m0-3l-3 3" />
-                                                    </svg>
-                                                </button>
-
-                                                <!-- RESET SEMUA -->
-                                                <button
-                                                    class="btn btn-sm btn-square bg-rose-400 text-black hover:bg-rose-500 tooltip"
-                                                    data-tip="RESET SEMUA" @click="do_reset_all_persiswa(props.row.id)">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                                                        fill="none" stroke="currentColor" stroke-width="1.75"
-                                                        stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5"
-                                                        aria-label="Reset semua">
-                                                        <path d="M3 8a9 9 0 0 1 15-3l2 2" />
-                                                        <path d="M3 4v4h4" />
-                                                        <path d="M21 16a9 9 0 0 1-15 3l-2-2" />
-                                                        <path d="M21 20v-4h-4" />
-                                                    </svg>
-                                                </button></span>
-                                        </span>
-
-                                        <span v-else-if="props.column.field == 'hasil'">
-                                            <div class="text-sm font-medium text-center flex justify-center space-x-1">
                                                 <RouterLink
-                                                    :to="{ name: 'admin-sekolah-submenu-ujiankhusus-persiswa-reset-v4', params: { sekolah_id, kelas_id, siswa_id: props.row.id } }">
+                                                    :to="{ name: 'admin-sekolah-submenu-ujianhspq_ist_minat-v4-reset', params: { sekolah_id, kelas_id, siswa_id: props.row.id } }">
                                                     <button class="btn btn-sm btn-warning tooltip"
                                                         data-tip="MENU RESET v4">
+                                                        MENU RESET
+                                                        <!-- <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                                                            fill="none" stroke="currentColor" stroke-width="1.75"
+                                                            stroke-linecap="round" stroke-linejoin="round"
+                                                            class="w-5 h-5" aria-label="Reset semua">
+                                                            <path d="M3 8a9 9 0 0 1 15-3l2 2" />
+                                                            <path d="M3 4v4h4" />
+                                                            <path d="M21 16a9 9 0 0 1-15 3l-2-2" />
+                                                            <path d="M21 20v-4h-4" />
+                                                        </svg> -->
+
+                                                    </button>
+                                                </RouterLink>
+
+                                            </span>
+                                        </span>
+
+                                        <!-- <span v-else-if="props.column.field == 'hasil'">
+                                            <div class="text-sm font-medium text-center flex justify-center space-x-1">
+                                                <RouterLink
+                                                    :to="{ name: 'admin-sekolah-submenu-ujianhspq_ist_minat-v4-reset', params: { sekolah_id, kelas_id, siswa_id: props.row.id } }">
+                                                    <button class="btn btn-sm btn-warning tooltip"
+                                                        data-tip="MENU RESET ">
                                                         V4
 
                                                     </button>
                                                 </RouterLink>
                                             </div>
-                                        </span>
+                                        </span> -->
 
                                         <span v-else-if="props.column.field == 'paketsoal_nama'">
                                             <!-- {{ props.row.progres?.created_at }} -->
@@ -1736,24 +1718,17 @@ function upsertDetail(p) {
                                                 : "-" }}
                                         </span>
                                         <span v-else-if="props.column.field == 'tgl_batas_terakhir'">
-                                            {{ props && props.row && props.row.ujian_hspq &&
-                                                props.row.ujian_hspq.tgl_batas_terakhir
-                                                ?
+                                            {{ props.row.ujian_hspq_ist_minat?.tgl_batas_terakhir ?
                                                 moment(props.row.ujian_hspq_ist_minat?.tgl_batas_terakhir).format(formatTanggal)
-                                                : " - " }}
-
-                                            <!-- {{ props.row.ujian_hspq_ist_minat?.tgl_batas_terakhir }} -->
-
-                                            <!-- {{ props.row.ujian_hspq_ist_minat?.tgl_batas_terakhir
-                                                ? moment(props.row.ujian_hspq_ist_minat?.tgl_batas_terakhir).format("DD MMMM YYYY
-                                                                                        HH: mm: ss"):" - " }} -->
+                                                : "-" }}
                                         </span>
                                         <span v-else-if="props.column.field == 'progres_status'">
                                             {{ props.row.ujian_hspq_ist_minat?.aspek_detail[0]?.status || "-" }}
                                         </span>
                                         <span v-else-if="props.column.field == 'progres_angka'">
-                                            {{ props.row.progres_angka?.progres }}/{{
-                                                props.row.progres_angka?.total }}
+                                            <span v-if="props.row.progres_angka?.total">
+                                                {{ props.row.progres_angka?.progress }}/{{
+                                                    props.row.progres_angka?.total }}</span>
                                         </span>
                                         <span v-else-if="props.column.field == 'username'">
                                             <div class="flex justify-center gap-2">

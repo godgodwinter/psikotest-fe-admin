@@ -1389,7 +1389,7 @@ function upsertDetail(p) {
                                             Detail Step
                                             <span v-if="detailItems.length" class="badge badge-ghost ml-2">{{
                                                 detailItems.length
-                                            }}</span>
+                                                }}</span>
                                         </a>
                                         <a role="tab" class="tab" :class="{ 'tab-active': activeTab === 'raw' }"
                                             @click="activeTab = 'raw'">Raw JSON</a>
@@ -1457,7 +1457,7 @@ function upsertDetail(p) {
                                                             <span class="font-medium">{{ it.phase || '-' }}</span>
                                                             <span v-if="it.nama" class="opacity-70"> • </span>
                                                             <span v-if="it.nama" class="font-medium">{{ it.nama
-                                                            }}</span>
+                                                                }}</span>
                                                         </div>
 
                                                         <div class="ml-auto text-xs opacity-60 font-mono">{{ it.ts }}

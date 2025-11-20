@@ -235,6 +235,14 @@ const AdminSekolahRoutes = [
                     "@/views/admin/ujianhspq_ist_minat/proses/Ujianhspq_ist_minat_ProsesPerkelas_v4.vue"
                   ),
               },
+              {
+                path: "/pages/admin/mastering/sekolah/:sekolah_id/submenu/kelas/:kelas_id?/hspq_ist_minat/v4/siswa/:siswa_id/reset",
+                name: "admin-sekolah-submenu-ujianhspq_ist_minat-v4-reset",
+                component: () =>
+                  import(
+                    "@/views/admin/ujianhspq_ist_minat/proses/Ujianhspq_ist_minat_ProsesPerkelas_v4_reset.vue"
+                  ),
+              },
               // ! UJIANSTUDI-HSPQ-END
               // ! UJIANSTUDI-MINAT
               {

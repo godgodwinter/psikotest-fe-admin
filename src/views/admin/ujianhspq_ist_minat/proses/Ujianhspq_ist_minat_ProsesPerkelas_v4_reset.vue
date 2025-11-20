@@ -45,7 +45,7 @@ const isError = ref(false);
 const getData = async () => {
     try {
         isLoading.value = true;
-        const response = await Api.post(`/ujiankhusus/v4/sekolah/${sekolah_id.value}/kelas/${kelas_id.value}/siswa/${siswa_id.value}/get_proses`);
+        const response = await Api.get(`/ujian/hspq_ist_minat/proses/sekolah/${sekolah_id.value}/kelas/${kelas_id.value}/siswa/${siswa_id.value}/get_proses`);
         // const response = await Api.get(`/ujiankhusus/proses/v3/sekolah/${sekolah_id.value}/kelas/${kelas_id.value}/siswa/${siswa_id.value}`);
         // const response = await Api.get(`/ujiankhusus/proses/sekolah/${sekolah_id.value}/kelas/${kelas_id.value}/siswa/${siswa_id.value}`);
         siswa.value = response.data;
@@ -58,9 +58,9 @@ const getData = async () => {
             response.data.ujiankhusus.minatList.desc = "MINAT"
             data.value.push(response.data.ujiankhusus.minatList)
 
-            response.data.ujiankhusus.krList.tipe = "kr"
-            response.data.ujiankhusus.krList.desc = "KR"
-            data.value.push(response.data.ujiankhusus.krList)
+            // response.data.ujiankhusus.krList.tipe = "kr"
+            // response.data.ujiankhusus.krList.desc = "KR"
+            // data.value.push(response.data.ujiankhusus.krList)
         }
         // data.value = response.data.ujiankhusus.aspek_detail;
         console.log(response.data.ujiankhusus.minatList, data.value);
@@ -100,7 +100,7 @@ const columns = [
     },
     {
         label: "Status",
-        field: "status",
+        field: "status_a",
         type: "String",
     },
     {
@@ -154,7 +154,7 @@ const doResetSalah = async (proses_detail_id,) => {
     if (confirm("Apakah anda yakin mereset jawban salah dan waktu data ini?")) {
 
         try {
-            const response = await Api.post(`/ujiankhusus/v4/sekolah/${sekolah_id.value}/kelas/${kelas_id.value}/siswa/${siswa_id.value}/do_reset_salah`, { siswa_id: siswa_id.value, mapel_id: proses_detail_id });
+            const response = await Api.post(`/ujian/hspq_ist_minat/proses/generate/sekolah/${sekolah_id.value}/kelas/${kelas_id.value}/siswa/${siswa_id.value}/reset/umum/salah`, { siswa_id: siswa_id.value, mapel_id: proses_detail_id });
             // const response = await Api.post(`/ujiankhusus/proses/v3/sekolah/${sekolah_id.value}/kelas/${kelas_id.value}/siswa/${siswa_id.value}/reset/${proses_detail_id}/salah`);
             Toast.babeng("Berhasil", 'Reset Salah berhasil!');
             getData();
@@ -170,7 +170,7 @@ const doResetWaktu = async (proses_detail_id,) => {
     if (confirm("Apakah anda yakin mereset jawban salah dan waktu data ini?")) {
 
         try {
-            const response = await Api.post(`/ujiankhusus/v4/sekolah/${sekolah_id.value}/kelas/${kelas_id.value}/siswa/${siswa_id.value}/do_reset_waktu`, { siswa_id: siswa_id.value, mapel_id: proses_detail_id });
+            const response = await Api.post(`/ujian/hspq_ist_minat/proses/generate/sekolah/${sekolah_id.value}/kelas/${kelas_id.value}/siswa/${siswa_id.value}/reset/umum/waktu`, { siswa_id: siswa_id.value, mapel_id: proses_detail_id });
             // const response = await Api.post(`/ujiankhusus/proses/v3/sekolah/${sekolah_id.value}/kelas/${kelas_id.value}/siswa/${siswa_id.value}/reset/${proses_detail_id}/waktu`);
             Toast.babeng("Berhasil", 'Reset Waktu berhasil!');
             getData();
@@ -184,7 +184,7 @@ const doForceFinish = async (proses_detail_id,) => {
     if (confirm("Apakah anda yakin mengakhiri proses pada paketsoal ini?")) {
 
         try {
-            const response = await Api.post(`/ujiankhusus/v4/sekolah/${sekolah_id.value}/kelas/${kelas_id.value}/siswa/${siswa_id.value}/do_finish`, { siswa_id: siswa_id.value, mapel_id: proses_detail_id });
+            const response = await Api.post(`/ujian/hspq_ist_minat/proses/generate/sekolah/${sekolah_id.value}/kelas/${kelas_id.value}/siswa/${siswa_id.value}/reset/umum/do_finish`, { siswa_id: siswa_id.value, mapel_id: proses_detail_id });
             // const response = await Api.post(`/ujiankhusus/proses/v3/sekolah/${sekolah_id.value}/kelas/${kelas_id.value}/siswa/${siswa_id.value}/reset/${proses_detail_id}/forceFinish`);
             Toast.babeng("Berhasil", 'Reset Waktu berhasil!');
             getData();
@@ -198,7 +198,7 @@ const doResetAll = async (proses_detail_id,) => {
     if (confirm("Apakah anda yakin mereset jawban salah dan waktu data ini?")) {
 
         try {
-            const response = await Api.post(`/ujiankhusus/v4/sekolah/${sekolah_id.value}/kelas/${kelas_id.value}/siswa/${siswa_id.value}/do_reset_all`, { siswa_id: siswa_id.value, mapel_id: proses_detail_id });
+            const response = await Api.post(`/ujian/hspq_ist_minat/proses/generate/sekolah/${sekolah_id.value}/kelas/${kelas_id.value}/siswa/${siswa_id.value}/reset/umum/all`, { siswa_id: siswa_id.value, mapel_id: proses_detail_id });
             // const response = await Api.post(`/ujiankhusus/proses/v3/sekolah/${sekolah_id.value}/kelas/${kelas_id.value}/siswa/${siswa_id.value}/reset/${proses_detail_id}/semua`);
             Toast.babeng("Berhasil", 'Reset Waktu dan Semua jawaban berhasil dilakukan!');
             getData();
@@ -213,7 +213,7 @@ const minat_doResetWaktu = async (proses_detail_id,) => {
     if (confirm("Apakah anda yakin mereset jawban salah dan waktu data ini?")) {
 
         try {
-            const response = await Api.post(`/ujiankhusus/proses/v3/sekolah/${sekolah_id.value}/kelas/${kelas_id.value}/siswa/${siswa_id.value}/minat/reset/waktu`);
+            const response = await Api.post(`/ujian/hspq_ist_minat/proses/generate/sekolah/${sekolah_id.value}/kelas/${kelas_id.value}/siswa/${siswa_id.value}/reset/minat/waktu`);
             Toast.babeng("Berhasil", 'Reset Waktu Minat berhasil!');
             getData();
             return true;
@@ -226,7 +226,7 @@ const minat_doForceFinish = async (proses_detail_id,) => {
     if (confirm("Apakah anda yakin mengakhiri proses pada paketsoal ini?")) {
 
         try {
-            const response = await Api.post(`/ujiankhusus/proses/v3/sekolah/${sekolah_id.value}/kelas/${kelas_id.value}/siswa/${siswa_id.value}/minat/reset/forceFinish`);
+            const response = await Api.post(`/ujian/hspq_ist_minat/proses/generate/sekolah/${sekolah_id.value}/kelas/${kelas_id.value}/siswa/${siswa_id.value}/reset/minat/do_finish`);
             Toast.babeng("Berhasil", 'Reset Waktu Minat berhasil!');
             getData();
             return true;
@@ -239,7 +239,7 @@ const minat_doResetAll = async (proses_detail_id,) => {
     if (confirm("Apakah anda yakin mereset jawban salah dan waktu data ini?")) {
 
         try {
-            const response = await Api.post(`/ujiankhusus/proses/v3/sekolah/${sekolah_id.value}/kelas/${kelas_id.value}/siswa/${siswa_id.value}/minat/reset/all`);
+            const response = await Api.post(`/ujian/hspq_ist_minat/proses/generate/sekolah/${sekolah_id.value}/kelas/${kelas_id.value}/siswa/${siswa_id.value}/reset/minat/all`);
             Toast.babeng("Berhasil", 'Reset All Minat berhasil!');
             getData();
             return true;
@@ -330,7 +330,7 @@ const onSubmit = async (values) => {
         revisi_nilai: dataForm.value.revisi_nilai,
     };
     try {
-        const response = await ApiUjianKhusus.post(`ujiankhusus/revisi/v3/sekolah/${sekolah_id.value}/kelas/${kelas_id.value}/siswa/${siswa_id.value}`, dataFormSend);
+        const response = await ApiUjianKhusus.post(`/ujian/hspq_ist_minat/proses/generate/sekolah/${sekolah_id.value}/kelas/${kelas_id.value}/siswa/${siswa_id.value}/do_revisi_nilai/umum`, dataFormSend);
         // console.log(response);
         Toast.success("Info", "Data berhasil diupdate!");
         // router.push({ name: "admin-ujiankhusus-banksoal-aspek" });
@@ -347,7 +347,7 @@ const onSubmit = async (values) => {
         <div class="pt-4 px-10 md:flex justify-between">
             <div>
                 <span class="text-2xl sm:text-3xl leading-none font-bold text-base-content shadow-sm">MENU RESET
-                    UJIANKHUSUS V4
+                    UJIAN IST+HSPQ+MINAT
                 </span>
             </div>
             <div class="md:py-0 py-4 space-x-2 space-y-2">
@@ -547,47 +547,6 @@ const onSubmit = async (values) => {
                                                     </svg>
                                                 </button>
                                             </div>
-                                            <div v-else-if="props.row.tipe == 'kr'"
-                                                class="text-sm font-medium text-center flex justify-center space-x-1">
-
-                                                <button class="btn btn-sm btn-warning tooltip" data-tip="Finish V3"
-                                                    @click="kr_doForceFinish(props.row.khusus_banksoal_aspek_detail_id)">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none"
-                                                        viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-                                                        class="w-6 h-6">
-                                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                                            d="M9 12.75 11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 0 1-1.043 3.296 3.745 3.745 0 0 1-3.296 1.043A3.745 3.745 0 0 1 12 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 0 1-3.296-1.043 3.745 3.745 0 0 1-1.043-3.296A3.745 3.745 0 0 1 3 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 0 1 1.043-3.296 3.746 3.746 0 0 1 3.296-1.043A3.746 3.746 0 0 1 12 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 0 1 3.296 1.043 3.746 3.746 0 0 1 1.043 3.296A3.745 3.745 0 0 1 21 12Z" />
-                                                    </svg>
-                                                </button>
-                                                <button class="btn btn-sm btn-primary tooltip" data-tip="Reset Waktu V3"
-                                                    @click="kr_doResetWaktu(props.row.khusus_banksoal_aspek_detail_id)">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none"
-                                                        viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-                                                        class="w-6 h-6">
-                                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                                            d="M19.5 12c0-1.232-.046-2.453-.138-3.662a4.006 4.006 0 00-3.7-3.7 48.678 48.678 0 00-7.324 0 4.006 4.006 0 00-3.7 3.7c-.017.22-.032.441-.046.662M19.5 12l3-3m-3 3l-3-3m-12 3c0 1.232.046 2.453.138 3.662a4.006 4.006 0 003.7 3.7 48.656 48.656 0 007.324 0 4.006 4.006 0 003.7-3.7c.017-.22.032-.441.046-.662M4.5 12l3 3m-3-3l-3 3" />
-                                                    </svg>
-                                                </button>
-                                                <button class="btn btn-sm btn-success tooltip"
-                                                    data-tip="Reset Jawaban Salah V3"
-                                                    @click="kr_doResetSalah(props.row.khusus_banksoal_aspek_detail_id)">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none"
-                                                        viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-                                                        class="w-6 h-6">
-                                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                                            d="M19.5 12c0-1.232-.046-2.453-.138-3.662a4.006 4.006 0 00-3.7-3.7 48.678 48.678 0 00-7.324 0 4.006 4.006 0 00-3.7 3.7c-.017.22-.032.441-.046.662M19.5 12l3-3m-3 3l-3-3m-12 3c0 1.232.046 2.453.138 3.662a4.006 4.006 0 003.7 3.7 48.656 48.656 0 007.324 0 4.006 4.006 0 003.7-3.7c.017-.22.032-.441.046-.662M4.5 12l3 3m-3-3l-3 3" />
-                                                    </svg>
-                                                </button>
-                                                <button class="btn btn-sm btn-error tooltip" data-tip="Reset All V3"
-                                                    @click="kr_doResetAll(props.row.khusus_banksoal_aspek_detail_id)">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none"
-                                                        viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-                                                        class="w-6 h-6">
-                                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                                            d="M19.5 12c0-1.232-.046-2.453-.138-3.662a4.006 4.006 0 00-3.7-3.7 48.678 48.678 0 00-7.324 0 4.006 4.006 0 00-3.7 3.7c-.017.22-.032.441-.046.662M19.5 12l3-3m-3 3l-3-3m-12 3c0 1.232.046 2.453.138 3.662a4.006 4.006 0 003.7 3.7 48.656 48.656 0 007.324 0 4.006 4.006 0 003.7-3.7c.017-.22.032-.441.046-.662M4.5 12l3 3m-3-3l-3 3" />
-                                                    </svg>
-                                                </button>
-                                            </div>
                                             <div v-else
                                                 class="text-sm font-medium text-center flex justify-center space-x-1">
                                                 <button class="btn btn-sm btn-warning tooltip" data-tip="Finish v4"
@@ -630,18 +589,56 @@ const onSubmit = async (values) => {
                                             </div>
                                         </div>
                                     </span>
+
+                                    <span v-if="props.column.field === 'status_a'">
+                                        <span v-if="props.row.status === 'Selesai' || props.row.waktu <= 0"
+                                            class="inline-flex items-center px-2.5 py-0.5 rounded-full text-sm font-medium bg-green-100 text-green-800">
+                                            <svg class="h-4 w-4 mr-1.5" fill="currentColor" viewBox="0 0 20 20"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <path fill-rule="evenodd"
+                                                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                                                    clip-rule="evenodd" />
+                                            </svg>
+                                            Selesai
+                                        </span>
+
+                                        <span v-else-if="props.row.status === 'Proses'"
+                                            class="inline-flex items-center px-2.5 py-0.5 rounded-full text-sm font-medium bg-yellow-100 text-yellow-800">
+                                            <svg class="h-4 w-4 mr-1.5 animate-spin" fill="currentColor"
+                                                viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                                <path
+                                                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                                            </svg>
+                                            Proses
+                                        </span>
+
+                                        <span v-else-if="props.row.status === 'Aktif'"
+                                            class="inline-flex items-center px-2.5 py-0.5 rounded-full text-sm font-medium bg-blue-100 text-blue-800">
+                                            <svg class="h-4 w-4 mr-1.5" fill="currentColor" viewBox="0 0 20 20"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <path fill-rule="evenodd"
+                                                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm.707-10.293a1 1 0 00-1.414-1.414L7 8.586 5.707 7.293a1 1 0 00-1.414 1.414L7 11.414l.293-.293.707-.707 3-3z"
+                                                    clip-rule="evenodd" />
+                                            </svg>
+                                            Aktif
+                                        </span>
+
+                                        <span v-else
+                                            class="inline-flex items-center px-2.5 py-0.5 rounded-full text-sm font-medium bg-gray-100 text-gray-800">
+                                            <svg class="h-4 w-4 mr-1.5" fill="currentColor" viewBox="0 0 20 20"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <path fill-rule="evenodd"
+                                                    d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+                                                    clip-rule="evenodd" />
+                                            </svg>
+                                            Lainnya
+                                        </span>
+                                    </span>
+
                                     <span v-if="props.column.field == 'revisi'">
                                         <div class="text-sm font-medium text-center flex justify-center space-x-1">
-                                            <!-- {{ props.row.status }} -->
                                             <div class="text-sm font-medium text-center flex justify-center space-x-1"
                                                 v-if="props.row.status == 'Selesai' || props.row.waktu <= 0">
-                                                <!-- <button class="btn btn-sm btn-secondary tooltip" data-tip="Revisi Nilai" @click="onRevisi(props.row.desc,props.row.skor_jml)"
-                                                >
-                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-  <path stroke-linecap="round" stroke-linejoin="round" d="M8.625 12a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-</svg>
-
-                                            </button> -->
                                                 <label for="my_modal_6" class="btn"
                                                     @click="onRevisi(props.row.desc, props.row.skor_jml, props.row.revisi_nilai)"
                                                     v-if="props.row.revisi">Revisi</label>
@@ -656,6 +653,8 @@ const onSubmit = async (values) => {
                                     </span>
                                 </template>
                             </vue-good-table>
+
+
                         </div>
                     </div>
                 </div>
