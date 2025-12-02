@@ -106,6 +106,8 @@ const getDataSetting = async (kelasId) => {
         const response = await axiosIst.get(`sertifikat_setting/sertifikat/kelas/${kelasId}`);
         if (response) {
             dataSetting.value = response?.data?.data_setting
+            // dataSetting.value.tipe_kelanjutan_studi = dataSetting.value.tipe_kelanjutan_studi || true
+            // dataSetting.value = response?.data?.data_setting || true
             console.log(`#getDataSetting:${kelasId}`, dataSetting.value);
         }
     } catch (error) {
@@ -476,6 +478,15 @@ const dashboard_doCetak_kewirausahaan = () => {
                             <option value="4">Kelas Dewasa</option>
                         </select>
                     </label>
+                    <!-- ! Kelanjutan Studi -->
+                    <label class="form-control w-full">
+                        <div class="label">
+                            <span class="label-text">Tipe Kelanjutan Studi (kelas 9/10): </span>
+                        </div>
+                        <input v-model="dataSetting.tipe_kelanjutan_studi" type="checkbox"
+                            class="toggle toggle-primary">
+                    </label>
+
 
                     <!-- Tipe IQ -->
                     <label class="form-control w-full">

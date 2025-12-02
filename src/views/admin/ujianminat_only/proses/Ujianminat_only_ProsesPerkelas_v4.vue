@@ -1473,9 +1473,8 @@ function upsertDetail(p) {
                                                     </button>
                                                 </div> -->
                                                 <button class="btn btn-sm  bg-cyan-500 text-white 
-         hover:bg-blue-600  tooltip" data-tip="Generate hasil (BELUM FIX)"
-                                                    @click="doGenerateHasilPersiswa_v4(props.row.id)"
-                                                    v-if="isSuperadminActive">
+         hover:bg-blue-600  tooltip" data-tip="Generate hasil " @click="doGenerateHasilPersiswa_v4(props.row.id)"
+                                                    v-if="isSuperadminActive && props.row.ujian_hspq_ist_minat">
                                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none"
                                                         viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
                                                         class="w-6 h-6">
