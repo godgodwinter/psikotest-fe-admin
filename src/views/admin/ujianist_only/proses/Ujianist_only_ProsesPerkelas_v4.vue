@@ -126,11 +126,16 @@ const columns = [
     },
 
 
-    // {
-    //     label: "progres",
-    //     field: "progres_angka",
-    //     type: "number",
-    // },
+    {
+        label: "IQ",
+        field: "iq",
+        type: "number",
+    },
+    {
+        label: "progres",
+        field: "progres_angka",
+        type: "number",
+    },
     {
         label: "Progres Status",
         field: "progres_status",
@@ -173,10 +178,10 @@ const columns = [
 const getData = async () => {
     try {
         console.log('====================================');
-        console.log('#getData minat_only');
+        console.log('#getData V3');
         console.log('====================================');
         isLoading.value = true;
-        const response = await ApiUjianKhusus.get(`/ujian/minat_only/proses/sekolah/${sekolah_id.value}/kelas/${getSekolahAktif.value.kelas_id}`);
+        const response = await ApiUjianKhusus.get(`/ujian/ist_only/proses/sekolah/${sekolah_id.value}/kelas/${getSekolahAktif.value.kelas_id}`);
         data.value = response.data;
 
         // const tempData=response.data;
@@ -270,7 +275,7 @@ const doPilihKelas = async () => {
     await getData()
     // console.log(inputCariKelas.value.id);
     await router.push({
-        name: "admin-sekolah-submenu-ujiankhusus-v4b",
+        name: "admin-sekolah-submenu-ujianist-v4",
         params: {
             sekolah_id: sekolah_id.value,
             kelas_id: inputCariKelas.value.id ? inputCariKelas.value.id : kelas_id.value,
@@ -324,56 +329,6 @@ const doPilihPaket = () => {
 }
 
 
-const do_reset_waktu = async (id, index) => {
-    if (confirm("Apakah anda yakin generate data ini (v3)?")) {
-        // console.log('====================================');
-        // console.log(paketsoal_aktif.value.id);
-        // console.log('====================================');
-        let dataFormSend = {
-            mapel_id: null,
-        }
-        console.log('====================================');
-        console.log(dataFormSend);
-        console.log('====================================');
-        try {
-            isLoading.value = true;
-            const response = await ApiUjianKhusus.post(`ujian/minat_only/proses/generate/sekolah/${sekolah_id.value}/kelas/${getSekolahAktif.value.kelas_id}/siswa/${id}/reset/minat/waktu`, dataFormSend);
-            console.log(response?.data);
-
-            Toast.babeng("Berhasil", 'Data berhasil digenerate!');
-            getData();
-        } catch (error) {
-            isLoading.value = false;
-            isError.value = true;
-            console.error(error);
-        }
-    }
-};
-const do_reset_all = async (id, index) => {
-    if (confirm("Apakah anda yakin generate data ini (v3)?")) {
-        // console.log('====================================');
-        // console.log(paketsoal_aktif.value.id);
-        // console.log('====================================');
-        let dataFormSend = {
-            mapel_id: null,
-        }
-        console.log('====================================');
-        console.log(dataFormSend);
-        console.log('====================================');
-        try {
-            isLoading.value = true;
-            const response = await ApiUjianKhusus.post(`ujian/minat_only/proses/generate/sekolah/${sekolah_id.value}/kelas/${getSekolahAktif.value.kelas_id}/siswa/${id}/reset/minat/all`, dataFormSend);
-            console.log(response?.data);
-
-            Toast.babeng("Berhasil", 'Reset Berhasil!');
-            getData();
-        } catch (error) {
-            isLoading.value = false;
-            isError.value = true;
-            console.error(error);
-        }
-    }
-};
 const doGenerateSiswa = async (id, index) => {
     if (confirm("Apakah anda yakin generate data ini (v3)?")) {
         // console.log('====================================');
@@ -390,7 +345,7 @@ const doGenerateSiswa = async (id, index) => {
         console.log('====================================');
         try {
             isLoading.value = true;
-            const response = await ApiUjianKhusus.post(`ujian/minat_only/proses/generate/sekolah/${sekolah_id.value}/kelas/${getSekolahAktif.value.kelas_id}/siswa/${id}`, dataFormSend);
+            const response = await ApiUjianKhusus.post(`ujian/ist_only/proses/generate/sekolah/${sekolah_id.value}/kelas/${getSekolahAktif.value.kelas_id}/siswa/${id}`, dataFormSend);
             console.log(response?.data);
 
             Toast.babeng("Berhasil", 'Data berhasil digenerate!');
@@ -406,8 +361,85 @@ const doDeleteProsesSiswa = async (id, proses_id) => {
     if (confirm("Apakah anda yakin menghapus data ujian ini?")) {
         try {
             isLoading.value = true;
-            const response = await ApiUjianKhusus.delete(`ujian/minat_only/proses/generate/sekolah/${sekolah_id.value}/kelas/${getSekolahAktif.value.kelas_id}/siswa/${id}`);
+            const response = await ApiUjianKhusus.delete(`ujian/ist_only/proses/generate/sekolah/${sekolah_id.value}/kelas/${getSekolahAktif.value.kelas_id}/siswa/${id}`);
             Toast.babeng("Berhasil", 'Data berhasil di hapus!');
+            getData();
+        } catch (error) {
+            isLoading.value = false;
+            isError.value = true;
+            console.error(error);
+        }
+    }
+};
+
+
+const do_reset_waktu_persiswa = async (id, index) => {
+    if (confirm("Apakah anda yakin generate data ini (v3)?")) {
+        // console.log('====================================');
+        // console.log(paketsoal_aktif.value.id);
+        // console.log('====================================');
+        let dataFormSend = {
+            mapel_id: null,
+        }
+        console.log('====================================');
+        console.log(dataFormSend);
+        console.log('====================================');
+        try {
+            isLoading.value = true;
+            const response = await ApiUjianKhusus.post(`ujian/ist_only/proses/generate/sekolah/${sekolah_id.value}/kelas/${getSekolahAktif.value.kelas_id}/siswa/${id}/reset/umum/waktu`, dataFormSend);
+            console.log(response?.data);
+
+            Toast.babeng("Berhasil", 'Data berhasil digenerate!');
+            getData();
+        } catch (error) {
+            isLoading.value = false;
+            isError.value = true;
+            console.error(error);
+        }
+    }
+};
+const do_reset_salah_persiswa = async (id, index) => {
+    if (confirm("Apakah anda yakin generate data ini (v3)?")) {
+        // console.log('====================================');
+        // console.log(paketsoal_aktif.value.id);
+        // console.log('====================================');
+        let dataFormSend = {
+            mapel_id: null,
+        }
+        console.log('====================================');
+        console.log(dataFormSend);
+        console.log('====================================');
+        try {
+            isLoading.value = true;
+            const response = await ApiUjianKhusus.post(`ujian/ist_only/proses/generate/sekolah/${sekolah_id.value}/kelas/${getSekolahAktif.value.kelas_id}/siswa/${id}/reset/umum/salah`, dataFormSend);
+            console.log(response?.data);
+
+            Toast.babeng("Berhasil", 'Data berhasil digenerate!');
+            getData();
+        } catch (error) {
+            isLoading.value = false;
+            isError.value = true;
+            console.error(error);
+        }
+    }
+};
+const do_reset_all_persiswa = async (id, index) => {
+    if (confirm("Apakah anda yakin generate data ini (v3)?")) {
+        // console.log('====================================');
+        // console.log(paketsoal_aktif.value.id);
+        // console.log('====================================');
+        let dataFormSend = {
+            mapel_id: null,
+        }
+        console.log('====================================');
+        console.log(dataFormSend);
+        console.log('====================================');
+        try {
+            isLoading.value = true;
+            const response = await ApiUjianKhusus.post(`ujian/ist_only/proses/generate/sekolah/${sekolah_id.value}/kelas/${getSekolahAktif.value.kelas_id}/siswa/${id}/reset/umum/all`, dataFormSend);
+            console.log(response?.data);
+
+            Toast.babeng("Berhasil", 'Data berhasil digenerate!');
             getData();
         } catch (error) {
             isLoading.value = false;
@@ -431,7 +463,7 @@ const doGenerateSiswaPerkelas = async (id, index) => {
         console.log('====================================');
         try {
             isLoading.value = true;
-            const response = await ApiUjianKhusus.post(`ujian/minat_only/proses/generate/sekolah/${sekolah_id.value}/kelas/${getSekolahAktif.value.kelas_id}`, dataFormSend);
+            const response = await ApiUjianKhusus.post(`ujian/ist_only/proses/generate/sekolah/${sekolah_id.value}/kelas/${getSekolahAktif.value.kelas_id}`, dataFormSend);
             Toast.babeng("Berhasil", 'Data berhasil digenerate!');
             getData();
         } catch (error) {
@@ -441,11 +473,63 @@ const doGenerateSiswaPerkelas = async (id, index) => {
         }
     }
 };
+
+
+const doUpdateTanggalPerkelas_v4 = async (id, index) => {
+    if (confirm("Apakah anda yakin generate data ini?")) {
+        let dataFormSend = {
+            paketsoal_id: paketsoal_aktif.value.id,
+            tgl_batas_mulai: dataForm.value.tgl_batas_mulai,
+            tgl_batas_terakhir: dataForm.value.tgl_batas_terakhir,
+            tipeCitacita: inputSelectTipeCitacita.value
+        }
+        console.log('====================================');
+        console.log(dataFormSend);
+        console.log('====================================');
+        try {
+            isLoading.value = true;
+            const response = await ApiUjianKhusus.post(`ujian/ist_only/proses/generate/sekolah/${sekolah_id.value}/kelas/${getSekolahAktif.value.kelas_id}/update/tgl`, dataFormSend);
+            Toast.babeng("Berhasil", 'Data berhasil digenerate!');
+            getData();
+        } catch (error) {
+            isLoading.value = false;
+            isError.value = true;
+            console.error(error);
+        }
+    }
+};
+
+
+const doUpdateTanggalPersiswa = async (id, index) => {
+    if (confirm("Apakah anda yakin generate data ini?")) {
+        let dataFormSend = {
+            paketsoal_id: paketsoal_aktif.value.id,
+            tgl_batas_mulai: dataForm.value.tgl_batas_mulai,
+            tgl_batas_terakhir: dataForm.value.tgl_batas_terakhir,
+            tipeCitacita: inputSelectTipeCitacita.value
+        }
+        console.log('====================================');
+        console.log(dataFormSend);
+        console.log('====================================');
+        try {
+            isLoading.value = true;
+            const response = await ApiUjianKhusus.post(`ujian/ist_only/proses/generate/sekolah/${sekolah_id.value}/kelas/${getSekolahAktif.value.kelas_id}/siswa/${id}/update/tgl`, dataFormSend);
+            Toast.babeng("Berhasil", 'Data berhasil digenerate!');
+            getData();
+        } catch (error) {
+            isLoading.value = false;
+            isError.value = true;
+            console.error(error);
+        }
+    }
+};
+
+
 const doDeleteProsesSiswaPerkelas = async (id) => {
     if (confirm("Apakah anda yakin menghapus data ujian ini?")) {
         try {
             isLoading.value = true;
-            const response = await ApiUjianKhusus.delete(`ujian/minat_only/proses/generate/sekolah/${sekolah_id.value}/kelas/${getSekolahAktif.value.kelas_id}`);
+            const response = await ApiUjianKhusus.delete(`ujian/ist_only/proses/generate/sekolah/${sekolah_id.value}/kelas/${getSekolahAktif.value.kelas_id}`);
             Toast.babeng("Berhasil", 'Data berhasil di hapus!');
             getData();
         } catch (error) {
@@ -670,7 +754,7 @@ const doGenerateHasilPerkelas_v4 = async (replace = true) => {
         // kelas_id.value 
         try {
             isLoading.value = true;
-            const response = await ApiUjianKhusus.post(`/ujian/minat_only/proses/generate/sekolah/${getSekolahAktif.value.sekolah_id}/kelas/${getSekolahAktif.value.kelas_id}/do_generate_hasil_perkelas`, { replace: replace });
+            const response = await ApiUjianKhusus.post(`/ujian/ist_only/proses/generate/sekolah/${getSekolahAktif.value.sekolah_id}/kelas/${getSekolahAktif.value.kelas_id}/generate/hasil`, { replace: replace });
             Toast.babeng("Berhasil", 'Generate Hasil Ujian telah berhasil!');
             getData();
             return true;
@@ -687,7 +771,10 @@ const doGenerateHasilPersiswa_v4 = async (siswa_id) => {
         // kelas_id.value 
         try {
             isLoading.value = true;
-            const response = await ApiUjianKhusus.post(`/ujian/minat_only/proses/generate/sekolah/${getSekolahAktif.value.sekolah_id}/kelas/${getSekolahAktif.value.kelas_id}/siswa/${siswa_id}/generate/hasil`);
+            let dataForm = {
+                replace: null
+            }
+            const response = await ApiUjianKhusus.post(`ujian/ist_only/proses/generate/sekolah/${sekolah_id.value}/kelas/${getSekolahAktif.value.kelas_id}/siswa/${siswa_id}/generate/hasil`, dataForm);
             Toast.babeng("Berhasil", 'Generate Hasil Ujian telah berhasil!');
             getData();
             return true;
@@ -1256,8 +1343,8 @@ function upsertDetail(p) {
                 <div class="flex items-center justify-between">
                     <!-- Judul -->
                     <div>
-                        <h1 class="text-lg font-bold">UJIAN MINAT : KELAS {{ kelas_nama }}</h1>
-                        <h5 class="text-sm text-gray-500">Hanya untuk ujian MINAT Saja</h5>
+                        <h1 class="text-lg font-bold">UJIAN IST : KELAS {{ kelas_nama }}</h1>
+                        <h5 class="text-sm text-gray-500">Hanya untuk ujian IST</h5>
                     </div>
 
                     <!-- Dropdown + Tombol -->
@@ -1330,8 +1417,8 @@ function upsertDetail(p) {
                 <div class="flex items-center justify-between">
                     <p class="text-sm">
                         <span class="font-medium">PAKET SOAL</span>
-                        <span class="ml-2">Ujian Psikologi Minat || label : minat_only || id :
-                            68d76c10f492c038ca17fabc</span>
+                        <span class="ml-2">Ujian IST || label : ist_only || id :
+                            68d76c10f492c038ca17fcbb</span>
                     </p>
                     <button class="btn btn-info btn-sm md:btn-md px-5" @click="doPilihPaket()">Apply</button>
                 </div>
@@ -1377,6 +1464,19 @@ function upsertDetail(p) {
                                 Delete Per Kelas
                             </button>
                         </div>
+                    </div>
+                </div>
+
+                <!-- PROSES UPDATE -->
+                <div class="flex items-start gap-3">
+                    <div class="w-28 shrink-0 text-xs uppercase font-semibold text-base-content/60 pt-2">
+                        UPDATE DATA
+                    </div>
+                    <div class="flex flex-wrap items-center gap-2 grow">
+                        <button class="btn btn-sm btn-primary" @click="doUpdateTanggalPerkelas_v4(true)">
+                            Update Tanggal
+                        </button>
+
                     </div>
                 </div>
 
@@ -1472,37 +1572,77 @@ function upsertDetail(p) {
                                                         Caching #2
                                                     </button>
                                                 </div> -->
-                                                <button class="btn btn-sm  bg-cyan-500 text-white 
+                                                <span v-if="props.row.ujian_hspq_ist_minat"
+                                                    class="flex gap-2 justify-center">
+                                                    <button class="btn btn-sm  bg-cyan-500 text-white 
          hover:bg-blue-600  tooltip" data-tip="Generate hasil (BELUM FIX)"
-                                                    @click="doGenerateHasilPersiswa_v4(props.row.id)"
-                                                    v-if="isSuperadminActive">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none"
-                                                        viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-                                                        class="w-6 h-6">
-                                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                                            d="M9 8.25H7.5a2.25 2.25 0 00-2.25 2.25v9a2.25 2.25 0 002.25 2.25h9a2.25 2.25 0 002.25-2.25v-9a2.25 2.25 0 00-2.25-2.25H15M9 12l3 3m0 0l3-3m-3 3V2.25" />
-                                                    </svg>
+                                                        @click="doGenerateHasilPersiswa_v4(props.row.id)"
+                                                        v-if="isSuperadminActive">
+                                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                                            stroke="currentColor" stroke-width="1.75"
+                                                            stroke-linecap="round" stroke-linejoin="round"
+                                                            aria-label="Generate hasil ujian">
+                                                            <rect x="5" y="3" width="14" height="18" rx="2" />
+                                                            <path d="M8 13l2 2 5-5" />
+                                                            <!-- garis header tipis (opsional) -->
+                                                            <path d="M7.5 7.5h6" />
+                                                        </svg>
 
-                                                </button>
+
+                                                    </button>
+                                                    <button class="btn btn-sm  bg-warning text-white 
+         hover:bg-emerald-600  tooltip" data-tip="Generate Update Tanggal "
+                                                        @click="doUpdateTanggalPersiswa(props.row.id)">
+                                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                                            stroke="currentColor" stroke-width="1.75"
+                                                            stroke-linecap="round" stroke-linejoin="round"
+                                                            aria-label="Generate update tanggal">
+                                                            <!-- kalender -->
+                                                            <rect x="3" y="5" width="18" height="16" rx="2" />
+                                                            <path d="M8 3v4M16 3v4M3 10h18" />
+                                                            <!-- refresh kecil di pojok kanan-bawah -->
+                                                            <path d="M15.5 17a3 3 0 1 0 2.5 1.5" />
+                                                            <path d="M18.5 16.5v2h-2" />
+                                                        </svg>
+
+                                                    </button>
+                                                </span>
                                                 <button class="btn btn-sm  bg-emerald-500 text-white 
          hover:bg-emerald-600  tooltip" data-tip="Generate UJIAN + CACHING 1 + 2 "
                                                     @click="doGenerateSiswa(props.row.id)">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none"
-                                                        viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-                                                        class="w-6 h-6">
-                                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                                            d="M3 7.5L7.5 3m0 0L12 7.5M7.5 3v13.5m13.5 0L16.5 21m0 0L12 16.5m4.5 4.5V7.5" />
+                                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                                        stroke="currentColor" stroke-width="1.75" stroke-linecap="round"
+                                                        stroke-linejoin="round" aria-label="Generate proses ujian">
+                                                        <!-- siklus -->
+                                                        <path d="M6 8A8 8 0 0 1 20 10" />
+                                                        <path d="M20 10v-4h-4" />
+                                                        <path d="M18 16a8 8 0 0 1-14-2" />
+                                                        <path d="M4 14v4h4" />
+                                                        <!-- play -->
+                                                        <path d="M0 0" stroke="none" />
+                                                        <path d="M0 0" stroke="none" />
+                                                        <path d="M11 10l4 2-4 2" fill="currentColor" stroke="none" />
                                                     </svg>
+
                                                 </button>
+
+
+
                                                 <button class="btn btn-sm btn-error tooltip" data-tip="Delete UJIAN"
                                                     @click="doDeleteProsesSiswa(props.row.id)"
                                                     v-if="isSuperadminActive">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none"
-                                                        viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-                                                        class="h-6 w-6">
-                                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                                            d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+                                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                                        stroke="currentColor" stroke-width="1.75" stroke-linecap="round"
+                                                        stroke-linejoin="round" aria-label="Delete proses ujian">
+                                                        <!-- tong sampah -->
+                                                        <path d="M4 7h16" />
+                                                        <path d="M7 7l1 12a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2l1-12" />
+                                                        <path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2" />
+                                                        <!-- indikator proses (setengah panah berputar kecil) -->
+                                                        <path d="M15.5 12.5a3.5 3.5 0 0 1-3 1.5" />
+                                                        <path d="M13 10.5l2.5 2" />
                                                     </svg>
+
 
                                                 </button>
 
@@ -1521,61 +1661,49 @@ function upsertDetail(p) {
                                                 </button> -->
                                             </div>
                                         </span>
+                                        <span v-else-if="props.column.field === 'reset'">
 
+                                            <!-- RESET WAKTU -->
+                                            <span v-if="props.row.ujian_hspq_ist_minat"
+                                                class="flex gap-2 justify-center">
+                                                <RouterLink
+                                                    :to="{ name: 'admin-sekolah-submenu-ujianist-v4-reset', params: { sekolah_id, kelas_id, siswa_id: props.row.id } }">
+                                                    <button class="btn btn-sm btn-warning tooltip"
+                                                        data-tip="MENU RESET v4">
+                                                        MENU RESET
+                                                        <!-- <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                                                            fill="none" stroke="currentColor" stroke-width="1.75"
+                                                            stroke-linecap="round" stroke-linejoin="round"
+                                                            class="w-5 h-5" aria-label="Reset semua">
+                                                            <path d="M3 8a9 9 0 0 1 15-3l2 2" />
+                                                            <path d="M3 4v4h4" />
+                                                            <path d="M21 16a9 9 0 0 1-15 3l-2-2" />
+                                                            <path d="M21 20v-4h-4" />
+                                                        </svg> -->
 
-                                        <span v-else-if="props.column.field === 'reset'"
-                                            class="flex gap-2 justify-center">
-                                            <span v-if="props.row.ujian_hspq_ist_minat">
-                                                <!-- {{ props.row.ujian_hspq_ist_minat?._id }} -->
-                                                <!-- RESET WAKTU -->
-                                                <button
-                                                    class="btn btn-sm btn-square bg-cyan-500 text-white hover:bg-cyan-600 tooltip"
-                                                    data-tip="RESET WAKTU" @click="do_reset_waktu(props.row.id)">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                                                        fill="none" stroke="currentColor" stroke-width="1.75"
-                                                        stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5"
-                                                        aria-label="Reset waktu">
-                                                        <path d="M9 3H5v4" />
-                                                        <path d="M5 7a9 9 0 1 0 4-4" />
-                                                        <circle cx="12" cy="12" r="7.5" />
-                                                        <path d="M12 8v4l3 2" />
-                                                    </svg>
-                                                </button>
+                                                    </button>
+                                                </RouterLink>
 
-
-                                                <!-- RESET SEMUA -->
-                                                <button
-                                                    class="btn btn-sm btn-square bg-rose-400 text-black hover:bg-rose-500 tooltip"
-                                                    data-tip="RESET SEMUA" @click="do_reset_all(props.row.id)">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                                                        fill="none" stroke="currentColor" stroke-width="1.75"
-                                                        stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5"
-                                                        aria-label="Reset semua">
-                                                        <path d="M3 8a9 9 0 0 1 15-3l2 2" />
-                                                        <path d="M3 4v4h4" />
-                                                        <path d="M21 16a9 9 0 0 1-15 3l-2-2" />
-                                                        <path d="M21 20v-4h-4" />
-                                                    </svg>
-                                                </button>
                                             </span>
                                         </span>
 
-                                        <span v-else-if="props.column.field == 'hasil'">
+                                        <!-- <span v-else-if="props.column.field == 'hasil'">
                                             <div class="text-sm font-medium text-center flex justify-center space-x-1">
                                                 <RouterLink
-                                                    :to="{ name: 'admin-sekolah-submenu-ujiankhusus-persiswa-reset-v4', params: { sekolah_id, kelas_id, siswa_id: props.row.id } }">
+                                                    :to="{ name: 'admin-sekolah-submenu-ujianhspq_ist_minat-v4-reset', params: { sekolah_id, kelas_id, siswa_id: props.row.id } }">
                                                     <button class="btn btn-sm btn-warning tooltip"
-                                                        data-tip="MENU RESET v4">
+                                                        data-tip="MENU RESET ">
                                                         V4
 
                                                     </button>
                                                 </RouterLink>
                                             </div>
-                                        </span>
+                                        </span> -->
 
                                         <span v-else-if="props.column.field == 'paketsoal_nama'">
                                             <!-- {{ props.row.progres?.created_at }} -->
-                                            {{ props.row.ujiankhusus ? props.row.ujiankhusus?.khusus_paketsoal_nama
+                                            {{ props.row.ujian_hspq ?
+                                                props.row.ujian_hspq_ist_minat?.khusus_paketsoal_nama
                                                 :
                                                 "-" }}
                                         </span>
@@ -1590,24 +1718,17 @@ function upsertDetail(p) {
                                                 : "-" }}
                                         </span>
                                         <span v-else-if="props.column.field == 'tgl_batas_terakhir'">
-                                            {{ props && props.row && props.row.ujian_hspq_ist_minat &&
-                                                props.row.ujian_hspq_ist_minat.tgl_batas_terakhir
-                                                ?
+                                            {{ props.row.ujian_hspq_ist_minat?.tgl_batas_terakhir ?
                                                 moment(props.row.ujian_hspq_ist_minat?.tgl_batas_terakhir).format(formatTanggal)
-                                                : " - " }}
-
-                                            <!-- {{ props.row.ujiankhusus?.tgl_batas_terakhir }} -->
-
-                                            <!-- {{ props.row.ujiankhusus?.tgl_batas_terakhir
-                                                ? moment(props.row.ujiankhusus?.tgl_batas_terakhir).format("DD MMMM YYYY
-                                                                                        HH: mm: ss"):" - " }} -->
+                                                : "-" }}
                                         </span>
                                         <span v-else-if="props.column.field == 'progres_status'">
-                                            {{ props.row.progres_status }}
+                                            {{ props.row.ujian_hspq_ist_minat?.aspek_detail[0]?.status || "-" }}
                                         </span>
                                         <span v-else-if="props.column.field == 'progres_angka'">
-                                            {{ props.row.progres_angka?.progres }}/{{
-                                                props.row.progres_angka?.total }}
+                                            <span v-if="props.row.progres_angka?.total">
+                                                {{ props.row.progres_angka?.progress }}/{{
+                                                    props.row.progres_angka?.total }}</span>
                                         </span>
                                         <span v-else-if="props.column.field == 'username'">
                                             <div class="flex justify-center gap-2">

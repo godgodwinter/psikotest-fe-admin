@@ -226,6 +226,24 @@ const AdminSekolahRoutes = [
                   ),
               },
               // ! UJIANSTUDI-HSPQ-END
+              // ! UJIANSTUDI-IST-MINAT
+              {
+                path: "/pages/admin/mastering/sekolah/:sekolah_id/submenu/kelas/:kelas_id?/ist_only/v4",
+                name: "admin-sekolah-submenu-ujianist-v4",
+                component: () =>
+                  import(
+                    "@/views/admin/ujianist_only/proses/Ujianist_only_ProsesPerkelas_v4.vue"
+                  ),
+              },
+              {
+                path: "/pages/admin/mastering/sekolah/:sekolah_id/submenu/kelas/:kelas_id?/ist_only/v4/siswa/:siswa_id/reset",
+                name: "admin-sekolah-submenu-ujianist-v4-reset",
+                component: () =>
+                  import(
+                    "@/views/admin/ujianist_only/proses/Ujianist_only_ProsesPerkelas_v4_reset.vue"
+                  ),
+              },
+              // ! UJIANSTUDI-IST-END
               // ! UJIANSTUDI-HSPQ-IST-MINAT
               {
                 path: "/pages/admin/mastering/sekolah/:sekolah_id/submenu/kelas/:kelas_id?/hspq_ist_minat/v4",
@@ -243,7 +261,7 @@ const AdminSekolahRoutes = [
                     "@/views/admin/ujianhspq_ist_minat/proses/Ujianhspq_ist_minat_ProsesPerkelas_v4_reset.vue"
                   ),
               },
-              // ! UJIANSTUDI-HSPQ-END
+              // ! UJIANSTUDI-HSPQ-IST-END
               // ! UJIANSTUDI-MINAT
               {
                 path: "/pages/admin/mastering/sekolah/:sekolah_id/submenu/kelas/:kelas_id?/minat_only/v4",
