@@ -202,7 +202,7 @@ const getData = async () => {
         console.log('#getData V3');
         console.log('====================================');
         isLoading.value = true;
-        const response = await ApiUjianKhusus.post(`mmpi2/backup/multi/file/detail/kelas/${kelas_id.value}`);
+        const response = await ApiUjianKhusus.post(`mmpi2/backup/multi/file/detail/kelas/${getSekolahAktif.value.kelas_id}`);
         data.value = response.data?.restoredData;
 
         // const tempData=response.data;

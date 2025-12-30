@@ -192,7 +192,7 @@ const getData = async () => {
         console.log('#getData V3');
         console.log('====================================');
         isLoading.value = true;
-        const response = await ApiUjianKhusus.post(`ujiankhusus/backup/multi/file/detail/kelas/${kelas_id.value}`);
+        const response = await ApiUjianKhusus.post(`ujiankhusus/backup/multi/file/detail/kelas/${getSekolahAktif.value.kelas_id}`);
         data.value = response.data?.restoredData;
 
         // const tempData=response.data;
@@ -284,7 +284,7 @@ const doPilihKelas = async () => {
     // console.log(getSekolahAktif.value, inputCariKelas.value.id);
     // console.log('====================================');
     await getData()
-    // console.log(inputCariKelas.value.id);
+    console.log(`#doPilihKelas:`, newDataSekolahAktif, inputCariKelas.value.id);
     await router.push({
         name: "admin-sekolah-submenu-ujiankhusus-v4-export",
         params: {
