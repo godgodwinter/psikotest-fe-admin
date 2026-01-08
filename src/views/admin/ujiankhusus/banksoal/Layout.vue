@@ -13,7 +13,7 @@
         <RouterLink :to="{ name: 'admin-ujiankhusus-banksoal-multijawaban' }">
             <button class="btn btn-warning btn-sm">MULTI JAWABAN (CFIT)</button>
         </RouterLink>
-        <RouterLink :to="{ name: 'admin-ujiankhusus-banksoal-multijawaban' }">
+        <RouterLink :to="{ name: 'admin-ujiankhusus-banksoal-pohon' }">
             <button class="btn btn-warning btn-sm">POHON (CFIT)</button>
         </RouterLink>
         <!-- <RouterLink :to="{ name: 'admin-ujiankhusus-banksoal-aspek' }">

@@ -294,6 +294,58 @@ const UjianStudiBanksoalRoutes = [
 
           // !multijawaban
 
+          // !pohon
+          {
+            path: "/pages/admin/ujiankhusus/banksoal/pohon",
+            name: "admin-ujiankhusus-banksoal-pohon",
+            component: () =>
+              import(
+                "@/views/admin/ujiankhusus/banksoal/pohon/UjianKhususBanksoalPohon.vue"
+              ),
+          },
+          {
+            path: "/pages/admin/ujiankhusus/banksoal/pohon/tambah",
+            name: "admin-ujiankhusus-banksoal-pohon-tambah",
+            component: () =>
+              import(
+                "@/views/admin/ujiankhusus/banksoal/pohon/UjianKhususBanksoalPohon_tambah.vue"
+              ),
+          },
+          {
+            path: "/pages/admin/ujiankhusus/banksoal/pohon/edit/:pohon_id",
+            name: "admin-ujiankhusus-banksoal-pohon-edit",
+            component: () =>
+              import(
+                "@/views/admin/ujiankhusus/banksoal/pohon/UjianKhususBanksoalPohon_edit.vue"
+              ),
+          },
+          // ! pohon-SOAL
+          {
+            path: "/pages/admin/ujiankhusus/banksoal/pohon/aspek_detail/:aspek_detail_id/soal",
+            name: "admin-ujiankhusus-banksoal-pohon-aspek_detail-soal",
+            component: () =>
+              import(
+                "@/views/admin/ujiankhusus/banksoal/pohon/soal/BanksoalPohonSoal.vue"
+              ),
+          },
+          {
+            path: "/pages/admin/ujiankhusus/banksoal/pohon/aspek_detail/:aspek_detail_id/soal/tambah",
+            name: "admin-ujiankhusus-banksoal-pohon-aspek_detail-soal-tambah",
+            component: () =>
+              import(
+                "@/views/admin/ujiankhusus/banksoal/pohon/soal/BanksoalPohonSoal_tambah.vue"
+              ),
+          },
+          {
+            path: "/pages/admin/ujiankhusus/banksoal/pohon/aspek_detail/:aspek_detail_id/soal/edit/:soal_id",
+            name: "admin-ujiankhusus-banksoal-pohon-aspek_detail-soal-edit",
+            component: () =>
+              import(
+                "@/views/admin/ujiankhusus/banksoal/pohon/soal/BanksoalPohonSoal_edit.vue"
+              ),
+          },
+          // ! MULTIJAWABAN-SOAL-END
+
           // ! banksoal minat dan bakat-END
 
           // ! banksoal kreatifitas

@@ -15,6 +15,7 @@ const router = useRouter();
 const route = useRoute();
 const paketsoal_id = ref(route.params.paketsoal_id);
 const inputSelectMinat = ref({ id: null, label: null })
+const inputSelectPohon = ref({ id: null, label: null })
 const inputSelectKr = ref({ id: null, label: null })
 const dataForm = ref({
     nama: null,
@@ -31,6 +32,10 @@ const getDataDetail = async () => {
         inputSelectMinat.value = {
             id: response.data.minatList._id,
             label: response.data.minatList.nama
+        };
+        inputSelectPohon.value = {
+            id: response.data?.pohonList._id,
+            label: response.data?.pohonList.nama
         };
         inputSelectKr.value = {
             id: response.data.krList._id,
@@ -49,7 +54,8 @@ const onSubmit = async (values) => {
     let dataFormSend = {
         nama: dataForm.value.nama,
         status: dataForm.value.status,
-        minat_id: inputSelectMinat.value.id,
+        minat_id: inputSelectMinat.value?.id || null,
+        pohon_id: inputSelectPohon.value?.id || null,
         // minat_id:null,
         // kr_id: inputSelectKr.value.id
     };
@@ -84,6 +90,27 @@ const getDataMinat = async () => {
     }
 };
 getDataMinat();
+
+
+const datapohonList = ref([]);
+const pohonList = ref([]);
+const getDatapohon = async () => {
+    try {
+        const response = await ApiUjianKhusus.get(`cfit/v2/banksoal/pohon`);
+        datapohonList.value = response.data;
+        datapohonList.value.forEach((item) => {
+            pohonList.value.push({
+                label: item.nama,
+                id: item._id,
+            });
+        });
+        // console.log(response);
+        return response.data;
+    } catch (error) {
+        console.error(error);
+    }
+};
+getDatapohon()
 
 const dataKrList = ref([]);
 const krList = ref([]);
@@ -140,7 +167,8 @@ const getDataKr = async () => {
                     <div>
                         <label className="form-control w-full max-w-xs">
                             <div className="label">
-                                <span className="label-text">Minat Bakat : {{ dataForm.minatList_nama }}</span>
+                                <span className="label-text">Soal Tipe Minat Bakat : {{ dataForm.minatList_nama
+                                }}</span>
                                 <span className="label-text"><code
                                         class="text-red-600 font-light text-xs">Kosongkan jika tidak ada.</code> </span>
                             </div>
@@ -148,20 +176,27 @@ const getDataKr = async () => {
                                 <div class="flex justify-center">
                                     <v-select class="py-2 px-3 w-72 mx-auto md:mx-0" :options="minatList"
                                         v-model="inputSelectMinat" v-bind:class="{ disabled: false }"></v-select>
-                                    <!-- <div class="py-2">
-            <button class="btn btn-sm btn-info p-2" @click="doPilihKelas()">
-                Cari
-            </button>
-        </div> -->
                                 </div>
                             </div>
-                            <!-- <select className="select select-bordered" v-model="dataForm.minatList">
-<option selected >aa</option> 
-
-<option v-for="(item, index) in dataMinatList" :value="item._id">{{ item.nama }}</option>
-</select> -->
                             <div className="label">
-                                <!-- <span className="label-text-alt">Alt label</span> -->
+                            </div>
+                        </label>
+                    </div>
+
+                    <div>
+                        <label className="form-control w-full max-w-xs">
+                            <div className="label">
+                                <span className="label-text">Soal Tipe Pohon : {{ dataForm.pohonList_nama }}</span>
+                                <span className="label-text"><code
+                                        class="text-red-600 font-light text-xs">Kosongkan jika tidak ada.</code> </span>
+                            </div>
+                            <div class="w-full bg-base-100 shadow-sm rounded-lg py-4 px-4">
+                                <div class="flex justify-center">
+                                    <v-select class="py-2 px-3 w-72 mx-auto md:mx-0" :options="pohonList"
+                                        v-model="inputSelectPohon" v-bind:class="{ disabled: false }"></v-select>
+                                </div>
+                            </div>
+                            <div className="label">
                             </div>
                         </label>
                     </div>
