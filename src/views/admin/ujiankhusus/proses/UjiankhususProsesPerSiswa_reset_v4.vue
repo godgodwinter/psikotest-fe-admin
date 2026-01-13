@@ -114,6 +114,11 @@ const columns = [
         type: "number",
     },
     {
+        label: "Jumlah Jawaban Benar",
+        field: "get_jml_benar",
+        type: "number",
+    },
+    {
         label: "Skor",
         field: "skor_jml",
         type: "number",
