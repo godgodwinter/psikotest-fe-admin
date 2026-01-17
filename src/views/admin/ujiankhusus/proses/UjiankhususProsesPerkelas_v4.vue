@@ -958,8 +958,8 @@ const formatTanggal = "DD MMMM YYYY HH:mm:ss";
             <div class="space-x-2 space-y-0 shadow-sm flex justify-start ">
                 <div class="space-x-2 space-y-2 shadow-sm py-1">
                     <button class="btn btn-sm   bg-cyan-500 text-white 
-         hover:bg-cyan-600  tooltip" data-tip="Generate Hasil Ujian V4" @click="doGenerateHasilPerkelas_v4(true)"
-                        v-if="isSuperadminActive">
+         hover:bg-cyan-600  tooltip" data-tip="Generate Hasil Ujian V4" @click="doGenerateHasilPerkelas_v4(true)">
+                        <!-- v-if="isSuperadminActive" -->
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor" class="w-6 h-6">
                             <path stroke-linecap="round" stroke-linejoin="round"
