@@ -59,13 +59,16 @@ const getData = async () => {
             //  "umum"; //!umum,minat,kr
             response.data.cfit.minatList.tipe = "minat"
             response.data.cfit.minatList.desc = "MINAT"
+            response.data.cfit.pohonList.tipe = "pohon"
+            response.data.cfit.pohonList.desc = "POHON"
             data.value.push(response.data.cfit.minatList)
+            data.value.push(response.data.cfit.pohonList)
             // response.data.cfit.krList.tipe = "kr"
             // response.data.cfit.krList.desc = "KR"
             // data.value.push(response.data.cfit.krList)
         }
         // data.value = response.data.cfit.aspek_detail;
-        console.log(response.data.cfit.minatList, data.value);
+        console.log(response.data.cfit.pohonList, data.value);
         // console.log('====================================');
         // console.log(data.value[0]?.soal_jml);
         // console.log('====================================');
@@ -373,6 +376,52 @@ const kr_doResetAll = async (proses_detail_id,) => {
         }
     }
 }
+
+
+const pohon_doResetWaktu = async (proses_detail_id) => {
+    if (confirm("Apakah anda yakin mereset jawban salah dan waktu data ini?")) {
+
+        try {
+            const response = await Api.post(`/cfit/v4/sekolah/${sekolah_id.value}/kelas/${kelas_id.value}/siswa/${siswa_id.value}/reset/pohon/waktu`);
+            Toast.babeng("Berhasil", 'Reset All pohon berhasil!');
+            getData();
+            return true;
+        } catch (error) {
+            console.error(error);
+        }
+    }
+}
+
+
+
+const pohon_doForceFinish = async (proses_detail_id) => {
+    if (confirm("Apakah anda yakin mengakhiri proses pada paketsoal ini?")) {
+
+        try {
+            const response = await Api.post(`/cfit/v4/sekolah/${sekolah_id.value}/kelas/${kelas_id.value}/siswa/${siswa_id.value}/reset/pohon/finish`);
+            Toast.babeng("Berhasil", 'Reset All pohon berhasil!');
+            getData();
+            return true;
+        } catch (error) {
+            console.error(error);
+        }
+    }
+}
+
+
+const pohon_doResetAll = async (proses_detail_id,) => {
+    if (confirm("Apakah anda yakin mereset jawban salah dan waktu data ini?")) {
+
+        try {
+            const response = await Api.post(`/cfit/v4/sekolah/${sekolah_id.value}/kelas/${kelas_id.value}/siswa/${siswa_id.value}/reset/pohon/all`);
+            Toast.babeng("Berhasil", 'Reset All pohon berhasil!');
+            getData();
+            return true;
+        } catch (error) {
+            console.error(error);
+        }
+    }
+}
 const dataForm = ref({
     desc: null,
     revisi_nilai: 0,
@@ -662,6 +711,39 @@ const onSubmit = async (values) => {
                                                 </button>
                                             </div>
 
+
+                                            <div v-else-if="props.row.tipe == 'pohon'"
+                                                class="text-sm font-medium text-center flex justify-center space-x-1">
+
+                                                <button class="btn btn-sm btn-warning tooltip" data-tip="Finish V3"
+                                                    @click="pohon_doForceFinish(props.row.khusus_banksoal_aspek_detail_id)">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                        viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                                                        class="w-6 h-6">
+                                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                                            d="M9 12.75 11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 0 1-1.043 3.296 3.745 3.745 0 0 1-3.296 1.043A3.745 3.745 0 0 1 12 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 0 1-3.296-1.043 3.745 3.745 0 0 1-1.043-3.296A3.745 3.745 0 0 1 3 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 0 1 1.043-3.296 3.746 3.746 0 0 1 3.296-1.043A3.746 3.746 0 0 1 12 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 0 1 3.296 1.043 3.746 3.746 0 0 1 1.043 3.296A3.745 3.745 0 0 1 21 12Z" />
+                                                    </svg>
+                                                </button>
+                                                <button class="btn btn-sm btn-primary tooltip" data-tip="Reset Waktu V3"
+                                                    @click="pohon_doResetWaktu(props.row.khusus_banksoal_aspek_detail_id)">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                        viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                                                        class="w-6 h-6">
+                                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                                            d="M19.5 12c0-1.232-.046-2.453-.138-3.662a4.006 4.006 0 00-3.7-3.7 48.678 48.678 0 00-7.324 0 4.006 4.006 0 00-3.7 3.7c-.017.22-.032.441-.046.662M19.5 12l3-3m-3 3l-3-3m-12 3c0 1.232.046 2.453.138 3.662a4.006 4.006 0 003.7 3.7 48.656 48.656 0 007.324 0 4.006 4.006 0 003.7-3.7c.017-.22.032-.441.046-.662M4.5 12l3 3m-3-3l-3 3" />
+                                                    </svg>
+                                                </button>
+                                                <button class="btn btn-sm btn-error tooltip" data-tip="Reset All V3"
+                                                    @click="pohon_doResetAll(props.row.khusus_banksoal_aspek_detail_id)">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                        viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                                                        class="w-6 h-6">
+                                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                                            d="M19.5 12c0-1.232-.046-2.453-.138-3.662a4.006 4.006 0 00-3.7-3.7 48.678 48.678 0 00-7.324 0 4.006 4.006 0 00-3.7 3.7c-.017.22-.032.441-.046.662M19.5 12l3-3m-3 3l-3-3m-12 3c0 1.232.046 2.453.138 3.662a4.006 4.006 0 003.7 3.7 48.656 48.656 0 007.324 0 4.006 4.006 0 003.7-3.7c.017-.22.032-.441.046-.662M4.5 12l3 3m-3-3l-3 3" />
+                                                    </svg>
+                                                </button>
+                                            </div>
+
                                             <div v-else-if="props.row.tipe == 'multi'"
                                                 class="text-sm font-medium text-center flex justify-center space-x-1">
                                                 <button class="btn btn-sm btn-warning tooltip" data-tip="Finish Multi"
@@ -743,6 +825,41 @@ const onSubmit = async (values) => {
                                                     </svg>
                                                 </button>
                                             </div>
+                                        </div>
+                                    </span>
+                                    <span v-if="props.column.field == 'soal_jml'">
+                                        <span v-if="props.row.tipe == 'pohon'">
+                                            {{ props.row.soal?.length || 0 }}
+                                        </span>
+                                        <!-- <span v-else> {{ props.row.soal_jml }}</span> -->
+                                    </span>
+
+                                    <span v-if="props.column.field === 'soal_terjawab'">
+                                        <div v-if="props.row.tipe === 'pohon'" class="flex flex-col gap-1">
+
+                                            <div class="flex items-center gap-2">
+                                                <span :class="[
+                                                    'px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider',
+                                                    props.row.soal[0]?.jawaban_terisi?.length > 0
+                                                        ? 'bg-green-100 text-green-700 border border-green-200'
+                                                        : 'bg-gray-100 text-gray-500 border border-gray-200'
+                                                ]">
+                                                    {{ props.row.soal[0]?.jawaban_terisi?.length > 0 ? "Sudah Terjawab"
+                                                        : "Belum" }}
+                                                </span>
+                                            </div>
+
+                                            <div v-if="props.row.soal[0]?.jawaban_terisi?.length > 0"
+                                                class="flex items-center text-xs text-slate-500 font-medium">
+                                                <span class="bg-slate-50 px-1.5 py-0.5 rounded border border-slate-200">
+                                                    {{ props.row.soal[0]?.jawaban_terisi[0]?.jawaban || "-" }}
+                                                </span>
+                                                <span class="mx-1 text-slate-300">/</span>
+                                                <span class="bg-slate-50 px-1.5 py-0.5 rounded border border-slate-200">
+                                                    {{ props.row.soal[0]?.jawaban_terisi[1]?.jawaban || "-" }}
+                                                </span>
+                                            </div>
+
                                         </div>
                                     </span>
                                     <span v-if="props.column.field == 'revisi'">
