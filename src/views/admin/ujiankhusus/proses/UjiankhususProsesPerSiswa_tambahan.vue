@@ -494,8 +494,10 @@ const onSubmit = async (values) => {
         prodi_2: dataForm.value.prodi_2,
         fakultas_1112: dataForm.value.fakultas_1112,
         fakultas_1112_mapel: dataForm.value.fakultas_1112_mapel,
+        data_kelas_10: dataForm.value.data_kelas_10,
+
     };
-    // console.log(values, dataFormSend);
+    console.log(`#onSubmit`, values, dataFormSend);
     try {
         const response = await ApiUjianKhusus.put(`ist_tambahan/saran/kelas/${kelas_id.value}/siswa/${siswa_id.value}`, dataFormSend);
         // console.log(response);
@@ -780,7 +782,8 @@ const do_generate_data_tambahan = async (values) => {
 
                                     <!-- Bagian Kelas 9  -->
                                     <div class="space-y-4">
-                                        <h3 class="font-semibold text-lg border-b pb-1">Kelas 9 </h3>
+                                        <h3 class="font-semibold text-lg border-b pb-1">Kelas 9 // <span
+                                                class="text-red-500">Tambahan Otomatis</span></h3>
                                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                             <label class="form-control w-full">
                                                 <span class="label-text mb-1">Studi 1</span>
@@ -850,7 +853,8 @@ const do_generate_data_tambahan = async (values) => {
 
                                     <!-- Bagian Kelas 10 saja  -->
                                     <div class="space-y-4">
-                                        <h3 class="font-semibold text-lg border-b pb-1">Kelas 10 </h3>
+                                        <h3 class="font-semibold text-lg border-b pb-1">Kelas 10 // <span
+                                                class="text-red-500">Tambahan Otomatis</span> </h3>
                                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                             <!-- <label class="form-control w-full">
                                                 <span class="label-text mb-1">Studi 1</span>
