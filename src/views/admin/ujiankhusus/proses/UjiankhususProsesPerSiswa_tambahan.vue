@@ -475,6 +475,9 @@ const doRefreshData = () => {
 const onSubmit = async (values) => {
     let dataFormSend = {
         kesimpulan_saran_tambahan: dataForm.value.kesimpulan_saran_tambahan,
+        // kelas10_studi_1: dataForm.value.kelas10_studi_1,
+        kelas10_jurusan_1: dataForm.value.kelas10_jurusan_1,
+        kelas10_jurusan_2: dataForm.value.kelas10_jurusan_2,
         studi_1: dataForm.value.studi_1,
         jurusan_1: dataForm.value.jurusan_1,
         studi_2: dataForm.value.studi_2,
@@ -654,7 +657,7 @@ const do_generate_data_tambahan = async (values) => {
                                                         "scq"
                                                     )
                                                 )
-                                            ) }}</span></td>
+                                                    ) }}</span></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -742,6 +745,21 @@ const do_generate_data_tambahan = async (values) => {
 
                                     </tbody>
                                 </table>
+                                <span v-if="dataForm?.data_kelas_10">
+                                    <h3 class="font-bold text-2xl p-4">Data Rekomendasi Tambahan Kelas 10</h3>
+
+                                    <table class="table table-compact" v-if="dataForm?.data_kelas_10?.length">
+                                        <tbody>
+                                            <tr v-for="(item, index) in dataForm.data_kelas_10" :key="item.id">
+                                                <td class="whitespace-nowrap w-1/12">{{ index + 1 }}.</td>
+                                                <td class="whitespace-nowrap w-1/12">:</td>
+                                                <td class="whitespace-nowrap w-10/12">
+                                                    <span class="font-semibold">{{ item.nama }}</span> = {{ item.val }}
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </span>
                             </div>
                         </div>
                         <div class="md:col-span-2">
@@ -760,7 +778,7 @@ const do_generate_data_tambahan = async (values) => {
                                     </div>
 
 
-                                    <!-- Bagian Kelas 9 & 10 -->
+                                    <!-- Bagian Kelas 9  -->
                                     <div class="space-y-4">
                                         <h3 class="font-semibold text-lg border-b pb-1">Kelas 9 </h3>
                                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -791,6 +809,7 @@ const do_generate_data_tambahan = async (values) => {
                                             </label>
                                         </div>
                                     </div>
+
 
                                     <!-- Bagian Kelas 9 & 10 -->
                                     <div class="space-y-4">
@@ -824,6 +843,36 @@ const do_generate_data_tambahan = async (values) => {
                                                     class="textarea textarea-bordered w-full"
                                                     placeholder="contoh : Teknik Pemesinan, Teknik Otomotif, Teknologi Industri, "></textarea>
                                             </label> -->
+                                        </div>
+                                    </div>
+
+
+
+                                    <!-- Bagian Kelas 10 saja  -->
+                                    <div class="space-y-4">
+                                        <h3 class="font-semibold text-lg border-b pb-1">Kelas 10 </h3>
+                                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                            <!-- <label class="form-control w-full">
+                                                <span class="label-text mb-1">Studi 1</span>
+                                                <Field v-model="dataForm.kelas10_studi_1" name="kelas10_studi_1"
+                                                    type="text" class="input input-bordered w-full"
+                                                    placeholder="contoh: SMA" />
+                                            </label> -->
+
+                                            <label class="form-control w-full md:col-span-2">
+                                                <span class="label-text mb-1">Jurusan 1</span>
+                                                <textarea v-model="dataForm.kelas10_jurusan_1"
+                                                    class="textarea textarea-bordered h-24 w-full"
+                                                    placeholder="contoh : IPA/IPS/Bahasa/Agama"></textarea>
+                                            </label>
+
+                                            <label class="form-control w-full md:col-span-2">
+                                                <span class="label-text mb-1">Jurusan 2</span>
+                                                <textarea v-model="dataForm.kelas10_jurusan_2"
+                                                    class="textarea textarea-bordered h-24 w-full"
+                                                    placeholder="contoh : IPA/IPS/Bahasa/Agama"></textarea>
+                                            </label>
+
                                         </div>
                                     </div>
 
@@ -874,11 +923,11 @@ const do_generate_data_tambahan = async (values) => {
                                 <tr v-for="(item, index) in dataAspek_ist" :key="item.id">
                                     <td class="whitespace-nowrap w-1/12">{{ index + 1 }}. {{ item.detail }} ({{
                                         item.kode
-                                    }})</td>
+                                        }})</td>
                                     <td class="whitespace-nowrap w-1/12">:</td>
                                     <td class="whitespace-nowrap w-10/12"> {{ item.persen }} % - {{
                                         fn_singkatkan_ket(item.ket)
-                                    }} - iq = {{ item.val }}
+                                        }} - iq = {{ item.val }}
                                     </td>
                                 </tr>
 
@@ -899,7 +948,7 @@ const do_generate_data_tambahan = async (values) => {
                                 <tr v-for="(item, index) in dataAspek_8km" :key="item.id">
                                     <td class="whitespace-nowrap w-1/12">{{ index + 1 }}. {{ item.nama_lengkap }} ({{
                                         item.nama
-                                    }})</td>
+                                        }})</td>
                                     <td class="whitespace-nowrap w-1/12">:</td>
                                     <td class="whitespace-nowrap w-10/12"> {{ item.persen }} % - {{
 
