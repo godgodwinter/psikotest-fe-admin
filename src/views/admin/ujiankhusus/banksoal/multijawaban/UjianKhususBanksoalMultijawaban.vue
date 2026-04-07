@@ -43,6 +43,16 @@ const columns = [
         field: "soal_jml",
         type: "String",
     },
+    {
+        label: "Label",
+        field: "label",
+        type: "String",
+    },
+    {
+        label: "ID",
+        field: "_id",
+        type: "String",
+    },
 ];
 
 const getData = async () => {
@@ -106,9 +116,9 @@ const doEditData = async (id, index) => {
                             <vue-good-table :line-numbers="true" :columns="columns" :rows="data" :search-options="{
                                 enabled: true,
                             }" :pagination-options="{
-            enabled: true,
-            perPageDropdown: [50, 100, 150, 200],
-        }" styleClass="vgt-table striped bordered condensed" class="py-0">
+                                enabled: true,
+                                perPageDropdown: [50, 100, 150, 200],
+                            }" styleClass="vgt-table striped bordered condensed" class="py-0">
                                 <template #table-actions>
                                     <div class="space-x-1 space-y-1 gap-1">
                                         <router-link :to="{

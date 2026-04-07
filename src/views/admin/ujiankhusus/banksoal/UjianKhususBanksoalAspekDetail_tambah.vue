@@ -7,7 +7,7 @@ import fnValidasi from "@/components/lib/babengValidasi";
 import moment from "moment/min/moment-with-locales";
 import Api from "@/axios/axiosNode";
 import ApiUjianKhusus from "@/axios/axiosIst";
-import {fn_copy_id_for_mongo} from "@/lib/FungsiBasic.js"
+import { fn_copy_id_for_mongo } from "@/lib/FungsiBasic.js"
 import localization from "moment/locale/id";
 moment.updateLocale("id", localization);
 
@@ -128,7 +128,7 @@ const pagesActive = ref("tulis");
                             </div>
                         </div>
                     </div>
-                    
+
                     <div class="flex flex-col">
                         <label>Deskripsi :</label>
                         <div>
@@ -142,8 +142,8 @@ const pagesActive = ref("tulis");
                     <div class="flex flex-col">
                         <label>Urutan :</label>
                         <div>
-                            <Field :rules="fnValidasi.validateDataNumber" v-model="dataForm.urutan" name="urutan" type="text"
-                                max="1000" min="0" class="input input-bordered w-11/12" />
+                            <Field :rules="fnValidasi.validateDataNumber" v-model="dataForm.urutan" name="urutan"
+                                type="text" max="1000" min="0" class="input input-bordered w-11/12" />
                             <div class="text-xs text-red-600 mt-1">
                                 {{ errors.urutan }}
                             </div>
@@ -152,21 +152,22 @@ const pagesActive = ref("tulis");
                     <div class="flex flex-col">
                         <label>Waktu : (detik)</label>
                         <div>
-                            <Field :rules="fnValidasi.validateDataNumber" v-model="dataForm.waktu" name="waktu" type="text"
-                                max="1000" min="0" class="input input-bordered w-11/12" />
+                            <Field :rules="fnValidasi.validateDataNumber" v-model="dataForm.waktu" name="waktu"
+                                type="text" max="1000" min="0" class="input input-bordered w-11/12" />
                             <div class="text-xs text-red-600 mt-1">
                                 {{ errors.waktu }}
                             </div>
                         </div>
                     </div>
-                    
+
 
                     <div class="flex flex-col">
                         <div class="max-w-xs py-2">
                             <div class="form-control">
                                 <label class="label cursor-pointer">
                                     <span class="label-text">Random Soal</span>
-                                    <input type="checkbox" class="toggle" v-model="dataForm.randomSoal" name="randomSoal" />
+                                    <input type="checkbox" class="toggle" v-model="dataForm.randomSoal"
+                                        name="randomSoal" />
                                 </label>
                             </div>
                         </div>
@@ -215,31 +216,32 @@ const pagesActive = ref("tulis");
                                 </label>
                             </div>
                         </div>
-            <div v-if="dataForm.lembar_prasoalStatus">
-                <div class="py-10 w-full bg-base-100 shadow-sm">
-                    <div class="tabs">
-                        <a class="tab tab-bordered" @click="pagesActive = 'tulis'"
-                            :class="{ 'tab-active': pagesActive == 'tulis' }">Tulis</a>
-                        <a class="tab tab-bordered" @click="pagesActive = 'preview'"
-                            :class="{ 'tab-active': pagesActive == 'preview' }">Preview</a>
-                    </div>
-                </div>
-                <div v-if="pagesActive == 'tulis'">
-                    <label>Pertanyaan :</label>
-                    <QuillEditor theme="snow" :toolbar="toolbarOptions" v-model:content="dataForm.lembar_prasoal"
-                        contentType="html" class="ql-editor2">
+                        <div v-if="dataForm.lembar_prasoalStatus">
+                            <div class="py-10 w-full bg-base-100 shadow-sm">
+                                <div class="tabs">
+                                    <a class="tab tab-bordered" @click="pagesActive = 'tulis'"
+                                        :class="{ 'tab-active': pagesActive == 'tulis' }">Tulis</a>
+                                    <a class="tab tab-bordered" @click="pagesActive = 'preview'"
+                                        :class="{ 'tab-active': pagesActive == 'preview' }">Preview</a>
+                                </div>
+                            </div>
+                            <div v-if="pagesActive == 'tulis'">
+                                <label>Pertanyaan :</label>
+                                <QuillEditor theme="snow" :toolbar="toolbarOptions"
+                                    v-model:content="dataForm.lembar_prasoal" contentType="html" class="ql-editor2">
 
-                    </QuillEditor>
+                                </QuillEditor>
 
-                </div>
-                </div>
+                            </div>
+                        </div>
                     </div>
-                    
+
                     <div class="flex flex-col" v-if="dataForm.lembar_prasoalStatus">
                         <label>Waktu Lembar Prasoal : (detik)</label>
                         <div>
-                            <Field :rules="fnValidasi.validateDataNumber" v-model="dataForm.lembar_prasoal_timer" name="lembar_prasoal_timer" type="text"
-                                max="1000" min="0" class="input input-bordered w-11/12" />
+                            <Field :rules="fnValidasi.validateDataNumber" v-model="dataForm.lembar_prasoal_timer"
+                                name="lembar_prasoal_timer" type="text" max="1000" min="0"
+                                class="input input-bordered w-11/12" />
                             <div class="text-xs text-red-600 mt-1">
                                 {{ errors.lembar_prasoal_timer }}
                             </div>

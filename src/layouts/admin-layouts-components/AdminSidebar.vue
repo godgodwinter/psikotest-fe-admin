@@ -120,7 +120,7 @@ const doLogout = async () => {
                                     <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
                                         clip-rule="evenodd" />
                                 </svg>
-                                <span class="ml-3">Paketsoal Ujian Khusus </span>
+                                <span class="ml-3">Paketsoal Ujian 8km / IST / HSPQ </span>
                             </router-link>
                         </li>
                         <li class="lg:w-full py-0"
@@ -132,7 +132,7 @@ const doLogout = async () => {
                                     <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
                                         clip-rule="evenodd" />
                                 </svg>
-                                <span class="ml-3">Paketsoal CFIT </span>
+                                <span class="ml-3">Paketsoal CFIT & TIKI </span>
                             </router-link>
                         </li>
                         <li class="lg:w-full py-0"

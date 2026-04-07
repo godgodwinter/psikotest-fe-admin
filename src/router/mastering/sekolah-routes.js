@@ -36,9 +36,7 @@ const AdminSekolahRoutes = [
                 path: "/pages/admin/mastering/sekolah/:sekolah_id/submenu/dashboard",
                 name: "admin-sekolah-submenu-dashboard",
                 component: () =>
-                  import(
-                    "@/views/admin/sekolah/submenu/SekolahSubmenuDashboard.vue"
-                  ),
+                  import("@/views/admin/sekolah/submenu/SekolahSubmenuDashboard.vue"),
               },
               {
                 path: "/pages/admin/mastering/sekolah/:sekolah_id/submenu/kelas",
@@ -57,17 +55,13 @@ const AdminSekolahRoutes = [
                 path: "/pages/admin/mastering/sekolah/:sekolah_id/submenu/kelas/:kelas_id?/ujianstudi",
                 name: "admin-sekolah-submenu-ujianstudi",
                 component: () =>
-                  import(
-                    "@/views/admin/ujianstudi/proses/UjianstudiProsesPerkelas.vue"
-                  ),
+                  import("@/views/admin/ujianstudi/proses/UjianstudiProsesPerkelas.vue"),
               },
               {
                 path: "/pages/admin/mastering/sekolah/:sekolah_id/submenu/kelas/:kelas_id?/ujianstudi/siswa/:siswa_id",
                 name: "admin-sekolah-submenu-ujianstudi-persiswa",
                 component: () =>
-                  import(
-                    "@/views/admin/ujianstudi/proses/UjianstudiProsesPerSiswa.vue"
-                  ),
+                  import("@/views/admin/ujianstudi/proses/UjianstudiProsesPerSiswa.vue"),
               },
 
               // ! UJIANSTUDI-PROSES-END
@@ -77,17 +71,13 @@ const AdminSekolahRoutes = [
                 path: "/pages/admin/mastering/sekolah/:sekolah_id/submenu/kelas/:kelas_id?/ujiankhusus",
                 name: "admin-sekolah-submenu-ujiankhusus",
                 component: () =>
-                  import(
-                    "@/views/admin/ujiankhusus/proses/UjiankhususProsesPerkelas.vue"
-                  ),
+                  import("@/views/admin/ujiankhusus/proses/UjiankhususProsesPerkelas.vue"),
               },
               {
                 path: "/pages/admin/mastering/sekolah/:sekolah_id/submenu/kelas/:kelas_id?/ujiankhusus/siswa/:siswa_id/reset",
                 name: "admin-sekolah-submenu-ujiankhusus-persiswa-reset",
                 component: () =>
-                  import(
-                    "@/views/admin/ujiankhusus/proses/UjiankhususProsesPerSiswa_reset.vue"
-                  ),
+                  import("@/views/admin/ujiankhusus/proses/UjiankhususProsesPerSiswa_reset.vue"),
               },
 
               // ! UJIANSTUDI-PROSES versi ringan
@@ -96,50 +86,38 @@ const AdminSekolahRoutes = [
                 path: "/pages/admin/mastering/sekolah/:sekolah_id/submenu/kelas/:kelas_id?/ujiankhusus/v2",
                 name: "admin-sekolah-submenu-ujiankhusus-v2",
                 component: () =>
-                  import(
-                    "@/views/admin/ujiankhusus/proses/UjiankhususProsesPerkelas_v2.vue"
-                  ),
+                  import("@/views/admin/ujiankhusus/proses/UjiankhususProsesPerkelas_v2.vue"),
               },
 
               {
                 path: "/pages/admin/mastering/sekolah/:sekolah_id/submenu/kelas/:kelas_id?/ujiankhusus/v3",
                 name: "admin-sekolah-submenu-ujiankhusus-v3",
                 component: () =>
-                  import(
-                    "@/views/admin/ujiankhusus/proses/UjiankhususProsesPerkelas_v3.vue"
-                  ),
+                  import("@/views/admin/ujiankhusus/proses/UjiankhususProsesPerkelas_v3.vue"),
               },
               {
                 path: "/pages/admin/mastering/sekolah/:sekolah_id/submenu/kelas/:kelas_id?/ujiankhusus/v4",
                 name: "admin-sekolah-submenu-ujiankhusus-v4",
                 component: () =>
-                  import(
-                    "@/views/admin/ujiankhusus/proses/UjiankhususProsesPerkelas_v4.vue"
-                  ),
+                  import("@/views/admin/ujiankhusus/proses/UjiankhususProsesPerkelas_v4.vue"),
               },
               {
                 path: "/pages/admin/mastering/sekolah/:sekolah_id/submenu/kelas/:kelas_id?/ujiankhusus/v4b",
                 name: "admin-sekolah-submenu-ujiankhusus-v4b",
                 component: () =>
-                  import(
-                    "@/views/admin/ujiankhusus/proses/UjiankhususProsesPerkelas_v4b.vue"
-                  ),
+                  import("@/views/admin/ujiankhusus/proses/UjiankhususProsesPerkelas_v4b.vue"),
               },
               {
                 path: "/pages/admin/mastering/sekolah/:sekolah_id/submenu/kelas/:kelas_id?/ujiankhusus/v4/progressive",
                 name: "admin-sekolah-submenu-ujiankhusus-v4-progressive",
                 component: () =>
-                  import(
-                    "@/views/admin/ujiankhusus/proses/UjiankhususProsesPerkelas_v4_progressive.vue"
-                  ),
+                  import("@/views/admin/ujiankhusus/proses/UjiankhususProsesPerkelas_v4_progressive.vue"),
               },
               {
                 path: "/pages/admin/mastering/sekolah/:sekolah_id/submenu/kelas/:kelas_id?/ujiankhusus/v4/progressive/v2",
                 name: "admin-sekolah-submenu-ujiankhusus-v4-progressive-v2",
                 component: () =>
-                  import(
-                    "@/views/admin/ujiankhusus/proses/UjiankhususProsesPerkelas_v4_progressive_v2.vue"
-                  ),
+                  import("@/views/admin/ujiankhusus/proses/UjiankhususProsesPerkelas_v4_progressive_v2.vue"),
               },
               {
                 path: "/pages/admin/mastering/sekolah/:sekolah_id/submenu/kelas/:kelas_id?/ujiankhusus/v4/export",
@@ -157,43 +135,33 @@ const AdminSekolahRoutes = [
                 path: "/pages/admin/mastering/sekolah/:sekolah_id/submenu/kelas/:kelas_id?/ujiankhusus/v2/siswa/:siswa_id/reset",
                 name: "admin-sekolah-submenu-ujiankhusus-persiswa-reset-v2",
                 component: () =>
-                  import(
-                    "@/views/admin/ujiankhusus/proses/UjiankhususProsesPerSiswa_reset_v2.vue"
-                  ),
+                  import("@/views/admin/ujiankhusus/proses/UjiankhususProsesPerSiswa_reset_v2.vue"),
               },
 
               {
                 path: "/pages/admin/mastering/sekolah/:sekolah_id/submenu/kelas/:kelas_id?/ujiankhusus/v3/siswa/:siswa_id/reset",
                 name: "admin-sekolah-submenu-ujiankhusus-persiswa-reset-v3",
                 component: () =>
-                  import(
-                    "@/views/admin/ujiankhusus/proses/UjiankhususProsesPerSiswa_reset_v3.vue"
-                  ),
+                  import("@/views/admin/ujiankhusus/proses/UjiankhususProsesPerSiswa_reset_v3.vue"),
               },
               {
                 path: "/pages/admin/mastering/sekolah/:sekolah_id/submenu/kelas/:kelas_id?/ujiankhusus/v4/siswa/:siswa_id/reset",
                 name: "admin-sekolah-submenu-ujiankhusus-persiswa-reset-v4",
                 component: () =>
-                  import(
-                    "@/views/admin/ujiankhusus/proses/UjiankhususProsesPerSiswa_reset_v4.vue"
-                  ),
+                  import("@/views/admin/ujiankhusus/proses/UjiankhususProsesPerSiswa_reset_v4.vue"),
               },
 
               {
                 path: "/pages/admin/mastering/sekolah/:sekolah_id/submenu/kelas/:kelas_id?/ujiankhusus/siswa/:siswa_id/tambahan",
                 name: "admin-sekolah-submenu-ujiankhusus-persiswa-tambahan",
                 component: () =>
-                  import(
-                    "@/views/admin/ujiankhusus/proses/UjiankhususProsesPerSiswa_tambahan.vue"
-                  ),
+                  import("@/views/admin/ujiankhusus/proses/UjiankhususProsesPerSiswa_tambahan.vue"),
               },
               {
                 path: "/pages/admin/mastering/sekolah/:sekolah_id/submenu/kelas/:kelas_id?/ujiankhusus/siswa/:siswa_id",
                 name: "admin-sekolah-submenu-ujiankhusus-persiswa",
                 component: () =>
-                  import(
-                    "@/views/admin/ujiankhusus/proses/UjiankhususProsesPerSiswa.vue"
-                  ),
+                  import("@/views/admin/ujiankhusus/proses/UjiankhususProsesPerSiswa.vue"),
               },
 
               // ! UJIANSTUDI-PROSES-END
@@ -202,28 +170,37 @@ const AdminSekolahRoutes = [
                 path: "/pages/admin/mastering/sekolah/:sekolah_id/submenu/kelas/:kelas_id?/ujiancfit/v4",
                 name: "admin-sekolah-submenu-ujiancfit-v4",
                 component: () =>
-                  import(
-                    "@/views/admin/ujiancfit/proses/UjianCfitProsesPerkelas_v4.vue"
-                  ),
+                  import("@/views/admin/ujiancfit/proses/UjianCfitProsesPerkelas_v4.vue"),
               },
               {
                 path: "/pages/admin/mastering/sekolah/:sekolah_id/submenu/kelas/:kelas_id?/ujiancfit/v4/siswa/:siswa_id",
                 name: "admin-sekolah-submenu-ujiancfit-v4-reset",
                 component: () =>
-                  import(
-                    "@/views/admin/ujiancfit/proses/UjianCfitProsesPerSiswa_reset_v4.vue"
-                  ),
+                  import("@/views/admin/ujiancfit/proses/UjianCfitProsesPerSiswa_reset_v4.vue"),
               },
               // ! UJIANSTUDI-CFIT-END
+
+              // ! UJIANSTUDI-TIKI-M
+              {
+                path: "/pages/admin/mastering/sekolah/:sekolah_id/submenu/kelas/:kelas_id?/tiki_m",
+                name: "admin-sekolah-submenu-ujian_tiki_m",
+                component: () =>
+                  import("@/views/admin/ujian_tiki_m/proses/Ujian_tiki_m_ProsesPerkelas.vue"),
+              },
+              {
+                path: "/pages/admin/mastering/sekolah/:sekolah_id/submenu/kelas/:kelas_id?/tiki_m/siswa/:siswa_id/reset",
+                name: "admin-sekolah-submenu-ujian_tiki_m-reset",
+                component: () =>
+                  import("@/views/admin/ujian_tiki_m/proses/Ujian_tiki_m_ProsesPerkelas_reset.vue"),
+              },
+              // ! UJIANSTUDI-TIKI-M-END
 
               // ! UJIANSTUDI-HSPQ
               {
                 path: "/pages/admin/mastering/sekolah/:sekolah_id/submenu/kelas/:kelas_id?/hspq_only/v4",
                 name: "admin-sekolah-submenu-ujianhspq_only-v4",
                 component: () =>
-                  import(
-                    "@/views/admin/ujianhspq_only/proses/Ujianhspq_only_ProsesPerkelas_v4.vue"
-                  ),
+                  import("@/views/admin/ujianhspq_only/proses/Ujianhspq_only_ProsesPerkelas_v4.vue"),
               },
               // ! UJIANSTUDI-HSPQ-END
               // ! UJIANSTUDI-IST-MINAT
@@ -231,17 +208,13 @@ const AdminSekolahRoutes = [
                 path: "/pages/admin/mastering/sekolah/:sekolah_id/submenu/kelas/:kelas_id?/ist_only/v4",
                 name: "admin-sekolah-submenu-ujianist-v4",
                 component: () =>
-                  import(
-                    "@/views/admin/ujianist_only/proses/Ujianist_only_ProsesPerkelas_v4.vue"
-                  ),
+                  import("@/views/admin/ujianist_only/proses/Ujianist_only_ProsesPerkelas_v4.vue"),
               },
               {
                 path: "/pages/admin/mastering/sekolah/:sekolah_id/submenu/kelas/:kelas_id?/ist_only/v4/siswa/:siswa_id/reset",
                 name: "admin-sekolah-submenu-ujianist-v4-reset",
                 component: () =>
-                  import(
-                    "@/views/admin/ujianist_only/proses/Ujianist_only_ProsesPerkelas_v4_reset.vue"
-                  ),
+                  import("@/views/admin/ujianist_only/proses/Ujianist_only_ProsesPerkelas_v4_reset.vue"),
               },
               // ! UJIANSTUDI-IST-END
               // ! UJIANSTUDI-HSPQ-IST-MINAT
@@ -249,17 +222,13 @@ const AdminSekolahRoutes = [
                 path: "/pages/admin/mastering/sekolah/:sekolah_id/submenu/kelas/:kelas_id?/hspq_ist_minat/v4",
                 name: "admin-sekolah-submenu-ujianhspq_ist_minat-v4",
                 component: () =>
-                  import(
-                    "@/views/admin/ujianhspq_ist_minat/proses/Ujianhspq_ist_minat_ProsesPerkelas_v4.vue"
-                  ),
+                  import("@/views/admin/ujianhspq_ist_minat/proses/Ujianhspq_ist_minat_ProsesPerkelas_v4.vue"),
               },
               {
                 path: "/pages/admin/mastering/sekolah/:sekolah_id/submenu/kelas/:kelas_id?/hspq_ist_minat/v4/siswa/:siswa_id/reset",
                 name: "admin-sekolah-submenu-ujianhspq_ist_minat-v4-reset",
                 component: () =>
-                  import(
-                    "@/views/admin/ujianhspq_ist_minat/proses/Ujianhspq_ist_minat_ProsesPerkelas_v4_reset.vue"
-                  ),
+                  import("@/views/admin/ujianhspq_ist_minat/proses/Ujianhspq_ist_minat_ProsesPerkelas_v4_reset.vue"),
               },
               // ! UJIANSTUDI-HSPQ-IST-END
               // ! UJIANSTUDI-MINAT
@@ -267,9 +236,7 @@ const AdminSekolahRoutes = [
                 path: "/pages/admin/mastering/sekolah/:sekolah_id/submenu/kelas/:kelas_id?/minat_only/v4",
                 name: "admin-sekolah-submenu-ujianminat_only-v4",
                 component: () =>
-                  import(
-                    "@/views/admin/ujianminat_only/proses/Ujianminat_only_ProsesPerkelas_v4.vue"
-                  ),
+                  import("@/views/admin/ujianminat_only/proses/Ujianminat_only_ProsesPerkelas_v4.vue"),
               },
               // ! UJIANSTUDI-MINAT-END
 
@@ -278,25 +245,19 @@ const AdminSekolahRoutes = [
                 path: "/pages/admin/mastering/sekolah/:sekolah_id/submenu/kelas/:kelas_id?/mmpi2/v4",
                 name: "admin-sekolah-submenu-ujianmmpi2-v4",
                 component: () =>
-                  import(
-                    "@/views/admin/ujianmmpi2/proses/UjianMmpi2ProsesPerkelas_v4.vue"
-                  ),
+                  import("@/views/admin/ujianmmpi2/proses/UjianMmpi2ProsesPerkelas_v4.vue"),
               },
               {
                 path: "/pages/admin/mastering/sekolah/:sekolah_id/submenu/kelas/:kelas_id?/mmpi2/v4/export",
                 name: "admin-sekolah-submenu-ujianmmpi2-v4-export",
                 component: () =>
-                  import(
-                    "@/views/admin/ujianmmpi2/proses/UjianMmpi2_Export_Import_proses_ujian.vue"
-                  ),
+                  import("@/views/admin/ujianmmpi2/proses/UjianMmpi2_Export_Import_proses_ujian.vue"),
               },
               {
                 path: "/pages/admin/mastering/sekolah/:sekolah_id/submenu/kelas/:kelas_id?/mmpi2/v4/import",
                 name: "admin-sekolah-submenu-ujianmmpi2-v4-import",
                 component: () =>
-                  import(
-                    "@/views/admin/ujianmmpi2/proses/UjianMmpi2_Import_proses_ujian.vue"
-                  ),
+                  import("@/views/admin/ujianmmpi2/proses/UjianMmpi2_Import_proses_ujian.vue"),
               },
               // {
               //   path: "/pages/admin/mastering/sekolah/:sekolah_id/submenu/kelas/:kelas_id?/ujiancfit/v4/siswa/:siswa_id",
@@ -312,9 +273,7 @@ const AdminSekolahRoutes = [
                 path: "/pages/admin/mastering/sekolah/:sekolah_id/submenu/kelas/:kelas_id?/ujianmmpi/v1",
                 name: "admin-sekolah-submenu-ujian-mmpi-v1",
                 component: () =>
-                  import(
-                    "@/views/admin/ujianmmpi/proses/UjianMmpiPerkelas_v1.vue"
-                  ),
+                  import("@/views/admin/ujianmmpi/proses/UjianMmpiPerkelas_v1.vue"),
               },
               // ! UJIAN-MMPI-PROSES-END
 
@@ -393,18 +352,14 @@ const AdminSekolahRoutes = [
         path: "/pages/admin/mastering/sekolah/:sekolah_id?/submenu/kelas/:kelas_id?/cfit/import_iq_generator",
         name: "admin-sekolah-submenu-cfit-import-iq-generator",
         component: () =>
-          import(
-            "@/views/ist/import/CfitImportIndex_rumus_iq_generator_Index.vue"
-          ),
+          import("@/views/ist/import/CfitImportIndex_rumus_iq_generator_Index.vue"),
       },
 
       {
         path: "/pages/admin/mastering/sekolah/:sekolah_id?/submenu/kelas/:kelas_id?/cfit/import_pohon_generator",
         name: "admin-sekolah-submenu-cfit-import-pohon-generator",
         component: () =>
-          import(
-            "@/views/ist/import/CfitImportIndex_rumus_pohon_generator_Index.vue"
-          ),
+          import("@/views/ist/import/CfitImportIndex_rumus_pohon_generator_Index.vue"),
       },
       {
         path: "/pages/admin/mastering/sekolah/:sekolah_id?/submenu/kelas/:kelas_id?/ist/import/migrasi",

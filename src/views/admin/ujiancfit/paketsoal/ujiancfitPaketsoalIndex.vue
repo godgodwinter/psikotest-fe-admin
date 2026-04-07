@@ -60,6 +60,11 @@ const columns = [
         field: "_id",
         type: "String",
     },
+    {
+        label: "Label",
+        field: "label",
+        type: "String",
+    },
 ];
 
 const getData = async () => {
@@ -126,8 +131,8 @@ const doAktifkanPaket = async (id, nama) => {
 <template>
     <div>
         <article class="prose lg:prose-sm">
-            <h1>PAKETSOAL CFIT</h1>
-            <h5>UJIAN CFIT</h5>
+            <h1>PAKETSOAL CFIT & TIKI</h1>
+            <h5>UJIAN CFIT & TIKI</h5>
             <div v-if="paketsoal_aktif">
                 <h4>PAKETSOAL AKTIF : {{ paketsoal_aktif?.nama }}</h4>
             </div>

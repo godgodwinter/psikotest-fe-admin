@@ -4,7 +4,7 @@ import Toast from "@/components/lib/Toast";
 import { useRoute, useRouter } from "vue-router";
 import Api from "@/axios/axiosNode";
 import ApiUjianKhusus from "@/axios/axiosIst";
-import {fn_copy_id_for_mongo} from "@/lib/FungsiBasic.js"
+import { fn_copy_id_for_mongo } from "@/lib/FungsiBasic.js"
 
 const BreadCrumb = defineAsyncComponent(() =>
     import('@/components/atoms/BreadCrumb.vue')
@@ -73,10 +73,10 @@ const getData = async () => {
     try {
         const response = await ApiUjianKhusus.get(`ujiankhusus/banksoal/aspek_detail/${aspek_detail_id.value}/soal`);
         // data.value = response.data;
-        
-        const tempData=response.data;
+
+        const tempData = response.data;
         data.value = tempData.map(fn_copy_id_for_mongo);
-        console.log(data.value);
+        console.log(response, data.value);
         aspek_detail.value = response.aspek_detail;
         // console.log(aspek_detail.value);
         isLoading.value = false;
@@ -159,9 +159,9 @@ const doEditData = async (id, index) => {
                             <vue-good-table :line-numbers="true" :columns="columns" :rows="data" :search-options="{
                                 enabled: true,
                             }" :pagination-options="{
-    enabled: true,
-    perPageDropdown: [50, 100, 150, 200],
-}" styleClass="vgt-table striped bordered condensed" class="py-0">
+                                enabled: true,
+                                perPageDropdown: [50, 100, 150, 200],
+                            }" styleClass="vgt-table striped bordered condensed" class="py-0">
                                 <template #table-actions>
                                     <div class="space-x-1 space-y-1 gap-1">
                                         <router-link :to="{
@@ -178,8 +178,8 @@ const doEditData = async (id, index) => {
                                         <div class="text-sm font-medium text-center flex justify-center space-x-1">
                                             <button class="btn btn-sm btn-warning tooltip" data-tip="Edit"
                                                 @click="doEditData(props.row.id, props.index)">
-                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20"
-                                                    fill="currentColor">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5"
+                                                    viewBox="0 0 20 20" fill="currentColor">
                                                     <path
                                                         d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z" />
                                                     <path fill-rule="evenodd"
@@ -188,8 +188,8 @@ const doEditData = async (id, index) => {
                                                 </svg></button>
                                             <button class="btn btn-sm btn-danger"
                                                 @click="doDeleteData(props.row.id, props.index)">
-                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20"
-                                                    fill="currentColor">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5"
+                                                    viewBox="0 0 20 20" fill="currentColor">
                                                     <path fill-rule="evenodd"
                                                         d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
                                                         clip-rule="evenodd" />
@@ -198,8 +198,9 @@ const doEditData = async (id, index) => {
                                         </div>
                                     </span>
                                     <span v-else-if="props.column.field == 'pilihanjawaban_jml'">
-{{ props.row.pilihan_jawaban?props.row.pilihan_jawaban.length:0 }} Pilihan Jawaban                                    
-</span>
+                                        {{ props.row.pilihan_jawaban ? props.row.pilihan_jawaban.length : 0 }} Pilihan
+                                        Jawaban
+                                    </span>
                                     <!-- <span v-else-if="props.column.field == 'pilihanjawaban_jml_benar'">
 {{ props.row.pilihan_jawaban?props.row.pilihan_jawaban.length:0 }}  Jawaban Benar                                   
 </span> -->
