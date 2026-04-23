@@ -45,7 +45,7 @@ const isError = ref(false);
 const getData = async () => {
     try {
         isLoading.value = true;
-        const response = await Api.get(`/ujian/hspq_ist_minat/proses/sekolah/${sekolah_id.value}/kelas/${kelas_id.value}/siswa/${siswa_id.value}/get_proses`);
+        const response = await Api.get(`/ujian/tiki_m/proses/sekolah/${sekolah_id.value}/kelas/${kelas_id.value}/siswa/${siswa_id.value}/get_proses`);
         // const response = await Api.get(`/ujiankhusus/proses/v3/sekolah/${sekolah_id.value}/kelas/${kelas_id.value}/siswa/${siswa_id.value}`);
         // const response = await Api.get(`/ujiankhusus/proses/sekolah/${sekolah_id.value}/kelas/${kelas_id.value}/siswa/${siswa_id.value}`);
         siswa.value = response.data;
@@ -154,7 +154,7 @@ const doResetSalah = async (proses_detail_id,) => {
     if (confirm("Apakah anda yakin mereset jawban salah dan waktu data ini?")) {
 
         try {
-            const response = await Api.post(`/ujian/hspq_ist_minat/proses/generate/sekolah/${sekolah_id.value}/kelas/${kelas_id.value}/siswa/${siswa_id.value}/reset/umum/salah`, { siswa_id: siswa_id.value, mapel_id: proses_detail_id });
+            const response = await Api.post(`/ujian/tiki_m/proses/generate/sekolah/${sekolah_id.value}/kelas/${kelas_id.value}/siswa/${siswa_id.value}/reset/umum/salah`, { siswa_id: siswa_id.value, mapel_id: proses_detail_id });
             // const response = await Api.post(`/ujiankhusus/proses/v3/sekolah/${sekolah_id.value}/kelas/${kelas_id.value}/siswa/${siswa_id.value}/reset/${proses_detail_id}/salah`);
             Toast.babeng("Berhasil", 'Reset Salah berhasil!');
             getData();
@@ -170,7 +170,7 @@ const doResetWaktu = async (proses_detail_id,) => {
     if (confirm("Apakah anda yakin mereset jawban salah dan waktu data ini?")) {
 
         try {
-            const response = await Api.post(`/ujian/hspq_ist_minat/proses/generate/sekolah/${sekolah_id.value}/kelas/${kelas_id.value}/siswa/${siswa_id.value}/reset/umum/waktu`, { siswa_id: siswa_id.value, mapel_id: proses_detail_id });
+            const response = await Api.post(`/ujian/tiki_m/proses/generate/sekolah/${sekolah_id.value}/kelas/${kelas_id.value}/siswa/${siswa_id.value}/reset/umum/waktu`, { siswa_id: siswa_id.value, mapel_id: proses_detail_id });
             // const response = await Api.post(`/ujiankhusus/proses/v3/sekolah/${sekolah_id.value}/kelas/${kelas_id.value}/siswa/${siswa_id.value}/reset/${proses_detail_id}/waktu`);
             Toast.babeng("Berhasil", 'Reset Waktu berhasil!');
             getData();
@@ -184,7 +184,7 @@ const doForceFinish = async (proses_detail_id,) => {
     if (confirm("Apakah anda yakin mengakhiri proses pada paketsoal ini?")) {
 
         try {
-            const response = await Api.post(`/ujian/hspq_ist_minat/proses/generate/sekolah/${sekolah_id.value}/kelas/${kelas_id.value}/siswa/${siswa_id.value}/reset/umum/do_finish`, { siswa_id: siswa_id.value, mapel_id: proses_detail_id });
+            const response = await Api.post(`/ujian/tiki_m/proses/generate/sekolah/${sekolah_id.value}/kelas/${kelas_id.value}/siswa/${siswa_id.value}/reset/umum/do_finish`, { siswa_id: siswa_id.value, mapel_id: proses_detail_id });
             // const response = await Api.post(`/ujiankhusus/proses/v3/sekolah/${sekolah_id.value}/kelas/${kelas_id.value}/siswa/${siswa_id.value}/reset/${proses_detail_id}/forceFinish`);
             Toast.babeng("Berhasil", 'Reset Waktu berhasil!');
             getData();
@@ -198,7 +198,7 @@ const doResetAll = async (proses_detail_id,) => {
     if (confirm("Apakah anda yakin mereset jawban salah dan waktu data ini?")) {
 
         try {
-            const response = await Api.post(`/ujian/hspq_ist_minat/proses/generate/sekolah/${sekolah_id.value}/kelas/${kelas_id.value}/siswa/${siswa_id.value}/reset/umum/all`, { siswa_id: siswa_id.value, mapel_id: proses_detail_id });
+            const response = await Api.post(`/ujian/tiki_m/proses/generate/sekolah/${sekolah_id.value}/kelas/${kelas_id.value}/siswa/${siswa_id.value}/reset/umum/all`, { siswa_id: siswa_id.value, mapel_id: proses_detail_id });
             // const response = await Api.post(`/ujiankhusus/proses/v3/sekolah/${sekolah_id.value}/kelas/${kelas_id.value}/siswa/${siswa_id.value}/reset/${proses_detail_id}/semua`);
             Toast.babeng("Berhasil", 'Reset Waktu dan Semua jawaban berhasil dilakukan!');
             getData();
@@ -213,7 +213,7 @@ const minat_doResetWaktu = async (proses_detail_id,) => {
     if (confirm("Apakah anda yakin mereset jawban salah dan waktu data ini?")) {
 
         try {
-            const response = await Api.post(`/ujian/hspq_ist_minat/proses/generate/sekolah/${sekolah_id.value}/kelas/${kelas_id.value}/siswa/${siswa_id.value}/reset/minat/waktu`);
+            const response = await Api.post(`/ujian/tiki_m/proses/generate/sekolah/${sekolah_id.value}/kelas/${kelas_id.value}/siswa/${siswa_id.value}/reset/minat/waktu`);
             Toast.babeng("Berhasil", 'Reset Waktu Minat berhasil!');
             getData();
             return true;
@@ -226,7 +226,7 @@ const minat_doForceFinish = async (proses_detail_id,) => {
     if (confirm("Apakah anda yakin mengakhiri proses pada paketsoal ini?")) {
 
         try {
-            const response = await Api.post(`/ujian/hspq_ist_minat/proses/generate/sekolah/${sekolah_id.value}/kelas/${kelas_id.value}/siswa/${siswa_id.value}/reset/minat/do_finish`);
+            const response = await Api.post(`/ujian/tiki_m/proses/generate/sekolah/${sekolah_id.value}/kelas/${kelas_id.value}/siswa/${siswa_id.value}/reset/minat/do_finish`);
             Toast.babeng("Berhasil", 'Reset Waktu Minat berhasil!');
             getData();
             return true;
@@ -239,7 +239,7 @@ const minat_doResetAll = async (proses_detail_id,) => {
     if (confirm("Apakah anda yakin mereset jawban salah dan waktu data ini?")) {
 
         try {
-            const response = await Api.post(`/ujian/hspq_ist_minat/proses/generate/sekolah/${sekolah_id.value}/kelas/${kelas_id.value}/siswa/${siswa_id.value}/reset/minat/all`);
+            const response = await Api.post(`/ujian/tiki_m/proses/generate/sekolah/${sekolah_id.value}/kelas/${kelas_id.value}/siswa/${siswa_id.value}/reset/minat/all`);
             Toast.babeng("Berhasil", 'Reset All Minat berhasil!');
             getData();
             return true;
@@ -330,7 +330,7 @@ const onSubmit = async (values) => {
         revisi_nilai: dataForm.value.revisi_nilai,
     };
     try {
-        const response = await ApiUjianKhusus.post(`/ujian/hspq_ist_minat/proses/generate/sekolah/${sekolah_id.value}/kelas/${kelas_id.value}/siswa/${siswa_id.value}/do_revisi_nilai/umum`, dataFormSend);
+        const response = await ApiUjianKhusus.post(`/ujian/tiki_m/proses/generate/sekolah/${sekolah_id.value}/kelas/${kelas_id.value}/siswa/${siswa_id.value}/do_revisi_nilai/umum`, dataFormSend);
         // console.log(response);
         Toast.success("Info", "Data berhasil diupdate!");
         // router.push({ name: "admin-ujiankhusus-banksoal-aspek" });

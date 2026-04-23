@@ -322,6 +322,11 @@ const AdminSekolahRoutes = [
         ],
       },
       {
+        path: "/pages/admin/mastering/sekolah/:sekolah_id?/submenu/kelas/:kelas_id?/tiki_m/import",
+        name: "admin-sekolah-submenu-tiki_m-import",
+        component: () => import("@/views/ist/import/TikiMImportIndex.vue"),
+      },
+      {
         path: "/pages/admin/mastering/sekolah/:sekolah_id?/submenu/kelas/:kelas_id?/ist/import",
         name: "admin-sekolah-submenu-ist-import",
         component: () => import("@/views/ist/import/IstImportIndex.vue"),

@@ -659,7 +659,7 @@ const do_generate_data_tambahan = async (values) => {
                                                         "scq"
                                                     )
                                                 )
-                                                    ) }}</span></td>
+                                            ) }}</span></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -927,11 +927,11 @@ const do_generate_data_tambahan = async (values) => {
                                 <tr v-for="(item, index) in dataAspek_ist" :key="item.id">
                                     <td class="whitespace-nowrap w-1/12">{{ index + 1 }}. {{ item.detail }} ({{
                                         item.kode
-                                        }})</td>
+                                    }})</td>
                                     <td class="whitespace-nowrap w-1/12">:</td>
                                     <td class="whitespace-nowrap w-10/12"> {{ item.persen }} % - {{
                                         fn_singkatkan_ket(item.ket)
-                                        }} - iq = {{ item.val }}
+                                    }} - iq = {{ item.val }}
                                     </td>
                                 </tr>
 
@@ -952,7 +952,7 @@ const do_generate_data_tambahan = async (values) => {
                                 <tr v-for="(item, index) in dataAspek_8km" :key="item.id">
                                     <td class="whitespace-nowrap w-1/12">{{ index + 1 }}. {{ item.nama_lengkap }} ({{
                                         item.nama
-                                        }})</td>
+                                    }})</td>
                                     <td class="whitespace-nowrap w-1/12">:</td>
                                     <td class="whitespace-nowrap w-10/12"> {{ item.persen }} % - {{
 

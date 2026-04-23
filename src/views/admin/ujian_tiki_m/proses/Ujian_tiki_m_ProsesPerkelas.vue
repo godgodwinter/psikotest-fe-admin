@@ -1666,7 +1666,7 @@ function upsertDetail(p) {
                                             <span v-if="props.row.ujian_hspq_ist_minat"
                                                 class="flex gap-2 justify-center">
                                                 <RouterLink
-                                                    :to="{ name: 'admin-sekolah-submenu-ujianhspq_ist_minat-v4-reset', params: { sekolah_id, kelas_id, siswa_id: props.row.id } }">
+                                                    :to="{ name: 'admin-sekolah-submenu-ujian_tiki_m-reset', params: { sekolah_id, kelas_id, siswa_id: props.row.id } }">
                                                     <button class="btn btn-sm btn-warning tooltip"
                                                         data-tip="MENU RESET v4">
                                                         MENU RESET
