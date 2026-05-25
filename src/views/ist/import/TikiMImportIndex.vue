@@ -191,6 +191,7 @@ const columns = [
     { label: "Nama", field: "nama" },
     { label: "Tgl Lahir", field: "tgllahir" },
     { label: "Umur", field: "umur" },
+    { label: "Status Import", field: "siswa_id", type: "String" },
     { label: "m_ba", field: "m_ba" },
     { label: "m_gb", field: "m_gb" },
     // ... tambahkan kolom lain sesuai kebutuhan ...
@@ -230,7 +231,7 @@ const columns = [
                                 <div tabindex="0" @click="isDropdownOpen = !isDropdownOpen"
                                     class="input input-bordered flex items-center justify-between cursor-pointer focus:border-primary">
                                     <span :class="{ 'text-gray-400': !dataDetail.sekolah_id }">{{ selectedSekolahLabel
-                                    }}</span>
+                                        }}</span>
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none"
                                         viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"

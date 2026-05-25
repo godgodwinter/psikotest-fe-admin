@@ -174,7 +174,8 @@ const doLogout = async () => {
                                     <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
                                         clip-rule="evenodd" />
                                 </svg>
-                                <span class="ml-3">Import IST</span>
+                                <span class="ml-3">Import IST</span><span
+                                    class="badge badge-info badge-outline">v2.0</span>
                             </router-link>
                         </li>
                         <li class="lg:w-full py-0" :class="[pagesActive == 'ujiankhusus' ? pagesActiveClass : '']">
@@ -187,7 +188,7 @@ const doLogout = async () => {
                                         clip-rule="evenodd" />
                                 </svg>
                                 <span class="ml-3">Import TIKI M</span> <span
-                                    class="badge badge-info badge-outline">v2.0</span>
+                                    class="badge badge-error badge-outline">ERR</span>
                             </router-link>
                         </li>
                         <li class="lg:w-full py-0" :class="[pagesActive == 'ujiankhusus' ? pagesActiveClass : '']">
@@ -199,7 +200,8 @@ const doLogout = async () => {
                                     <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
                                         clip-rule="evenodd" />
                                 </svg>
-                                <span class="ml-3">Import CFIT</span>
+                                <span class="ml-3">Import CFIT</span><span
+                                    class="badge badge-info badge-outline">v2.0</span>
                             </router-link>
                         </li>
                         <li class="lg:w-full py-0" :class="[pagesActive == 'ujiankhusus' ? pagesActiveClass : '']">
@@ -211,7 +213,8 @@ const doLogout = async () => {
                                     <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
                                         clip-rule="evenodd" />
                                 </svg>
-                                <span class="ml-3">Import MMPI (DATA)</span>
+                                <span class="ml-3">Import MMPI </span><span
+                                    class="badge badge-info badge-outline">v2.0</span>
                             </router-link>
                         </li>
                         <li class="lg:w-full py-0">

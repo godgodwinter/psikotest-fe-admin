@@ -142,6 +142,11 @@ const columns = [
         type: "String",
     },
     {
+        label: "Tanggal Lahir",
+        field: "tgllahir",
+        type: "String",
+    },
+    {
         label: "Tanggal Bisa Memulai",
         field: "tgl_batas_mulai",
         type: "String",
@@ -186,7 +191,7 @@ const getData = async () => {
 
         // const tempData=response.data;
         // data.value = tempData.map(fn_copy_id_for_mongo);
-        // console.log(data.value);
+        console.log(`#getData V3`, data.value);
         isLoading.value = false;
     } catch (error) {
         isLoading.value = false;

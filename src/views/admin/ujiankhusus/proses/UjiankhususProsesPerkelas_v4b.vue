@@ -165,6 +165,11 @@ const columns = [
         type: "String",
     },
     {
+        label: "Tanggal Lahir",
+        field: "tgllahir",
+        type: "String",
+    },
+    {
         label: "Tanggal Bisa Memulai",
         field: "tgl_batas_mulai",
         type: "String",

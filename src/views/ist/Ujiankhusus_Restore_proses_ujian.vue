@@ -71,6 +71,7 @@ function handleFileChange(event) {
 }
 
 // Process the compressed .zst file
+
 async function processFile() {
     if (!file.value) return alert("Pilih file dulu!");
 
@@ -82,46 +83,63 @@ async function processFile() {
         const compressed = new Uint8Array(arrayBuffer);
 
         ZstdCodec.run((zstd) => {
-            const simple = new zstd.Simple();
-            const decompressed = simple.decompress(compressed);
+            try {
+                // LOG 1: Kita intip isi objek zstd untuk melihat method/class apa saja yang tersedia
+                console.log("Isi objek zstd dari library:", zstd);
 
-            const jsonString = new TextDecoder().decode(decompressed);
-            const parsed = JSON.parse(jsonString);
+                // Alternatif fallback jika .Simple atau .ZstdSimple tidak terbaca langsung
+                const DecompressorClass = zstd.Simple || zstd.ZstdSimple;
 
-            // Handle both single object and array
-            if (Array.isArray(parsed)) {
-                jsonData.value = parsed.map((item, index) => ({
-                    no: index + 1,
-                    nama: item.nama || "-",
-                    tgl_mulai: formatDate(item.tgl_batas_mulai),
-                    tgl_akhir: formatDate(item.tgl_batas_terakhir),
-                    // v4_ujian_mmpi2_getJawabanBySiswaMapel_multi: Array.isArray(item.v4_ujian_mmpi2_getJawabanBySiswaMapel_multi)
-                    //     ? item.v4_ujian_mmpi2_getJawabanBySiswaMapel_multi.length > 0
-                    //     : !!item.v4_ujian_mmpi2_getJawabanBySiswaMapel_multi,
-                    ...item
-                }));
-            } else {
-                jsonData.value = [{
-                    no: 1,
-                    nama: parsed.nama || "-",
-                    tgl_mulai: formatDate(parsed.tgl_batas_mulai),
-                    tgl_akhir: formatDate(parsed.tgl_batas_terakhir),
-                    // v4_ujian_mmpi2_getJawabanBySiswaMapel_multi: Array.isArray(parsed.v4_ujian_mmpi2_getJawabanBySiswaMapel_multi)
-                    //     ? parsed.v4_ujian_mmpi2_getJawabanBySiswaMapel_multi.length > 0
-                    //     : !!parsed.v4_ujian_mmpi2_getJawabanBySiswaMapel_multi,
-                    ...parsed
-                }];
+                if (!DecompressorClass) {
+                    throw new Error("Class Simple atau ZstdSimple tidak ditemukan pada library ini. Silakan cek console log diatas.");
+                }
+
+                const simple = new DecompressorClass();
+                const decompressed = simple.decompress(compressed);
+
+                const jsonString = new TextDecoder().decode(decompressed);
+                const parsed = JSON.parse(jsonString);
+
+                // LOG 2: Menampilkan data asli JSON hasil dekompresi di console
+                console.log("=== DATA JSON ASLI ===");
+                console.log(parsed);
+                console.log("======================");
+
+                // Tetap lakukan mapping data ke UI
+                if (Array.isArray(parsed)) {
+                    jsonData.value = parsed.map((item, index) => ({
+                        no: index + 1,
+                        nama: item.nama || "-",
+                        tgl_mulai: formatDate(item.tgl_batas_mulai),
+                        tgl_akhir: formatDate(item.tgl_batas_terakhir),
+                        ...item
+                    }));
+                } else {
+                    jsonData.value = [{
+                        no: 1,
+                        nama: parsed.nama || "-",
+                        tgl_mulai: formatDate(parsed.tgl_batas_mulai),
+                        tgl_akhir: formatDate(parsed.tgl_batas_terakhir),
+                        ...parsed
+                    }];
+                }
+
+            } catch (innerError) {
+                // Menangkap error di dalam callback ZstdCodec.run
+                console.error("Error saat dekompresi/parsing:", innerError);
+                isError.value = true;
+            } finally {
+                isLoading.value = false;
             }
-
-            isLoading.value = false;
         });
+
     } catch (err) {
-        console.error(err);
+        // Menangkap error di luar callback (misal file.value.arrayBuffer() gagal)
+        console.error("Error di luar alur zstd:", err);
         isError.value = true;
         isLoading.value = false;
     }
 }
-
 // Format date for display
 function formatDate(isoString) {
     if (!isoString) return "-";

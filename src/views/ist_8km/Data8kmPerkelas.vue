@@ -342,6 +342,12 @@ const dashboard_doCetak_ist_v8 = () => {
     );
 }
 
+const dashboard_doCetak_ist_v9_kelas_10 = () => {
+    window.open(
+        `${VITE_API_FE_DASHBOARD}admin/sekolah/${getSekolahAktif.value.sekolah_id}/kelas/${getSekolahAktif.value.kelas_id}/hasil_psikologi/sertifikat_ist_v9_perkelas_cetak/cetak/kelas/10`
+    );
+}
+
 const dashboard_doCetak_negatif = () => {
     window.open(
         `${VITE_API_FE_DASHBOARD}admin/sekolah/${getSekolahAktif.value.sekolah_id}/kelas/${getSekolahAktif.value.kelas_id}/hasil_psikologi/deteksi/cetak/negatif`
@@ -421,6 +427,9 @@ const dashboard_doCetak_kewirausahaan = () => {
                     DASHBOARD - Cetak IST V7 </button>
                 <button class="btn btn-sm btn-success" @click="dashboard_doCetak_ist_v8()">
                     DASHBOARD - Cetak IST V8 </button>
+
+                <button class="btn btn-sm btn-success" @click="dashboard_doCetak_ist_v9_kelas_10()">
+                    DASHBOARD - Cetak IST V9 Kelas 10 </button>
 
                 <button class="btn btn-sm btn-success" @click="dashboard_doCetak_kewirausahaan()"
                     v-if="dataSetting.kewirausahaan">
